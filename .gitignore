@@ -1,0 +1,15 @@
+# Build output and tooling
+build/
+.build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+.DS_Store
+*.swp
+__pycache__/
+# The Xcode project is generated: ruby tools/generate_xcodeproj.rb
+BitAirlines.xcodeproj/
+# Raw source data (re-downloadable, see tools/README.md)
+data/raw/
+# Local settings
+.claude/settings.local.json
