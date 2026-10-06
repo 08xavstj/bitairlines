@@ -9,6 +9,8 @@ import CoreCatalog
         w.pausePolicy = .never
         #expect(w.campaignProblem(.radio) == .needsARoute)
         _ = try w.createRoute(stops: ["YEV", "YUB"])
+        // The first route starts fully known; make it a little-known one so the campaign has something to lift.
+        for l in w.routes[0].legs.indices { w.routes[0].legs[l].maturity = Tuning.minimumMaturity }
         let before = w.routes[0].legs[0].maturity
         let cash = w.airline.cash
         try w.startCampaign(.radio)

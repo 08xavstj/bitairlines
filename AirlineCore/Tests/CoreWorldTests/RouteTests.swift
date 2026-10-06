@@ -12,7 +12,8 @@ import CoreCatalog
         #expect(route.legs[2].from == "YSY" && route.legs[2].to == "YEV")
         #expect(route.name == "Inuvik - Tuktoyaktuk - Sachs Harbour")
         #expect(route.frequency == 2 && route.fareMultiplier == 1)
-        #expect(route.legs.allSatisfy { $0.marketPaxPerDay > 0 && $0.marketFare > 0 && $0.maturity == Tuning.minimumMaturity })
+        // The airline's first route starts fully known (FirstSession.swift); later ones start at the minimum.
+        #expect(route.legs.allSatisfy { $0.marketPaxPerDay > 0 && $0.marketFare > 0 && $0.maturity == Tuning.firstRouteMaturity })
         #expect(w.news.last?.kind == .routeOpened)
     }
 

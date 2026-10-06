@@ -41,7 +41,11 @@ extension World {
     @discardableResult
     public mutating func createRoute(stops: [String], name: String? = nil) throws -> Int {
         if let problem = routeProblem(stops: stops) { throw problem }
-        guard let legs = makeLegs(stops: stops) else { throw WorldError.unknownAirport(stops.first ?? "") }
+        guard var legs = makeLegs(stops: stops) else { throw WorldError.unknownAirport(stops.first ?? "") }
+        // The very first route starts fully known, so the first session pays (FirstSession.swift).
+        if opensFirstRoute {
+            for l in legs.indices { legs[l].maturity = Tuning.firstRouteMaturity }
+        }
         let id = takeRouteID()
         routes.append(Route(id: id, name: name ?? stops.map { AirportCatalog.airport($0)?.label ?? $0 }.joined(separator: " - "), stops: stops, fareMultiplier: 1.0, carriesCargo: true, frequency: 2.0, autoFrequency: true, legs: legs, aircraftIDs: [],
                             openedDay: clock.dayIndex, flights: 0, revenueThisMonth: 0, costThisMonth: 0, revenueLastMonth: 0, costLastMonth: 0))
