@@ -8,7 +8,7 @@ public enum WeeklyGoalKind: String, Sendable, Hashable, Codable, CaseIterable {
 }
 
 public struct WeeklyGoal: Sendable, Hashable, Codable {
-    /// Game week number (day index / 7) the goal belongs to.
+    /// Game week number (counted from Mondays) the goal belongs to.
     public var week: Int
     public var kind: WeeklyGoalKind
     public var target: Int
@@ -49,7 +49,8 @@ extension World {
 
     /// Sets the goal for the week that starts now. Called when a game starts and every Monday.
     mutating func startWeeklyGoal() {
-        let week = clock.dayIndex / 7
+        // Weeks are counted from Mondays (weekday 0), the day a new goal starts.
+        let week = (clock.dayIndex - clock.weekday + 7) / 7
         let kinds = WeeklyGoalKind.allCases
         let kind = kinds[week % kinds.count]
         // What the airline did last week in this kind of goal, and what it earned.
