@@ -149,7 +149,7 @@ extension World {
         guard aircraft[i].isDelivered else { throw WorldError.notDelivered }
         if case .grounded = aircraft[i].status { throw WorldError.aircraftBusy }
         guard let type = aircraft[i].type else { throw WorldError.unknownType(aircraft[i].typeID) }
-        if aircraft[i].jobID != nil { throw WorldError.aircraftBusy }
+        if aircraft[i].jobID != nil || aircraft[i].awaitingRestoration { throw WorldError.aircraftBusy }
         if let problem = fitProblem(type: type, route: routes[r], kits: aircraft[i].kits) { throw problem }
 
         let before = aircraft[i].allRouteIDs

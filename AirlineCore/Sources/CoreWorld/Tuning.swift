@@ -121,8 +121,6 @@ public enum Tuning {
     public static let connectingFareDiscount = 0.9
 
     // MARK: Rival airlines
-    /// Chance each month that a rival moves into one of the player's busy routes.
-    public static let rivalEntryChance = 0.15
     /// A leg must have at least this many people a day before a rival bothers.
     public static let rivalEntryPaxPerDay = 60.0
     /// Share of a market a rival is assumed to carry (for the rankings).

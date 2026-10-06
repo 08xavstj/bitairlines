@@ -40,7 +40,7 @@ struct RouteProfitLine: View {
     /// What to try when the route lost money: empty seats mean too many flights or too high a fare; full seats mean the fare or aircraft is wrong.
     static func hint(for week: RouteDay) -> String? {
         guard week.profit < 0, week.flights > 0 else { return nil }
-        if let load = week.seatLoad, load < 0.5 { return "Losing money: fly less often or lower the fare." }
+        if let load = week.seatLoad, load < 0.5 { return "Losing money: fly less often, or bring the fare back to the going fare if it is higher." }
         return "Losing money: try a higher fare or a smaller aircraft."
     }
 }

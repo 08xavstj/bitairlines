@@ -82,7 +82,7 @@ extension World {
             let share = capture(route: route, leg: mature, from: a, to: b)
             // Only so many people (and so much freight) wait at a gate at once, which caps what a sparse schedule can ever carry.
             let paxPerDay = (leg.marketPaxPerDay + leg.connectingPaxPerDay) * share
-            let cargoPerDay = leg.marketCargoKgPerDay * share
+            let cargoPerDay = leg.marketCargoKgPerDay * share / max(0.01, fareFactor(route: route, leg: mature))
             let carriedPax = min(paxPerDay, f * (2.0 * paxPerDay + 4.0), f * Double(type.seats) * Tuning.loadFactorCap)
             let carriedCargo = route.carriesCargo ? min(cargoPerDay, f * (2.0 * cargoPerDay + 40.0), f * Double(type.cargoKg) * Tuning.cargoLoadLimit) : 0
             let fare = leg.blendedFare * route.fareMultiplier

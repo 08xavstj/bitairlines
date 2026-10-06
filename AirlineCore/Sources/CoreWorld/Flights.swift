@@ -14,11 +14,16 @@ extension World {
         let perDay = leg.departuresLastWeek > 0 ? Double(leg.departuresLastWeek) / 7.0 : Double(leg.departuresThisWeek) / 3.0
         let ownShare = min(0.5, max(0.05, 0.05 + 0.004 * airline.reputation + 0.03 * perDay))
         let competitive = (1.0 - intensity) + intensity * ownShare
-        // Fares are compared with the going fare, or with a rival's fare where one flies the same pair.
-        let reference = rivals.map(\.fareLevel).min() ?? 1.0
-        let fareEffect = FareDemand.factor(ratio: reference / route.fareMultiplier)
+        let fareEffect = fareFactor(route: route, leg: leg)
         let quality = 0.9 + 0.001 * airline.reputation
         return competitive * fareEffect * quality * route.service.captureFactor * captureFactor
+    }
+
+    /// How the route's fare moves the number of people who choose it. Fares are compared with the going fare, or with a rival's
+    /// fare where one flies the same pair. Freight is priced by weight, not by the ticket fare, so it leaves this out.
+    func fareFactor(route: Route, leg: LegState) -> Double {
+        let reference = rivalRoutes(leg.from, leg.to).map(\.fareLevel).min() ?? 1.0
+        return FareDemand.factor(ratio: reference / route.fareMultiplier)
     }
 
     /// Brings a leg's waiting buckets up to date: new people arrive, those who waited a while give up.
@@ -30,7 +35,7 @@ extension World {
         let share = capture(route: route, leg: leg, from: a, to: b) * Seasons.factor(month: clock.date.month) * leg.maturity
         let boost = eventFactors(from: a, to: b)
         let paxPerDay = (leg.marketPaxPerDay + leg.connectingPaxPerDay) * share * boost.passengers
-        let cargoPerDay = leg.marketCargoKgPerDay * share * boost.cargo
+        let cargoPerDay = leg.marketCargoKgPerDay * share / max(0.01, fareFactor(route: route, leg: leg)) * boost.cargo
         let patience = 1.0 / (1.0 + Tuning.waitingDecayPerDay * elapsedDays)
         leg.waitingPax = min(2.0 * paxPerDay + 4.0, leg.waitingPax * patience + paxPerDay * elapsedDays)
         leg.waitingCargoKg = min(2.0 * cargoPerDay + 40.0, leg.waitingCargoKg * patience + cargoPerDay * elapsedDays)

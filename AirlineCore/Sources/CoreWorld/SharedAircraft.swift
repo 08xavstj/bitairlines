@@ -41,7 +41,7 @@ extension World {
         guard let type = plane.type else { return .unknownType(plane.typeID) }
         guard plane.isDelivered else { return .notDelivered }
         if case .grounded = plane.status { return .aircraftBusy }
-        if plane.jobID != nil { return .aircraftBusy }
+        if plane.jobID != nil || plane.awaitingRestoration { return .aircraftBusy }
         guard plane.routeID != nil else { return .invalidChoice }
         let flown = plane.allRouteIDs
         if flown.contains(routeID) { return .invalidChoice }
