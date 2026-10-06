@@ -147,7 +147,7 @@ struct AircraftSheet: View {
                         KitsCard(session: session, aircraftID: aircraftID)
                         SectionTitle("Route")
                         if plane.routeID != nil { SharedRoutesCard(session: session, plane: plane) }
-                        routePicker(plane: plane, type: type, world: world)
+                        AircraftRoutePicker(session: session, plane: plane, type: type)
                         SectionTitle("Paint")
                         Card {
                             VStack(alignment: .leading, spacing: 8) {
@@ -196,43 +196,6 @@ struct AircraftSheet: View {
         if !plane.isDelivered { return "It can be sold once it has arrived." }
         if plane.routeID != nil { return "Take it off its route first, then it can be sold." }
         return nil
-    }
-
-    @ViewBuilder private func routePicker(plane: Aircraft, type: AircraftType, world: World) -> some View {
-        Card {
-            VStack(alignment: .leading, spacing: 8) {
-                if world.routes.isEmpty {
-                    Text("No routes yet. Plan one on the Map, then come back to assign this aircraft.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                if !plane.isDelivered {
-                    Text("It can fly a route once it has arrived.").pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
-                } else if plane.awaitingRestoration {
-                    Text("Restore it first (see Upkeep above). Then it can fly a route.").pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
-                }
-                ForEach(world.routes) { route in
-                    let problem = world.fitProblem(type: type, route: route, kits: plane.kits)
-                    let current = plane.routeID == route.id
-                    HStack(alignment: .top, spacing: 12) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(route.name).pixelFont(13.333).foregroundStyle(current ? Theme.accent : Theme.textPrimary)
-                                .fixedSize(horizontal: false, vertical: true)
-                            if let problem { Text(Messages.describe(problem)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true) }
-                            else if !current { AssignOutlook(world: world, route: route, type: type) }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        if current {
-                            Button { session.perform { try $0.unassign(aircraftID: aircraftID) } } label: { HangarButtonText("Take off route") }.buttonStyle(.small)
-                        } else {
-                            // Assigning moves the aircraft off every route it flies now, so the button says so when it has one.
-                            Button { session.perform { try $0.assign(aircraftID: aircraftID, toRoute: route.id) } } label: { HangarButtonText(plane.routeID == nil ? "Assign" : "Move here") }
-                                .buttonStyle(.smallProminent)
-                                .disabled(problem != nil || !plane.isDelivered || plane.awaitingRestoration)
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 

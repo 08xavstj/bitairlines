@@ -35,10 +35,10 @@ enum FerryGrid {
     }
 
     static let airports: [Airport] = AirportCatalog.all.sorted { $0.code < $1.code }
-    static let points: [Point] = airports.map { point($0) }
+    static let points: [Point] = FerryGrid.airports.map { FerryGrid.point($0) }
     static let index: [String: Int] = {
         var map: [String: Int] = [:]
-        for (k, airport) in airports.enumerated() { map[airport.code] = k }
+        for (k, airport) in FerryGrid.airports.enumerated() { map[airport.code] = k }
         return map
     }()
 

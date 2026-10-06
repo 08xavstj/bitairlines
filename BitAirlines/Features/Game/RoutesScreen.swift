@@ -36,6 +36,7 @@ struct RoutesScreen: View {
     let session: GameSession
     @State private var deleting: Int?
     @State private var selling: Int?
+    @State private var assigning: Int?
 
     var body: some View {
         let world = session.world
@@ -45,7 +46,7 @@ struct RoutesScreen: View {
             if world.routes.isEmpty {
                 Card { Text("No routes yet. Open one of the suggested routes above, or go to the Map, tap New route and tap the airports in the order you want to fly them. Then assign an aircraft from Fleet.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true) }
             }
-            ForEach(world.routes) { route in RouteCard(session: session, route: route, onDelete: { deleting = route.id }, onSell: { selling = route.id }) }
+            ForEach(world.routes) { route in RouteCard(session: session, route: route, onDelete: { deleting = route.id }, onSell: { selling = route.id }, onAddAircraft: { assigning = route.id }) }
         }
         .pixelConfirm("Close this route?", message: "Its aircraft are parked. Money already earned is kept.", confirm: "Close route", destructive: true,
                       isPresented: Binding(get: { deleting != nil }, set: { if !$0 { deleting = nil } })) {
@@ -57,6 +58,11 @@ struct RoutesScreen: View {
             if let id = selling { session.perform(sound: .coin) { _ = try $0.sellRoute(routeID: id) } }
             selling = nil
         }
+        .sheet(item: Binding(get: { assigning.map { SheetID(id: $0) } }, set: { assigning = $0?.id })) { sheet in
+            RouteAssignSheet(session: session, routeID: sheet.id)
+        }
+        // A stopping issue is drawn under any sheet: close the sheet so the player sees it.
+        .onChange(of: session.world.isPausedByIssue) { _, now in if now { assigning = nil } }
     }
 }
 
@@ -65,6 +71,8 @@ struct RouteCard: View {
     let route: Route
     let onDelete: () -> Void
     var onSell: (() -> Void)? = nil
+    /// Opens the list of aircraft that can join this route (RouteAssignSheet.swift); nil hides the button.
+    var onAddAircraft: (() -> Void)? = nil
 
     var body: some View {
         let world = session.world
@@ -104,7 +112,7 @@ struct RouteCard: View {
                 RouteNotes(world: world, route: route)
 
                 if planes.isEmpty {
-                    Text("No aircraft yet. Assign one from Fleet.").pixelFont(10.667).foregroundStyle(Theme.bad)
+                    Text("No aircraft yet.").pixelFont(10.667).foregroundStyle(Theme.bad)
                 } else {
                     Text("Aircraft: " + planes.map { $0.registration }.joined(separator: ", ")).pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
                     if planes.count < needed {
@@ -113,6 +121,7 @@ struct RouteCard: View {
                         Text("About \(needed) aircraft are enough for this schedule. The rest sit idle.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                     }
                 }
+                if let onAddAircraft { Button("Add an aircraft") { onAddAircraft() }.buttonStyle(SmallButtonStyle(kind: planes.isEmpty ? .prominent : .plain)) }
                 RouteOutlook(world: world, route: route)
                 KeyValueRow("This month", Format.signedMoney(route.revenueThisMonth - route.costThisMonth), color: route.revenueThisMonth >= route.costThisMonth ? Theme.good : Theme.bad)
                 KeyValueRow("Last month", Format.signedMoney(route.revenueLastMonth - route.costLastMonth), color: route.revenueLastMonth >= route.costLastMonth ? Theme.good : Theme.bad)

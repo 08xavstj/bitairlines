@@ -148,13 +148,9 @@ extension World {
 
     /// Puts an aircraft on a route, and on this route only (it stops flying any other). If it is parked somewhere else it first flies there empty.
     public mutating func assign(aircraftID: Int, toRoute routeID: Int) throws {
-        guard let i = aircraftIndex(aircraftID) else { throw WorldError.unknownAircraft(aircraftID) }
-        guard let r = routeIndex(routeID) else { throw WorldError.unknownRoute(routeID) }
-        guard aircraft[i].isDelivered else { throw WorldError.notDelivered }
-        if case .grounded = aircraft[i].status { throw WorldError.aircraftBusy }
-        guard let type = aircraft[i].type else { throw WorldError.unknownType(aircraft[i].typeID) }
-        if aircraft[i].jobID != nil || aircraft[i].awaitingRestoration { throw WorldError.aircraftBusy }
-        if let problem = fitProblem(type: type, route: routes[r], kits: aircraft[i].kits) { throw problem }
+        // The same checks the app shows before the player taps (PlaneChoices.swift), including whether it can get there empty.
+        if let problem = assignProblem(aircraftID: aircraftID, routeID: routeID) { throw problem }
+        guard let i = aircraftIndex(aircraftID), let r = routeIndex(routeID), let type = aircraft[i].type else { throw WorldError.unknownAircraft(aircraftID) }
 
         let before = aircraft[i].allRouteIDs
         detachFromAllRoutes(i)
@@ -172,7 +168,8 @@ extension World {
             if let leg = routes[r].firstLeg(from: aircraft[i].location) {
                 aircraft[i].legIndex = leg
                 aircraft[i].status = .boarding(until: clock.minute)
-            } else if !startFerry(index: i, to: routes[r].stops[0]) {
+            } else if !startFerry(index: i, toAny: routes[r].stops) {
+                // Not expected (assignProblem checked the way there), but never leave it on a route it cannot reach.
                 aircraft[i].routeID = nil
                 routes[r].aircraftIDs.removeAll { $0 == aircraftID }
                 throw WorldError.outOfRange(km: 0)

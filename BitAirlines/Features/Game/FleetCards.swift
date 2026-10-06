@@ -56,7 +56,10 @@ struct SharedRoutesCard: View {
     var body: some View {
         let world = session.world
         let others = plane.otherRouteIDs.compactMap { id in world.routes.first { $0.id == id } }
-        let candidates = world.routesToShare(aircraftID: plane.id)
+        // Routes that meet its own: those it can also fly first, then (greyed, no button) those it cannot, with the reason.
+        let options = world.routesToShare(aircraftID: plane.id).map { RouteOption(route: $0, problem: world.addRouteProblem(aircraftID: plane.id, routeID: $0.id)) }
+        let candidates = options.filter { $0.problem == nil }
+        let blocked = options.filter { $0.problem != nil }
         Card {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Flies: \(FleetText.routeNames(plane, in: world).joined(separator: ", "))").pixelFont(13.333).foregroundStyle(Theme.accent)
@@ -72,12 +75,19 @@ struct SharedRoutesCard: View {
                 }
                 if !candidates.isEmpty && plane.allRouteIDs.count < World.maxRoutesPerAircraft {
                     Text("It could also fly:").pixelFont(10.667).foregroundStyle(Theme.textMuted)
-                    ForEach(candidates) { route in
+                    ForEach(candidates) { option in
                         HStack(alignment: .top, spacing: 12) {
-                            Text(route.name).pixelFont(10.667).foregroundStyle(Theme.textPrimary)
+                            Text(option.route.name).pixelFont(10.667).foregroundStyle(Theme.textPrimary)
                                 .fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity, alignment: .leading)
-                            Button { session.perform { try $0.addRoute(aircraftID: plane.id, routeID: route.id) } } label: { HangarButtonText("Also fly") }.buttonStyle(.smallProminent)
+                            Button { session.perform { try $0.addRoute(aircraftID: plane.id, routeID: option.route.id) } } label: { HangarButtonText("Also fly") }.buttonStyle(.smallProminent)
                         }
+                    }
+                }
+                if !blocked.isEmpty && plane.allRouteIDs.count < World.maxRoutesPerAircraft {
+                    ForEach(blocked) { option in
+                        Text(option.route.name + ": cannot share it, " + PlaneChoiceWords.reason(option.problem ?? .invalidChoice))
+                            .pixelFont(10.667).foregroundStyle(Theme.textMuted).opacity(0.6)
+                            .fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             }

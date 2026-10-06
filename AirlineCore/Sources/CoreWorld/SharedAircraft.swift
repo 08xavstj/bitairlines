@@ -109,6 +109,7 @@ extension World {
         }
         aircraft[i].routeID = nil
         aircraft[i].otherRouteIDs = []
+        aircraft[i].ferryTargetStore = nil
     }
 
     /// Takes the aircraft off one route. If it was the current route, the next of its other routes becomes current.

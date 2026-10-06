@@ -18,13 +18,15 @@ struct MapStillLayer: View, Equatable {
     let marked: Set<String>
     /// The stops of the route being planned, or empty.
     let plan: [String]
+    /// A leg of the plan none of the player's aircraft can fly (index into `plan`), drawn in the warning colour.
+    var planBlocked: Int? = nil
     let blocked: [CGRect]
     let cache: MapCache
     @Environment(\.displayScale) private var displayScale
 
     nonisolated static func == (a: MapStillLayer, b: MapStillLayer) -> Bool {
         a.camera == b.camera && a.legs == b.legs && a.routePalette == b.routePalette && a.home == b.home
-            && a.important == b.important && a.marked == b.marked && a.plan == b.plan && a.blocked == b.blocked
+            && a.important == b.important && a.marked == b.marked && a.plan == b.plan && a.planBlocked == b.planBlocked && a.blocked == b.blocked
     }
 
     var body: some View {
@@ -33,7 +35,7 @@ struct MapStillLayer: View, Equatable {
             let projection = MapProjection(camera: camera, size: size)
             MapRenderer.drawTerrain(&context, image: cache.terrain(projection: projection, scale: displayScale), size: size)
             MapRenderer.drawRoutes(&context, legs: legs, colour: Livery.color(routePalette), projection: projection)
-            if plan.count >= 2 { MapRenderer.drawPlan(&context, stops: plan, projection: projection) }
+            if plan.count >= 2 { MapRenderer.drawPlan(&context, stops: plan, blockedLeg: planBlocked, projection: projection) }
             let layout = cache.airports(projection: projection, important: important, selected: marked, blocked: blocked)
             MapRenderer.drawAirports(&context, layout: layout, home: home, projection: projection)
         }

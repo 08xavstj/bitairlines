@@ -6,11 +6,15 @@ import CoreWorld
 struct JobsScreen: View {
     let session: GameSession
     @State private var picking: Int?
+    /// Show only the jobs one of the player's aircraft can fly now.
+    @State private var onlyFlyable = true
 
     var body: some View {
         let world = session.world
         let open = world.ops.jobs.filter { !$0.isTaken }
         let taken = world.ops.jobs.filter { $0.isTaken }
+        let choices = PlaneChoiceCache.shared.jobChoices(world: world)
+        let shown = onlyFlyable ? open.filter { job in choices[job.id]?.contains(where: \.canDo) ?? false } : open
         Page {
             ScreenHeader(title: "Jobs") { Text("\(open.count) on offer").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
             if !world.ops.events.isEmpty || !world.ops.offers.isEmpty { EventsCard(session: session) }
@@ -27,14 +31,31 @@ struct JobsScreen: View {
                 }
             }
             SectionTitle("On offer")
-            if open.isEmpty { EmptyNote("No jobs right now. New ones turn up every day near the airports you fly to.") }
+            Toggle(isOn: $onlyFlyable) {
+                Text("Jobs I can fly").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+            }.toggleStyle(PixelToggleStyle())
+            if open.isEmpty {
+                EmptyNote("No jobs right now. New ones turn up every day near the airports you fly to.")
+            } else if shown.count < open.count {
+                EmptyNote(shown.isEmpty ? "None of your aircraft can fly the jobs on offer right now. Turn off Jobs I can fly to see them and why."
+                                        : "\(open.count - shown.count) more on offer that none of your aircraft can fly now. Turn off Jobs I can fly to see them.")
+            }
             RewardButton(session: session, kind: .newJobs)
-            ForEach(open) { job in
+            ForEach(shown) { job in
+                let flyers = PlaneChoiceWords.jobFlyers(choices[job.id] ?? [], job: job, in: world)
                 JobCard(world: world, job: job) {
-                    Button("Fly it") { picking = job.id }
-                        .buttonStyle(.smallProminent)
-                        .accessibilityHint("Choose the aircraft that flies this job.")
+                    if flyers.good {
+                        Button("Fly it") { picking = job.id }
+                            .buttonStyle(.smallProminent)
+                            .accessibilityHint("Choose the aircraft that flies this job.")
+                    } else {
+                        Button("Why not") { picking = job.id }
+                            .buttonStyle(.small)
+                            .accessibilityHint("Shows each aircraft and why it cannot fly this job.")
+                    }
                 } footer: {
+                    Text(flyers.text).pixelFont(10.667).foregroundStyle(flyers.good ? Theme.good : Theme.bad)
+                        .fixedSize(horizontal: false, vertical: true)
                     RewardButton(session: session, kind: .doubleJobPay, target: job.id)
                 }
             }
@@ -110,56 +131,6 @@ extension JobCard where Footer == EmptyView {
     /// A job card with no footer row.
     init(world: World, job: Job, @ViewBuilder trailing: () -> Trailing) {
         self.init(world: world, job: job, trailing: trailing, footer: { EmptyView() })
-    }
-}
-
-/// Choosing which aircraft flies a job.
-struct JobAssignSheet: View {
-    let session: GameSession
-    let jobID: Int
-    @Environment(\.dismiss) private var dismiss
-
-    var body: some View {
-        let world = session.world
-        VStack(alignment: .leading, spacing: 10) {
-            ScreenHeader(title: "Who flies it?") { Button("Close") { dismiss() }.buttonStyle(.small) }
-            if let job = world.ops.jobs.first(where: { $0.id == jobID }) {
-                JobCard(world: world, job: job) { EmptyView() }
-                if world.aircraft.isEmpty {
-                    EmptyNote("You have no aircraft yet. Buy one in the Hangar, then come back to fly this job.")
-                }
-                ScrollView {
-                    VStack(spacing: 8) {
-                        ForEach(world.aircraft) { plane in
-                            let problem = world.jobProblem(jobID: jobID, aircraftID: plane.id)
-                            HStack(alignment: .top, spacing: 12) {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("\(plane.registration)  \(plane.type?.name ?? "")")
-                                        .pixelFont(13.333).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
-                                    if let problem {
-                                        Text(Messages.describe(problem)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
-                                    } else {
-                                        Text(plane.routeID == nil ? "Parked at \(Place.name(plane.location))" : "Leaves \(FleetText.routeName(plane, in: world)) until the job is done")
-                                            .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
-                                    }
-                                }
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                Button("Fly this job") {
-                                    if session.perform({ try $0.takeJob(jobID: jobID, aircraftID: plane.id) }) { dismiss() }
-                                }
-                                .buttonStyle(.smallProminent).disabled(problem != nil)
-                            }
-                            .padding(12).background(PixelPanel())
-                        }
-                    }
-                }
-            } else {
-                EmptyNote("That job has gone.")
-            }
-            Spacer(minLength: 0)
-        }
-        .padding(16)
-        .screenBackground()
     }
 }
 

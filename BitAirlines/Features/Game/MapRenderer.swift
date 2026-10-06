@@ -134,7 +134,8 @@ enum MapRenderer {
     }
 
     /// The route being planned: a dashed line through the chosen stops, closed back to the first when there are more than two.
-    static func drawPlan(_ context: inout GraphicsContext, stops: [String], projection p: MapProjection) {
+    /// `blockedLeg` (a leg none of the player's aircraft can fly: stops[i] to the next stop) is drawn solid in the warning colour.
+    static func drawPlan(_ context: inout GraphicsContext, stops: [String], blockedLeg: Int? = nil, projection p: MapProjection) {
         var path = Path()
         for (i, code) in stops.enumerated() {
             guard let a = AirportCatalog.airport(code) else { continue }
@@ -142,6 +143,12 @@ enum MapRenderer {
         }
         if stops.count > 2, let first = AirportCatalog.airport(stops[0]) { path.addLine(to: p.point(for: first)) }
         context.stroke(path, with: .color(Theme.accent), style: StrokeStyle(lineWidth: 3, dash: [2, 4]))
+        if let l = blockedLeg, l < stops.count, let a = AirportCatalog.airport(stops[l]), let b = AirportCatalog.airport(stops[(l + 1) % stops.count]) {
+            var leg = Path()
+            leg.move(to: p.point(for: a))
+            leg.addLine(to: p.point(for: b))
+            context.stroke(leg, with: .color(Theme.bad), style: StrokeStyle(lineWidth: 3, lineCap: .butt))
+        }
     }
 
     /// Whether an airport earns a name label at this zoom (more labels as the map zooms in).

@@ -23,11 +23,8 @@ extension World {
         if !canUse(cap, at: to, month: month) { return .aircraftCannotUse(airport: to.code) }
         let km = from.distanceKm(to: to)
         if !type.canFly(km: km) { return .outOfRange(km: Int(km)) }
-        let start = plane.flight?.to ?? plane.location
-        if start != from.code, let here = AirportCatalog.airport(start) {
-            let ferry = here.distanceKm(to: from)
-            if !type.canFly(km: ferry) { return .outOfRange(km: Int(ferry)) }
-        }
+        // Getting to the pickup may take stops on the way (FerryPlan.swift); it fails only when no chain of stops reaches it.
+        if let problem = positioningProblem(aircraftIndex: i, toAny: [from.code]) { return problem }
         return nil
     }
 
@@ -73,6 +70,7 @@ extension World {
         }
         let job = ops.jobs[j]
         if aircraft[i].location != job.from {
+            // Fly empty towards the pickup, one hop at a time: on landing at a stop on the way this runs again.
             if !startFerry(index: i, to: job.from) {
                 ops.jobs[j].aircraftID = nil
                 endJob(aircraftIndex: i)
@@ -155,6 +153,7 @@ extension World {
     /// The aircraft is free again: back to its old route if it had one.
     mutating func endJob(aircraftIndex i: Int) {
         aircraft[i].jobID = nil
+        aircraft[i].ferryTargetStore = nil
         let back = aircraft[i].returnRouteID
         aircraft[i].returnRouteID = nil
         // An aircraft still in the air rejoins its route when it lands (assign leaves a flying aircraft to finish its flight).

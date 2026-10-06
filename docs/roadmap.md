@@ -25,7 +25,8 @@ Status in October 2026. "Tested" means a test runs in CI; "written" means the co
 | Bases | Fuel depot, hangar, runway lights, longer runway, paving and hub terminal at any airport served. Home apron scene with a departures board. Tested (scene not yet seen on a phone). |
 | Kits | Floats, amphibious floats, wheel-skis, gravel kit, STOL kit, freighter conversion. Lakes freeze in winter; skis land on the ice. Tested. |
 | Daylight | Unlit strips are open only in daylight plus twilight, so polar winter cuts the schedule until lights are built. Tested. |
-| Job board | Medevac, mail, fuel drums, crew changes, lodge charters, surveys and freight near the network, with deadlines; the aircraft returns to its route after. Tested. |
+| Job board | Medevac, mail, fuel drums, crew changes, lodge charters, surveys and freight near the network, with deadlines; the aircraft returns to its route after. Each job says which of your aircraft can fly it (or why none can), with a "Jobs I can fly" filter on by default. Tested. |
+| Positioning flights | An empty aircraft that cannot reach a route or a job pickup in one go flies there through stops it can use (fuel stops in Realism), planned by a shortest-path search over the map airports. Picking an aircraft for a job or a route lists the ones that can do it first, with the empty flight each needs, and greys the rest with the reason. The route planner marks a leg none of your aircraft can fly and offers a stop in between. Tested in Core; app not yet seen on a phone. |
 | Events | Forest fire evacuations, early thaw, volcanic ash, film crew, winter games (with a sponsorship offer), oil shock, mining boom. Tested. |
 | Hubs | Passengers change planes at a hub terminal between the airline's routes. Tested. |
 | Slots | Busy airports (certificate level 3 and up) ration daily departures; slots are bought and sold. Tested. |

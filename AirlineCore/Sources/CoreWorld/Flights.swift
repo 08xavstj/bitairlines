@@ -65,6 +65,12 @@ extension World {
             departOnJob(i, jobID: jobID)
             return
         }
+        // An aircraft with no route and no job on its way somewhere through stops flies the next hop.
+        if aircraft[i].routeID == nil, let target = aircraft[i].ferryTargetStore {
+            aircraft[i].ferryTargetStore = nil
+            if target == aircraft[i].location || !startFerry(index: i, to: target) { aircraft[i].status = .idle }
+            return
+        }
         // A shared aircraft takes whichever of its routes leaves from here first.
         pickSharedRoute(i)
         guard let rid = aircraft[i].routeID, let r = routeIndex(rid), let type = aircraft[i].type else {
@@ -73,7 +79,8 @@ extension World {
         }
         let route = routes[r]
         guard let l = route.firstLeg(from: aircraft[i].location) else {
-            if !startFerry(index: i, to: route.stops[0]) {
+            // Not at a stop of this route: fly empty towards it, one hop at a time (this runs again at every stop on the way).
+            if !startFerry(index: i, toAny: route.stops) {
                 // It cannot reach this route: drop it (another of its routes takes over, or it parks).
                 aircraft[i].status = .idle
                 detach(i, fromRoute: rid)
@@ -169,11 +176,20 @@ extension World {
         aircraft[i].status = .flying(until: clock.minute + blockMinutes)
     }
 
-    /// Flies the aircraft empty to an airport (to reach a route or a job that starts elsewhere). False if it cannot get there.
+    /// Flies the aircraft empty towards an airport (to reach a route or a job that starts elsewhere). False if it cannot get there.
+    /// When it needs stops on the way (FerryPlan.swift) this flies the first hop only; on landing the route or job sends it on,
+    /// and an aircraft with neither keeps the destination in `ferryTargetStore`.
     @discardableResult
     mutating func startFerry(index i: Int, to code: String) -> Bool {
-        guard let type = aircraft[i].type, let from = AirportCatalog.airport(aircraft[i].location), let to = AirportCatalog.airport(code),
-              canUse(type: type, kits: aircraft[i].kits, at: to) else { return false }
+        startFerry(index: i, toAny: [code])
+    }
+
+    /// The same, to whichever of `goals` the planner reaches first (a direct flight to the earliest listed goal wins).
+    @discardableResult
+    mutating func startFerry(index i: Int, toAny goals: [String]) -> Bool {
+        guard let type = aircraft[i].type, let from = AirportCatalog.airport(aircraft[i].location),
+              let plan = ferryPlan(aircraftIndex: i, from: from.code, toAny: goals),
+              let next = plan.hops.first, let to = AirportCatalog.airport(next) else { return false }
         let km = from.distanceKm(to: to)
         guard type.canFly(km: km) else { return false }
         let cost = legCost(type: type, aircraftIndex: i, from: from, to: to, km: km)
@@ -181,6 +197,8 @@ extension World {
         aircraft[i].flight = Flight(from: from.code, to: to.code, departedMinute: clock.minute, distanceKm: km, passengers: 0, cargoKg: 0, revenue: 0,
                                     cost: Int(cost.rounded()), isFerry: true)
         aircraft[i].status = .flying(until: clock.minute + minutes)
+        let free = aircraft[i].routeID == nil && aircraft[i].jobID == nil
+        aircraft[i].ferryTargetStore = free && plan.hops.count > 1 ? plan.destination : nil
         return true
     }
 
@@ -235,7 +253,11 @@ extension World {
             routes[r].book.add(RouteDay(flightCost: flight.cost))
         }
 
-        if aircraft[i].routeID == nil && aircraft[i].jobID == nil {
+        // An aircraft with no route and no job still on its way somewhere through stops goes on (depart() flies the next hop).
+        let target = aircraft[i].ferryTargetStore
+        let ferryOnward = target != nil && target != aircraft[i].location
+        if aircraft[i].routeID == nil && aircraft[i].jobID == nil && !ferryOnward {
+            aircraft[i].ferryTargetStore = nil
             aircraft[i].status = .idle
         } else {
             let engine = aircraft[i].type?.engine ?? .turboprop

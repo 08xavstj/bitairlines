@@ -14,6 +14,8 @@ struct MapScreen: View {
     @State private var planning = false
     @State private var stops: [String] = []
     @State private var building: String?
+    /// What the player's own aircraft make of the route being planned (RoutePlanCheck.swift), worked out when the stops change.
+    @State private var planCheck: PlannerCheck?
     /// Terrain picture and airport layout, kept between frames.
     @State private var cache = MapCache()
     /// Frames of the buttons and panels over the map (no airport name goes under them).
@@ -42,7 +44,8 @@ struct MapScreen: View {
                 ZStack {
                     // Still while the clock runs: redrawn only when the camera, network, selection or plan changes.
                     MapStillLayer(camera: camera, legs: legs, routePalette: world.airline.branding.primary, home: world.airline.home,
-                                  important: important, marked: marked, plan: planning ? stops : [], blocked: covered, cache: cache)
+                                  important: important, marked: marked, plan: planning ? stops : [], planBlocked: planning ? planCheck?.blockedLeg : nil,
+                                  blocked: covered, cache: cache)
                         .equatable()
                     // Redrawn every tick: only the aircraft.
                     Canvas { context, size in
@@ -66,7 +69,7 @@ struct MapScreen: View {
                     Spacer()
                     HStack(alignment: .bottom, spacing: 8) {
                         if planning {
-                            RoutePlannerPanel(session: session, stops: $stops, onClose: { planning = false; stops = [] })
+                            RoutePlannerPanel(session: session, stops: $stops, check: planCheck, onClose: { planning = false; stops = [] })
                                 .coversMap()
                         } else if let code = selected, let airport = AirportCatalog.airport(code) {
                             AirportPanel(world: world, airport: airport, onPlan: { startPlan(from: code) }, onBuild: { building = code }, onClose: { selected = nil }, session: session)
@@ -87,6 +90,7 @@ struct MapScreen: View {
         }
         // A stopping issue is drawn over the game, under any sheet: close the sheet so the player sees it.
         .onChange(of: session.world.isPausedByIssue) { _, now in if now { building = nil } }
+        .onChange(of: planKey, initial: true) { _, _ in planCheck = stops.count >= 2 ? session.world.plannerCheck(stops: stops) : nil }
     }
 
     // MARK: Toolbar
@@ -102,6 +106,11 @@ struct MapScreen: View {
             }.buttonStyle(planning ? AnyButtonStyle(SmallButtonStyle(kind: .danger)) : AnyButtonStyle(SmallButtonStyle(kind: .prominent)))
         }
         .coversMap()
+    }
+
+    /// What the planner check depends on: the stops and the fleet (aircraft and their kits).
+    private var planKey: String {
+        stops.joined(separator: ",") + "|" + session.world.aircraft.map { "\($0.typeID)/\($0.kits.count)" }.joined(separator: ",")
     }
 
     /// Airports always shown and named: every stop on a route, and home.
@@ -216,6 +225,7 @@ struct AirportPanel: View {
 struct RoutePlannerPanel: View {
     let session: GameSession
     @Binding var stops: [String]
+    var check: PlannerCheck? = nil
     let onClose: () -> Void
 
     var body: some View {
@@ -240,6 +250,7 @@ struct RoutePlannerPanel: View {
                         Button("Buy permit \(Format.compactMoney(price))") { session.perform(sound: .coin) { try $0.buyPermit(country: country) } }.buttonStyle(.small)
                     }
                 }
+                if stops.count >= 2, let check { PlannerFleetNote(world: world, stops: $stops, check: check) }
                 if stops.count >= 2, problem == nil { ForecastList(session: session, stops: stops) }
                 if let notice = session.notice { Text(notice).pixelFont(10.667).foregroundStyle(Theme.gold) }
                 HStack(spacing: 8) {
