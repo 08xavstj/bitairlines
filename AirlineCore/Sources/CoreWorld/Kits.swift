@@ -107,7 +107,7 @@ extension World {
         leaveRouteIfItNoLongerFits(i)
     }
 
-    /// Takes a kit off again (free, one day in the hangar).
+    /// Takes a kit off again (free, one day in the hangar). Not while the aircraft is on a job: the job may need the kit.
     public mutating func remove(_ kit: Kit, aircraftID: Int) throws {
         guard let i = aircraftIndex(aircraftID) else { throw WorldError.unknownAircraft(aircraftID) }
         guard aircraft[i].kits.contains(kit) else { throw WorldError.invalidChoice }
@@ -115,6 +115,7 @@ extension World {
         case .flying, .onOrder, .grounded, .maintenance: throw WorldError.aircraftBusy
         case .idle, .boarding: break
         }
+        if aircraft[i].jobID != nil { throw WorldError.aircraftBusy }
         aircraft[i].kits = aircraft[i].kits.filter { $0 != kit }
         aircraft[i].status = .maintenance(until: clock.minute + GameClock.minutesPerDay)
         leaveRouteIfItNoLongerFits(i)

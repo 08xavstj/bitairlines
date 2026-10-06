@@ -358,6 +358,29 @@ struct IssueOptions: View {
         }
     }
 
+    /// On the 'you qualify' notice: buy the certificate here, or see what is missing. The notice's own choice only closes it.
+    @ViewBuilder private var certificateButton: some View {
+        let world = session.world
+        if let next = world.nextLevelRequirement {
+            Button {
+                session.perform(sound: .coin) { try $0.upgradeCertificate() }
+            } label: {
+                HStack {
+                    Text("Buy level \(next.level)")
+                    Spacer()
+                    Text(Format.dollars(next.fee))
+                }
+                .padding(.horizontal, 14)
+            }
+            .buttonStyle(PrimaryButtonStyle())
+            .disabled(!world.canUpgradeCertificate)
+            if !world.canUpgradeCertificate && world.airline.cash < next.fee {
+                Text("You need \(Format.dollars(next.fee - max(0, world.airline.cash))) more to buy it.")
+                    .pixelFont(10.667).foregroundStyle(Theme.gold).frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+    }
+
     /// The optional ad for this issue: the mechanic flies in free, or a sponsor helps with the overdraft.
     private var rewardKind: RewardKind? {
         switch issue.kind {

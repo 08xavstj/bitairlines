@@ -26,50 +26,6 @@ public struct FerryPlan: Sendable, Hashable {
     public var destination: String? { hops.last }
 }
 
-/// The map airports as points on a unit sphere, worked out once, in code order (so ties always break the same way).
-enum FerryGrid {
-    struct Point: Sendable {
-        let x: Double
-        let y: Double
-        let z: Double
-    }
-
-    static let airports: [Airport] = AirportCatalog.all.sorted { $0.code < $1.code }
-    static let points: [Point] = FerryGrid.airports.map { FerryGrid.point($0) }
-    static let index: [String: Int] = {
-        var map: [String: Int] = [:]
-        for (k, airport) in FerryGrid.airports.enumerated() { map[airport.code] = k }
-        return map
-    }()
-
-    static func point(_ a: Airport) -> Point {
-        let rad = 3.141592653589793 / 180.0
-        let lat = a.latitude * rad
-        let lon = a.longitude * rad
-        let c = GeoMath.cosine(lat)
-        return Point(x: c * GeoMath.cosine(lon), y: c * GeoMath.sine(lon), z: GeoMath.sine(lat))
-    }
-
-    /// Squared straight-line (chord) distance between two points on the unit sphere.
-    static func chord2(_ a: Point, _ b: Point) -> Double {
-        let dx = a.x - b.x
-        let dy = a.y - b.y
-        let dz = a.z - b.z
-        return dx * dx + dy * dy + dz * dz
-    }
-
-    /// Great-circle km for a chord. Short chords use the series 2 asin(c/2) = c + c^3/24 + 3c^5/640 + 5c^7/7168 (within metres),
-    /// long ones the exact arc sine. Never less than the chord itself, so the straight-line estimate stays a lower bound.
-    static func km(chord2 c2: Double) -> Double {
-        let c = c2.squareRoot()
-        if c <= 0.6 {
-            let c3 = c * c2
-            return GeoMath.earthRadiusKm * (c + c3 / 24.0 + 3.0 * c3 * c2 / 640.0 + 5.0 * c3 * c2 * c2 / 7168.0)
-        }
-        return GeoMath.earthRadiusKm * 2.0 * GeoMath.arcSine(c / 2.0)
-    }
-}
-
 extension World {
     /// Where the aircraft will next be on the ground: where it is landing if it is in the air, else where it is.
     public func nextGround(of plane: Aircraft) -> String { plane.flight?.to ?? plane.location }

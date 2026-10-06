@@ -37,6 +37,7 @@ struct KitsCard: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             if fitted {
                                 Button { session.perform { try $0.remove(kit, aircraftID: plane.id) } } label: { HangarButtonText("Remove") }.buttonStyle(.small)
+                                    .disabled(!kitsOnGround(plane))
                             } else {
                                 Button { session.perform(sound: .coin) { try $0.fit(kit, aircraftID: plane.id) } } label: { HangarButtonText("Fit") }.buttonStyle(.smallProminent)
                                     .disabled(problem != nil)

@@ -60,6 +60,17 @@ enum Messages {
         }
     }
 
+    /// The words on one choice of an issue, where they depend on the issue: putting the overdraft aside, the size of the
+    /// emergency loan, closing the 'you qualify' notice.
+    static func name(_ option: IssueOption, of issue: Issue, in world: World) -> String {
+        switch (issue.kind, option.choice) {
+        case (.overdraft, .acknowledge): return "Keep flying, I will sort it out"
+        case (.overdraft, .emergencyLoan): return "Emergency loan of \(Format.compactMoney(world.emergencyLoanOffer)) at \(Int((Tuning.emergencyLoanRate * 100).rounded()))%"
+        case (.certificateReady, .acknowledge): return "Later"
+        default: return name(option.choice)
+        }
+    }
+
     static func title(_ issue: Issue, in world: World) -> String {
         switch issue.kind {
         case .breakdown(let id): return "\(world.aircraft.first { $0.id == id }?.registration ?? "An aircraft") is broken down"
@@ -74,8 +85,12 @@ enum Messages {
     static func detail(_ issue: Issue, in world: World) -> String {
         switch issue.kind {
         case .breakdown: return "It cannot fly until it is repaired. A faster repair costs more."
-        case .overdraft: return "Cash is below zero. Take a loan, sell something, or fly more profitable routes. Too many days like this ends the game."
-        case .certificateReady: return "Open Money to buy the new certificate. It unlocks bigger aircraft and busier airports."
+        case .overdraft:
+            let limit = Format.compactMoney(Tuning.overdraftLimit)
+            let left = world.overdraftDaysLeft ?? Tuning.daysOverdrawnBeforeBankruptcy
+            let days = "\(left) day\(left == 1 ? "" : "s")"
+            return "Cash is past the \(limit) overdraft. \(days) left before the bank closes the airline. Sell an aircraft or a route, borrow on the Money screen, or stop routes that lose money. The notice comes back when time is short."
+        case .certificateReady: return "Buy the new certificate here or on the Money screen. It unlocks bigger aircraft and busier airports."
         case .delivery: return "Put it on a route from the Fleet screen."
         case .weather(_, let until): return "Flights wait until it reopens. It should clear by \(Format.date(GameClock(minute: until).date))."
         case .bankruptcy: return "The creditors have taken everything."
