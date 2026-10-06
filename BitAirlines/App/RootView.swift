@@ -7,9 +7,10 @@ enum AppScreen { case title, newGame, game }
 struct RootView: View {
     @Environment(AppSettings.self) private var settings
     @Environment(\.audio) private var audio
+    @Environment(\.scenePhase) private var scenePhase
     @State private var screen: AppScreen = .title
     @State private var session: GameSession?
-    @State private var store = SaveStore()
+    @State private var store = SaveStore(cloud: CloudSaves())
     @State private var firstSection: GameSection = .map
     @State private var firstStep = 0
     @State private var firstScenario: ScenarioID?
@@ -31,6 +32,12 @@ struct RootView: View {
         }
         .background(Theme.background.ignoresSafeArea())
         .onChange(of: screen, initial: true) { _, now in audio?.setMusic(now == .game ? .flying : .title) }
+        // iOS may close a game in the background without warning, so save the moment the player leaves the app.
+        .onChange(of: scenePhase) { _, phase in if phase == .background { session?.save(toCloud: true) } }
+        .onAppear {
+            store.cloud?.enabled = { [settings] in settings.iCloudSaves }
+            GameCenter.shared.signIn()
+        }
         #if DEBUG
         .task { launchDemo() }
         #endif

@@ -64,18 +64,18 @@ import CoreSim
         let a = LegEconomics.cost(type: tw, from: yev, to: yzf, distanceKm: yev.distanceKm(to: yzf))
         #expect(close(a.blockHours, 3.5284, tolerance: 1e-4))
         #expect(close(a.fuel, 1125.5685))
-        #expect(close(a.crew, 776.2541))
+        #expect(close(a.crew, 564.5485))
         #expect(close(a.maintenance, 987.9598))
         #expect(close(a.landing, 45.36))
         #expect(close(a.navigation, 329.7388))
-        #expect(close(a.total, 3264.8813))
+        #expect(close(a.total, 3053.1756))
 
         let b = LegEconomics.cost(type: cv, from: yev, to: yub, distanceKm: yev.distanceKm(to: yub))
-        #expect(close(b.total, 430.8092))
+        #expect(close(b.total, 410.6140))
         #expect(b.landing == 40)
 
         let c = LegEconomics.cost(type: b738, from: yzf, to: yeg, distanceKm: yzf.distanceKm(to: yeg))
-        #expect(close(c.total, 9626.4493))
+        #expect(close(c.total, 9526.6618))
         #expect(close(c.landing, 1106))
     }
 

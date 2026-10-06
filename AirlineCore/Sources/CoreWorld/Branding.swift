@@ -6,7 +6,9 @@ public enum LiveryStyle: String, Sendable, Hashable, Codable, CaseIterable {
 }
 
 public struct Branding: Sendable, Hashable, Codable {
-    public static let logoSize = 16
+    public static let logoSize = 24
+    /// Logos from before the bigger canvas were 16 x 16; they load centred on the new one.
+    static let oldLogoSize = 16
 
     /// Palette indexes (1...31, see PixelPalette). Primary is the fuselage or tail, secondary the stripe, accent the small details.
     public var primary: Int
@@ -28,11 +30,33 @@ public struct Branding: Sendable, Hashable, Codable {
 
     public static func blankLogo() -> [UInt8] { [UInt8](repeating: 0, count: logoSize * logoSize) }
 
-    /// A logo of exactly 256 valid pixels (shorter input is padded, longer is cut, bad indexes become transparent).
+    /// A logo of exactly logoSize x logoSize valid pixels (an old 16 x 16 logo is centred, other short input is padded, longer is
+    /// cut, bad indexes become transparent).
     static func fixed(_ logo: [UInt8]) -> [UInt8] {
+        if logo.count == oldLogoSize * oldLogoSize { return fixed(centred(logo)) }
         var out = Array(logo.prefix(logoSize * logoSize))
         while out.count < logoSize * logoSize { out.append(0) }
         return out.map { Int($0) < PixelPalette.count ? $0 : 0 }
+    }
+
+    /// An old 16 x 16 logo placed in the middle of the bigger canvas.
+    static func centred(_ old: [UInt8]) -> [UInt8] {
+        var out = blankLogo()
+        let offset = (logoSize - oldLogoSize) / 2
+        for y in 0..<oldLogoSize {
+            for x in 0..<oldLogoSize { out[(y + offset) * logoSize + x + offset] = old[y * oldLogoSize + x] }
+        }
+        return out
+    }
+
+    enum CodingKeys: String, CodingKey { case primary, secondary, accent, style, logo }
+
+    /// Decodes through the main initialiser, so a save from before the bigger canvas still loads.
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        self.init(primary: try c.decode(Int.self, forKey: .primary), secondary: try c.decode(Int.self, forKey: .secondary),
+                  accent: try c.decode(Int.self, forKey: .accent), style: try c.decode(LiveryStyle.self, forKey: .style),
+                  logo: try c.decode([UInt8].self, forKey: .logo))
     }
 
     public func logoPixel(x: Int, y: Int) -> Int {
@@ -54,7 +78,8 @@ public struct Branding: Sendable, Hashable, Codable {
             "................", "................", ".....aaaa.......", "....aaaaaa......", "...aaaaaaaa.....", "..aaaaaaaaaaa...", ".aaaaaaaaaaaaaa.", "..aaaaaaaaaaaa..",
             "...aaaaaaaaa....", "....aaaaaaa.....", ".....aaaaa......", "......aaa.......", "................", "................", "................", "................",
         ]
-        for (y, row) in rows.enumerated() { for (x, ch) in row.enumerated() where ch == "a" { b[y * logoSize + x] = UInt8(PixelPalette.sky) } }
+        let offset = (logoSize - oldLogoSize) / 2
+        for (y, row) in rows.enumerated() { for (x, ch) in row.enumerated() where ch == "a" { b[(y + offset) * logoSize + x + offset] = UInt8(PixelPalette.sky) } }
         return b
     }
 }

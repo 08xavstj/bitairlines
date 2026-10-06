@@ -46,6 +46,8 @@ final class AppSettings {
     var soundEffects: Bool { didSet { persist() } }
     var music: Bool { didSet { persist() } }
     var volume: VolumeLevel { didSet { persist() } }
+    /// Copy saves to iCloud so they follow the player to another device.
+    var iCloudSaves: Bool { didSet { persist() } }
 
     /// Called after any setting changes, so the audio engine can follow.
     @ObservationIgnored var onChange: (@MainActor () -> Void)?
@@ -59,6 +61,7 @@ final class AppSettings {
         soundEffects = defaults.object(forKey: "settings.soundEffects") as? Bool ?? true
         music = defaults.object(forKey: "settings.music") as? Bool ?? true
         volume = VolumeLevel(rawValue: defaults.object(forKey: "settings.volume") as? Int ?? VolumeLevel.medium.rawValue) ?? .medium
+        iCloudSaves = defaults.object(forKey: "settings.iCloudSaves") as? Bool ?? true
     }
 
     private func persist() {
@@ -68,6 +71,7 @@ final class AppSettings {
         defaults.set(soundEffects, forKey: "settings.soundEffects")
         defaults.set(music, forKey: "settings.music")
         defaults.set(volume.rawValue, forKey: "settings.volume")
+        defaults.set(iCloudSaves, forKey: "settings.iCloudSaves")
         onChange?()
     }
 

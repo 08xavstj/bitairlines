@@ -31,8 +31,8 @@ public enum Facility: String, Sendable, Hashable, Codable, CaseIterable {
     /// Upkeep per day at a small strip, in dollars.
     public var baseUpkeep: Int {
         switch self {
-        case .fuelDepot: 60
-        case .hangar: 150
+        case .fuelDepot: 30
+        case .hangar: 60
         case .lights: 25
         case .runwayExtension: 80
         case .paving: 100

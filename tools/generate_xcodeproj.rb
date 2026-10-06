@@ -17,6 +17,10 @@ DISPLAY_NAME = 'Bit Airlines'                      # working title
 BUNDLE_ID = 'ca.amaruq.bitairlines'                # change freely until the first App Store upload; permanent after that
 DEVELOPMENT_TEAM = 'AKLDHPSZ33'                    # personal team (Apple Development certificate); not a secret
 DEPLOYMENT_TARGET = '17.0'
+# iCloud saves and Game Center need a paid Apple Developer Program membership: a free personal team cannot sign them and the
+# build would fail to install. Turn this on once the team above is a paid one (or run with BIT_CLOUD=1).
+CLOUD_FEATURES = ENV['BIT_CLOUD'] == '1' || false
+ENTITLEMENTS = 'Support/BitAirlines.entitlements'
 CORE_PACKAGE = 'AirlineCore'
 
 FileUtils.rm_rf(PROJECT_PATH)
@@ -92,6 +96,7 @@ app.build_configurations.each do |config|
   s['SDKROOT'] = 'iphoneos'
   s['SUPPORTED_PLATFORMS'] = 'iphoneos iphonesimulator'
   s['SWIFT_ACTIVE_COMPILATION_CONDITIONS'] = '$(inherited) DEBUG' if config.name == 'Debug'
+  s['CODE_SIGN_ENTITLEMENTS'] = ENTITLEMENTS if CLOUD_FEATURES
 end
 tests.build_configurations.each do |config|
   s = config.build_settings

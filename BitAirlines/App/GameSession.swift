@@ -74,7 +74,7 @@ final class GameSession {
     func stop() {
         loop?.cancel()
         loop = nil
-        save()
+        save(toCloud: true)
     }
 
     func setSpeed(_ newSpeed: GameSpeed) { speed = newSpeed }
@@ -106,9 +106,11 @@ final class GameSession {
         }
     }
 
-    func save() {
-        do { try store.save(world, slot: slot) } catch { notice = "Could not save the game." }
+    /// `toCloud` also copies the save to iCloud now and sends Game Center scores (leaving, or the app going to the background).
+    func save(toCloud: Bool = false) {
+        do { try store.save(world, slot: slot, toCloud: toCloud) } catch { notice = "Could not save the game." }
         lastSave = Date()
+        GameCenter.shared.report(world, now: toCloud)
         if let state = world.ops.scenario, let medal = state.medal { ScenarioRecords.record(medal, for: state.id) }
     }
 

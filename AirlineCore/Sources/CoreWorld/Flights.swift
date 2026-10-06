@@ -205,7 +205,7 @@ extension World {
                 routes[r].costThisMonth += flight.cost
                 routes[r].legs[l].passengersCarried += flight.passengers
                 routes[r].legs[l].revenue += flight.revenue
-                routes[r].legs[l].maturity = min(1.0, routes[r].legs[l].maturity + 0.006)
+                routes[r].legs[l].maturity = min(1.0, routes[r].legs[l].maturity + Tuning.maturityPerFlight)
             }
             airline.reputation = min(100, airline.reputation + reputationGain(passengers: flight.passengers, seats: aircraft[i].seats, service: service))
         }

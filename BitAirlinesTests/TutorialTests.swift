@@ -16,20 +16,42 @@ import CoreWorld
 
     @Test func theStepsFollowWhatThePlayerDid() throws {
         var w = try newWorld()
-        #expect(Tutorial.step(world: w, speed: .paused, reviewed: false) == .openRoute)
+        #expect(Tutorial.step(world: w, speed: .paused, seen: []) == .openRoute)
 
         let route = try w.createRoute(stops: ["YEV", "YUB"])
-        #expect(Tutorial.step(world: w, speed: .paused, reviewed: false) == .assignAircraft)
+        #expect(Tutorial.step(world: w, speed: .paused, seen: []) == .assignAircraft)
 
         try w.assign(aircraftID: w.aircraft[0].id, toRoute: route)
-        #expect(Tutorial.step(world: w, speed: .paused, reviewed: false) == .startClock)
-        #expect(Tutorial.step(world: w, speed: .x4, reviewed: false) == .watch)
+        #expect(Tutorial.step(world: w, speed: .paused, seen: []) == .startClock)
+        #expect(Tutorial.step(world: w, speed: .x4, seen: []) == .watch)
 
         for _ in 0..<60 where w.airline.stats.flights < Tutorial.flightsToWatch { w.advance(byMinutes: 1440) }
         #expect(w.airline.stats.flights >= Tutorial.flightsToWatch)
-        #expect(Tutorial.step(world: w, speed: .x4, reviewed: false) == .review)
-        #expect(Tutorial.step(world: w, speed: .paused, reviewed: false) == .review, "pausing at the end does not send the player back")
-        #expect(Tutorial.step(world: w, speed: .x4, reviewed: true) == nil)
+        #expect(Tutorial.step(world: w, speed: .x4, seen: []) == .review)
+        #expect(Tutorial.step(world: w, speed: .paused, seen: []) == .review, "pausing at the end does not send the player back")
+        #expect(Tutorial.step(world: w, speed: .x4, seen: [.review]) == .money)
+        #expect(Tutorial.step(world: w, speed: .x4, seen: [.review, .money, .inbox]) == .hangar)
+        #expect(Tutorial.step(world: w, speed: .x4, seen: Set(TutorialStep.tour)) == nil)
+    }
+
+    @Test func buyingAndOpeningFinishTheirStepsWithoutNext() throws {
+        var w = try newWorld()
+        w.airline.cash = 30_000_000
+        let route = try w.createRoute(stops: ["YEV", "YUB"])
+        try w.assign(aircraftID: w.aircraft[0].id, toRoute: route)
+        for _ in 0..<60 where w.airline.stats.flights < Tutorial.flightsToWatch { w.advance(byMinutes: 1440) }
+        let read: Set<TutorialStep> = [.review, .money, .inbox]
+        #expect(Tutorial.step(world: w, speed: .x4, seen: read) == .hangar)
+        let listing = try #require(w.market.listings.first { (AircraftCatalog.type($0.typeID)?.level ?? 9) <= 1 })
+        try w.buyUsed(listingID: listing.id)
+        #expect(Tutorial.step(world: w, speed: .x4, seen: read) == .secondRoute)
+        _ = try w.createRoute(stops: ["YEV", "YSY"])
+        #expect(Tutorial.step(world: w, speed: .x4, seen: read) == .jobs)
+    }
+
+    @Test func everyTipHasAButtonToMoveOn() {
+        for step in TutorialStep.tour { #expect(step.needsNext || step.canPutOff, "\(step)") }
+        #expect(TutorialStep.tour.last == .level)
     }
 
     @Test func everyStepHasPlainWordsAndNoDashes() throws {
@@ -89,7 +111,7 @@ import CoreWorld
         #expect(!TutorialCoach(slot: 0, store: store).active)
     }
 
-    @Test func doneOnTheLastStepEndsTheGuide() throws {
+    @Test func goingThroughEveryTipEndsTheGuide() throws {
         let store = try scratchStore()
         store.setActive(true, slot: 2)
         var w = try newWorld()
@@ -99,7 +121,7 @@ import CoreWorld
         let coach = TutorialCoach(slot: 2, store: store)
         coach.update(world: w, speed: .x1)
         #expect(coach.step == .review)
-        coach.done()
+        for _ in TutorialStep.tour { coach.next(world: w, speed: .x1) }
         #expect(!coach.active && !store.isActive(slot: 2))
     }
 }

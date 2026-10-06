@@ -11,7 +11,7 @@ struct CoachStrip: View {
         if coach.active {
             // The guide follows the world: it looks at the step the world is on and tells the coach when that changes.
             // The stack is always there (even before the first step is known), so the change handler is installed.
-            let wanted = Tutorial.step(world: session.world, speed: session.speed, reviewed: false)
+            let wanted = Tutorial.step(world: session.world, speed: session.speed, seen: coach.seen)
             VStack(spacing: 0) { strip }
                 .onChange(of: wanted, initial: true) { _, _ in coach.update(world: session.world, speed: session.speed) }
                 .task { suggestion = Tutorial.suggestion(world: session.world) }
@@ -25,11 +25,12 @@ struct CoachStrip: View {
                 Text(Tutorial.text(for: step, world: session.world, suggestion: suggestion, flights: session.world.airline.stats.flights))
                     .pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: 4)
-                if step == .review {
-                    Button("Done") { coach.done() }.buttonStyle(.smallProminent)
-                } else {
-                    Button("Skip guide") { coach.finish() }.buttonStyle(.small)
+                if step.needsNext {
+                    Button(step == TutorialStep.tour.last ? "Done" : "Next") { coach.next(world: session.world, speed: session.speed) }.buttonStyle(.smallProminent)
+                } else if step.canPutOff {
+                    Button("Later") { coach.next(world: session.world, speed: session.speed) }.buttonStyle(.small)
                 }
+                Button("Skip guide") { coach.finish() }.buttonStyle(.small)
             }
             .padding(.horizontal, 10).padding(.vertical, 6)
             .background(Theme.surfaceRaised)

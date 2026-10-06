@@ -12,7 +12,7 @@ public enum JobKind: String, Sendable, Hashable, Codable, CaseIterable {
     var payFactor: Double {
         switch self {
         case .medevac: 4.0
-        case .mail: 1.6
+        case .mail: 2.2
         case .fuelDrums: 1.8
         case .crewChange: 2.2
         case .lodgeCharter: 2.6

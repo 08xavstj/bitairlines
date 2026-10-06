@@ -42,12 +42,14 @@ public enum Tuning {
     /// Usable fraction of a hold's capacity on an ordinary day.
     public static let cargoLoadLimit = 0.7
     /// A route never drops below this share of its potential, and a new one starts here.
-    public static let minimumMaturity = 0.5
+    public static let minimumMaturity = 0.65
+    /// How much better known a leg becomes with each departure (1.0 is fully known).
+    public static let maturityPerFlight = 0.012
 
     // MARK: Operating costs (US dollars)
     public static let jetFuelPerKg = 1.00
     public static let avgasPerKg = 1.90
-    public static let pilotPerBlockHour = 110.0
+    public static let pilotPerBlockHour = 80.0
     public static let cabinCrewPerBlockHour = 45.0
     public static let handlingPerPassenger = 14.0
     /// Commissions and card fees as a share of ticket revenue.
@@ -62,7 +64,7 @@ public enum Tuning {
     public static let navigationPerKm = 0.9
     /// Fixed daily cost per airline and per aircraft (admin, insurance), plus insurance as a share of hull value per year.
     /// Head office costs per day grow with the size of the operation: a one-plane bush airline has a desk, a jumbo carrier has a headquarters.
-    public static func headOfficePerDay(level: Int) -> Double { 120.0 * Double(level * level) }
+    public static func headOfficePerDay(level: Int) -> Double { 120.0 * Double(level * (level + 1) / 2) }
     public static let adminPerAircraftPerDay = 120.0
     public static let insuranceShareOfPricePerYear = 0.0025
 

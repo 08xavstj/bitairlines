@@ -3,35 +3,54 @@ import Observation
 import CoreCatalog
 import CoreWorld
 
-/// The guided first route, in five steps. Where the player is comes from the world itself (routes, aircraft on them, flights flown), so the
-/// guide cannot fall out of step with what they actually did, and nothing about it is stored in a save.
+/// The guide for a new airline: the first route in four steps, then a short tour of what comes next. Where the player is comes from
+/// the world itself (routes, aircraft, flights flown) plus the tips they have read, so the guide cannot fall out of step with what
+/// they actually did. Nothing about it is stored in a save.
 enum TutorialStep: Int, CaseIterable {
-    case openRoute, assignAircraft, startClock, watch, review
+    case openRoute, assignAircraft, startClock, watch, review, money, inbox, hangar, secondRoute, jobs, level
 
     /// The rail button to light up.
     var section: GameSection? {
         switch self {
-        case .openRoute: GameSection.map
+        case .openRoute, .secondRoute: GameSection.map
         case .assignAircraft: GameSection.fleet
         case .review: GameSection.routes
+        case .money: GameSection.money
+        case .inbox: GameSection.inbox
+        case .hangar: GameSection.market
+        case .jobs: GameSection.jobs
+        case .level: GameSection.airline
         case .startClock, .watch: nil
         }
     }
 
     var highlightsSpeed: Bool { self == .startClock }
+
+    /// A tip the player reads and then presses Next on. The other steps finish when the world shows they were done.
+    var needsNext: Bool { [.review, .money, .inbox, .jobs, .level].contains(self) }
+
+    /// A step the player may put off with Later (buying an aircraft needs cash they may not have yet).
+    var canPutOff: Bool { self == .hangar || self == .secondRoute }
+
+    /// The tips after the first route, in order.
+    static let tour: [TutorialStep] = [.review, .money, .inbox, .hangar, .secondRoute, .jobs, .level]
 }
 
 enum Tutorial {
-    /// How many flights the player watches before the last step.
+    /// How many flights the player watches before the tour.
     static let flightsToWatch = 3
 
-    /// The step the player is on, or nil once they have been through all of it. `reviewed` is true after they press Done on the last step.
-    static func step(world: World, speed: GameSpeed, reviewed: Bool) -> TutorialStep? {
+    /// The step the player is on, or nil once they have been through all of it. `seen` holds the tips already read or put off.
+    static func step(world: World, speed: GameSpeed, seen: Set<TutorialStep>) -> TutorialStep? {
         if world.routes.isEmpty { return .openRoute }
         if world.routes.allSatisfy({ $0.aircraftIDs.isEmpty }) { return .assignAircraft }
-        let flights = world.airline.stats.flights
-        if flights < flightsToWatch { return speed == .paused ? .startClock : .watch }
-        return reviewed ? nil : .review
+        if world.airline.stats.flights < flightsToWatch, !seen.contains(.review) { return speed == .paused ? .startClock : .watch }
+        for step in TutorialStep.tour where !seen.contains(step) {
+            if step == .hangar && world.aircraft.count >= 2 { continue }
+            if step == .secondRoute && world.routes.count >= 2 { continue }
+            return step
+        }
+        return nil
     }
 
     /// A good first route from home for the starting aircraft: the nearby place where it would earn the most.
@@ -65,18 +84,41 @@ enum Tutorial {
         case .watch:
             return "Watch it fly. You earn money when an aircraft lands. Flights so far: \(min(flights, Tutorial.flightsToWatch)) of \(Tutorial.flightsToWatch)."
         case .review:
-            return "Your first flights are done. Routes shows what each route should earn. When there is cash, buy a used aircraft in Hangar and open another route."
+            return "Routes shows what each route earns a day and how full the seats are. Planes flying full: raise the fare. Flying empty: lower it or fly less often."
+        case .money:
+            return "Money shows each day: income from landings, then fuel, crew, upkeep and fees. A parked aircraft still costs money every day, so keep them flying."
+        case .inbox:
+            return "When something needs you, the clock stops and Inbox says why: a breakdown, bad weather, a low bank balance. Pick an answer and the clock goes on."
+        case .hangar:
+            return "When you have the cash, buy a second aircraft in Hangar. Pick Fits my airports to see only ones that can land where you fly. Used ones arrive within a day."
+        case .secondRoute:
+            return "Give the new aircraft its own route. Towns with no road to them pay best. Check the forecast before you open it: a green number means profit."
+        case .jobs:
+            return "Jobs are one-off flights: medevac, mail and charters. They pay well and have a deadline. Send a free aircraft from the Jobs board."
+        case .level:
+            return "Airline shows your certificate level. Earn enough and keep a good reputation to buy the next one: it opens bigger aircraft and bigger airports."
         }
     }
 }
 
-/// Remembers, per save slot, that a new airline's guide is still running. Saves from before the guide existed never show it.
+/// Remembers, per save slot, that a new airline's guide is still running and which tips were read. Saves from before the guide
+/// existed never show it.
 struct TutorialStore {
     var defaults: UserDefaults = .standard
 
     private func key(_ slot: Int) -> String { "tutorial.active.\(slot)" }
+    private func seenKey(_ slot: Int) -> String { "tutorial.seen.\(slot)" }
     func isActive(slot: Int) -> Bool { defaults.bool(forKey: key(slot)) }
-    func setActive(_ on: Bool, slot: Int) { defaults.set(on, forKey: key(slot)) }
+    func setActive(_ on: Bool, slot: Int) {
+        defaults.set(on, forKey: key(slot))
+        if on { defaults.removeObject(forKey: seenKey(slot)) }
+    }
+
+    func seen(slot: Int) -> Set<TutorialStep> {
+        Set((defaults.array(forKey: seenKey(slot)) as? [Int] ?? []).compactMap(TutorialStep.init(rawValue:)))
+    }
+
+    func setSeen(_ steps: Set<TutorialStep>, slot: Int) { defaults.set(steps.map(\.rawValue).sorted(), forKey: seenKey(slot)) }
 }
 
 /// The guide while a game is open: which step it is on, and the Skip and Done buttons.
@@ -85,7 +127,7 @@ struct TutorialStore {
 final class TutorialCoach {
     private(set) var active: Bool
     private(set) var step: TutorialStep?
-    private var reviewed = false
+    private(set) var seen: Set<TutorialStep>
     private let slot: Int
     @ObservationIgnored private let store: TutorialStore
 
@@ -93,16 +135,23 @@ final class TutorialCoach {
         self.slot = slot
         self.store = store
         active = store.isActive(slot: slot)
+        seen = store.seen(slot: slot)
     }
 
     /// Follows the world. Ends the guide after the last step.
     func update(world: World, speed: GameSpeed) {
         guard active else { step = nil; return }
-        step = Tutorial.step(world: world, speed: speed, reviewed: reviewed)
+        step = Tutorial.step(world: world, speed: speed, seen: seen)
         if step == nil { finish() }
     }
 
-    func done() { reviewed = true; finish() }
+    /// Next on a tip, or Later on a step that can wait: moves on to the next step.
+    func next(world: World, speed: GameSpeed) {
+        guard let step else { return }
+        seen.insert(step)
+        store.setSeen(seen, slot: slot)
+        update(world: world, speed: speed)
+    }
 
     func finish() {
         active = false

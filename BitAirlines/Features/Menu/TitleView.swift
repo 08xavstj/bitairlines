@@ -30,12 +30,19 @@ struct TitleView: View {
                         Button("Settings") { showSettings = true }.buttonStyle(SecondaryButtonStyle())
                         Button("Credits") { showCredits = true }.buttonStyle(SecondaryButtonStyle())
                     }
+                    if GameCenter.shared.isSignedIn {
+                        Button("Leaderboards") { GameCenter.shared.showDashboard() }.buttonStyle(SecondaryButtonStyle())
+                    }
                 }
                 .frame(width: 260)
             }
             .padding(.horizontal, 32)
         }
-        .onAppear { saves = store.summaries() }
+        .onAppear {
+            saves = store.summaries()
+            // A game played on another device arrives through iCloud; show it once it is here.
+            store.syncWithCloud { saves = store.summaries() }
+        }
         .sheet(isPresented: $showContinue) { ContinueSheet(store: store, saves: $saves) { slot in showContinue = false; onContinue(slot) } }
         .sheet(isPresented: $showCredits) { CreditsView() }
         .sheet(isPresented: $showSettings) { SettingsSheet() }
@@ -153,6 +160,7 @@ struct SettingsSheet: View {
                         Toggle(isOn: $settings.haptics) { Text("Vibration").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
                         Toggle(isOn: $settings.soundEffects) { Text("Sound effects").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
                         Toggle(isOn: $settings.music) { Text("Music").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                        Toggle(isOn: $settings.iCloudSaves) { Text("Keep saves in iCloud").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
                         Text("Volume").pixelFont(10.667).foregroundStyle(Theme.textMuted)
                         PixelChoice(options: VolumeLevel.allCases.map { (label: $0.label, value: $0) }, selection: $settings.volume)
                         Text("Text size").pixelFont(10.667).foregroundStyle(Theme.textMuted)
