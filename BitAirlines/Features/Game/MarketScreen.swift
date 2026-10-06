@@ -20,6 +20,7 @@ struct MarketScreen: View {
             MarketFilterBar(filter: $filter)
             if tab == 0 {
                 Text("Used aircraft are ferried to your home airport within a day. The listings change every week.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                RewardButton(session: session, kind: .brokersTip)
                 ForEach(used) { listing in
                     if let type = AircraftCatalog.type(listing.typeID), let fit = fits[type.id] {
                         UsedCard(session: session, listing: listing, type: type, fit: fit)
@@ -86,6 +87,7 @@ struct UsedCard: View {
                     if let rare = listing.rare {
                         Tag(text: "Rare find", color: Theme.gold)
                         Text(Words.explain(rare)).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                        RewardButton(session: session, kind: .holdRareFind, target: listing.id)
                     }
                     Text(type.displayName.uppercased()).pixelFont(13.333).foregroundStyle(locked ? Theme.textMuted : Theme.textPrimary).lineLimit(1)
                     SpecLine(type: type)

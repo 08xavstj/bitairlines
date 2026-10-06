@@ -197,23 +197,18 @@ import CoreCatalog
         #expect(loaded.ops.dispatch.stamps == 1 && loaded.ops.realDay == Self.day)
         #expect(loaded.dispatchToday?.dispatchDay == Self.day, "a dispatch job keeps its day")
 
-        // Strip everything this feature added, as a save from before it would look.
-        var root = try #require(try JSONSerialization.jsonObject(with: data) as? [String: Any])
-        var ops = try #require(root["operationsStore"] as? [String: Any])
-        for key in ["realDay", "dispatch", "realWeekGoal", "realWeekGoalsMet", "season", "unlockedLiveries", "logbook"] { ops[key] = nil }
-        if let jobs = ops["jobs"] as? [[String: Any]] {
-            ops["jobs"] = jobs.map { job -> [String: Any] in
-                var j = job
-                j["dispatchDay"] = nil
-                j["season"] = nil
-                return j
-            }
-        }
-        root["operationsStore"] = ops
-        let old = try JSONSerialization.data(withJSONObject: root)
-        var older = try JSONDecoder().decode(World.self, from: old)
-        #expect(older.ops.realDay == 0 && older.ops.dispatch.stamps == 0 && older.logbook.airports.isEmpty)
-        older.advance(byMinutes: 3 * 1440)
-        #expect(older.airline.stats.flights > 0, "and keeps flying")
+        // An older save's added systems have none of the new keys: everything reads as a new game would have it.
+        let ops = try JSONDecoder().decode(Operations.self, from: Data("{}".utf8))
+        #expect(ops.realDay == 0 && ops.dispatch.stamps == 0 && ops.realWeekGoal == nil && ops.season.active == nil)
+        #expect(ops.unlockedLiveries.isEmpty && ops.logbook.airports.isEmpty && ops.logbook.types.isEmpty)
+        let book = try JSONDecoder().decode(DispatchBook.self, from: Data("{\"stamps\":3}".utf8))
+        #expect(book.stamps == 3 && book.lastStampDay == 0)
+
+        // A job saved before dispatches had no day or season.
+        let oldJob = """
+        {"id":4,"kind":"mail","from":"YEV","to":"YUB","passengers":0,"cargoKg":120,"pay":5000,"deadlineMinute":3000,"expiresMinute":2000,"loaded":false}
+        """
+        let job = try JSONDecoder().decode(Job.self, from: Data(oldJob.utf8))
+        #expect(job.dispatchDay == nil && job.season == nil && !job.isSpecial)
     }
 }

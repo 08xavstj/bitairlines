@@ -17,6 +17,8 @@ final class GameCenter {
         static let fleet = "ca.amaruq.bitairlines.fleet"
         /// Weekly goals met in one game.
         static let goals = "ca.amaruq.bitairlines.goals"
+        /// Daily dispatch stamps in one game.
+        static let stamps = "ca.amaruq.bitairlines.stamps"
     }
 
     enum Achievement {
@@ -24,6 +26,9 @@ final class GameCenter {
         static let tenAircraft = "ca.amaruq.bitairlines.tenaircraft"
         static func level(_ n: Int) -> String { "ca.amaruq.bitairlines.level\(n)" }
         static func scenario(_ id: ScenarioID) -> String { "ca.amaruq.bitairlines.scenario.\(id.rawValue)" }
+        /// Logbook milestones: airports landed at (10, 50, 250) and aircraft types flown (10).
+        static func airports(_ n: Int) -> String { "ca.amaruq.bitairlines.airports\(n)" }
+        static func types(_ n: Int) -> String { "ca.amaruq.bitairlines.types\(n)" }
     }
 
     /// Seconds between leaderboard updates while playing.
@@ -62,12 +67,16 @@ final class GameCenter {
         GKLeaderboard.submitScore(revenue, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [Board.revenue]) { _ in }
         GKLeaderboard.submitScore(world.aircraft.count, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [Board.fleet]) { _ in }
         GKLeaderboard.submitScore(world.ops.goalsCompleted, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [Board.goals]) { _ in }
+        GKLeaderboard.submitScore(world.ops.dispatch.stamps, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [Board.stamps]) { _ in }
 
         var earned: [String] = []
         if !world.routes.isEmpty { earned.append(Achievement.firstRoute) }
         if world.aircraft.count >= 10 { earned.append(Achievement.tenAircraft) }
         if world.airline.level >= 2 { earned += (2...world.airline.level).map(Achievement.level) }
         if let state = world.ops.scenario, state.medal != nil { earned.append(Achievement.scenario(state.id)) }
+        let book = world.logbook
+        earned += Tuning.logbookAirportMilestones.filter { book.airports.count >= $0 }.map(Achievement.airports)
+        earned += Tuning.logbookTypeMilestones.filter { book.types.count >= $0 }.map(Achievement.types)
         let fresh = earned.filter { !reported.contains($0) }
         guard !fresh.isEmpty else { return }
         reported.formUnion(fresh)

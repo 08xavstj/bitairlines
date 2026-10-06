@@ -15,6 +15,7 @@ extension Messages {
         case .loan: return item.subject == "taken" ? "You took a loan of \(Format.dollars(item.amount))." : "You repaid a loan of \(Format.dollars(item.amount))."
         case .permit: return "You bought a permit for \(CountryCatalog.country(item.subject)?.name ?? item.subject) (\(Format.dollars(item.amount)))."
         case .milestone:
+            if let line = CalendarWords.news(item) { return line }
             if item.subject.hasPrefix("rare:") { return rareFind(item) }
             if item.subject.hasPrefix("goal:") { return goalMet(item) }
             return item.subject

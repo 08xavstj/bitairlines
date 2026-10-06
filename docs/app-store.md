@@ -37,9 +37,33 @@ Create these in App Store Connect (your app, Services, Game Center). The IDs mus
 | Achievement | `ca.amaruq.bitairlines.tenaircraft` | Ten aircraft | |
 | Achievement | `ca.amaruq.bitairlines.level2` ... `level7` | Commuter ... Jumbo operator | One per certificate level |
 | Achievement | `ca.amaruq.bitairlines.scenario.freezeUp` (and the other scenario ids) | Scenario medal | One per scenario |
+| Leaderboard (classic, high score, integer) | `ca.amaruq.bitairlines.stamps` | Dispatch stamps | Daily dispatches flown in one game (one per real day at most) |
+| Achievement | `ca.amaruq.bitairlines.airports10` | Ten airports | Landed at 10 airports (Logbook) |
+| Achievement | `ca.amaruq.bitairlines.airports50` | Fifty airports | Landed at 50 airports |
+| Achievement | `ca.amaruq.bitairlines.airports250` | 250 airports | Landed at 250 airports |
+| Achievement | `ca.amaruq.bitairlines.types10` | Ten types | Flown 10 aircraft types |
 
 Each achievement needs a 512 x 512 or 1024 x 1024 image and a short description. Scores go up every 5 minutes of play and
 when the player leaves the game. The title screen shows a Leaderboards button once the player is signed in.
+
+## 3b. In-App Events (seasonal events)
+
+The game has a calendar of seasonal events on the real date (`AirlineCore/Sources/CoreWorld/SeasonalEvents.swift`). Submit each
+one as an In-App Event in App Store Connect (your app, In-App Events) a few weeks before it starts, so it shows on the App
+Store. Badge: Special Event, for all six. Priority: normal. Each event unlocks its own paint scheme for flying 3 event jobs
+while it runs.
+
+| Event | Dates (every year) | What it does in the game |
+|---|---|---|
+| Lunar New Year | 7 days either side of Lunar New Year's day (table in the code, to 2040) | More passengers on every route |
+| Spring break | 15 to 31 March | More passengers to the coast, islands and lakes |
+| Summer peak | 11 to 31 July | Even more passengers to the coast, islands and lakes |
+| Harvest freight | 22 September to 12 October | More freight on every route |
+| Festival season | 28 October to 10 November | A few more passengers and a little more freight |
+| Holiday parcels | 4 to 23 December | Much more freight on every route |
+
+Short description for each (30 characters or fewer), for example "Fly the holiday parcels". Use a screenshot of the
+event's paint scheme on an aircraft. Keep the text plain: what the event is and what you can earn.
 
 ## 4. Compliance checklist
 

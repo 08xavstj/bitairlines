@@ -37,7 +37,9 @@ struct MoneyScreen: View {
         let invested = recent.reduce(0) { $0 + $1.investments } + world.today.investments
         Page {
             ScreenHeader("Money")
-            WeeklyGoalCard(world: world)
+            WeeklyGoalCard(world: world, session: session)
+            DailyDispatchCard(world: world)
+            SeasonCard(world: world)
             Card {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(Format.dollars(world.airline.cash)).pixelFont(21.333).foregroundStyle(world.airline.cash < 0 ? Theme.bad : Theme.good)
@@ -53,6 +55,7 @@ struct MoneyScreen: View {
                 }
             }
             certificateCard(world)
+            SponsorCard(session: session)
             MarketingCard(session: session)
             StaffCard(session: session)
             FuelCard(session: session)

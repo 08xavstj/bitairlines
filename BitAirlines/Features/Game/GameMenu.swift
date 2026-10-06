@@ -8,6 +8,7 @@ struct GameMenu: View {
     let onSettings: () -> Void
     let onLeave: () -> Void
     @Environment(\.dismiss) private var dismiss
+    @State private var showLogbook = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -15,6 +16,7 @@ struct GameMenu: View {
             HStack(alignment: .top, spacing: 12) {
                 VStack(spacing: 10) {
                     Button("Airline") { onAirline() }.buttonStyle(PrimaryButtonStyle())
+                    Button("Logbook") { showLogbook = true }.buttonStyle(SecondaryButtonStyle())
                     Button("Settings") { onSettings() }.buttonStyle(SecondaryButtonStyle())
                     if GameCenter.shared.isSignedIn {
                         Button("Leaderboards") { dismiss(); GameCenter.shared.showDashboard() }.buttonStyle(SecondaryButtonStyle())
@@ -22,13 +24,14 @@ struct GameMenu: View {
                     Button("Save and leave") { onLeave() }.buttonStyle(SecondaryButtonStyle())
                 }
                 .frame(width: 260)
-                Text("Airline has your look, totals, level and what makes the game stop. Your game saves by itself.")
+                Text("Airline has your look, totals, level and what makes the game stop. Logbook has the airports, aircraft types and paint schemes you have collected. Your game saves by itself.")
                     .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
             }
             Spacer(minLength: 0)
         }
         .padding(16)
         .screenBackground()
+        .sheet(isPresented: $showLogbook) { LogbookScreen(session: session) }
     }
 }
 

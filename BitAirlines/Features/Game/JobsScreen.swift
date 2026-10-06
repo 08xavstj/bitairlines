@@ -24,8 +24,14 @@ struct JobsScreen: View {
             }
             SectionTitle("On offer")
             if open.isEmpty { EmptyNote("No jobs right now. New ones turn up every day around your network.") }
+            RewardButton(session: session, kind: .newJobs)
             ForEach(open) { job in
-                JobCard(world: world, job: job) { Button("Fly it") { picking = job.id }.buttonStyle(.smallProminent) }
+                JobCard(world: world, job: job) {
+                    VStack(alignment: .trailing, spacing: 6) {
+                        Button("Fly it") { picking = job.id }.buttonStyle(.smallProminent)
+                        RewardButton(session: session, kind: .doubleJobPay, target: job.id)
+                    }
+                }
             }
             Text("A job takes an aircraft off its route until it is done; then it goes back by itself. Late jobs pay half.")
                 .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
@@ -49,6 +55,7 @@ struct JobCard<Trailing: View>: View {
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(spacing: 8) {
                         Tag(text: Words.name(job.kind), color: job.kind == .medevac || job.kind == .evacuation ? Theme.bad : Theme.info)
+                        if let tag = CalendarWords.jobTag(job) { Tag(text: tag, color: Theme.gold) }
                         Text("\(Place.name(job.from)) to \(Place.name(job.to))").pixelFont(13.333).foregroundStyle(Theme.textPrimary).lineLimit(1)
                     }
                     Text(load + ", \(Format.km(km)). Pays \(Format.dollars(job.pay)).").pixelFont(10.667).foregroundStyle(Theme.good)

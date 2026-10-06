@@ -183,7 +183,8 @@ extension World {
     /// News subject "stampreward:<livery code or empty>", amount the rare find's listing id (0 if none fitted).
     mutating func giveStampReward() {
         ops.dispatch.rewardsEarned += 1
-        let next = UnlockableLiveries.classicCodes.first { !ops.unlockedLiveries.contains($0) }
+        let have = ops.unlockedLiveries
+        let next = UnlockableLiveries.classicCodes.first { !have.contains($0) }
         if let next { unlockLivery(next) }
         let kind: RareFind = ops.dispatch.rewardsEarned % 2 == 1 ? .heritage : .lowHours
         let listing = addRareFind(kind)

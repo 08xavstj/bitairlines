@@ -4,6 +4,8 @@ import CoreWorld
 /// This week's goal: what to do, how far along it is, and the bonus for meeting it.
 struct WeeklyGoalCard: View {
     let world: World
+    /// With a session, a met goal offers the optional ad that pays the bonus again.
+    var session: GameSession? = nil
 
     var body: some View {
         if let goal = world.ops.weeklyGoal {
@@ -26,6 +28,8 @@ struct WeeklyGoalCard: View {
                     .frame(height: 8)
                     Text("\(WeeklyGoalCard.amount(goal.kind, progress)) of \(WeeklyGoalCard.amount(goal.kind, goal.target))\(goal.place == nil ? "" : " landed there"). Goals met: \(world.ops.goalsCompleted).")
                         .pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                    if goal.done, let session { RewardButton(session: session, kind: .doubleGoalBonus) }
+                    if let real = world.ops.realWeekGoal { RealWeekGoalSection(world: world, goal: real) }
                 }
             }
         }

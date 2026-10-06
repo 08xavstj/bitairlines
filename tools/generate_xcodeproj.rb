@@ -22,6 +22,14 @@ DEPLOYMENT_TARGET = '17.0'
 CLOUD_FEATURES = ENV['BIT_CLOUD'] == '1' || false
 ENTITLEMENTS = 'Support/BitAirlines.entitlements'
 CORE_PACKAGE = 'AirlineCore'
+# Rewarded ads (docs/rewarded-ads.md). Off by default, so builds stay as they are (the app then shows a stand-in ad).
+# BIT_ADS=1 adds Google's Mobile Ads and consent (UMP) packages and the Info.plist keys AdMob and Apple's tracking question need.
+ADS_SDK = ENV['BIT_ADS'] == '1'
+ADS_CONFIG = 'BitAirlines/Ads/AdService.swift'     # AdConfig.appID is read from here, so the id lives in one place
+ADS_INFO_PLIST = 'build/AdsInfo.plist'             # written by this script; Xcode merges it into the generated Info.plist
+TRACKING_TEXT = 'Allowing this shows ads that suit you better. You will see the same number of ads either way, and only when you choose to watch.'
+# Google's own SKAdNetwork id. Add the ids of any other ad networks used through mediation (each network lists its own).
+SKADNETWORK_IDS = %w[cstr6suwn9.skadnetwork]
 
 FileUtils.rm_rf(PROJECT_PATH)
 project = Xcodeproj::Project.new(PROJECT_PATH)
@@ -64,6 +72,44 @@ project.root_object.package_references << package_ref
   target.frameworks_build_phase.files << build_file
 end
 
+# ---- Optional: Google Mobile Ads (BIT_ADS=1) -----------------------------------------------------
+if ADS_SDK
+  [
+    ['https://github.com/googleads/swift-package-manager-google-mobile-ads', '12.0.0', 'GoogleMobileAds'],
+    ['https://github.com/googleads/swift-package-manager-google-user-messaging-platform', '3.0.0', 'UserMessagingPlatform'],
+  ].each do |url, version, product|
+    remote = project.new(Xcodeproj::Project::Object::XCRemoteSwiftPackageReference)
+    remote.repositoryURL = url
+    remote.requirement = { 'kind' => 'upToNextMajorVersion', 'minimumVersion' => version }
+    project.root_object.package_references << remote
+    dependency = project.new(Xcodeproj::Project::Object::XCSwiftPackageProductDependency)
+    dependency.package = remote
+    dependency.product_name = product
+    app.package_product_dependencies << dependency
+    build_file = project.new(Xcodeproj::Project::Object::PBXBuildFile)
+    build_file.product_ref = dependency
+    app.frameworks_build_phase.files << build_file
+  end
+
+  app_id = File.read(File.join(ROOT, ADS_CONFIG))[/static let appID = "([^"]+)"/, 1] or abort("AdConfig.appID not found in #{ADS_CONFIG}")
+  networks = SKADNETWORK_IDS.map { |id| "    <dict><key>SKAdNetworkIdentifier</key><string>#{id}</string></dict>" }.join("\n")
+  FileUtils.mkdir_p(File.join(ROOT, File.dirname(ADS_INFO_PLIST)))
+  File.write(File.join(ROOT, ADS_INFO_PLIST), <<~PLIST)
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+      <key>GADApplicationIdentifier</key>
+      <string>#{app_id}</string>
+      <key>SKAdNetworkItems</key>
+      <array>
+    #{networks}
+      </array>
+    </dict>
+    </plist>
+  PLIST
+end
+
 # ---- Build settings ------------------------------------------------------------------------------
 # The app is Swift 5 language mode on purpose: the local 9B agent edits the views, and strict-concurrency errors are noise for it.
 # AirlineCore itself is Swift 6 strict (see AirlineCore/Package.swift).
@@ -97,6 +143,11 @@ app.build_configurations.each do |config|
   s['SUPPORTED_PLATFORMS'] = 'iphoneos iphonesimulator'
   s['SWIFT_ACTIVE_COMPILATION_CONDITIONS'] = '$(inherited) DEBUG' if config.name == 'Debug'
   s['CODE_SIGN_ENTITLEMENTS'] = ENTITLEMENTS if CLOUD_FEATURES
+  if ADS_SDK
+    s['INFOPLIST_FILE'] = ADS_INFO_PLIST
+    s['INFOPLIST_KEY_NSUserTrackingUsageDescription'] = TRACKING_TEXT
+    s['OTHER_LDFLAGS'] = ['$(inherited)', '-ObjC']
+  end
 end
 tests.build_configurations.each do |config|
   s = config.build_settings

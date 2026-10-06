@@ -212,6 +212,8 @@ struct UpkeepCard: View {
                 } else {
                     Text(heavyCheckLine(world)).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                 }
+                // In the hangar (a check, a repair or a restoration): the optional ad that finishes the work now.
+                RewardButton(session: session, kind: .instantCheck, target: plane.id)
             }
         }
     }

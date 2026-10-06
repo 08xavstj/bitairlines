@@ -16,6 +16,9 @@ struct AwaySummary: View {
                     KeyValueRow("Passengers", Format.number(report.passengers))
                     KeyValueRow("Earned from flights", Format.dollars(report.revenue))
                     KeyValueRow("Cash change", Format.signedMoney(report.cashChange))
+                    if report.cashChange > 0 {
+                        RewardButton(session: session, kind: .awayDouble, target: report.cashChange, once: true)
+                    }
                     if report.stoppedForIssue {
                         Text("Something needs you, so the clock stopped early.").pixelFont(10.667).foregroundStyle(Theme.gold)
                     }

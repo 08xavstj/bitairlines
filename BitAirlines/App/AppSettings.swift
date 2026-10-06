@@ -48,6 +48,12 @@ final class AppSettings {
     var volume: VolumeLevel { didSet { persist() } }
     /// Copy saves to iCloud so they follow the player to another device.
     var iCloudSaves: Bool { didSet { persist() } }
+    /// One note while the app is in the background, for the first thing that will need the player (Notifications.swift).
+    var notifyAircraft: Bool { didSet { persist() } }
+    /// A daily reminder that today's dispatch is ready. Off until the player turns it on.
+    var notifyDaily: Bool { didSet { persist() } }
+    /// The game has already asked, in its own dialog, whether to send notifications (it asks once, after the first breakdown or overdraft).
+    var askedAboutNotifications: Bool { didSet { persist() } }
 
     /// Called after any setting changes, so the audio engine can follow.
     @ObservationIgnored var onChange: (@MainActor () -> Void)?
@@ -62,6 +68,9 @@ final class AppSettings {
         music = defaults.object(forKey: "settings.music") as? Bool ?? true
         volume = VolumeLevel(rawValue: defaults.object(forKey: "settings.volume") as? Int ?? VolumeLevel.medium.rawValue) ?? .medium
         iCloudSaves = defaults.object(forKey: "settings.iCloudSaves") as? Bool ?? true
+        notifyAircraft = defaults.object(forKey: "settings.notifyAircraft") as? Bool ?? true
+        notifyDaily = defaults.bool(forKey: "settings.notifyDaily")
+        askedAboutNotifications = defaults.bool(forKey: "settings.askedAboutNotifications")
     }
 
     private func persist() {
@@ -72,6 +81,9 @@ final class AppSettings {
         defaults.set(music, forKey: "settings.music")
         defaults.set(volume.rawValue, forKey: "settings.volume")
         defaults.set(iCloudSaves, forKey: "settings.iCloudSaves")
+        defaults.set(notifyAircraft, forKey: "settings.notifyAircraft")
+        defaults.set(notifyDaily, forKey: "settings.notifyDaily")
+        defaults.set(askedAboutNotifications, forKey: "settings.askedAboutNotifications")
         onChange?()
     }
 

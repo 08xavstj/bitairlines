@@ -29,6 +29,7 @@ struct MarketingCard: View {
                         }
                     }
                 }
+                RewardButton(session: session, kind: .freePosters)
             }
         }
     }

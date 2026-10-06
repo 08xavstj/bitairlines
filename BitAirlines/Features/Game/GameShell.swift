@@ -81,6 +81,7 @@ struct GameShell: View {
         }
         .background(Theme.background.ignoresSafeArea())
         .background { SoundWatcher(session: session) }
+        .background { RealDaySync(session: session) }
         .overlay { PerkChoiceOverlay(session: session) }
         .overlay { IssueOverlay(session: session, onExit: onExit) }
         .overlay { AwaySummary(session: session) }
@@ -271,11 +272,21 @@ struct IssueOptions: View {
                 }
                 .buttonStyle(AnyButtonStyle(option.choice == .declareBankruptcy ? AnyButtonStyle(DangerWideButtonStyle()) : AnyButtonStyle(PrimaryButtonStyle())))
             }
+            if let kind = rewardKind { RewardButton(session: session, kind: kind, target: issue.id).frame(maxWidth: .infinity, alignment: .leading) }
             if let notice = session.notice { Text(notice).pixelFont(10.667).foregroundStyle(Theme.gold).frame(maxWidth: .infinity, alignment: .leading) }
         }
         .pixelConfirm("Declare bankruptcy?", message: "The airline closes and this game ends. It cannot be undone.", confirm: "Close the airline", destructive: true,
                       isPresented: $confirmingBankruptcy) {
             session.resolve(issueID: issue.id, choice: .declareBankruptcy)
+        }
+    }
+
+    /// The optional ad for this issue: the mechanic flies in free, or a sponsor helps with the overdraft.
+    private var rewardKind: RewardKind? {
+        switch issue.kind {
+        case .breakdown: return .freeMechanic
+        case .overdraft: return .overdraftSponsor
+        default: return nil
         }
     }
 }

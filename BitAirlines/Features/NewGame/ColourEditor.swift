@@ -19,6 +19,8 @@ struct ColourEditor: View {
             FlowRow(items: LiveryStyle.allCases) { style in
                 Chip(title: ColourEditor.name(style), selected: branding.style == style) { branding.style = style }
             }
+            Text("Livery code").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+            LiveryCodeImport(branding: $branding)
         }
     }
 

@@ -88,6 +88,7 @@ struct MapScreen: View {
 
     private var toolbar: some View {
         HStack(spacing: 6) {
+            NextStepLine(session: session)
             PixelSquareButton(icon: .plus, label: "Zoom in") { zoom(factor: 1.6) }
             PixelSquareButton(icon: .minus, label: "Zoom out") { zoom(factor: 1 / 1.6) }
             Button("Home") { goHome() }.buttonStyle(.small)

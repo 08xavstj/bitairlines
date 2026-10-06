@@ -173,6 +173,10 @@ struct SettingsSheet: View {
                         Toggle(isOn: $settings.soundEffects) { Text("Sound effects").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
                         Toggle(isOn: $settings.music) { Text("Music").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
                         Toggle(isOn: $settings.iCloudSaves) { Text("Keep saves in iCloud").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                        Toggle(isOn: aircraftNotes) { Text("Tell me when an aircraft needs me").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                        Toggle(isOn: dailyNotes) { Text("Remind me of the daily dispatch").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                        Text("Notes arrive only while you are away from the game, at most two at a time. If none arrive, allow notifications for the game in the iPhone Settings app.")
+                            .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                         Text("Volume").pixelFont(10.667).foregroundStyle(Theme.textMuted)
                         PixelChoice(options: VolumeLevel.allCases.map { (label: $0.label, value: $0) }, selection: $settings.volume)
                         Text("Text size").pixelFont(10.667).foregroundStyle(Theme.textMuted)
@@ -183,5 +187,26 @@ struct SettingsSheet: View {
         }
         .padding(16)
         .screenBackground()
+    }
+
+    /// On only once the player has been asked and said yes (the event note is never sent before that).
+    private var aircraftNotes: Binding<Bool> {
+        Binding(get: { settings.askedAboutNotifications && settings.notifyAircraft }, set: { on in
+            settings.notifyAircraft = on
+            if on { askSystem(ifRefused: { settings.notifyAircraft = false }) }
+        })
+    }
+
+    private var dailyNotes: Binding<Bool> {
+        Binding(get: { settings.notifyDaily }, set: { on in
+            settings.notifyDaily = on
+            if on { askSystem(ifRefused: { settings.notifyDaily = false }) }
+        })
+    }
+
+    /// Turning a note on asks iOS for permission (the system asks only once; later answers come straight back). A no turns it off again.
+    private func askSystem(ifRefused turnOff: @escaping @MainActor () -> Void) {
+        settings.askedAboutNotifications = true
+        Notifier.requestPermission { granted in if !granted { turnOff() } }
     }
 }

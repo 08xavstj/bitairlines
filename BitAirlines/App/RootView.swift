@@ -32,6 +32,8 @@ struct RootView: View {
             case .game:
                 if let session {
                     GameShell(session: session, onExit: { leaveGame() }, initialSection: firstSection)
+                        .overlay { NotificationAsk(session: session) }
+                        .background { ReviewPromptWatcher(session: session) }
                 }
             }
             if settings.scanlines { ScanlineOverlay() }
@@ -40,15 +42,21 @@ struct RootView: View {
         .onChange(of: screen, initial: true) { _, now in audio?.setMusic(now == .game ? .flying : .title) }
         // iOS may close a game in the background without warning, so save the moment the player leaves the app.
         .onChange(of: scenePhase) { _, phase in
-            if phase == .background, let session {
-                // Stop the clock too, so nothing happens between this save and iOS suspending the app.
-                wasRunning = session.speed != .paused
-                session.stop()
-                backgroundedAt = Date()
-            } else if phase == .active, let since = backgroundedAt, let session {
-                backgroundedAt = nil
-                session.start()
-                if wasRunning { session.catchUp(realSeconds: Date().timeIntervalSince(since)) }
+            if phase == .background {
+                if let session {
+                    // Stop the clock too, so nothing happens between this save and iOS suspending the app.
+                    wasRunning = session.speed != .paused
+                    session.stop()
+                    backgroundedAt = Date()
+                }
+                scheduleNotifications()
+            } else if phase == .active {
+                Notifier.cancelAll()
+                if let since = backgroundedAt, let session {
+                    backgroundedAt = nil
+                    session.start()
+                    if wasRunning { session.catchUp(realSeconds: Date().timeIntervalSince(since)) }
+                }
             }
         }
         .pixelAlert("Cannot open this save", message: loadProblem, isPresented: Binding(get: { loadProblem != nil }, set: { if !$0 { loadProblem = nil } }))
@@ -91,6 +99,15 @@ struct RootView: View {
         screen = .game
     }
     #endif
+
+    /// Leaving the app: one note for the first thing that will need the player (only if the clock was running, since a paused
+    /// game does not move while away), and the daily reminder if it is on. Nothing is asked of iOS from here.
+    private func scheduleNotifications() {
+        var note: AwayNote?
+        if settings.askedAboutNotifications, settings.notifyAircraft, wasRunning, let session { note = AwayNotes.next(for: session.world) }
+        guard note != nil || settings.notifyDaily else { return }
+        Notifier.schedule(note, daily: settings.notifyDaily)
+    }
 
     private func continueGame(slot: Int) {
         guard let world = try? store.load(slot: slot) else {

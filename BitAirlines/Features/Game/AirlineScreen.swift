@@ -6,13 +6,17 @@ import CoreWorld
 struct AirlineScreen: View {
     let session: GameSession
     @State private var showStats = true
+    @State private var sharing = false
 
     var body: some View {
         let world = session.world
         VStack(alignment: .leading, spacing: 8) {
             ScreenHeader(title: world.airline.name) {
-                PixelChoice(options: [(label: "Look", value: true), (label: "Totals", value: false)], selection: Binding(get: { !showStats }, set: { showStats = !$0 }))
-                    .frame(width: 180)
+                HStack(spacing: 8) {
+                    Button("Share") { sharing = true }.buttonStyle(.small)
+                    PixelChoice(options: [(label: "Look", value: true), (label: "Totals", value: false)], selection: Binding(get: { !showStats }, set: { showStats = !$0 }))
+                        .frame(width: 180)
+                }
             }
             .padding(.horizontal, 12).padding(.top, 8)
             if showStats {
@@ -30,6 +34,7 @@ struct AirlineScreen: View {
             }
         }
         .background(PixelBackdrop())
+        .sheet(isPresented: $sharing) { ShareAirlineSheet(world: session.world) }
     }
 
     @ViewBuilder private func totals(_ world: World) -> some View {

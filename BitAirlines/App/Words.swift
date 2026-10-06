@@ -201,6 +201,7 @@ extension Words {
 
     /// The name of a special livery. Heritage finds arrive with a code; names the player typed are shown as they are.
     static func liveryName(_ name: String) -> String {
-        name == RareFinds.heritageLiveryCode ? "Heritage" : name
+        if let earned = CalendarWords.liveryName(name) { return earned }
+        return name == RareFinds.heritageLiveryCode ? "Heritage" : name
     }
 }
