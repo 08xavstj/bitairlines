@@ -13,8 +13,8 @@ extension Aircraft {
 
     /// Every route it flies: the current one first.
     public var allRouteIDs: [Int] {
-        guard let routeID else { return [] }
-        return [routeID] + otherRouteIDs
+        guard let current = routeID else { return [] }
+        return [current] + otherRouteIDs
     }
 
     /// The part of this aircraft one of its routes can count on (1 for an aircraft on a single route).
@@ -161,7 +161,9 @@ extension World {
                fitProblem(type: type, route: routes[r], kits: kits) == nil {
                 blocked = 0
             }
-            let key = (blocked, leg.nextSlot, rid == current ? 0 : 1, rid)
+            // A slot already passed counts as now, so two routes that could both leave now keep the current one.
+            let slot = max(leg.nextSlot, clock.minute)
+            let key = (blocked, slot, rid == current ? 0 : 1, rid)
             if let previous = best, !(key < previous) { continue }
             best = key
         }
