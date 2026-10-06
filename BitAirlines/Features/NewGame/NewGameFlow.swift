@@ -6,7 +6,7 @@ struct NewGameDraft {
     var regionID = "arctic-canada"
     var home = "YEV"
     var name = "Aurora Air"
-    var code = "AA"
+    var code = "ZZ"
     var branding = Branding.starter
     var difficulty: Difficulty = .standard
     var starterID = "c208"
@@ -207,7 +207,7 @@ struct IdentityStep: View {
                 VStack(alignment: .leading, spacing: 12) {
                     PixelField(title: "Airline name", text: $draft.name, prompt: "Aurora Air")
                     HStack(spacing: 12) {
-                        PixelField(title: "Code (2 or 3 letters)", text: $draft.code, prompt: "AA", capitalization: .characters)
+                        PixelField(title: "Code (2 or 3 letters)", text: $draft.code, prompt: "ZZ", capitalization: .characters)
                             .onChange(of: draft.code) { _, new in draft.code = String(new.uppercased().filter { $0.isLetter }.prefix(3)) }
                         Button("Suggest a name") {
                             suggestion = (suggestion + 1) % Self.names.count
@@ -215,7 +215,7 @@ struct IdentityStep: View {
                             draft.code = Self.initials(Self.names[suggestion])
                         }.buttonStyle(.small)
                     }
-                    Text("Your flights will be called \(draft.code.isEmpty ? "AA" : draft.code)101, \(draft.code.isEmpty ? "AA" : draft.code)102 and so on.")
+                    Text("Your flights will be called \(draft.code.isEmpty ? "ZZ" : draft.code)101, \(draft.code.isEmpty ? "ZZ" : draft.code)102 and so on.")
                         .pixelFont(10.667).foregroundStyle(Theme.textMuted)
                 }
             }

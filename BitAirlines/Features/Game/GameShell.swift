@@ -219,11 +219,15 @@ struct IssueOverlay: View {
 struct IssueOptions: View {
     let session: GameSession
     let issue: Issue
+    /// Bankruptcy ends the game, so it asks first.
+    @State private var confirmingBankruptcy = false
 
     var body: some View {
         VStack(spacing: 8) {
             ForEach(issue.options, id: \.choice) { option in
-                Button { session.resolve(issueID: issue.id, choice: option.choice) } label: {
+                Button {
+                    if option.choice == .declareBankruptcy { confirmingBankruptcy = true } else { session.resolve(issueID: issue.id, choice: option.choice) }
+                } label: {
                     HStack {
                         Text(Messages.name(option.choice))
                         Spacer()
@@ -235,6 +239,10 @@ struct IssueOptions: View {
                 .buttonStyle(AnyButtonStyle(option.choice == .declareBankruptcy ? AnyButtonStyle(DangerWideButtonStyle()) : AnyButtonStyle(PrimaryButtonStyle())))
             }
             if let notice = session.notice { Text(notice).pixelFont(10.667).foregroundStyle(Theme.gold).frame(maxWidth: .infinity, alignment: .leading) }
+        }
+        .pixelConfirm("Declare bankruptcy?", message: "The airline closes and this game ends. It cannot be undone.", confirm: "Close the airline", destructive: true,
+                      isPresented: $confirmingBankruptcy) {
+            session.resolve(issueID: issue.id, choice: .declareBankruptcy)
         }
     }
 }
