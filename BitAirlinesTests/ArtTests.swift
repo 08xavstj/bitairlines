@@ -30,7 +30,7 @@ import CoreWorld
     }
 
     @Test func mapIconsExistForEverySizeClass() {
-        for size in ["small", "medium", "large", "heavy"] { #expect(Livery.mapIcon(sizeClass: size, branding: .starter) != nil, size) }
+        for size in ["small", "medium", "large", "heavy"] { #expect(Livery.mapIcon(sizeClass: size, branding: .starter) != nil, "\(size) icon") }
         #expect(Livery.sizeClass(seats: 9) == "small" && Livery.sizeClass(seats: 19) == "medium" && Livery.sizeClass(seats: 180) == "large" && Livery.sizeClass(seats: 500) == "heavy")
     }
 
@@ -55,7 +55,7 @@ import CoreWorld
 
     @Test func logoTemplatesFitTheGrid() {
         for template in LogoTemplates.all {
-            #expect(template.rows.count <= Branding.logoSize && template.rows.allSatisfy { $0.count <= Branding.logoSize }, template.name)
+            #expect(template.rows.count <= Branding.logoSize && template.rows.allSatisfy { $0.count <= Branding.logoSize }, "\(template.name) fits")
             #expect(template.logo(for: .starter).contains { $0 != 0 }, "\(template.name) draws nothing")
         }
     }
