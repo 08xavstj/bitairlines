@@ -53,6 +53,11 @@ public struct Route: Sendable, Hashable, Codable, Identifiable {
     /// The schedules offered in the app and picked by the suggestion.
     public static let frequencySteps: [Double] = [0.25, 0.5, 1, 1.5, 2, 3, 4, 5, 6, 8, 10, 12, 16, 24]
 
+    /// The nearest schedule the app offers.
+    public static func snapFrequency(_ f: Double) -> Double {
+        frequencySteps.min { abs($0 - f) < abs($1 - f) } ?? 1
+    }
+
     /// Minutes between departures on one leg.
     public var headwayMinutes: Int { max(1, Int((Double(GameClock.minutesPerDay) / frequency).rounded())) }
 

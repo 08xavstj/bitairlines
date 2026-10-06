@@ -23,19 +23,25 @@ extension World {
         return nil
     }
 
-    /// Opens a route through the stops, flown as a cycle. Returns the route id.
-    @discardableResult
-    public mutating func createRoute(stops: [String], name: String? = nil) throws -> Int {
-        if let problem = routeProblem(stops: stops) { throw problem }
+    /// The legs of a cycle through the stops, with the market numbers for each; nil if an airport is unknown.
+    func makeLegs(stops: [String]) -> [LegState]? {
         var legs: [LegState] = []
         for (i, code) in stops.enumerated() {
-            guard let a = AirportCatalog.airport(code), let b = AirportCatalog.airport(stops[(i + 1) % stops.count]) else { throw WorldError.unknownAirport(code) }
+            guard let a = AirportCatalog.airport(code), let b = AirportCatalog.airport(stops[(i + 1) % stops.count]) else { return nil }
             let km = a.distanceKm(to: b)
             legs.append(LegState(from: a.code, to: b.code, distanceKm: km, marketPaxPerDay: Demand.passengersPerDay(from: a, to: b, distanceKm: km),
                                  marketCargoKgPerDay: Demand.cargoKgPerDay(from: a, to: b), marketFare: Fares.market(from: a, to: b, distanceKm: km),
                                  waitingPax: 0, waitingCargoKg: 0, lastUpdate: clock.minute, maturity: Tuning.minimumMaturity, passengersCarried: 0, revenue: 0,
                                  departuresThisWeek: 0, departuresLastWeek: 0, nextSlot: clock.minute))
         }
+        return legs
+    }
+
+    /// Opens a route through the stops, flown as a cycle. Returns the route id.
+    @discardableResult
+    public mutating func createRoute(stops: [String], name: String? = nil) throws -> Int {
+        if let problem = routeProblem(stops: stops) { throw problem }
+        guard let legs = makeLegs(stops: stops) else { throw WorldError.unknownAirport(stops.first ?? "") }
         let id = takeRouteID()
         routes.append(Route(id: id, name: name ?? stops.map { AirportCatalog.airport($0)?.label ?? $0 }.joined(separator: " - "), stops: stops, fareMultiplier: 1.0, carriesCargo: true, frequency: 2.0, autoFrequency: true, legs: legs, aircraftIDs: [],
                             openedDay: clock.dayIndex, flights: 0, revenueThisMonth: 0, costThisMonth: 0, revenueLastMonth: 0, costLastMonth: 0))
@@ -63,12 +69,26 @@ extension World {
     /// A sensible number of departures per day for a route flown by `aircraftCount` aircraft of this type: enough to carry the market at a healthy load,
     /// never more than the aircraft can actually fly in a day.
     public func suggestedFrequency(route: Route, type: AircraftType, aircraftCount: Int = 1) -> Double {
+        let target = min(demandFrequency(route: route, type: type), maxFrequency(route: route, type: type, aircraftCount: aircraftCount))
+        return Route.snapFrequency(target)
+    }
+
+    /// Departures per day the market would fill at a healthy load with this type (the thinnest leg limits it).
+    public func demandFrequency(route: Route, type: AircraftType) -> Double {
         let demand = (route.legs.map { $0.marketPaxPerDay * 0.75 }.min() ?? 0)
-        let wanted = demand / max(1.0, Double(type.seats) * 0.8)
-        let cycleHours = route.legs.reduce(0.0) { $0 + type.blockHours(km: $1.distanceKm) + Tuning.turnaroundHours(type.engine) }
-        let capacity = Tuning.maxBlockHoursPerDay(level: type.level) * 0.9 / max(0.5, cycleHours) * Double(max(1, aircraftCount))
-        let target = min(wanted, capacity)
-        return Route.frequencySteps.min { abs($0 - target) < abs($1 - target) } ?? 1
+        return demand / max(1.0, Double(type.seats) * 0.8)
+    }
+
+    /// Most departures per day `aircraftCount` aircraft of this type can fly on the route, within crew hours.
+    public func maxFrequency(route: Route, type: AircraftType, aircraftCount: Int) -> Double {
+        Double(max(1, aircraftCount)) * cyclesPerAircraftPerDay(route: route, type: type)
+    }
+
+    /// Whole trips round the route one aircraft can fly in a day: limited by the 24-hour day and by the crew's flying hours.
+    public func cyclesPerAircraftPerDay(route: Route, type: AircraftType) -> Double {
+        let block = route.legs.reduce(0.0) { $0 + type.blockHours(km: $1.distanceKm) }
+        let cycle = block + Tuning.turnaroundHours(type.engine) * Double(route.legs.count)
+        return min(24.0 / max(0.5, cycle), Tuning.maxBlockHoursPerDay(level: type.level) * 0.9 / max(0.25, block))
     }
 
     /// Re-picks the schedule from the aircraft now on the route (and turns automatic scheduling back on).
