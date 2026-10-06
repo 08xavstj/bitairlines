@@ -110,6 +110,7 @@ extension World {
         if ops.jobsDone.count > Tuning.jobRecordsKept { ops.jobsDone.removeFirst(ops.jobsDone.count - Tuning.jobRecordsKept) }
         addNews(onTime ? .jobDone : .jobLate, subject: job.to, amount: onTime ? job.pay : job.pay / 2)
         ops.jobs.remove(at: j)
+        aircraft[i].status = .idle
         endJob(aircraftIndex: i)
         return true
     }

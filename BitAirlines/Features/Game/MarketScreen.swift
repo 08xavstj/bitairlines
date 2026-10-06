@@ -10,41 +10,53 @@ struct MarketScreen: View {
 
     var body: some View {
         let world = session.world
+        // Every type's fit is worked out once per screen update, not once per card, filter and count.
+        let fits = MarketScreen.fitTable(world)
+        let used = usedListings(world, fits: fits)
+        let new = newTypes(fits: fits)
         Page {
             ScreenHeader(title: "Hangar") { Text("Cash \(Format.compactMoney(world.airline.cash))").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
             PixelChoice(options: [(label: "Used", value: 0), (label: "New", value: 1)], selection: $tab)
             MarketFilterBar(filter: $filter)
             if tab == 0 {
                 Text("Used aircraft are ferried to your home airport within a day. The listings change every week.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
-                ForEach(usedListings(world)) { listing in
-                    if let type = AircraftCatalog.type(listing.typeID) {
-                        UsedCard(session: session, listing: listing, type: type, fit: world.fit(of: type))
+                ForEach(used) { listing in
+                    if let type = AircraftCatalog.type(listing.typeID), let fit = fits[type.id] {
+                        UsedCard(session: session, listing: listing, type: type, fit: fit)
                     }
                 }
             } else {
                 Text("New aircraft cost more and take a little longer to arrive, but they are in perfect condition.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
-                ForEach(newTypes(world)) { type in NewCard(session: session, type: type, fit: world.fit(of: type)) }
+                ForEach(new) { type in
+                    if let fit = fits[type.id] { NewCard(session: session, type: type, fit: fit) }
+                }
             }
-            if nothingShown(world) {
+            if (tab == 0 && used.isEmpty) || (tab == 1 && new.isEmpty) {
                 Text("Nothing for sale matches. Clear the search or pick another level.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
             }
         }
     }
 
-    private func shows(_ type: AircraftType, in world: World) -> Bool { filter.matches(type, fit: world.fit(of: type)) }
+    /// How every aircraft type fits the airline's airports.
+    static func fitTable(_ world: World) -> [String: AircraftFit] {
+        var table: [String: AircraftFit] = [:]
+        for type in AircraftCatalog.all { table[type.id] = world.fit(of: type) }
+        return table
+    }
+
+    private func shows(_ type: AircraftType, fits: [String: AircraftFit]) -> Bool {
+        guard let fit = fits[type.id] else { return false }
+        return filter.matches(type, fit: fit)
+    }
 
     /// The listings that match the filter, rare finds first.
-    private func usedListings(_ world: World) -> [UsedListing] {
-        let shown = world.market.listings.filter { AircraftCatalog.type($0.typeID).map { shows($0, in: world) } ?? false }
+    private func usedListings(_ world: World, fits: [String: AircraftFit]) -> [UsedListing] {
+        let shown = world.market.listings.filter { AircraftCatalog.type($0.typeID).map { shows($0, fits: fits) } ?? false }
         return shown.filter { $0.rare != nil } + shown.filter { $0.rare == nil }
     }
 
-    private func newTypes(_ world: World) -> [AircraftType] {
-        AircraftCatalog.all.filter { $0.inProduction && shows($0, in: world) }.sorted { ($0.level, $0.priceUSD) < ($1.level, $1.priceUSD) }
-    }
-
-    private func nothingShown(_ world: World) -> Bool {
-        tab == 0 ? usedListings(world).isEmpty : newTypes(world).isEmpty
+    private func newTypes(fits: [String: AircraftFit]) -> [AircraftType] {
+        AircraftCatalog.all.filter { $0.inProduction && shows($0, fits: fits) }.sorted { ($0.level, $0.priceUSD) < ($1.level, $1.priceUSD) }
     }
 }
 

@@ -162,6 +162,8 @@ extension World {
         }
         // Routes it shared before now have less of it.
         if before.count > 1 { refreshAutoFrequency(routeIDs: before.filter { $0 != routeID }) }
+        // An aircraft held at the gate for its old route (weather, crew hours, a frozen lake) looks again at once.
+        if case .boarding = aircraft[i].status { aircraft[i].status = .boarding(until: clock.minute) }
         if case .idle = aircraft[i].status {
             if let leg = routes[r].firstLeg(from: aircraft[i].location) {
                 aircraft[i].legIndex = leg

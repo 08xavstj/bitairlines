@@ -55,6 +55,8 @@ final class GameCenter {
     /// or at once with `now` (leaving the game).
     func report(_ world: World, now: Bool = false) {
         guard isSignedIn, now || Date().timeIntervalSince(lastReport) > reportInterval else { return }
+        // Sandbox money is unlimited, so its games stay off the leaderboards.
+        guard world.ops.mode != .sandbox else { return }
         lastReport = Date()
         let revenue = min(world.airline.stats.revenue, Int(Int32.max))
         GKLeaderboard.submitScore(revenue, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [Board.revenue]) { _ in }

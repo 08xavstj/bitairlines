@@ -16,6 +16,10 @@ struct RootView: View {
     @State private var firstScenario: ScenarioID?
     /// When the app went to the background, so the fleet can catch up on return.
     @State private var backgroundedAt: Date?
+    /// Whether the clock was running when the app went to the background (a paused game stays where it was).
+    @State private var wasRunning = false
+    /// Why a save could not be opened, shown on the title screen.
+    @State private var loadProblem: String?
 
     var body: some View {
         ZStack {
@@ -36,14 +40,18 @@ struct RootView: View {
         .onChange(of: screen, initial: true) { _, now in audio?.setMusic(now == .game ? .flying : .title) }
         // iOS may close a game in the background without warning, so save the moment the player leaves the app.
         .onChange(of: scenePhase) { _, phase in
-            if phase == .background {
-                session?.save(toCloud: true)
+            if phase == .background, let session {
+                // Stop the clock too, so nothing happens between this save and iOS suspending the app.
+                wasRunning = session.speed != .paused
+                session.stop()
                 backgroundedAt = Date()
-            } else if phase == .active, let since = backgroundedAt {
+            } else if phase == .active, let since = backgroundedAt, let session {
                 backgroundedAt = nil
-                session?.catchUp(realSeconds: Date().timeIntervalSince(since))
+                session.start()
+                if wasRunning { session.catchUp(realSeconds: Date().timeIntervalSince(since)) }
             }
         }
+        .pixelAlert("Cannot open this save", message: loadProblem, isPresented: Binding(get: { loadProblem != nil }, set: { if !$0 { loadProblem = nil } }))
         .onAppear {
             store.cloud?.enabled = { [settings] in settings.iCloudSaves }
             GameCenter.shared.signIn()
@@ -85,7 +93,10 @@ struct RootView: View {
     #endif
 
     private func continueGame(slot: Int) {
-        guard let world = try? store.load(slot: slot) else { return }
+        guard let world = try? store.load(slot: slot) else {
+            loadProblem = "That save could not be opened. It may come from a newer version of the game."
+            return
+        }
         let savedAt = store.summary(slot: slot)?.savedAt
         begin(world: world, slot: slot)
         if let savedAt { session?.catchUp(realSeconds: Date().timeIntervalSince(savedAt)) }

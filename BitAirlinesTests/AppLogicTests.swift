@@ -86,7 +86,8 @@ import CoreWorld
         #expect(store.summary(slot: 1) == nil)
         #expect(throws: (any Error).self) { try store.load(slot: 1) }
         try Data("not json".utf8).write(to: store.url(slot: 1))
-        #expect(store.summary(slot: 1) == nil)
+        #expect(store.summary(slot: 1)?.broken == true, "a save that cannot be read is listed, not hidden")
+        #expect(store.freeSlot() == 2, "and its slot is not handed to a new game")
     }
 }
 

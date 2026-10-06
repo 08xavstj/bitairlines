@@ -15,7 +15,7 @@ struct AwaySummary: View {
                     KeyValueRow("Flights", Format.number(report.flights))
                     KeyValueRow("Passengers", Format.number(report.passengers))
                     KeyValueRow("Earned from flights", Format.dollars(report.revenue))
-                    KeyValueRow("Bank balance", Format.signedMoney(report.cashChange))
+                    KeyValueRow("Cash change", Format.signedMoney(report.cashChange))
                     if report.stoppedForIssue {
                         Text("Something needs you, so the clock stopped early.").pixelFont(10.667).foregroundStyle(Theme.gold)
                     }

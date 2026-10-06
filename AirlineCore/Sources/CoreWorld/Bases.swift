@@ -113,6 +113,10 @@ extension World {
         guard let b = ops.bases.firstIndex(where: { $0.airport == code }), ops.bases[b].has(facility) else { throw WorldError.invalidChoice }
         ops.bases[b].facilities.removeAll { $0 == facility }
         if ops.bases[b].facilities.isEmpty { ops.bases.remove(at: b) }
+        // Without the longer runway or the paving, some aircraft may no longer fit this airport's routes.
+        for i in aircraft.indices where aircraft[i].allRouteIDs.contains(where: { rid in routes.first { $0.id == rid }?.stops.contains(code) == true }) {
+            leaveRouteIfItNoLongerFits(i)
+        }
     }
 
     /// What all bases cost per day.

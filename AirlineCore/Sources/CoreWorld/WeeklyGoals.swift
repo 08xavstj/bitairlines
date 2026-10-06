@@ -23,10 +23,10 @@ public struct WeeklyGoal: Sendable, Hashable, Codable {
 // MARK: Weekly goals
 extension Tuning {
     /// The goal is last week's result times this, at least the floor below.
-    public static let weeklyGoalStretch = 1.2
+    public static let weeklyGoalStretch = 1.1
     public static let weeklyGoalFloor: [WeeklyGoalKind: Int] = [.passengers: 30, .freightKg: 800, .flights: 10, .revenue: 10_000]
     /// The bonus is this share of last week's revenue, at least the minimum.
-    public static let weeklyGoalRewardShare = 0.15
+    public static let weeklyGoalRewardShare = 0.08
     public static let weeklyGoalMinimumReward = 5_000
 }
 

@@ -59,6 +59,8 @@ struct GameShell: View {
     @State private var confirmExit = false
     @State private var showMenu = false
     @State private var showSettings = false
+    /// What the menu asked for, done once its sheet has closed (two sheets cannot swap in one step).
+    @State private var afterMenu: (() -> Void)?
     @State private var coach: TutorialCoach
 
     init(session: GameSession, onExit: @escaping () -> Void, initialSection: GameSection = .map) {
@@ -84,11 +86,11 @@ struct GameShell: View {
         .overlay { AwaySummary(session: session) }
         .overlay(alignment: .bottom) { NoticeBanner(session: session) }
         .pixelConfirm("Leave the game?", message: "Your airline is saved. You can continue it from the title screen.", confirm: "Leave", isPresented: $confirmExit) { onExit() }
-        .sheet(isPresented: $showMenu) {
+        .sheet(isPresented: $showMenu, onDismiss: { afterMenu?(); afterMenu = nil }) {
             GameMenu(session: session,
-                     onAirline: { showMenu = false; section = .airline },
-                     onSettings: { showMenu = false; showSettings = true },
-                     onLeave: { showMenu = false; confirmExit = true })
+                     onAirline: { afterMenu = { section = .airline }; showMenu = false },
+                     onSettings: { afterMenu = { showSettings = true }; showMenu = false },
+                     onLeave: { afterMenu = { confirmExit = true }; showMenu = false })
         }
         .sheet(isPresented: $showSettings) { SettingsSheet() }
     }

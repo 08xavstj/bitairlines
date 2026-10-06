@@ -32,7 +32,7 @@ public enum Tuning {
     ])
     public static let fareScale = 0.85
     /// Fly-in communities pay up to this much more.
-    public static let isolationFarePremium = 1.1
+    public static let isolationFarePremium = 0.9
 
     // MARK: Cargo
     public static let cargoConstant = 0.18
@@ -168,9 +168,9 @@ extension Tuning {
     /// How long a rare find stays on the market (two weekly turnovers).
     public static let rareFindDays = 14
     /// Price as a share of the market value.
-    public static let rareLowHoursPriceShare = 0.70
+    public static let rareLowHoursPriceShare = 0.80
     public static let rareHeritagePriceShare = 1.0
-    public static let rareBarnFindPriceShare = 0.40
+    public static let rareBarnFindPriceShare = 0.60
     /// Age in years and condition in percent of each kind.
     public static let rareLowHoursAge: ClosedRange<Double> = 1...4
     public static let rareLowHoursCondition: ClosedRange<Double> = 94...99

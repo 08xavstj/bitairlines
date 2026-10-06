@@ -95,7 +95,8 @@ extension World {
     public var ops: Operations {
         get { operationsStore ?? Operations() }
         _modify {
-            if operationsStore == nil { operationsStore = Operations() }
+            // An older save gets the full upgrade (crews, rivals, a pilot market) before its first change, not a bare default.
+            if operationsStore == nil { upgradeOldSave() }
             yield &operationsStore!
         }
         set { operationsStore = newValue }

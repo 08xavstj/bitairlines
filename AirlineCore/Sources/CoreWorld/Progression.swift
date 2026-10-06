@@ -13,7 +13,7 @@ public struct LevelRequirement: Sendable, Hashable {
 public enum Progression {
     /// Index 0 leads to level 2.
     public static let requirements: [LevelRequirement] = [
-        LevelRequirement(level: 2, lifetimeRevenue: 1_500_000, reputation: 12, fee: 150_000),
+        LevelRequirement(level: 2, lifetimeRevenue: 1_500_000, reputation: 11, fee: 150_000),
         LevelRequirement(level: 3, lifetimeRevenue: 10_000_000, reputation: 22, fee: 600_000),
         LevelRequirement(level: 4, lifetimeRevenue: 60_000_000, reputation: 35, fee: 3_000_000),
         LevelRequirement(level: 5, lifetimeRevenue: 400_000_000, reputation: 50, fee: 15_000_000),

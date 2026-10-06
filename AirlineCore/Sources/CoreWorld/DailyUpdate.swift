@@ -31,8 +31,12 @@ extension World {
     mutating func rollRouteBooks() {
         for r in routes.indices { routes[r].book.closeDay() }
         for plane in aircraft where plane.isDelivered {
-            guard let rid = plane.routeID, let r = routeIndex(rid), let type = plane.type else { continue }
-            routes[r].book.add(RouteDay(aircraftCost: Int(LegEconomics.fixedPerDay(type: type).rounded())))
+            guard let type = plane.type else { continue }
+            // A shared aircraft's day is split between the routes it flies.
+            let share = LegEconomics.fixedPerDay(type: type) * plane.routeShare
+            for rid in plane.allRouteIDs {
+                if let r = routeIndex(rid) { routes[r].book.add(RouteDay(aircraftCost: Int(share.rounded()))) }
+            }
         }
     }
 

@@ -20,7 +20,8 @@ struct MarketingCard: View {
                         }
                         Spacer(minLength: 4)
                         if let running = world.activeCampaign(c) {
-                            Tag(text: "\(running.untilDay - world.clock.dayIndex) days left", color: Theme.good)
+                            let left = running.untilDay - world.clock.dayIndex
+                            Tag(text: "\(left) day\(left == 1 ? "" : "s") left", color: Theme.good)
                         } else {
                             Button("\(Format.compactMoney(world.campaignPrice(c)))") { session.perform(sound: .coin) { try $0.startCampaign(c) } }
                                 .buttonStyle(.smallProminent)

@@ -3,7 +3,7 @@ import CoreCatalog
 import CoreWorld
 
 /// Remembers the suggested routes, so they are not worked out again on every clock tick. They are worked out again when the
-/// network, the fleet's types, the permits or the level change, and otherwise once a game day.
+/// network, the fleet's types, the permits or the level change, and otherwise once a game week.
 @MainActor
 final class RouteIdeasCache {
     static let shared = RouteIdeasCache()
@@ -16,7 +16,7 @@ final class RouteIdeasCache {
         var types: [String]
         var level: Int
         var permits: [String]
-        var day: Int
+        var week: Int
     }
 
     private var key: Key?
@@ -29,7 +29,7 @@ final class RouteIdeasCache {
                       types: world.aircraft.map { $0.isDelivered ? $0.typeID : $0.typeID + " on order" }.sorted(),
                       level: world.airline.level,
                       permits: world.airline.permits.sorted(),
-                      day: world.clock.dayIndex)
+                      week: world.clock.dayIndex / 7)
         if key == self.key { return ideas }
         ideas = world.routeIdeas(limit: 5)
         self.key = key

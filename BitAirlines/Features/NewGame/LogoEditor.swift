@@ -161,7 +161,7 @@ struct LogoCanvas: View {
         .contentShape(Rectangle())
         .gesture(DragGesture(minimumDistance: 0)
             .onChanged { drag in
-                let x = Int(drag.location.x / cell), y = Int(drag.location.y / cell)
+                let x = Int((drag.location.x / cell).rounded(.down)), y = Int((drag.location.y / cell).rounded(.down))
                 guard x >= 0, y >= 0, x < n, y < n else { return }
                 let first = !strokeStarted
                 if first { willChange(); strokeStarted = true }

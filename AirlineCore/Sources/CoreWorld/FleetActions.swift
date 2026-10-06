@@ -13,8 +13,7 @@ extension World {
         guard type.level <= airline.level else { throw WorldError.levelTooLow(required: type.level) }
         if let problem = homeProblem(type) { throw problem }
         guard airline.cash >= listing.price else { throw WorldError.notEnoughCash(needed: listing.price) }
-        airline.cash -= listing.price
-        today.investments += listing.price
+        spendOnInvestment(listing.price)
         let id = takeAircraftID()
         let delivery = clock.minute + Valuation.usedDeliveryMinutes(listing)
         aircraft.append(Aircraft(id: id, typeID: type.id, registration: nextRegistration(), builtDay: clock.dayIndex - Int(listing.ageYears * 365.25),
@@ -35,8 +34,7 @@ extension World {
         guard type.level <= airline.level else { throw WorldError.levelTooLow(required: type.level) }
         if let problem = homeProblem(type) { throw problem }
         guard airline.cash >= type.priceUSD else { throw WorldError.notEnoughCash(needed: type.priceUSD) }
-        airline.cash -= type.priceUSD
-        today.investments += type.priceUSD
+        spendOnInvestment(type.priceUSD)
         let id = takeAircraftID()
         let delivery = clock.minute + Valuation.newDeliveryMinutes(level: type.level)
         aircraft.append(Aircraft(id: id, typeID: type.id, registration: nextRegistration(), builtDay: clock.dayIndex, condition: 100,
@@ -54,7 +52,9 @@ extension World {
     /// What a dealer pays for the aircraft today.
     public func saleValue(of plane: Aircraft) -> Int {
         guard let type = plane.type else { return 0 }
-        return Int(Double(Valuation.value(type: type, ageYears: plane.ageYears(atDay: clock.dayIndex), condition: plane.condition)) * 0.85)
+        let offer = Int(Double(Valuation.value(type: type, ageYears: plane.ageYears(atDay: clock.dayIndex), condition: plane.condition)) * 0.85)
+        // A dealer never pays more than the airline paid, so buying a bargain to sell it on at once (or after a free check) earns nothing.
+        return plane.price > 0 ? min(offer, plane.price) : offer
     }
 
     /// Sells an aircraft that has no route. Returns the price.
@@ -66,6 +66,7 @@ extension World {
         guard plane.routeID == nil else { throw WorldError.aircraftHasRoute }
         guard plane.jobID == nil else { throw WorldError.aircraftBusy }
         if case .flying = plane.status { throw WorldError.aircraftBusy }
+        if case .grounded = plane.status { throw WorldError.aircraftBusy }
         let price = saleValue(of: plane)
         airline.cash += price
         aircraft.remove(at: i)
@@ -88,8 +89,7 @@ extension World {
         guard !airline.permits.contains(country) else { throw WorldError.alreadyHasPermit }
         let price = permitPrice(country: country)
         guard airline.cash >= price else { throw WorldError.notEnoughCash(needed: price) }
-        airline.cash -= price
-        today.investments += price
+        spendOnInvestment(price)
         airline.permits.append(country)
         addNews(.permit, subject: country, amount: price)
     }
@@ -105,8 +105,7 @@ extension World {
         guard let r = nextLevelRequirement else { throw WorldError.requirementsNotMet }
         guard Progression.meets(r, airline: airline) else { throw WorldError.requirementsNotMet }
         guard airline.cash >= r.fee else { throw WorldError.notEnoughCash(needed: r.fee) }
-        airline.cash -= r.fee
-        today.investments += r.fee
+        spendOnInvestment(r.fee)
         airline.level = r.level
         issues.removeAll { if case .certificateReady = $0.kind { return true } else { return false } }
         addNews(.certificate, subject: "level", amount: r.level)

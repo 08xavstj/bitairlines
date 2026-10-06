@@ -98,6 +98,8 @@ struct ContinueSheet: View {
     @Binding var saves: [SaveSummary]
     let onPick: (Int) -> Void
     @Environment(\.dismiss) private var dismiss
+    /// The save waiting for "Delete" to be confirmed.
+    @State private var deleting: SaveSummary?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -107,12 +109,16 @@ struct ContinueSheet: View {
                     HStack(spacing: 12) {
                         VStack(alignment: .leading, spacing: 3) {
                             Text(save.airlineName).pixelFont(13.333).foregroundStyle(Theme.textPrimary)
-                            Text("\(Format.date(save.date)) - \(Format.compactMoney(save.cash)) - \(save.aircraft) aircraft - level \(save.level)")
-                                .pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                            if let date = save.date {
+                                Text("\(Format.date(date)) - \(Format.compactMoney(save.cash)) - \(save.aircraft) aircraft - level \(save.level)")
+                                    .pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                            } else {
+                                Text("This save was made by a newer version of the game, or is damaged.").pixelFont(10.667).foregroundStyle(Theme.bad)
+                            }
                         }
                         Spacer()
-                        Button("Delete") { store.delete(slot: save.slot); saves = store.summaries() }.buttonStyle(.smallDanger)
-                        Button("Play") { onPick(save.slot) }.buttonStyle(.smallProminent)
+                        Button("Delete") { deleting = save }.buttonStyle(.smallDanger)
+                        if !save.broken { Button("Play") { onPick(save.slot) }.buttonStyle(.smallProminent) }
                     }
                 }
             }
@@ -121,6 +127,12 @@ struct ContinueSheet: View {
         }
         .padding(16)
         .screenBackground()
+        .pixelConfirm("Delete \(deleting?.airlineName ?? "this airline")?", message: "The save is gone for good, on this device and in iCloud.", confirm: "Delete",
+                      destructive: true, isPresented: Binding(get: { deleting != nil }, set: { if !$0 { deleting = nil } })) {
+            if let save = deleting { store.delete(slot: save.slot) }
+            deleting = nil
+            saves = store.summaries()
+        }
     }
 }
 

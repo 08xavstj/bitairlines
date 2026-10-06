@@ -169,7 +169,14 @@ extension World {
     mutating func autoCrew(aircraftIndex i: Int, free: Bool) {
         guard free || ops.autoHirePilots, let type = aircraft[i].type else { return }
         let group = RatingGroup.of(type.family)
-        let have = ops.pilots.filter { $0.aircraftID == aircraft[i].id && $0.isRated(group) }.count
+        var have = ops.pilots.filter { $0.aircraftID == aircraft[i].id && $0.isRated(group) }.count
+        // Spare pilots already on the payroll (no aircraft, or one that was sold) fly the new aircraft before anyone new is hired.
+        let fleet = Set(aircraft.map(\.id))
+        for p in ops.pilots.indices where have < World.pilotsNeeded(type) && ops.pilots[p].isRated(group) && ops.pilots[p].trainingFor == nil
+            && (ops.pilots[p].aircraftID.map { !fleet.contains($0) } ?? true) {
+            ops.pilots[p].aircraftID = aircraft[i].id
+            have += 1
+        }
         for _ in 0..<max(0, World.pilotsNeeded(type) - have) {
             var pilot = makePilot(group: group)
             if !free { spendOnOverhead(pilot.hireFee) }

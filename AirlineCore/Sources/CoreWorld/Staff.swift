@@ -16,14 +16,14 @@ extension Tuning {
     /// Monthly salary at certificate level 1; it grows by half again for each level above.
     public static func staffBaseSalary(_ role: StaffRole) -> Int {
         switch role {
-        case .revenueManager: 6_000
-        case .operationsManager: 7_000
-        case .fleetPlanner: 8_000
+        case .revenueManager: 3_000
+        case .operationsManager: 3_500
+        case .fleetPlanner: 4_000
         }
     }
 
     /// Seats-full share above which the revenue manager raises the fare, and below which it lowers it.
-    public static let fareRaiseLoad = 0.85
+    public static let fareRaiseLoad = 0.87
     public static let fareCutLoad = 0.5
     public static let fareStep = 0.05
     /// The revenue manager keeps fares inside these multipliers.

@@ -19,12 +19,21 @@ public struct ActiveCampaign: Sendable, Hashable, Codable {
 
 // MARK: Marketing
 extension Tuning {
-    /// Price at certificate level 1; each level above adds the same again (a level 3 airline pays three times as much).
+    /// The least a campaign costs.
     public static func campaignBasePrice(_ c: Campaign) -> Int {
         switch c {
-        case .posters: 15_000
-        case .radio: 60_000
-        case .national: 250_000
+        case .posters: 3_000
+        case .radio: 12_000
+        case .national: 50_000
+        }
+    }
+
+    /// Above the floor, a campaign costs this share of the last 30 days' revenue, so it is a real choice at every size.
+    public static func campaignRevenueShare(_ c: Campaign) -> Double {
+        switch c {
+        case .posters: 0.015
+        case .radio: 0.05
+        case .national: 0.15
         }
     }
 
@@ -64,7 +73,10 @@ extension Tuning {
 }
 
 extension World {
-    public func campaignPrice(_ c: Campaign) -> Int { Tuning.campaignBasePrice(c) * max(1, airline.level) }
+    public func campaignPrice(_ c: Campaign) -> Int {
+        let revenue = books.suffix(30).reduce(0) { $0 + $1.revenue }
+        return max(Tuning.campaignBasePrice(c), Int(Double(revenue) * Tuning.campaignRevenueShare(c)))
+    }
 
     /// The campaign of this kind that is running, if any.
     public func activeCampaign(_ c: Campaign) -> ActiveCampaign? { ops.campaigns.first { $0.kind == c && $0.untilDay > clock.dayIndex } }

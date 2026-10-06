@@ -79,7 +79,7 @@ struct FleetScreen: View {
                                     Text(type.displayName).pixelFont(10.667).foregroundStyle(Theme.textPrimary).lineLimit(1)
                                 }
                                 Text(status.text).pixelFont(10.667).foregroundStyle(status.color).lineLimit(1)
-                                Text("Route: \(FleetText.routeName(plane, in: world))").pixelFont(10.667).foregroundStyle(Theme.textMuted).lineLimit(1)
+                                Text("Route: \(FleetText.routeName(plane, in: world))").pixelFont(10.667).foregroundStyle(Theme.textMuted).lineLimit(2)
                             }
                             Spacer()
                             VStack(alignment: .trailing, spacing: 3) {
@@ -237,8 +237,7 @@ struct LiverySheet: View {
                 HStack(spacing: 8) {
                     Button("Cancel") { dismiss() }.buttonStyle(.small)
                     Button("Apply") {
-                        session.perform { try $0.setLivery(aircraftID: aircraftID, livery: SpecialLivery(name: name, branding: branding)) }
-                        dismiss()
+                        if session.perform({ try $0.setLivery(aircraftID: aircraftID, livery: SpecialLivery(name: name, branding: branding)) }) { dismiss() }
                     }.buttonStyle(.smallProminent)
                 }
             }

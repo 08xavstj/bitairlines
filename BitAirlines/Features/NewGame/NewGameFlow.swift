@@ -100,9 +100,14 @@ struct NewGameFlow: View {
         let config = NewGameConfig(airlineName: draft.name.trimmingCharacters(in: .whitespaces), airlineCode: draft.code.uppercased(), homeAirport: draft.home,
                                    branding: draft.branding, difficulty: draft.difficulty, starterTypeID: draft.starterID, seed: UInt64.random(in: 1...UInt64.max),
                                    mode: draft.scenario == nil ? draft.mode : .normal, scenario: draft.scenario)
+        guard let slot = store.freeSlot() else {
+            problem = "All \(SaveStore.slotCount) save slots are taken. Go back to the title screen and delete an airline under Continue first."
+            return
+        }
         do {
             let world = try World.newGame(config)
-            onStart(world, store.freeSlot())
+            store.prepareNewGame(slot: slot)
+            onStart(world, slot)
         } catch let error as WorldError {
             problem = Messages.describe(error)
         } catch {
@@ -206,9 +211,14 @@ struct IdentityStep: View {
             Card {
                 VStack(alignment: .leading, spacing: 12) {
                     PixelField(title: "Airline name", text: $draft.name, prompt: "Aurora Air")
+                        // The pixel font only has plain letters, and long names do not fit the screens.
+                        .onChange(of: draft.name) { _, new in
+                            let clean = String(new.filter { $0.isASCII && ($0.isLetter || $0.isNumber || " -'&.".contains($0)) }.prefix(22))
+                            if clean != new { draft.name = clean }
+                        }
                     HStack(spacing: 12) {
                         PixelField(title: "Code (2 or 3 letters)", text: $draft.code, prompt: "ZZ", capitalization: .characters)
-                            .onChange(of: draft.code) { _, new in draft.code = String(new.uppercased().filter { $0.isLetter }.prefix(3)) }
+                            .onChange(of: draft.code) { _, new in draft.code = String(new.uppercased().filter { $0.isASCII && $0.isLetter }.prefix(3)) }
                         Button("Suggest a name") {
                             suggestion = (suggestion + 1) % Self.names.count
                             draft.name = Self.names[suggestion]

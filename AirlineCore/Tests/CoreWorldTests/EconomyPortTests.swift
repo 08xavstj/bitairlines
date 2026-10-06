@@ -51,8 +51,8 @@ import CoreSim
 
     @Test func faresMatchThePrototype() throws {
         let yev = try airport("YEV"), yzf = try airport("YZF"), yub = try airport("YUB")
-        #expect(close(Fares.market(from: yev, to: yzf, distanceKm: yev.distanceKm(to: yzf)), 263.352434))
-        #expect(close(Fares.market(from: yev, to: yub, distanceKm: yev.distanceKm(to: yub)), 121.397139))
+        #expect(close(Fares.market(from: yev, to: yzf, distanceKm: yev.distanceKm(to: yzf)), 253.011123))
+        #expect(close(Fares.market(from: yev, to: yub, distanceKm: yev.distanceKm(to: yub)), 111.597002))
     }
 
     @Test func legCostsMatchThePrototype() throws {
