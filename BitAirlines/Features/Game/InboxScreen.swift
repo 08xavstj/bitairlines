@@ -39,6 +39,9 @@ extension Messages {
         case .noCrew: return "\(item.subject) is waiting for a pilot."
         case .scenario: return item.subject == "failed" ? "The scenario deadline passed." : "Scenario complete: \(item.subject) medal."
         case .growth: return GrowthWords.news(item)
+        case .fleetMoved:
+            let route = world.routes.first { $0.id == item.amount }.map { Place.list($0.stops, separator: " - ") } ?? "another route"
+            return "\(item.subject) moved to \(route). Its old route had more aircraft than it needed and keeps the ones it does."
         }
     }
 

@@ -18,7 +18,7 @@ struct UpkeepCard: View {
                         .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                     let problem = world.restorationProblem(aircraftID: plane.id)
                     if let problem {
-                        Text(Messages.describe(problem)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
+                        Text(Messages.describe(problem, cash: world.airline.cash)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
                     }
                     Button { session.perform(sound: .coin) { try $0.startRestoration(aircraftID: plane.id) } } label: { HangarButtonText("Restore for \(Format.compactMoney(cost))") }
                         .buttonStyle(.smallProminent)

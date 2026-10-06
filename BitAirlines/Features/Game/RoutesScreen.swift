@@ -79,7 +79,7 @@ struct RouteCard: View {
         let planes = route.aircraftIDs.compactMap { id in world.aircraft.first { $0.id == id } }
         let types = planes.compactMap { $0.type }
         let cycleHours = cycle(route: route, type: types.first)
-        let needed = max(1, Int((route.frequency * cycleHours / 24).rounded(.up)))
+        let needed = world.aircraftNeeded(routeID: route.id) ?? max(1, Int((route.frequency * cycleHours / 24).rounded(.up)))
         let first = route.legs.first
         Card {
             VStack(alignment: .leading, spacing: 8) {
@@ -119,6 +119,7 @@ struct RouteCard: View {
                         Text("This schedule needs about \(needed) aircraft. With \(planes.count) some departures will be missed.").pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
                     } else if planes.count > needed {
                         Text("About \(needed) aircraft are enough for this schedule. The rest sit idle.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                        SpareAircraftButton(session: session, route: route)
                     }
                 }
                 if let onAddAircraft { Button("Add an aircraft") { onAddAircraft() }.buttonStyle(SmallButtonStyle(kind: planes.isEmpty ? .prominent : .plain)) }

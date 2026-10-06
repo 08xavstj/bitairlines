@@ -7,7 +7,8 @@ public enum StaffRole: String, Sendable, Hashable, Codable, CaseIterable {
     case revenueManager
     /// Settles breakdowns at once with the quickest repair the airline can pay for, so the game does not stop for them.
     case operationsManager
-    /// Every Monday puts parked aircraft on the route they suit best and resets schedules to the suggested ones.
+    /// Every Monday moves aircraft a route does not need to routes where they earn more (the route keeps enough), puts parked
+    /// aircraft on the route they suit best and resets schedules to the suggested ones.
     case fleetPlanner
 }
 
@@ -54,7 +55,10 @@ extension World {
     /// The staff's Monday work.
     mutating func weeklyStaff() {
         if hasStaff(.revenueManager) { manageFares() }
-        if hasStaff(.fleetPlanner) { planFleet() }
+        if hasStaff(.fleetPlanner) {
+            balanceFleet()
+            planFleet()
+        }
     }
 
     /// The fare people compare with on this route: 1.0, or the cheapest rival fare on any of its legs.

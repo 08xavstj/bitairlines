@@ -96,7 +96,7 @@ struct StaffCard: View {
         switch role {
         case .revenueManager: "Every Monday raises fares on routes that fly full and lowers them where seats fly empty."
         case .operationsManager: "Settles breakdowns at once with the quickest repair you can pay for, so the game does not stop."
-        case .fleetPlanner: "Every Monday puts parked aircraft on the route they suit best and sets each schedule to the suggested one."
+        case .fleetPlanner: "Every Monday moves aircraft a route does not need to routes where they earn more, keeping enough on each route, puts parked aircraft to work and sets each schedule to the suggested one."
         }
     }
 }

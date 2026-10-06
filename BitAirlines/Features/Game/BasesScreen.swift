@@ -92,7 +92,7 @@ struct BuildSheet: View {
                                     Text("\(Format.dollars(world.facilityPrice(facility, at: airport))) to build, \(Format.dollars(world.facilityUpkeep(facility, at: airport))) a day to keep")
                                         .pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
                                     if let problem, !built, problem != .alreadyBuilt {
-                                        Text(Messages.describe(problem)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
+                                        Text(Messages.describe(problem, cash: world.airline.cash)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
                                     }
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)

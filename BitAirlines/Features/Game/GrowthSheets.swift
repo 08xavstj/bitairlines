@@ -44,7 +44,7 @@ struct LeaveAirportSheet: View {
                         }
                     }
                     if let problem {
-                        Text(Messages.describe(problem)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
+                        Text(Messages.describe(problem, cash: session.world.airline.cash)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
                     }
                     Button {
                         if session.perform(sound: .coin, { _ = try $0.leaveAirport(code: code) }) { dismiss() }
@@ -125,7 +125,7 @@ struct HeadquartersRow: View {
                 Text("About \(Format.people(people)) people nearby. The move costs \(Format.dollars(option.fee)).")
                     .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                 if let problem {
-                    Text(Messages.describe(problem)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
+                    Text(Messages.describe(problem, cash: session.world.airline.cash)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)

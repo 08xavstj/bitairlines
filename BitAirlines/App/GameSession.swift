@@ -144,7 +144,7 @@ final class GameSession {
             if let sound { audio?.play(sound) }
             return true
         } catch let error as WorldError {
-            notice = Messages.describe(error)
+            notice = Messages.describe(error, cash: world.airline.cash)
             audio?.play(.denied)
             return false
         } catch {

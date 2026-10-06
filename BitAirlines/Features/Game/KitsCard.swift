@@ -31,7 +31,7 @@ struct KitsCard: View {
                                 Text(Words.explain(kit) + (fitted ? "" : " \(Format.dollars(world.kitPrice(kit, type: type))), \(kit.days) days in the hangar."))
                                     .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                                 if !fitted, let problem, problem != .aircraftBusy {
-                                    Text(Messages.describe(problem)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
+                                    Text(Messages.describe(problem, cash: world.airline.cash)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
                                 }
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)

@@ -59,6 +59,8 @@ public struct NewsItem: Sendable, Hashable, Codable {
         case perk, fuelBought, jobDone, jobLate, event, baseBuilt, kitFitted, slotBought, rivalRoute, pilotHired, pilotSick, noCrew, scenario
         /// Growing out of the bush (Growth.swift): subject "sold:<route name>", "left:<airport>" or "hq:<airport>"; amount in dollars.
         case growth
+        /// A spare aircraft moved to a route that needed it more (FleetBalance.swift): subject the registration, amount the new route's id.
+        case fleetMoved
     }
     public var minute: Int
     public var kind: Kind

@@ -39,7 +39,7 @@ enum SoundCues {
         case .certificate, .milestone, .scenario: .levelUp
         case .weather, .event, .rivalRoute, .pilotSick, .jobLate, .noCrew: .notice
         case .jobDone: .coin
-        case .aircraftSold, .breakdown, .loan, .permit, .perk, .fuelBought, .baseBuilt, .kitFitted, .slotBought, .pilotHired, .growth: nil
+        case .aircraftSold, .breakdown, .loan, .permit, .perk, .fuelBought, .baseBuilt, .kitFitted, .slotBought, .pilotHired, .growth, .fleetMoved: nil
         }
     }
 }

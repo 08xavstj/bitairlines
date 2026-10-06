@@ -3,7 +3,8 @@ import CoreWorld
 
 /// The words for what the core reports. Plain and specific; no hype.
 enum Messages {
-    static func describe(_ error: WorldError) -> String {
+    /// `cash` is the airline's cash now: with it, a price the airline cannot pay says how much is missing.
+    static func describe(_ error: WorldError, cash: Int? = nil) -> String {
         switch error {
         case .unknownAirport(let code): return "No airport with the code \(code)."
         case .unknownType: return "That aircraft model is not known."
@@ -11,7 +12,10 @@ enum Messages {
         case .unknownRoute: return "That route is gone."
         case .unknownListing: return "Someone else bought that aircraft."
         case .unknownIssue: return "That problem has already been dealt with."
-        case .notEnoughCash(let needed): return "You need \(Format.dollars(needed)) more."
+        case .notEnoughCash(let needed):
+            // `needed` is the full price, not the gap.
+            guard let cash else { return "This costs \(Format.dollars(needed)), more than you have." }
+            return "This costs \(Format.dollars(needed)). You have \(Format.dollars(max(0, cash))), so you need \(Format.dollars(needed - max(0, cash))) more."
         case .levelTooLow(let level): return "Needs certificate level \(level)."
         case .airportLevelTooHigh(let airport, let required): return "\(Place.name(airport)) is too busy for you yet. It needs certificate level \(required)."
         case .permitRequired(let country, let price): return "You need a permit for \(CountryCatalog.country(country)?.name ?? country): \(Format.dollars(price))."
