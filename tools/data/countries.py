@@ -1,0 +1,255 @@
+"""Country table: ISO code, display name (ASCII, the pixel font has no accents), world region group, wealth tier.
+
+Wealth tier is a rough GDP-per-person band that scales how much people fly and what they pay:
+1 low (under about 1.2k USD), 2 lower-middle, 3 upper-middle (4.5k to 14k), 4 high (14k to 40k), 5 very high (over 40k).
+Region groups: NAM CAM CAR SAM EUW EUE NRD RUS MEA NAF CAS SAS EAS SEA OCE SSA.
+Excluded on purpose: AQ (Antarctica), IO, UM and XP (military-only airfields).
+"""
+
+# iso|name|group|wealth
+_ROWS = """
+AE|United Arab Emirates|MEA|5
+AF|Afghanistan|CAS|1
+AG|Antigua and Barbuda|CAR|4
+AI|Anguilla|CAR|4
+AL|Albania|EUE|3
+AM|Armenia|CAS|3
+AO|Angola|SSA|2
+AR|Argentina|SAM|3
+AS|American Samoa|OCE|3
+AT|Austria|EUW|5
+AU|Australia|OCE|5
+AW|Aruba|CAR|4
+AZ|Azerbaijan|CAS|3
+BA|Bosnia and Herzegovina|EUE|3
+BB|Barbados|CAR|4
+BD|Bangladesh|SAS|2
+BE|Belgium|EUW|5
+BF|Burkina Faso|SSA|1
+BG|Bulgaria|EUE|3
+BH|Bahrain|MEA|4
+BI|Burundi|SSA|1
+BJ|Benin|SSA|2
+BL|Saint Barthelemy|CAR|4
+BM|Bermuda|NAM|5
+BN|Brunei|SEA|4
+BO|Bolivia|SAM|2
+BQ|Caribbean Netherlands|CAR|4
+BR|Brazil|SAM|3
+BS|Bahamas|CAR|4
+BT|Bhutan|SAS|2
+BW|Botswana|SSA|3
+BY|Belarus|EUE|3
+BZ|Belize|CAM|3
+CA|Canada|NAM|5
+CC|Cocos Islands|SEA|4
+CD|DR Congo|SSA|1
+CF|Central African Republic|SSA|1
+CG|Republic of the Congo|SSA|2
+CH|Switzerland|EUW|5
+CI|Cote d'Ivoire|SSA|2
+CK|Cook Islands|OCE|3
+CL|Chile|SAM|4
+CM|Cameroon|SSA|2
+CN|China|EAS|3
+CO|Colombia|SAM|3
+CR|Costa Rica|CAM|4
+CU|Cuba|CAR|3
+CV|Cape Verde|SSA|2
+CW|Curacao|CAR|4
+CX|Christmas Island|SEA|4
+CY|Cyprus|EUW|4
+CZ|Czechia|EUE|4
+DE|Germany|EUW|5
+DJ|Djibouti|SSA|2
+DK|Denmark|NRD|5
+DM|Dominica|CAR|3
+DO|Dominican Republic|CAR|3
+DZ|Algeria|NAF|3
+EC|Ecuador|SAM|3
+EE|Estonia|EUE|4
+EG|Egypt|NAF|2
+EH|Western Sahara|NAF|2
+ER|Eritrea|SSA|1
+ES|Spain|EUW|4
+ET|Ethiopia|SSA|1
+FI|Finland|NRD|5
+FJ|Fiji|OCE|3
+FK|Falkland Islands|SAM|4
+FM|Micronesia|OCE|2
+FO|Faroe Islands|NRD|5
+FR|France|EUW|5
+GA|Gabon|SSA|3
+GB|United Kingdom|EUW|5
+GD|Grenada|CAR|3
+GE|Georgia|CAS|3
+GF|French Guiana|SAM|4
+GG|Guernsey|EUW|5
+GH|Ghana|SSA|2
+GI|Gibraltar|EUW|5
+GL|Greenland|NAM|4
+GM|Gambia|SSA|1
+GN|Guinea|SSA|1
+GP|Guadeloupe|CAR|4
+GQ|Equatorial Guinea|SSA|3
+GR|Greece|EUW|4
+GT|Guatemala|CAM|3
+GU|Guam|OCE|4
+GW|Guinea-Bissau|SSA|1
+GY|Guyana|SAM|3
+HK|Hong Kong|EAS|5
+HN|Honduras|CAM|2
+HR|Croatia|EUE|4
+HT|Haiti|CAR|1
+HU|Hungary|EUE|4
+ID|Indonesia|SEA|3
+IE|Ireland|EUW|5
+IL|Israel|MEA|5
+IM|Isle of Man|EUW|5
+IN|India|SAS|2
+IQ|Iraq|MEA|3
+IR|Iran|MEA|3
+IS|Iceland|NRD|5
+IT|Italy|EUW|4
+JE|Jersey|EUW|5
+JM|Jamaica|CAR|3
+JO|Jordan|MEA|3
+JP|Japan|EAS|4
+KE|Kenya|SSA|2
+KG|Kyrgyzstan|CAS|2
+KH|Cambodia|SEA|2
+KI|Kiribati|OCE|2
+KM|Comoros|SSA|2
+KN|Saint Kitts and Nevis|CAR|4
+KP|North Korea|EAS|1
+KR|South Korea|EAS|4
+KW|Kuwait|MEA|4
+KY|Cayman Islands|CAR|5
+KZ|Kazakhstan|CAS|3
+LA|Laos|SEA|2
+LB|Lebanon|MEA|3
+LC|Saint Lucia|CAR|3
+LK|Sri Lanka|SAS|3
+LR|Liberia|SSA|1
+LS|Lesotho|SSA|2
+LT|Lithuania|EUE|4
+LU|Luxembourg|EUW|5
+LV|Latvia|EUE|4
+LY|Libya|NAF|3
+MA|Morocco|NAF|2
+MD|Moldova|EUE|3
+ME|Montenegro|EUE|3
+MF|Saint Martin|CAR|4
+MG|Madagascar|SSA|1
+MH|Marshall Islands|OCE|2
+MK|North Macedonia|EUE|3
+ML|Mali|SSA|1
+MM|Myanmar|SEA|2
+MN|Mongolia|EAS|3
+MO|Macau|EAS|5
+MP|Northern Mariana Islands|OCE|4
+MQ|Martinique|CAR|4
+MR|Mauritania|SSA|2
+MS|Montserrat|CAR|3
+MT|Malta|EUW|4
+MU|Mauritius|SSA|3
+MV|Maldives|SAS|3
+MW|Malawi|SSA|1
+MX|Mexico|NAM|3
+MY|Malaysia|SEA|3
+MZ|Mozambique|SSA|1
+NA|Namibia|SSA|3
+NC|New Caledonia|OCE|4
+NE|Niger|SSA|1
+NF|Norfolk Island|OCE|4
+NG|Nigeria|SSA|2
+NI|Nicaragua|CAM|2
+NL|Netherlands|EUW|5
+NO|Norway|NRD|5
+NP|Nepal|SAS|2
+NR|Nauru|OCE|3
+NU|Niue|OCE|3
+NZ|New Zealand|OCE|5
+OM|Oman|MEA|4
+PA|Panama|CAM|4
+PE|Peru|SAM|3
+PF|French Polynesia|OCE|4
+PG|Papua New Guinea|OCE|2
+PH|Philippines|SEA|2
+PK|Pakistan|SAS|2
+PL|Poland|EUE|4
+PM|Saint Pierre and Miquelon|NAM|4
+PR|Puerto Rico|CAR|4
+PT|Portugal|EUW|4
+PW|Palau|OCE|3
+PY|Paraguay|SAM|3
+QA|Qatar|MEA|5
+RE|Reunion|SSA|4
+RO|Romania|EUE|4
+RS|Serbia|EUE|3
+RU|Russia|RUS|3
+RW|Rwanda|SSA|1
+SA|Saudi Arabia|MEA|4
+SB|Solomon Islands|OCE|2
+SC|Seychelles|SSA|4
+SD|Sudan|NAF|1
+SE|Sweden|NRD|5
+SG|Singapore|SEA|5
+SH|Saint Helena|SSA|2
+SI|Slovenia|EUE|4
+SK|Slovakia|EUE|4
+SL|Sierra Leone|SSA|1
+SN|Senegal|SSA|2
+SO|Somalia|SSA|1
+SR|Suriname|SAM|3
+SS|South Sudan|SSA|1
+ST|Sao Tome and Principe|SSA|2
+SV|El Salvador|CAM|3
+SX|Sint Maarten|CAR|4
+SY|Syria|MEA|1
+SZ|Eswatini|SSA|2
+TC|Turks and Caicos|CAR|4
+TD|Chad|SSA|1
+TG|Togo|SSA|1
+TH|Thailand|SEA|3
+TJ|Tajikistan|CAS|2
+TL|Timor-Leste|SEA|2
+TM|Turkmenistan|CAS|3
+TN|Tunisia|NAF|3
+TO|Tonga|OCE|3
+TR|Turkey|MEA|3
+TT|Trinidad and Tobago|CAR|4
+TV|Tuvalu|OCE|3
+TW|Taiwan|EAS|4
+TZ|Tanzania|SSA|1
+UA|Ukraine|EUE|2
+UG|Uganda|SSA|1
+US|United States|NAM|5
+UY|Uruguay|SAM|4
+UZ|Uzbekistan|CAS|2
+VC|Saint Vincent and the Grenadines|CAR|3
+VE|Venezuela|SAM|2
+VG|British Virgin Islands|CAR|5
+VI|US Virgin Islands|CAR|4
+VN|Vietnam|SEA|2
+VU|Vanuatu|OCE|2
+WF|Wallis and Futuna|OCE|3
+WS|Samoa|OCE|3
+XK|Kosovo|EUE|3
+YE|Yemen|MEA|1
+YT|Mayotte|SSA|3
+ZA|South Africa|SSA|3
+ZM|Zambia|SSA|1
+ZW|Zimbabwe|SSA|1
+"""
+
+EXCLUDED = {'AQ', 'IO', 'UM', 'XP'}
+
+
+def load():
+    """Returns {iso: (name, group, wealth)}."""
+    table = {}
+    for line in _ROWS.strip().splitlines():
+        iso, name, group, wealth = line.split('|')
+        table[iso] = (name, group, int(wealth))
+    return table
