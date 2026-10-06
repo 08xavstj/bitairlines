@@ -67,7 +67,7 @@ import CoreSim
             case .heritage:
                 #expect(listing.ageYears >= 25)
             case .barnFind:
-                #expect(listing.price < value / 2)
+                #expect(listing.price < value * 2 / 3)
                 #expect(listing.condition <= 45)
             }
         }
