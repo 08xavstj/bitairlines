@@ -148,9 +148,9 @@ enum MapRenderer {
     /// Which airports to draw at a zoom, so the world view is not a smear of dots.
     static func shows(_ a: Airport, ppd: Double, important: Set<String>) -> Bool {
         if important.contains(a.code) { return true }
-        if ppd >= 18 { return true }
-        if ppd >= 8 { return a.kind == .large || a.kind == .medium || a.scheduled }
-        if ppd >= 3.5 { return a.kind == .large || a.population > 400_000 }
+        if ppd >= 40 { return true }
+        if ppd >= 14 { return a.scheduled || a.kind == .large || a.kind == .medium }
+        if ppd >= 5 { return a.kind == .large || a.population > 300_000 }
         return a.kind == .large && a.population > 2_500_000
     }
 
@@ -168,23 +168,50 @@ enum MapRenderer {
         }
     }
 
+    /// Whether an airport earns a name label at this zoom (more labels as the map zooms in).
+    static func wantsLabel(_ a: Airport, ppd: Double, mine: Bool) -> Bool {
+        if mine { return true }
+        if ppd >= 45 { return true }
+        if ppd >= 20 { return a.scheduled || a.kind != .small }
+        if ppd >= 10 { return a.kind == .large || a.population > 100_000 }
+        return false
+    }
+
     static func drawAirports(_ context: inout GraphicsContext, world: World, projection p: MapProjection, important: Set<String>, selected: Set<String>, labels: Bool) {
         let rect = p.visible
-        for a in AirportCatalog.all {
-            guard shows(a, ppd: p.camera.ppd, important: important) else { continue }
+        var inView: [(airport: Airport, point: CGPoint)] = []
+        for a in AirportCatalog.all where shows(a, ppd: p.camera.ppd, important: important) {
             let pt = p.point(for: a)
-            guard rect.contains(pt) else { continue }
+            if rect.contains(pt) { inView.append((airport: a, point: pt)) }
+        }
+        for item in inView {
+            let a = item.airport, pt = item.point
             let size: CGFloat = a.kind == .large ? 6 : (a.kind == .medium ? 5 : 4)
             let isMine = important.contains(a.code)
-            let isSelected = selected.contains(a.code)
             let fill: Color = isMine ? Theme.gold : (a.kind == .seaplane ? Theme.info : (a.scheduled ? Theme.textPrimary : Theme.textMuted))
             let box = CGRect(x: pt.x - size / 2, y: pt.y - size / 2, width: size, height: size)
             context.fill(Path(box.insetBy(dx: -1, dy: -1)), with: .color(.black.opacity(0.7)), style: FillStyle(antialiased: false))
             context.fill(Path(box), with: .color(fill), style: FillStyle(antialiased: false))
-            if isSelected { context.stroke(Path(box.insetBy(dx: -4, dy: -4)), with: .color(Theme.accent), style: StrokeStyle(lineWidth: 2)) }
-            if (labels && (p.camera.ppd >= 22 || isMine)) || isSelected {
-                let text = Text(a.code).font(Theme.pixel(8)).foregroundColor(isMine || isSelected ? Theme.gold : Theme.textPrimary)
-                context.draw(context.resolve(text), at: CGPoint(x: pt.x + size / 2 + 3, y: pt.y), anchor: .leading)
+            if selected.contains(a.code) { context.stroke(Path(box.insetBy(dx: -4, dy: -4)), with: .color(Theme.accent), style: StrokeStyle(lineWidth: 2)) }
+        }
+        if labels {
+            // Labels, most important first, skipping any that would land on one already drawn.
+            func priority(_ a: Airport) -> Int {
+                if selected.contains(a.code) { return 4 }
+                if important.contains(a.code) { return 3 }
+                return a.kind == .large ? 2 : (a.kind == .medium ? 1 : 0)
+            }
+            let ordered = inView.sorted { priority($0.airport) != priority($1.airport) ? priority($0.airport) > priority($1.airport) : $0.airport.population > $1.airport.population }
+            var placed: [CGRect] = []
+            for item in ordered {
+                let a = item.airport, pt = item.point
+                let mine = important.contains(a.code) || selected.contains(a.code)
+                guard wantsLabel(a, ppd: p.camera.ppd, mine: mine) else { continue }
+                let box = CGRect(x: pt.x + 6, y: pt.y - 6, width: CGFloat(a.code.count) * 7 + 4, height: 12)
+                if !mine && placed.contains(where: { $0.intersects(box.insetBy(dx: -2, dy: -1)) }) { continue }
+                placed.append(box)
+                let text = Text(a.code).font(Theme.pixel(8)).foregroundColor(mine ? Theme.gold : Theme.textPrimary)
+                context.draw(context.resolve(text), at: CGPoint(x: box.minX, y: pt.y), anchor: .leading)
             }
         }
         if let home = AirportCatalog.airport(world.airline.home) {
@@ -210,7 +237,7 @@ enum MapRenderer {
             guard p.visible.contains(pt) else { continue }
             let angle = Double(atan2(to.x - from.x, -(to.y - from.y)))
             guard let icon = Livery.mapIcon(sizeClass: Livery.sizeClass(seats: type.seats), branding: plane.livery?.branding ?? world.airline.branding) else { continue }
-            let scale: CGFloat = 2
+            let scale: CGFloat = 3
             var c = context
             c.translateBy(x: pt.x, y: pt.y)
             c.rotate(by: .radians(angle))

@@ -67,6 +67,30 @@ import CoreCatalog
         if case .boarding = w.aircraft[0].status {} else { Issue.record("an aircraft at the first stop should start boarding") }
     }
 
+    @Test func assigningPicksASensibleScheduleUntilTheFrequencyIsSetByHand() throws {
+        var w = try Fixtures.world()
+        let thin = try w.createRoute(stops: ["YEV", "YUB"])
+        try w.assign(aircraftID: w.aircraft[0].id, toRoute: thin)
+        #expect(w.routes[0].autoFrequency)
+        #expect(w.routes[0].frequency >= 0.5 && w.routes[0].frequency <= 1.5, "a Caravan on a thin route needs about one flight a day, got \(w.routes[0].frequency)")
+        try w.setFrequency(routeID: thin, perDay: 3)
+        #expect(!w.routes[0].autoFrequency && w.routes[0].frequency == 3)
+        try w.applySuggestedFrequency(routeID: thin)
+        #expect(w.routes[0].autoFrequency && w.routes[0].frequency <= 1.5)
+    }
+
+    @Test func aBusyRouteGetsMoreFlightsThanAThinOne() throws {
+        let w = try Fixtures.world(type: "dhc6", difficulty: .easy)
+        var a = w, b = w
+        let thin = try a.createRoute(stops: ["YEV", "YUB"])
+        let busy = try b.createRoute(stops: ["YEV", "YZF"])
+        let type = try #require(AircraftCatalog.type("dhc6"))
+        let thinFreq = a.suggestedFrequency(route: a.routes[a.routeIndex(thin)!], type: type)
+        let busyFreq = b.suggestedFrequency(route: b.routes[b.routeIndex(busy)!], type: type, aircraftCount: 4)
+        #expect(busyFreq >= thinFreq, "busy \(busyFreq) vs thin \(thinFreq)")
+        #expect(Route.frequencySteps.contains(thinFreq) && Route.frequencySteps.contains(busyFreq))
+    }
+
     @Test func anAircraftElsewhereFliesToTheRouteFirst() throws {
         var w = try Fixtures.world()
         let id = try w.createRoute(stops: ["YUB", "YSY"])

@@ -35,6 +35,8 @@ public struct Route: Sendable, Hashable, Codable, Identifiable {
     public var carriesCargo: Bool
     /// Departures per day on each leg (0.25 is one every four days). Aircraft wait for the next slot, so the schedule matches demand.
     public var frequency: Double
+    /// True until the player sets the frequency by hand: while true, assigning aircraft picks a sensible schedule.
+    public var autoFrequency: Bool
     public var legs: [LegState]
     public var aircraftIDs: [Int]
     public var openedDay: Int
@@ -48,6 +50,8 @@ public struct Route: Sendable, Hashable, Codable, Identifiable {
     public static let maxFare = 2.0
     public static let minFrequency = 0.25
     public static let maxFrequency = 24.0
+    /// The schedules offered in the app and picked by the suggestion.
+    public static let frequencySteps: [Double] = [0.25, 0.5, 1, 1.5, 2, 3, 4, 5, 6, 8, 10, 12, 16, 24]
 
     /// Minutes between departures on one leg.
     public var headwayMinutes: Int { max(1, Int((Double(GameClock.minutesPerDay) / frequency).rounded())) }

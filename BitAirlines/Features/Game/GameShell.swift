@@ -87,7 +87,7 @@ struct TopBar: View {
                 Text(Format.date(world.clock.date)).pixelFont(10.667).foregroundStyle(Theme.textPrimary)
                 Text("\(Format.weekdays[world.clock.weekday]) \(Format.time(world.clock))").pixelFont(10.667).foregroundStyle(Theme.textMuted)
             }
-            .frame(width: 92, alignment: .leading)
+            .frame(width: 122, alignment: .leading)
             SpeedControls(session: session)
             Spacer(minLength: 4)
             VStack(alignment: .trailing, spacing: 1) {
@@ -131,7 +131,7 @@ struct Rail: View {
     var body: some View {
         let waiting = session.world.issues.count
         ScrollView {
-            VStack(spacing: 6) {
+            VStack(spacing: 3) {
                 ForEach(GameSection.allCases) { s in
                     let on = s == section
                     Button { section = s } label: {
@@ -140,7 +140,7 @@ struct Rail: View {
                             Text(s.title.uppercased()).pixelFont(8).lineLimit(1).minimumScaleFactor(0.6)
                         }
                         .foregroundStyle(on ? Theme.onAccent : Theme.textMuted)
-                        .frame(width: 58, height: 50)
+                        .frame(width: 58, height: 41)
                         .background(PixelShape(step: 2).fill(on ? Theme.accent : Theme.surfaceRaised))
                         .overlay(alignment: .topTrailing) {
                             if s == .inbox && waiting > 0 {
@@ -153,7 +153,7 @@ struct Rail: View {
                     .accessibilitySelected(on)
                 }
             }
-            .padding(.vertical, 6).padding(.horizontal, 4)
+            .padding(.vertical, 4).padding(.horizontal, 4)
         }
         .frame(width: 66)
         .background(Theme.surface)
@@ -210,6 +210,7 @@ struct IssueOptions: View {
                         if option.costUSD > 0 { Text(Format.dollars(option.costUSD)) }
                         if option.days > 0 { Text("\(option.days) day\(option.days == 1 ? "" : "s")") }
                     }
+                    .padding(.horizontal, 14)
                 }
                 .buttonStyle(AnyButtonStyle(option.choice == .declareBankruptcy ? AnyButtonStyle(DangerWideButtonStyle()) : AnyButtonStyle(PrimaryButtonStyle())))
             }

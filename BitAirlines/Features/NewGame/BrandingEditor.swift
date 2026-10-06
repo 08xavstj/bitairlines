@@ -231,8 +231,7 @@ struct LiveryPreview: View {
                 LogoView(branding: branding, pixel: 4)
                 Text(name.isEmpty ? "YOUR AIRLINE" : name.uppercased()).pixelFont(13.333).foregroundStyle(Theme.textPrimary).lineLimit(2)
             }
-            AircraftSpriteView(family: .utilitySingle, branding: branding, pixel: 3)
-            AircraftSpriteView(family: .twinTurboprop, branding: branding, pixel: 3)
+            AircraftSpriteView(family: .utilitySingle, branding: branding, pixel: 2)
             AircraftSpriteView(family: .narrowbody, branding: branding, pixel: 2)
             AircraftSpriteView(family: .widebody, branding: branding, pixel: 2)
         }
@@ -246,7 +245,7 @@ struct BrandingEditor: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 14) {
-            Card { LiveryPreview(branding: branding, name: airlineName) }
+            ScrollView { Card { LiveryPreview(branding: branding, name: airlineName) } }
                 .frame(width: 270)
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {

@@ -42,7 +42,7 @@ struct InboxScreen: View {
             SectionTitle("News")
             ForEach(Array(world.news.reversed().enumerated()), id: \.offset) { _, item in
                 HStack(alignment: .top, spacing: 8) {
-                    Text(Format.date(GameClock(minute: item.minute).date)).pixelFont(10.667).foregroundStyle(Theme.textMuted).frame(width: 96, alignment: .leading)
+                    Text(Format.date(GameClock(minute: item.minute).date)).pixelFont(10.667).foregroundStyle(Theme.textMuted).frame(width: 122, alignment: .leading)
                     Text(Messages.news(item, in: world)).pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
                 }
             }

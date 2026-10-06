@@ -34,7 +34,7 @@ struct MarketScreen: View {
 struct SpecLine: View {
     let type: AircraftType
     var body: some View {
-        Text("\(type.seats) seats  \(Format.number(type.cargoKg)) kg freight  \(Format.number(type.rangeKm)) km  \(Format.number(type.cruiseKph)) km/h  runway \(Format.number(type.runwayFt)) ft")
+        Text("\(type.seats) seats  \(Format.number(type.cargoKg)) kg freight  \(Format.number(type.rangeKm)) km  \(Format.number(type.cruiseKph)) km/h  \(type.water ? "water only" : "runway " + Format.number(type.runwayFt) + " ft")")
             .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
     }
 }

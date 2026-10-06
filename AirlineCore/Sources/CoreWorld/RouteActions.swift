@@ -37,7 +37,7 @@ extension World {
                                  departuresThisWeek: 0, departuresLastWeek: 0, nextSlot: clock.minute))
         }
         let id = takeRouteID()
-        routes.append(Route(id: id, name: name ?? stops.joined(separator: "-"), stops: stops, fareMultiplier: 1.0, carriesCargo: true, frequency: 2.0, legs: legs, aircraftIDs: [],
+        routes.append(Route(id: id, name: name ?? stops.joined(separator: "-"), stops: stops, fareMultiplier: 1.0, carriesCargo: true, frequency: 2.0, autoFrequency: true, legs: legs, aircraftIDs: [],
                             openedDay: clock.dayIndex, flights: 0, revenueThisMonth: 0, costThisMonth: 0, revenueLastMonth: 0, costLastMonth: 0))
         addNews(.routeOpened, subject: routes[routes.count - 1].name, amount: id)
         return id
@@ -57,6 +57,27 @@ extension World {
     public mutating func setFrequency(routeID: Int, perDay: Double) throws {
         guard let r = routeIndex(routeID) else { throw WorldError.unknownRoute(routeID) }
         routes[r].frequency = min(Route.maxFrequency, max(Route.minFrequency, perDay))
+        routes[r].autoFrequency = false
+    }
+
+    /// A sensible number of departures per day for a route flown by `aircraftCount` aircraft of this type: enough to carry the market at a healthy load,
+    /// never more than the aircraft can actually fly in a day.
+    public func suggestedFrequency(route: Route, type: AircraftType, aircraftCount: Int = 1) -> Double {
+        let demand = (route.legs.map { $0.marketPaxPerDay * 0.75 }.min() ?? 0)
+        let wanted = demand / max(1.0, Double(type.seats) * 0.8)
+        let cycleHours = route.legs.reduce(0.0) { $0 + type.blockHours(km: $1.distanceKm) + Tuning.turnaroundHours(type.engine) }
+        let capacity = Tuning.maxBlockHoursPerDay(level: type.level) * 0.9 / max(0.5, cycleHours) * Double(max(1, aircraftCount))
+        let target = min(wanted, capacity)
+        return Route.frequencySteps.min { abs($0 - target) < abs($1 - target) } ?? 1
+    }
+
+    /// Re-picks the schedule from the aircraft now on the route (and turns automatic scheduling back on).
+    public mutating func applySuggestedFrequency(routeID: Int) throws {
+        guard let r = routeIndex(routeID) else { throw WorldError.unknownRoute(routeID) }
+        let planes = routes[r].aircraftIDs.compactMap { id in aircraft.first { $0.id == id } }
+        guard let type = planes.first?.type else { return }
+        routes[r].frequency = suggestedFrequency(route: routes[r], type: type, aircraftCount: planes.count)
+        routes[r].autoFrequency = true
     }
 
     public mutating func setCargo(routeID: Int, enabled: Bool) throws {
@@ -91,6 +112,7 @@ extension World {
         if let old = aircraft[i].routeID, let oldIndex = routeIndex(old) { routes[oldIndex].aircraftIDs.removeAll { $0 == aircraftID } }
         aircraft[i].routeID = routeID
         routes[r].aircraftIDs.append(aircraftID)
+        if routes[r].autoFrequency { routes[r].frequency = suggestedFrequency(route: routes[r], type: type, aircraftCount: routes[r].aircraftIDs.count) }
         if case .idle = aircraft[i].status {
             if let leg = routes[r].firstLeg(from: aircraft[i].location) {
                 aircraft[i].legIndex = leg

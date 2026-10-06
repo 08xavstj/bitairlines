@@ -76,6 +76,9 @@ struct RouteCard: View {
                 ListStepper(label: "Flights", values: RouteSteps.frequencies, current: route.frequency, display: RouteSteps.frequencyText) { v in
                     session.perform { try $0.setFrequency(routeID: route.id, perDay: v) }
                 }
+                if !route.autoFrequency && !planes.isEmpty {
+                    Button("Suggest a schedule") { session.perform { try $0.applySuggestedFrequency(routeID: route.id) } }.buttonStyle(.small)
+                }
                 ListStepper(label: "Fare", values: RouteSteps.fares, current: route.fareMultiplier, display: { fareText($0, first: first) }) { v in
                     session.perform { try $0.setFare(routeID: route.id, multiplier: v) }
                 }
