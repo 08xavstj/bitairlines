@@ -25,7 +25,7 @@ struct RealWeekGoalSection: View {
                 }
             }
             .frame(height: 8)
-            Text("\(WeeklyGoalCard.amount(goal.kind, progress)) of \(WeeklyGoalCard.amount(goal.kind, goal.target)) landed there. \(CalendarWords.days(world.realWeekDaysLeft)) left. Met so far: \(world.ops.realWeekGoalsMet).")
+            Text("\(WeeklyGoalCard.amount(goal.kind, progress)) of \(WeeklyGoalCard.amount(goal.kind, goal.target))\(goal.place == nil ? "" : " landed there"). \(CalendarWords.days(world.realWeekDaysLeft)) left. Met so far: \(world.ops.realWeekGoalsMet).")
                 .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
         }
     }

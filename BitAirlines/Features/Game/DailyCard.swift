@@ -17,9 +17,11 @@ struct DailyDispatchCard: View {
                     }
                     Text(status).pixelFont(10.667).foregroundStyle(world.dispatchStampedToday ? Theme.good : Theme.textPrimary)
                         .fixedSize(horizontal: false, vertical: true)
-                    StampRow(filled: Tuning.stampsPerReward - world.stampsToNextReward)
-                    Text("\(CalendarWords.stamps(world.stampsToNextReward)) more for the next reward: a classic paint scheme and a rare find in the hangar. The days do not have to be in a row.")
-                        .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                    HStack(alignment: .center, spacing: 10) {
+                        StampRow(filled: Tuning.stampsPerReward - world.stampsToNextReward)
+                        Text("\(CalendarWords.stamps(world.stampsToNextReward)) more for a classic paint scheme and a rare hangar find. Any days, not only in a row.")
+                            .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                    }
                 }
             }
         }

@@ -18,7 +18,8 @@ struct HomeApron: View {
             if case .flying = plane.status { return false }
             return true
         }
-        let images: [UIImage] = parked.prefix(4).compactMap { plane in
+        // The painter draws as many as fit the width and counts the rest; more than 8 would never fit.
+        let images: [UIImage] = parked.prefix(8).compactMap { plane in
             plane.type.flatMap { Livery.image(family: $0.family, branding: plane.livery?.branding ?? world.airline.branding) }
         }
         let rolling = world.aircraft.first { if case .flying = $0.status { return $0.flight?.from == home } else { return false } }
@@ -27,7 +28,7 @@ struct HomeApron: View {
             let t = reduceMotion ? 0 : timeline.date.timeIntervalSinceReferenceDate
             Canvas { context, size in
                 ApronPainter(size: size, t: t, code: world.airline.code, hasHangar: base?.has(.hangar) == true, hasDepot: base?.has(.fuelDepot) == true,
-                             hasLights: base?.has(.lights) == true).paint(&context, parked: images, rolling: rollImage)
+                             hasLights: base?.has(.lights) == true).paint(&context, parked: images, parkedCount: parked.count, rolling: rollImage)
             }
         }
         .accessibilityLabel("\(Place.name(home)) with \(parked.count) aircraft on the ground")
@@ -50,11 +51,30 @@ struct ApronPainter {
     private let wall = Color(hex: 0x5A6482)
     private let window = Color(hex: 0x8FB8FF)
 
+    /// Parked aircraft are drawn larger when the sprite is small.
+    private func standScale(_ image: UIImage) -> CGFloat { image.size.width > 70 ? 1.5 : 2 }
+
+    /// How many parked aircraft fit side by side, leaving room for the "+N more" label when some do not.
+    private func standsThatFit(_ parked: [UIImage], parkedCount: Int) -> Int {
+        let gap: CGFloat = 12
+        var count = 0
+        var used: CGFloat = 0
+        for image in parked {
+            let next = used + image.size.width * standScale(image) + gap
+            let left = parkedCount - (count + 1)
+            if next > size.width - 40 - (left > 0 ? 70 : 0) { break }
+            used = next
+            count += 1
+        }
+        return count
+    }
+
     private func block(_ context: inout GraphicsContext, _ x: CGFloat, _ y: CGFloat, _ w: CGFloat, _ h: CGFloat, _ color: Color) {
         context.fill(Path(CGRect(x: (x / px).rounded() * px, y: (y / px).rounded() * px, width: w, height: h)), with: .color(color), style: FillStyle(antialiased: false))
     }
 
-    func paint(_ context: inout GraphicsContext, parked: [UIImage], rolling: UIImage?) {
+    /// `parkedCount` is every aircraft on the ground at home; the ones that do not fit are shown as "+3 more".
+    func paint(_ context: inout GraphicsContext, parked: [UIImage], parkedCount: Int, rolling: UIImage?) {
         let w = size.width, h = size.height
         let runwayY = h - 30
         // Sky is the panel; grass, apron and runway are bands.
@@ -93,14 +113,20 @@ struct ApronPainter {
             block(&context, rightX, h * 0.42 - 18, 36, 6, Theme.bad)
         }
 
-        // Aircraft at their stands.
-        let stand = max(110, (w - 40) / CGFloat(max(1, parked.count + 1)))
-        for (n, image) in parked.enumerated() {
-            let scale: CGFloat = image.size.width > 70 ? 1.5 : 2
+        // Aircraft at their stands: only as many as fit inside the canvas, then a count of the rest.
+        let shown = standsThatFit(parked, parkedCount: parkedCount)
+        let extra = parkedCount - shown
+        let room = w - 40 - (extra > 0 ? 70 : 0)
+        let stand = room / CGFloat(max(1, shown))
+        for (n, image) in parked.prefix(shown).enumerated() {
+            let scale = standScale(image)
             let iw = image.size.width * scale, ih = image.size.height * scale
-            let cx = 30 + stand * CGFloat(n) + stand / 2
+            let cx = 20 + stand * CGFloat(n) + stand / 2
             let rect = CGRect(x: (cx - iw / 2).rounded(), y: (h * 0.72 - ih).rounded(), width: iw, height: ih)
             context.draw(Image(uiImage: image).interpolation(.none), in: rect)
+        }
+        if extra > 0 {
+            context.draw(Text("+\(extra) MORE").font(Theme.pixel(10.667)).foregroundStyle(Theme.gold), at: CGPoint(x: w - 50, y: h * 0.72 - 12))
         }
 
         // A fuel truck driving back and forth along the apron.
@@ -136,12 +162,17 @@ struct DeparturesBoard: View {
         Card {
             VStack(alignment: .leading, spacing: 4) {
                 Text("DEPARTURES FROM \(Place.name(home).uppercased())").pixelFont(10.667).foregroundStyle(Theme.gold)
+                    .fixedSize(horizontal: false, vertical: true)
                 if rows.isEmpty { Text("Nothing waiting to leave home right now.").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
                 ForEach(Array(rows.prefix(5).enumerated()), id: \.offset) { _, row in
-                    HStack(spacing: 12) {
+                    HStack(alignment: .top, spacing: 12) {
                         Text(Format.time(GameClock(minute: max(row.time, world.clock.minute)))).pixelFont(10.667).foregroundStyle(Theme.gold).frame(width: 60, alignment: .leading)
-                        Text(row.text).pixelFont(10.667).foregroundStyle(Theme.textPrimary).lineLimit(1)
+                        Text(row.text).pixelFont(10.667).foregroundStyle(Theme.textPrimary)
+                            .fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity, alignment: .leading)
                     }
+                }
+                if rows.count > 5 {
+                    Text("and \(rows.count - 5) more").pixelFont(10.667).foregroundStyle(Theme.textMuted)
                 }
             }
         }

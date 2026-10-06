@@ -179,13 +179,10 @@ struct BaseStep: View {
                                 Spacer()
                                 if selected { Tag(text: "Selected", color: Theme.good) }
                             }
-                            Text(airport.name).pixelFont(10.667).foregroundStyle(Theme.textMuted)
-                            HStack(spacing: 12) {
-                                Text("People nearby \(Format.people(airport.population))")
-                                Text("Runway \(Format.number(airport.runwayFt)) ft \(airport.surface == .gravel ? "gravel" : (airport.surface == .water ? "water" : "paved"))")
-                                Text("\(HomeStats.neighbours(code)) airports within 600 km")
-                            }
-                            .pixelFont(10.667).foregroundStyle(Theme.textPrimary)
+                            Text(airport.name).pixelFont(10.667).foregroundStyle(Theme.textMuted).multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
+                            // One text, so it wraps as a whole instead of squeezing three columns.
+                            Text("People nearby \(Format.people(airport.population)). Runway \(Format.number(airport.runwayFt)) ft \(airport.surface == .gravel ? "gravel" : (airport.surface == .water ? "water" : "paved")). \(HomeStats.neighbours(code)) airports within 600 km.")
+                                .pixelFont(10.667).foregroundStyle(Theme.textPrimary).multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(12)
@@ -210,23 +207,32 @@ struct IdentityStep: View {
         Page {
             Card {
                 VStack(alignment: .leading, spacing: 12) {
-                    PixelField(title: "Airline name", text: $draft.name, prompt: "Aurora Air")
-                        // The pixel font only has plain letters, and long names do not fit the screens.
-                        .onChange(of: draft.name) { _, new in
-                            let clean = String(new.filter { $0.isASCII && ($0.isLetter || $0.isNumber || " -'&.".contains($0)) }.prefix(22))
-                            if clean != new { draft.name = clean }
-                        }
-                    HStack(spacing: 12) {
-                        PixelField(title: "Code (2 or 3 letters)", text: $draft.code, prompt: "ZZ", capitalization: .characters)
-                            .onChange(of: draft.code) { _, new in draft.code = String(new.uppercased().filter { $0.isASCII && $0.isLetter }.prefix(3)) }
+                    // The suggestion button sits by the name it changes (it also sets a matching code).
+                    HStack(alignment: .bottom, spacing: 12) {
+                        PixelField(title: "Airline name (3 to 22 letters)", text: $draft.name, prompt: "Aurora Air")
+                            // The pixel font only has plain letters, and long names do not fit the screens.
+                            .onChange(of: draft.name) { _, new in
+                                let clean = String(new.filter { $0.isASCII && ($0.isLetter || $0.isNumber || " -'&.".contains($0)) }.prefix(22))
+                                if clean != new { draft.name = clean }
+                            }
                         Button("Suggest a name") {
                             suggestion = (suggestion + 1) % Self.names.count
                             draft.name = Self.names[suggestion]
                             draft.code = Self.initials(Self.names[suggestion])
-                        }.buttonStyle(.small)
+                        }
+                        .buttonStyle(.small)
                     }
+                    PixelField(title: "Code (2 or 3 letters)", text: $draft.code, prompt: "ZZ", capitalization: .characters)
+                        .onChange(of: draft.code) { _, new in draft.code = String(new.uppercased().filter { $0.isASCII && $0.isLetter }.prefix(3)) }
+                        .frame(maxWidth: 240, alignment: .leading)
                     Text("Your flights will be called \(draft.code.isEmpty ? "ZZ" : draft.code)101, \(draft.code.isEmpty ? "ZZ" : draft.code)102 and so on.")
-                        .pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                        .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                    // Says why Next is greyed out.
+                    if draft.name.trimmingCharacters(in: .whitespaces).count < 3 {
+                        Text("The name needs at least 3 letters.").pixelFont(10.667).foregroundStyle(Theme.gold)
+                    } else if draft.code.count < 2 {
+                        Text("The code needs 2 or 3 letters.").pixelFont(10.667).foregroundStyle(Theme.gold)
+                    }
                 }
             }
         }

@@ -5,6 +5,8 @@ import CoreWorld
 /// The world map: pan and zoom, tap airports, plan routes, watch the aircraft fly.
 struct MapScreen: View {
     let session: GameSession
+    /// While the guide shows a step, its strip says what to do, so the map's own NEXT line stays out of the way.
+    var guideRunning = false
     @State private var camera: MapCamera
     @State private var dragStart: MapCamera?
     @State private var pinchStart: Double?
@@ -17,8 +19,9 @@ struct MapScreen: View {
     /// Frames of the buttons and panels over the map (no airport name goes under them).
     @State private var covered: [CGRect] = []
 
-    init(session: GameSession) {
+    init(session: GameSession, guideRunning: Bool = false) {
         self.session = session
+        self.guideRunning = guideRunning
         let home = AirportCatalog.airport(session.world.airline.home)
         _camera = State(initialValue: MapCamera(lat: home?.latitude ?? 0, lon: home?.longitude ?? 0, ppd: 30))
         #if DEBUG
@@ -82,13 +85,15 @@ struct MapScreen: View {
         .sheet(item: Binding(get: { building.map { CodeSheet(id: $0) } }, set: { building = $0?.id })) { sheet in
             BuildSheet(session: session, code: sheet.id)
         }
+        // A stopping issue is drawn over the game, under any sheet: close the sheet so the player sees it.
+        .onChange(of: session.world.isPausedByIssue) { _, now in if now { building = nil } }
     }
 
     // MARK: Toolbar
 
     private var toolbar: some View {
         HStack(spacing: 6) {
-            NextStepLine(session: session)
+            if !guideRunning && !planning { NextStepLine(session: session) }
             PixelSquareButton(icon: .plus, label: "Zoom in") { zoom(factor: 1.6) }
             PixelSquareButton(icon: .minus, label: "Zoom out") { zoom(factor: 1 / 1.6) }
             Button("Home") { goHome() }.buttonStyle(.small)
@@ -173,12 +178,12 @@ struct AirportPanel: View {
         let home = AirportCatalog.airport(world.airline.home)
         Card {
             VStack(alignment: .leading, spacing: 6) {
-                HStack {
-                    Text(airport.label.uppercased()).pixelFont(13.333).foregroundStyle(Theme.accent).lineLimit(1)
-                    Spacer()
+                HStack(alignment: .top) {
+                    Text(airport.label.uppercased()).pixelFont(13.333).foregroundStyle(Theme.accent).fixedSize(horizontal: false, vertical: true)
+                    Spacer(minLength: 8)
                     PixelSquareButton(icon: .close, label: "Close", action: onClose)
                 }
-                Text(airport.name).pixelFont(10.667).foregroundStyle(Theme.textMuted).lineLimit(2)
+                Text(airport.name).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                 KeyValueRow("Country", CountryCatalog.country(airport.country)?.name ?? airport.country)
                 KeyValueRow("People nearby", Format.people(airport.population))
                 KeyValueRow("Runway", "\(Format.number(world.runwayFt(at: airport))) ft \(world.surface(at: airport) == .gravel ? "gravel" : (world.surface(at: airport) == .water ? "water" : "paved"))")
@@ -195,7 +200,7 @@ struct AirportPanel: View {
                     if !world.airline.permits.contains(airport.country) { Tag(text: "Permit needed", color: Theme.gold) }
                 }
                 HStack(spacing: 8) {
-                    Button("Plan a route from here") { onPlan() }.buttonStyle(.smallProminent).disabled(locked)
+                    Button("Plan a route") { onPlan() }.buttonStyle(.smallProminent).disabled(locked)
                     Button("Build here") { onBuild() }.buttonStyle(.small).disabled(locked)
                 }
             }
@@ -223,7 +228,7 @@ struct RoutePlannerPanel: View {
                 if stops.isEmpty {
                     Text("Tap airports on the map, in the order you want to fly them.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
                 } else {
-                    Text(Place.list(stops, separator: " > ")).pixelFont(13.333).foregroundStyle(Theme.textPrimary).lineLimit(2)
+                    Text(Place.list(stops, separator: " > ")).pixelFont(13.333).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
                     Text("Cycle \(Format.km(cycleKm))" + (stops.count > 2 ? ", back to \(Place.name(stops[0]))" : ", and back")).pixelFont(10.667).foregroundStyle(Theme.textMuted)
                 }
                 if stops.count >= 2, let problem {

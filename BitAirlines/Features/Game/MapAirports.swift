@@ -90,11 +90,19 @@ struct MapAirportLayout {
             let text = d.airport.label
             let width = widths[text] ?? textWidth(text)
             widths[text] = width
-            // The box covers the text and its one-point black outline.
-            let box = CGRect(x: d.point.x + 5, y: d.point.y - 6, width: width + 2, height: 12)
-            guard screen.contains(box) else { continue }
-            if blocked.contains(where: { $0.insetBy(dx: -2, dy: -2).intersects(box) }) { continue }
-            if !mine && placed.contains(where: { $0.intersects(box.insetBy(dx: -2, dy: -1)) }) { continue }
+            // The box covers the text and its one-point black outline. The name goes right of the dot, or left of it
+            // when the right side runs off the screen, sits under a button or hits a name already placed.
+            let right = CGRect(x: d.point.x + 5, y: d.point.y - 6, width: width + 2, height: 12)
+            let left = CGRect(x: d.point.x - 7 - width, y: d.point.y - 6, width: width + 2, height: 12)
+            var chosen: CGRect?
+            for box in [right, left] {
+                if !screen.contains(box) { continue }
+                if blocked.contains(where: { $0.insetBy(dx: -2, dy: -2).intersects(box) }) { continue }
+                if !mine && placed.contains(where: { $0.intersects(box.insetBy(dx: -2, dy: -1)) }) { continue }
+                chosen = box
+                break
+            }
+            guard let box = chosen else { continue }
             placed.append(box)
             labels.append(Label(text: text, origin: CGPoint(x: box.minX + 1, y: d.point.y), mine: mine))
         }

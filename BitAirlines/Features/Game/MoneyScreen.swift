@@ -20,7 +20,7 @@ struct DailyBars: View {
                 context.fill(Path(rect), with: .color(day.net >= 0 ? Theme.good : Theme.bad), style: FillStyle(antialiased: false))
             }
         }
-        .frame(height: 90)
+        .frame(height: 64)
         .accessibilityLabel("Daily profit for the last 60 days")
     }
 }
@@ -35,26 +35,38 @@ struct MoneyScreen: View {
         let revenue = recent.reduce(0) { $0 + $1.revenue }
         let costs = recent.reduce(0) { $0 + $1.flightCosts + $1.overhead }
         let invested = recent.reduce(0) { $0 + $1.investments } + world.today.investments
+        // Order: cash and result first, then goals and level, then the ways to spend, then loans and permits.
         Page {
             ScreenHeader("Money")
+            Card {
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack(alignment: .center, spacing: 12) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("CASH").pixelFont(8).foregroundStyle(Theme.textMuted)
+                            Text(Format.dollars(world.airline.cash)).pixelFont(21.333).foregroundStyle(world.airline.cash < 0 ? Theme.bad : Theme.good).lineLimit(1).fixedSize()
+                        }
+                        Spacer(minLength: 12)
+                        VStack(alignment: .trailing, spacing: 2) {
+                            Text("RESULT, LAST 30 DAYS").pixelFont(8).foregroundStyle(Theme.textMuted)
+                            Text(Format.signedMoney(revenue - costs)).pixelFont(16).foregroundStyle(revenue >= costs ? Theme.good : Theme.bad).lineLimit(1).fixedSize()
+                        }
+                    }
+                    DailyBars(books: world.books)
+                    KeyValueRow("Earned from flying", Format.compactMoney(revenue), color: Theme.good)
+                    KeyValueRow("Running costs", Format.compactMoney(costs), color: Theme.bad)
+                    KeyValueRow("Invested", Format.compactMoney(invested))
+                    KeyValueRow("Pilot salaries", "\(Format.dollars(world.pilotPayroll)) a month")
+                    KeyValueRow("Base upkeep", "\(Format.dollars(world.baseUpkeepPerDay)) a day")
+                    Text("All for the last 30 days. Invested is what the airline keeps: aircraft, bases, kits, slots, training, permits and certificates. The result and the bars leave it out.")
+                        .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            SectionTitle("Goals and level")
             WeeklyGoalCard(world: world, session: session)
             DailyDispatchCard(world: world)
             SeasonCard(world: world)
-            Card {
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(Format.dollars(world.airline.cash)).pixelFont(21.333).foregroundStyle(world.airline.cash < 0 ? Theme.bad : Theme.good)
-                    KeyValueRow("Last 30 days: earned from flying", Format.compactMoney(revenue), color: Theme.good)
-                    KeyValueRow("Last 30 days: running costs", Format.compactMoney(costs), color: Theme.bad)
-                    KeyValueRow("Operating result", Format.signedMoney(revenue - costs), color: revenue >= costs ? Theme.good : Theme.bad)
-                    KeyValueRow("Last 30 days: invested", Format.compactMoney(invested))
-                    DailyBars(books: world.books)
-                    Text("Invested is money spent on things the airline keeps: aircraft, bases, kits, slots, training, permits and certificates. The result and the bars leave it out.")
-                        .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
-                    KeyValueRow("Pilot salaries", "\(Format.dollars(world.pilotPayroll)) a month")
-                    KeyValueRow("Base upkeep", "\(Format.dollars(world.baseUpkeepPerDay)) a day")
-                }
-            }
             certificateCard(world)
+            SectionTitle("Spending")
             SponsorCard(session: session)
             MarketingCard(session: session)
             StaffCard(session: session)
@@ -63,18 +75,20 @@ struct MoneyScreen: View {
             Card {
                 VStack(alignment: .leading, spacing: 8) {
                     ForEach(world.airline.loans) { loan in
-                        HStack {
+                        HStack(spacing: 8) {
                             Text("\(Format.dollars(loan.remaining)) at \(Int((loan.annualRate * 100).rounded()))%, \(loan.monthsLeft) months left").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
-                            Spacer()
+                                .fixedSize(horizontal: false, vertical: true)
+                            Spacer(minLength: 8)
                             Button("Repay") { session.perform(sound: .coin) { try $0.repayLoan(id: loan.id) } }.buttonStyle(.small).disabled(world.airline.cash < loan.remaining)
                         }
                     }
                     if world.airline.loans.isEmpty { Text("No loans.").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
                     let room = max(0, world.borrowingLimit - world.totalDebt)
                     let top = Double(max(100_000, room / 100_000 * 100_000))
+                    let amount = Int(min(loanAmount, top))
                     PixelStepper(label: "Borrow", value: Binding(get: { min(loanAmount, top) }, set: { loanAmount = $0 }), range: 100_000...top, step: 100_000, display: { Format.compactMoney(Int($0)) })
                     Text("You can borrow up to \(Format.compactMoney(world.borrowingLimit)) in all; \(Format.compactMoney(room)) is left. Interest is 8.5% a year, paid back over five years.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
-                    Button("Take the loan") { session.perform(sound: .coin) { try $0.takeLoan(amount: Int(min(loanAmount, top))) } }.buttonStyle(.smallProminent).disabled(room < 100_000)
+                    Button("Borrow \(Format.compactMoney(amount))") { session.perform(sound: .coin) { try $0.takeLoan(amount: amount) } }.buttonStyle(.smallProminent).disabled(room < 100_000)
                 }
             }
             SectionTitle("Permits")

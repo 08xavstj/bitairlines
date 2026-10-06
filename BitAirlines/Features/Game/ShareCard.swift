@@ -20,8 +20,9 @@ struct Postcard: View {
                     LogoView(branding: branding, pixel: 2, background: Livery.color(PixelPalette.white))
                         .overlay(Rectangle().stroke(Livery.color(PixelPalette.ink), lineWidth: 2))
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(airlineName.uppercased()).pixelFont(16).foregroundStyle(Livery.color(PixelPalette.ink)).lineLimit(1).minimumScaleFactor(0.6)
-                        Text("Home: \(homeName)").pixelFont(10.667).foregroundStyle(Livery.color(PostcardSky.navy)).lineLimit(1)
+                        // Names are up to 22 letters: two lines at most, never cut off.
+                        Text(airlineName.uppercased()).pixelFont(16).foregroundStyle(Livery.color(PixelPalette.ink)).lineLimit(2).fixedSize(horizontal: false, vertical: true)
+                        Text("Home: \(homeName)").pixelFont(10.667).foregroundStyle(Livery.color(PostcardSky.navy)).lineLimit(2).fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 Spacer(minLength: 0)

@@ -15,11 +15,15 @@ struct MarketScreen: View {
         let used = usedListings(world, fits: fits)
         let new = newTypes(fits: fits)
         Page {
-            ScreenHeader(title: "Hangar") { Text("Cash \(Format.compactMoney(world.airline.cash))").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
-            PixelChoice(options: [(label: "Used", value: 0), (label: "New", value: 1)], selection: $tab)
+            ScreenHeader(title: "Hangar") {
+                HStack(spacing: 12) {
+                    Text("Cash \(Format.compactMoney(world.airline.cash))").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                    PixelChoice(options: [(label: "Used", value: 0), (label: "New", value: 1)], selection: $tab).frame(width: 200)
+                }
+            }
             MarketFilterBar(filter: $filter)
             if tab == 0 {
-                Text("Used aircraft are ferried to your home airport within a day. The listings change every week.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                Text("Used aircraft reach your home airport within a day. The listings change every week.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                 RewardButton(session: session, kind: .brokersTip)
                 ForEach(used) { listing in
                     if let type = AircraftCatalog.type(listing.typeID), let fit = fits[type.id] {
@@ -27,13 +31,25 @@ struct MarketScreen: View {
                     }
                 }
             } else {
-                Text("New aircraft cost more and take a little longer to arrive, but they are in perfect condition.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                Text("New aircraft cost more and take longer to arrive, but come in perfect condition.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                 ForEach(new) { type in
                     if let fit = fits[type.id] { NewCard(session: session, type: type, fit: fit) }
                 }
             }
-            if (tab == 0 && used.isEmpty) || (tab == 1 && new.isEmpty) {
-                Text("Nothing for sale matches. Clear the search or pick another level.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+            if (tab == 0 && used.isEmpty) || (tab == 1 && new.isEmpty) { emptyNote }
+        }
+    }
+
+    /// Why the list is empty, and the way out.
+    private var emptyNote: some View {
+        let filtered = filter != MarketFilter()
+        return Card {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(filtered ? "Nothing for sale matches the search and filters." : (tab == 0 ? "No used aircraft for sale this week. New listings come every week, or look at the New tab." : "No new aircraft to order right now."))
+                    .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                if filtered {
+                    Button { filter = MarketFilter() } label: { HangarButtonText("Clear search and filters") }.buttonStyle(.small)
+                }
             }
         }
     }
@@ -81,17 +97,20 @@ struct UsedCard: View {
         // A heritage find is shown in the paint it arrives in.
         let paint = listing.rare == .heritage ? RareFinds.heritageLivery(logo: world.airline.branding.logo).branding : world.airline.branding
         Card {
-            HStack(spacing: 12) {
+            HStack(alignment: .top, spacing: 12) {
                 AircraftSpriteView(family: type.family, branding: paint, pixel: 2).frame(width: 130)
-                VStack(alignment: .leading, spacing: 3) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(type.displayName.uppercased()).pixelFont(13.333).foregroundStyle(locked ? Theme.textMuted : Theme.textPrimary)
+                        .fixedSize(horizontal: false, vertical: true)
                     if let rare = listing.rare {
-                        Tag(text: "Rare find", color: Theme.gold)
-                        Text(Words.explain(rare)).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
-                        RewardButton(session: session, kind: .holdRareFind, target: listing.id)
+                        HStack(alignment: .top, spacing: 8) {
+                            Tag(text: "Rare find", color: Theme.gold)
+                            Text(Words.explain(rare)).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                        }
                     }
-                    Text(type.displayName.uppercased()).pixelFont(13.333).foregroundStyle(locked ? Theme.textMuted : Theme.textPrimary).lineLimit(1)
                     SpecLine(type: type)
-                    Text("\(Int(listing.ageYears)) years old, condition \(Int(listing.condition))%, arrives in \(Format.wait(minutes: Valuation.usedDeliveryMinutes(listing)))").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
+                    Text("\(Int(listing.ageYears)) years old, condition \(Int(listing.condition))%, arrives in \(Format.wait(minutes: Valuation.usedDeliveryMinutes(listing)))")
+                        .pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
                     if listing.rare == .barnFind {
                         let cost = Restorations.cost(type: type, ageYears: listing.ageYears)
                         let days = Restorations.days(ageYears: listing.ageYears, fasterHangar: false)
@@ -99,15 +118,12 @@ struct UsedCard: View {
                             .pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
                     }
                     FitSummary(fit: fit)
+                    if listing.rare != nil { RewardButton(session: session, kind: .holdRareFind, target: listing.id) }
                 }
-                Spacer()
-                VStack(alignment: .trailing, spacing: 6) {
-                    Text(Format.dollars(listing.price)).pixelFont(13.333).foregroundStyle(world.airline.cash >= listing.price ? Theme.good : Theme.bad)
-                    if locked {
-                        Tag(text: "Level \(type.level)", color: Theme.bad)
-                    } else {
-                        Button("Buy") { session.perform(sound: .coin) { _ = try $0.buyUsed(listingID: listing.id) } }.buttonStyle(.smallProminent).disabled(world.airline.cash < listing.price)
-                    }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                HangarPriceColumn(priceText: Format.dollars(listing.price), price: listing.price, cash: world.airline.cash,
+                                  neededLevel: locked ? type.level : nil, action: "Buy") {
+                    session.perform(sound: .coin) { _ = try $0.buyUsed(listingID: listing.id) }
                 }
             }
         }
@@ -123,22 +139,20 @@ struct NewCard: View {
         let world = session.world
         let locked = type.level > world.airline.level
         Card {
-            HStack(spacing: 12) {
+            HStack(alignment: .top, spacing: 12) {
                 AircraftSpriteView(family: type.family, branding: world.airline.branding, pixel: 2).frame(width: 130)
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(type.displayName.uppercased()).pixelFont(13.333).foregroundStyle(locked ? Theme.textMuted : Theme.textPrimary).lineLimit(1)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(type.displayName.uppercased()).pixelFont(13.333).foregroundStyle(locked ? Theme.textMuted : Theme.textPrimary)
+                        .fixedSize(horizontal: false, vertical: true)
                     SpecLine(type: type)
                     Text("Arrives in about \(Format.wait(minutes: Valuation.newDeliveryMinutes(level: type.level)))").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
+                        .fixedSize(horizontal: false, vertical: true)
                     FitSummary(fit: fit)
                 }
-                Spacer()
-                VStack(alignment: .trailing, spacing: 6) {
-                    Text(Format.compactMoney(type.priceUSD)).pixelFont(13.333).foregroundStyle(world.airline.cash >= type.priceUSD ? Theme.good : Theme.bad)
-                    if locked {
-                        Tag(text: "Level \(type.level)", color: Theme.bad)
-                    } else {
-                        Button("Order") { session.perform(sound: .coin) { _ = try $0.orderNew(typeID: type.id) } }.buttonStyle(.smallProminent).disabled(world.airline.cash < type.priceUSD)
-                    }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                HangarPriceColumn(priceText: Format.compactMoney(type.priceUSD), price: type.priceUSD, cash: world.airline.cash,
+                                  neededLevel: locked ? type.level : nil, action: "Order") {
+                    session.perform(sound: .coin) { _ = try $0.orderNew(typeID: type.id) }
                 }
             }
         }

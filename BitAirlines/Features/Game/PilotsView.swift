@@ -17,35 +17,48 @@ struct PilotsView: View {
                     KeyValueRow("Salaries", "\(Format.dollars(world.pilotPayroll)) a month")
                     Toggle(isOn: Binding(get: { session.world.ops.autoHirePilots }, set: { v in session.world.setAutoHire(v) })) {
                         Text("Hire pilots automatically for new aircraft").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                            .multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
                     }.toggleStyle(PixelToggleStyle())
                 }
             }
             SectionTitle("Your pilots")
+            if world.ops.pilots.isEmpty {
+                EmptyNote("No pilots yet. Hire one below, or turn on automatic hiring above.")
+            }
             ForEach(world.ops.pilots) { pilot in
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(pilot.name).pixelFont(13.333).foregroundStyle(Theme.textPrimary)
+                HStack(alignment: .top, spacing: 12) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(pilot.name.uppercased()).pixelFont(13.333).foregroundStyle(Theme.textPrimary)
+                            .fixedSize(horizontal: false, vertical: true)
                         Text(pilot.ratings.map { Words.name($0) }.joined(separator: ", ") + ", \(Format.number(Int(pilot.hours))) hours")
-                            .pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                            .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                         Text(status(pilot, world: world, now: now)).pixelFont(10.667).foregroundStyle(pilot.isAvailable(at: now) ? Theme.info : Theme.gold)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    Spacer()
-                    Button("Train") { training = pilot.id }.buttonStyle(.small).disabled(pilot.trainingFor != nil)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    Button { training = pilot.id } label: { HangarButtonText("Train") }.buttonStyle(.small).disabled(pilot.trainingFor != nil)
                 }
-                .padding(10).background(PixelPanel())
+                .padding(12).background(PixelPanel())
             }
             SectionTitle("Looking for work")
+            if world.ops.pilotMarket.isEmpty {
+                EmptyNote("Nobody is looking for work right now. New pilots come every week.")
+            }
             ForEach(world.ops.pilotMarket) { pilot in
-                HStack {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(pilot.name).pixelFont(13.333).foregroundStyle(Theme.textPrimary)
-                        Text("\(pilot.ratings.map { Words.name($0) }.joined(separator: ", ")), \(Format.number(Int(pilot.hours))) hours, \(Format.dollars(pilot.salaryPerMonth)) a month")
-                            .pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                HStack(alignment: .top, spacing: 12) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(pilot.name.uppercased()).pixelFont(13.333).foregroundStyle(Theme.textPrimary)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Text("\(pilot.ratings.map { Words.name($0) }.joined(separator: ", ")), \(Format.number(Int(pilot.hours))) hours")
+                            .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                        Text("Salary \(Format.dollars(pilot.salaryPerMonth)) a month").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    Spacer()
-                    Button("Hire for \(Format.compactMoney(pilot.hireFee))") { session.perform(sound: .coin) { try $0.hirePilot(id: pilot.id) } }.buttonStyle(.smallProminent)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    Button { session.perform(sound: .coin) { try $0.hirePilot(id: pilot.id) } } label: { HangarButtonText("Hire for \(Format.compactMoney(pilot.hireFee))") }
+                        .buttonStyle(.smallProminent)
                 }
-                .padding(10).background(PixelPanel())
+                .padding(12).background(PixelPanel())
             }
             Text("An aircraft needs pilots rated on its type. Spare pilots step in when someone is sick. New faces come every week.")
                 .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
@@ -74,24 +87,39 @@ struct TrainingSheet: View {
     var body: some View {
         let world = session.world
         VStack(alignment: .leading, spacing: 10) {
-            ScreenHeader(title: "Type course") { Button("Close") { dismiss() }.buttonStyle(.small) }
+            ScreenHeader(title: "Type course") { Button { dismiss() } label: { HangarButtonText("Close") }.buttonStyle(.small) }
+            HangarNotice(session: session)
             if let pilot = world.ops.pilots.first(where: { $0.id == pilotID }) {
+                let groups = RatingGroup.allCases.filter { !pilot.isRated($0) }
                 Text("\(pilot.name) is away for the course and then rated on the new type.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
-                ForEach(RatingGroup.allCases.filter { !pilot.isRated($0) }, id: \.self) { group in
-                    HStack {
-                        Text("\(Words.name(group)): \(World.trainingDays(group)) days, \(Format.dollars(world.trainingPrice(group)))").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
-                        Spacer()
-                        Button("Send") {
-                            if session.perform(sound: .coin, { try $0.train(pilotID: pilotID, for: group) }) { dismiss() }
-                        }.buttonStyle(.smallProminent)
+                    .fixedSize(horizontal: false, vertical: true)
+                if groups.isEmpty { EmptyNote("\(pilot.name) is already rated on every type.") }
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 8) {
+                        ForEach(groups, id: \.self) { group in
+                            HStack(alignment: .top, spacing: 12) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(Words.name(group).uppercased()).pixelFont(13.333).foregroundStyle(Theme.textPrimary)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                    Text("\(World.trainingDays(group)) days away, \(Format.dollars(world.trainingPrice(group)))").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                Button {
+                                    if session.perform(sound: .coin, { try $0.train(pilotID: pilotID, for: group) }) { dismiss() }
+                                } label: { HangarButtonText("Send") }.buttonStyle(.smallProminent)
+                            }
+                            .padding(12).background(PixelPanel())
+                        }
                     }
-                    .padding(10).background(PixelPanel())
                 }
+            } else {
+                EmptyNote("This pilot has left the airline.")
             }
-            if let notice = session.notice { Text(notice).pixelFont(10.667).foregroundStyle(Theme.gold) }
             Spacer(minLength: 0)
         }
         .padding(16)
         .screenBackground()
+        .onAppear { session.notice = nil }
     }
 }

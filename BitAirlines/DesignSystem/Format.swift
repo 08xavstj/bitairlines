@@ -68,6 +68,14 @@ enum Format {
 
     static let weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
+    /// A time the player can place: "06:00" today, "Sat 06:00" later this week, "Feb 20, 2027 06:00" further out.
+    static func when(_ clock: GameClock, now: GameClock) -> String {
+        let days = clock.dayIndex - now.dayIndex
+        if days == 0 { return time(clock) }
+        if days > 0 && days < 7 { return "\(weekdays[clock.weekday]) \(time(clock))" }
+        return "\(date(clock.date)) \(time(clock))"
+    }
+
     /// 125 minutes -> "2h 05m"
     static func duration(minutes: Int) -> String {
         let h = minutes / 60, m = minutes % 60

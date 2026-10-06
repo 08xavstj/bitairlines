@@ -68,14 +68,11 @@ struct InboxScreen: View {
         let world = session.world
         Page {
             ScreenHeader("Inbox")
-            if world.issues.isEmpty { EmptyNote("Nothing needs you right now.") }
+            if world.issues.isEmpty { EmptyNote("Nothing needs you right now. Problems that need a choice from you wait here.") }
             ForEach(world.issues) { issue in
                 Card {
                     VStack(alignment: .leading, spacing: 6) {
-                        HStack {
-                            Text(Messages.title(issue, in: world).uppercased()).pixelFont(13.333).foregroundStyle(issue.isCritical ? Theme.bad : Theme.accent).fixedSize(horizontal: false, vertical: true)
-                            Spacer()
-                        }
+                        Text(Messages.title(issue, in: world).uppercased()).pixelFont(13.333).foregroundStyle(issue.isCritical ? Theme.bad : Theme.accent).fixedSize(horizontal: false, vertical: true)
                         Text(Messages.detail(issue, in: world)).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                         IssueOptions(session: session, issue: issue)
                     }

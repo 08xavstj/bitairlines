@@ -94,11 +94,24 @@ struct GameShell: View {
                      onLeave: { afterMenu = { confirmExit = true }; showMenu = false })
         }
         .sheet(isPresented: $showSettings) { SettingsSheet() }
+        // A decision is drawn over the game, so close the menu sheets that would hide it.
+        .onChange(of: needsDecision) { _, now in
+            if now {
+                showMenu = false
+                showSettings = false
+            }
+        }
+    }
+
+    /// True while something on top of the game waits for the player: a stopping issue, a perk to pick, or the end of the game.
+    private var needsDecision: Bool {
+        let world = session.world
+        return world.isBankrupt || world.isPausedByIssue || !world.ops.perkChoices.isEmpty
     }
 
     @ViewBuilder private var content: some View {
         switch section {
-        case .map: MapScreen(session: session)
+        case .map: MapScreen(session: session, guideRunning: coach.step != nil)
         case .jobs: SubTabs(first: .routes, second: .jobs, section: $section) { JobsScreen(session: session) }
         case .fleet: SubTabs(first: .fleet, second: .bases, section: $section) { FleetScreen(session: session) }
         case .routes: SubTabs(first: .routes, second: .jobs, section: $section) { RoutesScreen(session: session) }
@@ -124,25 +137,29 @@ struct TopBar: View {
                     Text("MENU").pixelFont(8).foregroundStyle(Theme.textMuted)
                     Text(world.airline.code.uppercased()).pixelFont(13.333).foregroundStyle(Theme.accent)
                 }
-                .padding(.horizontal, 8).frame(height: 34)
+                .padding(.horizontal, 8).frame(minWidth: 44, minHeight: 38)
                 .background(PixelShape(step: 2).fill(Theme.surfaceRaised))
                 .coachOutline(coach.step?.section == .airline)
             }
             .buttonStyle(.tap).accessibilityLabel("Menu")
             VStack(alignment: .leading, spacing: 1) {
-                Text(Format.date(world.clock.date)).pixelFont(10.667).foregroundStyle(Theme.textPrimary)
-                Text("\(Format.weekdays[world.clock.weekday]) \(Format.time(world.clock))").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                Text(Format.date(world.clock.date)).pixelFont(10.667).foregroundStyle(Theme.textPrimary).lineLimit(1)
+                Text("\(Format.weekdays[world.clock.weekday]) \(Format.time(world.clock))").pixelFont(10.667).foregroundStyle(Theme.textMuted).lineLimit(1)
             }
-            .frame(width: 122, alignment: .leading)
+            .fixedSize()
+            .frame(minWidth: 118, alignment: .leading)
             SpeedControls(session: session, coach: coach)
             Spacer(minLength: 4)
             VStack(alignment: .trailing, spacing: 1) {
                 HStack(spacing: 6) {
                     PayoutTag(payout: session.payout)
                     Text(Format.compactMoney(world.airline.cash)).pixelFont(13.333).foregroundStyle(world.airline.cash < 0 ? Theme.bad : Theme.good)
+                        .lineLimit(1).fixedSize()
                 }
                 Text("Level \(world.airline.level)  Rep \(Int(world.airline.reputation))").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                    .lineLimit(1).fixedSize()
             }
+            .layoutPriority(1)
         }
         .padding(.horizontal, 10).padding(.vertical, 4)
         .background(Theme.surface)
@@ -163,7 +180,7 @@ struct SpeedControls: View {
                         if speed == .paused { PixelIconView(icon: .pause, pixel: 2) } else { Text(speed.label).pixelFont(10.667) }
                     }
                     .foregroundStyle(on ? Theme.onAccent : Theme.textPrimary)
-                    .frame(minWidth: 34, minHeight: 32)
+                    .frame(minWidth: 40, minHeight: 38)
                     .background(PixelShape(step: 2).fill(on ? Theme.accent : Theme.surfaceRaised))
                 }
                 .buttonStyle(.tap)
@@ -171,7 +188,7 @@ struct SpeedControls: View {
                 .accessibilitySelected(on)
             }
         }
-        .padding(3)
+        .padding(.horizontal, 3).padding(.vertical, 2)
         .coachOutline(coach.step?.highlightsSpeed == true)
     }
 }
@@ -184,7 +201,7 @@ struct Rail: View {
     var body: some View {
         let waiting = session.world.issues.count
         ScrollView {
-            VStack(spacing: 2) {
+            VStack(spacing: 4) {
                 ForEach(GameSection.rail) { s in
                     let on = s == section.railButton
                     Button { section = s } label: {
@@ -193,7 +210,7 @@ struct Rail: View {
                             Text(s.title.uppercased()).pixelFont(8).lineLimit(1).minimumScaleFactor(0.6)
                         }
                         .foregroundStyle(on ? Theme.onAccent : Theme.textMuted)
-                        .frame(width: 58, height: 34)
+                        .frame(width: 58, height: 40)
                         .background(PixelShape(step: 2).fill(on ? Theme.accent : Theme.surfaceRaised))
                         .overlay(alignment: .topTrailing) {
                             if s == .inbox && waiting > 0 {
@@ -242,9 +259,9 @@ struct IssueOverlay: View {
         ZStack {
             Color.black.opacity(0.62).ignoresSafeArea()
             VStack(alignment: .leading, spacing: 10) { content() }
-                .padding(16).frame(maxWidth: 480)
+                .padding(16).frame(maxWidth: 520)
                 .background(PixelPanel(fill: Theme.surface, border: Theme.accent.opacity(0.7)))
-                .padding(24)
+                .padding(.horizontal, 24).padding(.vertical, 8)
         }
     }
 }
@@ -291,19 +308,30 @@ struct IssueOptions: View {
     }
 }
 
-/// A line at the bottom of the screen when the game refuses something.
+/// A line at the bottom of the screen when the game refuses something. Tap to close; it also goes by itself after a few seconds.
 struct NoticeBanner: View {
     let session: GameSession
+    static let showSeconds: UInt64 = 4
 
     var body: some View {
         if let notice = session.notice, !session.world.isPausedByIssue {
             Button { session.notice = nil } label: {
-                Text(notice).pixelFont(10.667).foregroundStyle(Theme.onAccent).padding(.horizontal, 12).padding(.vertical, 6)
+                Text(notice).pixelFont(10.667).foregroundStyle(Theme.onAccent)
+                    .multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 12).padding(.vertical, 8)
+                    .frame(minHeight: 36)
                     .background(PixelShape(step: 2).fill(Theme.gold))
             }
             .buttonStyle(.tap)
-            .padding(.bottom, 8)
+            .frame(maxWidth: 560)
+            .padding(.horizontal, 80).padding(.bottom, 8)
             .accessibilityLabel(notice)
+            .task(id: notice) {
+                try? await Task.sleep(nanoseconds: NoticeBanner.showSeconds * 1_000_000_000)
+                guard !Task.isCancelled else { return }
+                // Only clear the notice this banner showed, not a newer one.
+                if session.notice == notice { session.notice = nil }
+            }
         }
     }
 }

@@ -20,13 +20,13 @@ struct AwaySummary: View {
                         RewardButton(session: session, kind: .awayDouble, target: report.cashChange, once: true)
                     }
                     if report.stoppedForIssue {
-                        Text("Something needs you, so the clock stopped early.").pixelFont(10.667).foregroundStyle(Theme.gold)
+                        Text("Something needs you, so the clock stopped early.").pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
                     }
                     Button("Back to work") { session.away = nil }.buttonStyle(PrimaryButtonStyle())
                 }
-                .padding(16).frame(maxWidth: 420)
+                .padding(16).frame(maxWidth: 480)
                 .background(PixelPanel(fill: Theme.surface, border: Theme.accent.opacity(0.7)))
-                .padding(24)
+                .padding(.horizontal, 24).padding(.vertical, 8)
             }
         }
     }

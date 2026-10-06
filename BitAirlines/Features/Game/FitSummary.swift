@@ -11,8 +11,9 @@ struct FitSummary: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(headline).pixelFont(10.667).foregroundStyle(fit.fitsAll ? Theme.good : (fit.fitsAny ? Theme.textPrimary : Theme.bad))
+                .fixedSize(horizontal: false, vertical: true)
             ForEach(fit.misfits.prefix(shown), id: \.code) { misfit in
-                Text("\(misfit.code) needs " + FitWords.list(misfit.needs)).pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                Text("\(Place.name(misfit.code)) needs " + FitWords.list(misfit.needs)).pixelFont(10.667).foregroundStyle(Theme.textMuted)
                     .fixedSize(horizontal: false, vertical: true)
             }
             if fit.misfits.count > shown {
@@ -26,7 +27,7 @@ struct FitSummary: View {
         if fit.fitsAll { return total == 1 ? "Fits your home airport" : "Fits all \(total) of your airports" }
         if !fit.fitsAny { return "Fits none of your airports" }
         let codes = fit.airports.filter(\.fits).map(\.code)
-        return "Fits " + (codes.count <= shown ? codes.joined(separator: ", ") : "\(codes.count) of \(total) airports")
+        return "Fits " + (codes.count <= shown ? Place.list(codes, separator: ", ") : "\(codes.count) of \(total) airports")
     }
 }
 
