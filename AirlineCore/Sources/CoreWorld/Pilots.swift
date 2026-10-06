@@ -63,19 +63,32 @@ extension World {
         let last = World.lastNames[ops.rng.int(0...(World.lastNames.count - 1))]
         let id = ops.nextPilotID
         ops.nextPilotID += 1
-        let logged = hours ?? Double(ops.rng.int(300...6000))
-        let fee = Int(Double(Tuning.pilotHireFee * group.tier) * (0.8 + logged / 10_000) * pilotCostFactor)
+        let logged: Double = hours ?? Double(ops.rng.int(300...6000))
+        let experience: Double = 0.8 + logged / 10_000
+        let baseFee = Double(Tuning.pilotHireFee * group.tier)
+        let fee = Int(baseFee * experience * pilotCostFactor)
         return Pilot(id: id, name: "\(first) \(last)", ratings: [group], hours: logged, aircraftID: nil, sickUntilMinute: 0, trainingUntilMinute: 0,
                      trainingFor: nil, salaryPerMonth: salary(for: group), hireFee: fee)
     }
 
     /// Weekly: a fresh handful of pilots looking for work, mostly rated on what the airline flies.
     mutating func refreshPilotMarket() {
-        let flown = Array(Set(aircraft.compactMap { $0.type.map { RatingGroup.of($0.family) } })).sorted { $0.tier < $1.tier || ($0.tier == $1.tier && $0.rawValue < $1.rawValue) }
-        let allowed = RatingGroup.allCases.filter { $0.tier <= max(1, (airline.level + 1) / 2 + 1) }
+        var flown: [RatingGroup] = []
+        for plane in aircraft {
+            guard let type = plane.type else { continue }
+            let group = RatingGroup.of(type.family)
+            if !flown.contains(group) { flown.append(group) }
+        }
+        let topTier = max(1, (airline.level + 1) / 2 + 1)
+        let allowed = RatingGroup.allCases.filter { $0.tier <= topTier }
         ops.pilotMarket = []
         for _ in 0..<6 {
-            let group = !flown.isEmpty && ops.rng.chance(0.7) ? flown[ops.rng.int(0...(flown.count - 1))] : allowed[ops.rng.int(0...(allowed.count - 1))]
+            var group: RatingGroup
+            if !flown.isEmpty && ops.rng.chance(0.7) {
+                group = flown[ops.rng.int(0...(flown.count - 1))]
+            } else {
+                group = allowed[ops.rng.int(0...(allowed.count - 1))]
+            }
             ops.pilotMarket.append(makePilot(group: group))
         }
     }

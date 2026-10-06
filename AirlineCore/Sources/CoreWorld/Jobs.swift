@@ -76,7 +76,8 @@ extension World {
 
     /// Once a day: old offers go, new ones come.
     mutating func dailyJobs() {
-        ops.jobs.removeAll { !$0.isTaken && $0.expiresMinute <= clock.minute }
+        let now = clock.minute
+        ops.jobs.removeAll { !$0.isTaken && $0.expiresMinute <= now }
         refreshJobArea()
         let open = ops.jobs.filter { !$0.isTaken }.count
         guard open < jobBoardSize, ops.jobArea.count >= 2 else { return }

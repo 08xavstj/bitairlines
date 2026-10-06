@@ -34,8 +34,9 @@ public struct EventOffer: Sendable, Hashable, Codable, Identifiable {
 extension World {
     /// Once a week, maybe something happens.
     mutating func weeklyEvents() {
-        ops.events.removeAll { $0.untilMinute <= clock.minute }
-        ops.offers.removeAll { $0.expiresMinute <= clock.minute }
+        let now = clock.minute
+        ops.events.removeAll { $0.untilMinute <= now }
+        ops.offers.removeAll { $0.expiresMinute <= now }
         guard ops.rng.chance(Tuning.eventChancePerWeek), !ops.jobArea.isEmpty else { return }
         let kind = EventKind.allCases[ops.rng.int(0...(EventKind.allCases.count - 1))]
         let place = ops.jobArea[ops.rng.int(0...(ops.jobArea.count - 1))]

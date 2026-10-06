@@ -98,9 +98,12 @@ extension World {
         }
         // Or grow in its own region.
         if ops.rng.chance(0.3), let base = AirportCatalog.airport(ops.rivals[v].home) {
-            let partners = AirportCatalog.all.filter {
-                ($0.kind == .large || $0.kind == .medium) && $0.code != base.code && $0.code != airline.home && $0.population >= 15_000
-                    && $0.distanceKm(to: base) <= 1500 && !ops.rivals[v].routes.contains(where: { r in r.serves(base.code, $0.code) })
+            let flown = ops.rivals[v].routes
+            let home = airline.home
+            let partners = AirportCatalog.all.filter { candidate in
+                guard candidate.kind == .large || candidate.kind == .medium, candidate.population >= 15_000 else { return false }
+                guard candidate.code != base.code, candidate.code != home else { return false }
+                return candidate.distanceKm(to: base) <= 1500 && !flown.contains { $0.serves(base.code, candidate.code) }
             }.sorted { $0.population > $1.population }
             if let partner = partners.first {
                 ops.rivals[v].routes.append(RivalRoute(a: base.code, b: partner.code, frequency: 1, fareLevel: 1.0, startedDay: clock.dayIndex))
