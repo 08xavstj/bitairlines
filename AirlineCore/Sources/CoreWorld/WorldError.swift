@@ -28,6 +28,11 @@ public enum WorldError: Error, Sendable, Hashable {
     /// Realism: a stretch of the route between fuel stops is longer than the aircraft can fly.
     case noFuel(airport: String)
     case alreadyBuilt
+    /// Marketing and staff.
+    case campaignRunning
+    case needsARoute
+    case alreadyHired
+    case notHired
     case cannotBuildHere
     case kitDoesNotFit
     case jobUnavailable

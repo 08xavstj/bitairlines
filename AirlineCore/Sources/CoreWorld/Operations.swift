@@ -45,6 +45,10 @@ public struct Operations: Sendable, Codable {
     public var weeklyGoal: WeeklyGoal?
     public var goalsCompleted = 0
 
+    /// Marketing campaigns running (Marketing.swift) and the staff on the payroll (Staff.swift).
+    public var campaigns: [ActiveCampaign] = []
+    public var staff: [StaffRole] = []
+
     public init() {}
 
     public init(mode: GameMode, seed: UInt64) {
@@ -81,6 +85,8 @@ public struct Operations: Sendable, Codable {
         scenario = try c.decodeIfPresent(ScenarioState.self, forKey: .scenario)
         weeklyGoal = try c.decodeIfPresent(WeeklyGoal.self, forKey: .weeklyGoal)
         goalsCompleted = try c.decodeIfPresent(Int.self, forKey: .goalsCompleted) ?? 0
+        campaigns = try c.decodeIfPresent([ActiveCampaign].self, forKey: .campaigns) ?? []
+        staff = try c.decodeIfPresent([StaffRole].self, forKey: .staff) ?? []
     }
 }
 

@@ -49,7 +49,7 @@ extension World {
     var reputationFactor: Double { has(.goodName) ? 1.3 : 1.0 }
     var maintenanceFactor: Double { has(.mechanicsGuild) ? 0.9 : 1.0 }
     var cargoRateFactor: Double { has(.freightNetwork) ? 1.1 : 1.0 }
-    var captureFactor: Double { has(.knownFace) ? 1.05 : 1.0 }
+    var captureFactor: Double { (has(.knownFace) ? 1.05 : 1.0) * marketingFactor }
     var pilotCostFactor: Double { has(.pilotSchool) ? 0.5 : 1.0 }
 
     /// What a permit for this country costs this airline.

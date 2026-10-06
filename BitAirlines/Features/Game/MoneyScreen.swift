@@ -49,6 +49,8 @@ struct MoneyScreen: View {
                 }
             }
             certificateCard(world)
+            MarketingCard(session: session)
+            StaffCard(session: session)
             FuelCard(session: session)
             SectionTitle("Loans")
             Card {

@@ -36,6 +36,7 @@ extension World {
         aircraft[i].status = .grounded(issue: id)
         airline.reputation = max(0, airline.reputation - 0.8)
         addNews(.breakdown, subject: aircraft[i].registration, amount: aircraft[i].id)
+        settleBreakdown(issueID: id)
     }
 
     /// Settles an issue with one of its options.

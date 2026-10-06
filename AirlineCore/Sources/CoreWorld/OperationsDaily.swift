@@ -9,6 +9,7 @@ extension World {
         dailyJobs()
         checkScenario()
         checkWeeklyGoal()
+        endCampaigns()
         if ops.mode.unlimitedMoney && airline.cash < Tuning.sandboxCashFloor { airline.cash += Tuning.sandboxTopUp }
     }
 
@@ -19,11 +20,13 @@ extension World {
         weeklyPilots()
         refreshConnections()
         startWeeklyGoal()
+        weeklyStaff()
     }
 
     mutating func monthlyOperations() {
         let payroll = pilotPayroll
         if payroll > 0 { spendOnOverhead(payroll) }
+        if staffPayroll > 0 { spendOnOverhead(staffPayroll) }
         monthlyRivals()
     }
 }
