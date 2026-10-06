@@ -19,7 +19,7 @@ enum TutorialStep: Int, CaseIterable {
         case .inbox: GameSection.inbox
         case .hangar: GameSection.market
         case .jobs: GameSection.jobs
-        case .level: GameSection.airline
+        case .level: GameSection.money
         case .startClock, .watch: nil
         }
     }
@@ -64,7 +64,7 @@ enum Tutorial {
     static func text(for step: TutorialStep, world: World, suggestion: (code: String, perDay: Double)?, flights: Int) -> String {
         switch step {
         case .openRoute:
-            var line = "Open your first route. On the Map press New route, then tap two airports in a row."
+            var line = "Open your first route. On the Map press New route, then tap two airports, one after the other."
             if let suggestion {
                 line += " Try \(Place.name(world.airline.home)) to \(Place.name(suggestion.code)), about \(Format.perDay(suggestion.perDay)) once people know it."
             }
@@ -88,7 +88,7 @@ enum Tutorial {
         case .jobs:
             return "Jobs are one-off flights: medevac, mail and charters. They pay well and have a deadline. Open Routes, then Jobs, and send a free aircraft."
         case .level:
-            return "Your certificate level is under MENU, then Airline. Earn enough and keep a good reputation to buy the next one: it opens bigger aircraft and bigger airports."
+            return "Your certificate level is on the Money screen. Earn enough and keep a good reputation to buy the next one: it opens bigger aircraft and bigger airports."
         }
     }
 }

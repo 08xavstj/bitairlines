@@ -27,7 +27,7 @@ struct GameMenu: View {
                     }
                     .frame(width: 260)
                     VStack(alignment: .leading, spacing: 8) {
-                        MenuNote(title: "Airline", text: "Your look, totals, certificate level and when the game stops.")
+                        MenuNote(title: "Airline", text: "Your look, totals, reputation and when the game stops.")
                         MenuNote(title: "Logbook", text: "Airports, aircraft types and paint schemes you have collected.")
                         MenuNote(title: "Saving", text: "Your game saves by itself.")
                     }

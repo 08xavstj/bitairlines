@@ -8,10 +8,11 @@ struct LiveryPreview: View {
     let name: String
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        // Tight spacing, so all three aircraft fit on a landscape phone without scrolling.
+        VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 10) {
                 LogoView(branding: branding, pixel: 3)
-                Text(name.isEmpty ? "YOUR AIRLINE" : name.uppercased()).pixelFont(13.333).foregroundStyle(Theme.textPrimary).lineLimit(2)
+                Text(name.isEmpty ? "YOUR AIRLINE" : name.uppercased()).pixelFont(13.333).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
             }
             AircraftSpriteView(family: .utilitySingle, branding: branding, pixel: 2)
             AircraftSpriteView(family: .narrowbody, branding: branding, pixel: 2)

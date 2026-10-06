@@ -11,24 +11,34 @@ struct FuelCard: View {
         let capacity = world.fuelCapacityKg
         Card {
             VStack(alignment: .leading, spacing: 8) {
-                HStack {
+                HStack(alignment: .top) {
                     Text("FUEL").pixelFont(13.333).foregroundStyle(Theme.accent)
-                    Spacer()
+                    Spacer(minLength: 12)
                     Text("\(Int((world.market.fuelIndex * 100).rounded()))% of normal today").pixelFont(10.667).foregroundStyle(world.market.fuelIndex > 1.1 ? Theme.bad : Theme.good)
                 }
                 FuelChart(history: world.ops.fuelHistory).frame(height: 60)
                 KeyValueRow("In your tanks", "\(Format.number(Int(stock.kg))) of \(Format.number(Int(capacity))) kg" + (stock.kg > 0 ? ", bought at \(Int((stock.priceIndex * 100).rounded()))%" : ""))
-                HStack(spacing: 8) {
-                    ForEach([5_000.0, 20_000.0], id: \.self) { kg in
-                        Button("Buy \(Format.number(Int(kg))) kg for \(Format.compactMoney(world.fuelPrice(kg: kg)))") {
-                            session.perform(sound: .coin) { try $0.buyFuel(kg: kg) }
-                        }
-                        .buttonStyle(.small).disabled(stock.kg + kg > capacity)
-                    }
+                // Side by side when they fit, one above the other when they do not (narrow screen or large text).
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 8) { buyButtons(world) }
+                    VStack(alignment: .leading, spacing: 8) { buyButtons(world) }
+                }
+                if stock.kg + 5_000 > capacity {
+                    Text("Your tanks are too full to buy more right now.").pixelFont(10.667).foregroundStyle(Theme.gold)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 Text("Fuel bought ahead is used first, at the price you paid. Buy when it is cheap. Fuel depots at your bases hold more.")
                     .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
             }
+        }
+    }
+
+    @ViewBuilder private func buyButtons(_ world: World) -> some View {
+        ForEach([5_000.0, 20_000.0], id: \.self) { kg in
+            Button { session.perform(sound: .coin) { try $0.buyFuel(kg: kg) } } label: {
+                HangarButtonText("Buy \(Format.number(Int(kg))) kg for \(Format.compactMoney(world.fuelPrice(kg: kg)))")
+            }
+            .buttonStyle(.small).disabled(world.ops.fuel.kg + kg > world.fuelCapacityKg)
         }
     }
 }

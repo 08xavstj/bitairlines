@@ -11,7 +11,8 @@ struct PaletteGrid: View {
 
     var body: some View {
         let rows = rowIndexes()
-        VStack(spacing: 3) {
+        // Leading, so a short last row lines up under the others instead of floating in the middle.
+        VStack(alignment: .leading, spacing: 3) {
             ForEach(Array(rows.enumerated()), id: \.offset) { _, row in
                 HStack(spacing: 3) {
                     ForEach(row, id: \.self) { index in

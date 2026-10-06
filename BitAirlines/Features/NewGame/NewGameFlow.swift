@@ -181,7 +181,7 @@ struct BaseStep: View {
                             }
                             Text(airport.name).pixelFont(10.667).foregroundStyle(Theme.textMuted).multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
                             // One text, so it wraps as a whole instead of squeezing three columns.
-                            Text("People nearby \(Format.people(airport.population)). Runway \(Format.number(airport.runwayFt)) ft \(airport.surface == .gravel ? "gravel" : (airport.surface == .water ? "water" : "paved")). \(HomeStats.neighbours(code)) airports within 600 km.")
+                            Text(BaseStep.facts(airport, neighbours: HomeStats.neighbours(code)))
                                 .pixelFont(10.667).foregroundStyle(Theme.textPrimary).multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -193,6 +193,12 @@ struct BaseStep: View {
                 }
             }
         }
+    }
+
+    /// "People nearby 63K. Runway 7,546 ft paved. 6 airports within 600 km."
+    static func facts(_ airport: Airport, neighbours: Int) -> String {
+        let surface = airport.surface == .gravel ? "gravel" : (airport.surface == .water ? "water" : "paved")
+        return "People nearby \(Format.people(airport.population)). Runway \(Format.number(airport.runwayFt)) ft \(surface). \(neighbours) airports within 600 km."
     }
 }
 
@@ -253,7 +259,7 @@ struct AircraftStep: View {
         Page {
             Text("Your starting money and your first aircraft. A bigger aircraft carries more but costs more to run.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
             Text("Starting money \(Format.dollars(draft.difficulty.startingBudget))").pixelFont(13.333).foregroundStyle(Theme.textPrimary)
-            if let problem { Text(problem).pixelFont(10.667).foregroundStyle(Theme.bad) }
+            if let problem { Text(problem).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true) }
             ForEach(offers) { offer in
                 if let type = AircraftCatalog.type(offer.typeID) {
                     let selected = offer.typeID == draft.starterID
@@ -261,9 +267,12 @@ struct AircraftStep: View {
                         HStack(spacing: 12) {
                             AircraftSpriteView(family: type.family, branding: draft.branding, pixel: 2).frame(width: 120, alignment: .center)
                             VStack(alignment: .leading, spacing: 3) {
-                                Text(type.displayName.uppercased()).pixelFont(13.333).foregroundStyle(selected ? Theme.accent : Theme.textPrimary).lineLimit(1)
+                                Text(type.displayName.uppercased()).pixelFont(13.333).foregroundStyle(selected ? Theme.accent : Theme.textPrimary)
+                                    .multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
                                 Text("\(type.seats) seats - \(Format.number(type.rangeKm)) km range - \(Int(offer.ageYears)) years old").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                                    .multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
                                 Text("Price \(Format.dollars(offer.price)) - left over \(Format.dollars(draft.difficulty.startingBudget - offer.price))").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
+                                    .multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
                             }
                             Spacer()
                             if selected { Tag(text: "Selected", color: Theme.good) }

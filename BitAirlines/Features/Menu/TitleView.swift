@@ -104,26 +104,30 @@ struct ContinueSheet: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             ScreenHeader(title: "Continue") { Button("Close") { dismiss() }.buttonStyle(.small) }
-            ForEach(saves) { save in
-                Card {
-                    HStack(spacing: 12) {
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(save.airlineName).pixelFont(13.333).foregroundStyle(Theme.textPrimary)
-                            if let date = save.date {
-                                Text("\(Format.date(date)) - \(Format.compactMoney(save.cash)) - \(save.aircraft) aircraft - level \(save.level)")
-                                    .pixelFont(10.667).foregroundStyle(Theme.textMuted)
-                            } else {
-                                Text("This save was made by a newer version of the game, or is damaged.").pixelFont(10.667).foregroundStyle(Theme.bad)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 10) {
+                    ForEach(saves) { save in
+                        Card {
+                            HStack(spacing: 12) {
+                                VStack(alignment: .leading, spacing: 3) {
+                                    Text(save.airlineName.uppercased()).pixelFont(13.333).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
+                                    if let date = save.date {
+                                        Text("\(Format.date(date)) - \(Format.compactMoney(save.cash)) - \(save.aircraft) aircraft - level \(save.level)")
+                                            .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                                    } else {
+                                        Text("This save was made by a newer version of the game, or is damaged.").pixelFont(10.667).foregroundStyle(Theme.bad)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                    }
+                                }
+                                Spacer(minLength: 8)
+                                Button("Delete") { deleting = save }.buttonStyle(.smallDanger)
+                                if !save.broken { Button("Play") { onPick(save.slot) }.buttonStyle(.smallProminent) }
                             }
                         }
-                        Spacer()
-                        Button("Delete") { deleting = save }.buttonStyle(.smallDanger)
-                        if !save.broken { Button("Play") { onPick(save.slot) }.buttonStyle(.smallProminent) }
                     }
+                    if saves.isEmpty { EmptyNote("No saved airlines. Start one with New airline on the title screen.") }
                 }
             }
-            if saves.isEmpty { EmptyNote("No saved airlines.") }
-            Spacer()
         }
         .padding(16)
         .screenBackground()
@@ -141,16 +145,17 @@ struct CreditsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             ScreenHeader(title: "Credits") { Button("Close") { dismiss() }.buttonStyle(.small) }
-            Card {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("A Lontra Industries game.").pixelFont(13.333).foregroundStyle(Theme.textPrimary)
-                    Text("Airports and runways: OurAirports, public domain.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
-                    Text("Places and populations: GeoNames (geonames.org), CC BY 4.0.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
-                    Text("Coastlines: Natural Earth, public domain.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
-                    Text("All airlines are made up. Aircraft figures are rounded for play, not for flying.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+            ScrollView {
+                Card {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("A Lontra Industries game.").pixelFont(13.333).foregroundStyle(Theme.textPrimary)
+                        Text("Airports and runways: OurAirports, public domain.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                        Text("Places and populations: GeoNames (geonames.org), CC BY 4.0.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                        Text("Coastlines: Natural Earth, public domain.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                        Text("All airlines are made up. Aircraft figures are rounded for play, not for flying.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                    }
                 }
             }
-            Spacer()
         }
         .padding(16)
         .screenBackground()
