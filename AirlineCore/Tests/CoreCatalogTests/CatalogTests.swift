@@ -3,9 +3,9 @@ import Testing
 
 @Suite struct AirportCatalogTests {
     @Test func loadsEveryRow() {
-        #expect(AirportCatalog.all.count > 2200 && AirportCatalog.all.count < 2700)
+        #expect(AirportCatalog.all.count > 1400 && AirportCatalog.all.count < 1800, "one airport per area keeps the map clean")
         #expect(AirportCatalog.byCode.count == AirportCatalog.all.count, "airport codes must be unique")
-        #expect(AirportCatalog.retired.count > 2000)
+        #expect(AirportCatalog.retired.count > 3000)
         #expect(Set(AirportCatalog.retired.keys).isDisjoint(with: AirportCatalog.byCode.keys), "a retired airport is never also on the map")
     }
 
@@ -15,6 +15,20 @@ import Testing
             #expect(AirportCatalog.byCode[code] == nil, "\(code) is a road town and leaves the map")
             #expect(AirportCatalog.airport(code) != nil, "\(code) still loads for an older save")
         }
+    }
+
+    @Test func awayFromTheStartRegionsSmallAirportsAreWellApart() {
+        // tools/data/declutter.py: 250 km apart (big cities 150 km); the start regions keep more places to fly to.
+        let starts = StartRegions.all.flatMap(\.headquarters).compactMap { AirportCatalog.airport($0) }
+        let far = AirportCatalog.all.filter { a in
+            a.population < 500_000 && a.surface != .water && starts.allSatisfy { a.distanceKm(to: $0) > 900 }
+        }
+        var crowded = 0
+        for (i, a) in far.enumerated() {
+            for b in far[(i + 1)...] where a.distanceKm(to: b) < 200 { crowded += 1 }
+        }
+        #expect(far.count > 300)
+        #expect(crowded < 10, "small airports closer than 200 km away from the start regions: \(crowded) pairs")
     }
 
     @Test func inuvikIsThere() throws {
@@ -72,9 +86,10 @@ import Testing
 
     @Test func coverageIsWorldWide() {
         let countries = Set(AirportCatalog.all.map(\.country))
-        #expect(countries.count > 200)
-        #expect(AirportCatalog.all.filter { $0.kind == .large }.count > 850)
-        #expect(AirportCatalog.all.filter { $0.surface == .gravel }.count > 500, "bush flying needs plenty of gravel strips")
+        #expect(countries.count > 190)
+        #expect(AirportCatalog.all.filter { $0.kind == .large }.count > 550)
+        #expect(AirportCatalog.all.filter { $0.surface == .gravel }.count > 100, "bush flying still has gravel strips")
+        #expect(AirportCatalog.all.filter { $0.surface == .water }.count >= 10, "floatplanes still have lakes")
     }
 }
 

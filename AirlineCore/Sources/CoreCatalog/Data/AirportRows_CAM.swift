@@ -3,17 +3,13 @@
 
 enum AirportRows_CAM {
     static let rows = #"""
-BZE|MZBZ|Philip S. W. Goldson International Airport|Belize City|Belize City|BZ|BZ|17.5400|-88.3036|15|9678|P|L|1|220746
-LIR|MRLB|Daniel Oduber Quiros International Airport|Liberia|Liberia|CR|G|10.5933|-85.5444|270|9022|P|L|1|184822
+SPR|MZSP|John Greif II Airport|San Pedro|San Pedro|BZ|CY|17.9139|-87.9711|4|6000|G|M|1|41490
 SJO|MROC|Juan Santamaria International Airport|San Jose|San Jose, CR|CR|A|9.9939|-84.2088|3021|9882|P|L|1|1474342
 GUA|MGGT|La Aurora International Airport|Guatemala City|Guatemala City|GT|GU|14.5829|-90.5275|4952|9800|P|L|1|6383378
-RER|MGRT|Retalhuleu Airport|Retalhuleu|Retalhuleu|GT|RE|14.5214|-91.6970|656|5065|P|M|1|1056168
-LCE|MHLC|Goloson International Airport|La Ceiba|La Ceiba|HN|AT|15.7425|-86.8530|39|9875|P|M|1|514424
 PEU|MHPL|Puerto Lempira Airport|Puerto Lempira|Puerto Lempira|HN|GD|15.2622|-83.7812|33|3000|G|S|1|8088
 SAP|MHLM|Ramon Villeda Morales International Airport|San Pedro Sula|San Pedro Sula|HN|CR|15.4526|-87.9236|91|9203|P|L|1|2360711
-XPL|MHPR|Palmerola International Airport|Palmerola|Palmerola|HN|CM|14.3824|-87.6212|2061|8064|P|L|1|1732022
+TGU|MHTG|Toncontin Airport|Tegucigalpa|Tegucigalpa|HN|FM|14.0609|-87.2172|3294|6112|P|M|1|1133868
 MGA|MNMG|Augusto C. Sandino (Managua) International Airport|Managua|Managua|NI|MN|12.1415|-86.1682|194|8012|P|L|1|2713421
-BFQ|MPPI|Bahia Pina Airport|Puerto Pina|Puerto Pina|PA|5|7.5874|-78.1799|14|3000|G|S|1|2349
 DAV|MPDA|Enrique Malek International Airport|David|David|PA|4|8.3890|-82.4364|89|8530|P|M|1|256487
 PTY|MPTO|Tocumen International Airport|Tocumen|Tocumen|PA|8|9.0714|-79.3835|135|10006|P|L|1|994810
 SAL|MSLP|El Salvador International Airport Saint Oscar Arnulfo Romero y Galdamez|San Salvador|San Salvador|SV|PA|13.4445|-89.0558|101|10500|P|L|1|2885635

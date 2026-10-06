@@ -52,6 +52,17 @@ public struct Operations: Sendable, Codable {
     /// This week's and last week's reputation bookkeeping (Reputation.swift); started on first use.
     public var reputationBook: ReputationBook?
 
+    /// The real calendar (RealDay.swift): today's real day as the app last passed it in (0 until then), the daily dispatch
+    /// stamps (DailyDispatch.swift), the real-week goal (RealWeekGoal.swift), seasonal events (SeasonalEvents.swift),
+    /// the liveries those unlocked, and the logbook of types and airports (Collections.swift).
+    public var realDay = 0
+    public var dispatch = DispatchBook()
+    public var realWeekGoal: WeeklyGoal?
+    public var realWeekGoalsMet = 0
+    public var season = SeasonBook()
+    public var unlockedLiveries: [String] = []
+    public var logbook = Logbook()
+
     public init() {}
 
     public init(mode: GameMode, seed: UInt64) {
@@ -91,6 +102,13 @@ public struct Operations: Sendable, Codable {
         campaigns = try c.decodeIfPresent([ActiveCampaign].self, forKey: .campaigns) ?? []
         staff = try c.decodeIfPresent([StaffRole].self, forKey: .staff) ?? []
         reputationBook = try c.decodeIfPresent(ReputationBook.self, forKey: .reputationBook)
+        realDay = try c.decodeIfPresent(Int.self, forKey: .realDay) ?? 0
+        dispatch = try c.decodeIfPresent(DispatchBook.self, forKey: .dispatch) ?? DispatchBook()
+        realWeekGoal = try c.decodeIfPresent(WeeklyGoal.self, forKey: .realWeekGoal)
+        realWeekGoalsMet = try c.decodeIfPresent(Int.self, forKey: .realWeekGoalsMet) ?? 0
+        season = try c.decodeIfPresent(SeasonBook.self, forKey: .season) ?? SeasonBook()
+        unlockedLiveries = try c.decodeIfPresent([String].self, forKey: .unlockedLiveries) ?? []
+        logbook = try c.decodeIfPresent(Logbook.self, forKey: .logbook) ?? Logbook()
     }
 }
 

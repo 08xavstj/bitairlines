@@ -3,143 +3,92 @@
 
 enum AirportRows_SEA {
     static let rows = #"""
-BWN|WBSB|Brunei International Airport|Bandar Seri Begawan|Bandar Seri Begawan|BN|BM|4.9442|114.9280|73|12000|P|L|1|448196
 CCK|YPCC|Cocos (Keeling) Islands Airport|West Island|West Island|CC|A|-12.1922|96.8341|10|7999|P|L|1|150
 XCH|YPXM|Christmas Island International Airport|Flying Fish Cove|Flying Fish Cove|CX|A|-10.4504|105.6911|916|6900|P|M|1|1355
-AAP|WALS|Aji Pangeran Tumenggung Pranoto International Airport|Samarinda|Samarinda|ID|KI|-0.3745|117.2501|82|7382|P|M|1|872192
 AMQ|WAPP|Pattimura International Airport|Ambon|Ambon|ID|MA|-3.7103|128.0890|33|8202|P|L|1|381106
 BDJ|WAOO|Syamsudin Noor International Airport|Banjarbaru|Banjarbaru|ID|KS|-3.4401|114.7612|66|8202|P|L|1|1148266
-BDO|WICC|Husein Sastranegara International Airport|Bandung|Bandung|ID|JB|-6.9006|107.5760|2436|7381|P|M|1|5017250
+BEJ|WAQT|Kalimarau Airport|Tanjung Redeb - Borneo|Tanjung Redeb - Borneo|ID|KI|2.1478|117.4307|59|4625|P|M|1|5007
 BKS|WIGG|Fatmawati Soekarno Airport|Bengkulu|Bengkulu|ID|BE|-3.8637|102.3390|50|7345|P|M|1|500779
 BPN|WALL|Sultan Aji Muhammad Sulaiman Sepinggan International Airport|Balikpapan|Balikpapan|ID|KI|-1.2683|116.8945|12|8202|P|L|1|1085436
+BTH|WIDD|Hang Nadim International Airport|Batam|Batam|ID|KR|1.1210|104.1190|126|13218|P|L|1|3509472
 BTJ|WITT|Sultan Iskandar Muda International Airport|Banda Aceh|Banda Aceh|ID|AC|5.5251|95.4200|65|9843|P|L|1|348133
-BXW|WARW|Harun Thohir Airport|Bawean|Bawean|ID|JI|-5.7236|112.6789|93|3000|G|S|0|50612
 CGK|WIII|Soekarno-Hatta International Airport|Jakarta|Jakarta|ID|BT|-6.1256|106.6560|34|12008|P|L|1|22884544
-CXP|WAHL|Tunggul Wulung Airport|Cilacap|Cilacap|ID|JT|-7.6451|109.0340|69|4593|P|M|1|972209
-DJB|WIJJ|Sultan Thaha Airport|Jambi|Jambi|ID|JA|-1.6387|103.6451|82|8537|P|S|1|635101
+DEX|WAVD|Nop Goliat Dekai Airport|Dekai|Dekai|ID|PP|-4.8557|139.4820|198|6398|P|S|1|150
 DJJ|WAJJ|Dortheys Hiyo Eluay International Airport|Sentani|Sentani|ID|PA|-2.5796|140.5199|289|9842|P|L|1|486195
 DPS|WADD|Denpasar I Gusti Ngurah Rai International Airport|Kuta|Kuta|ID|BA|-8.7484|115.1671|14|9790|P|L|1|1766246
-DUM|WIBD|Pinang Kampai Airport|Dumai|Dumai|ID|RI|1.6090|101.4335|55|5905|P|M|1|358466
-EWE|ID-EWE|Ewer Asmat Airport|Agats|Agats|ID|PS|-5.4962|138.0784|27|1969|G|S|0|23869
-FLZ|WIMS|Dr. Ferdinand Lumban Tobing Airport|Sibolga|Sibolga|ID|SU|1.5571|98.8871|33|5655|P|M|1|376106
-IAX|WAMS|Miangas Airport|Miangas|Miangas|ID|SA|5.5604|126.5801|9|3000|G|S|0|816
-ID-0070|WAJV|Iwur Airstrip|Iwur|Iwur|ID|PP|-5.1391|140.7176|820|1632|G|S|1|150
-ID-0094|WAQH|Long Rungan Airport|Long Rungan|Long Rungan|ID|KU|3.5989|115.8408|2880|1312|G|S|1|150
-ID-0111|WAJW|Okyap Airstrip|Okyap|Okyap|ID|PP|-4.7434|140.8483|4370|1427|G|S|1|150
-JBB|WARE|Notohadinegoro Airport|Jember|Jember|ID|JI|-8.2425|113.6935|281|5594|P|S|1|298013
+FKQ|WASF|Fakfak Airport|Fakfak|Fakfak|ID|PB|-2.9205|132.2670|462|3415|P|M|1|18900
+GNS|WIMB|Binaka Airport|Gunungsitoli|Gunungsitoli|ID|SU|1.1663|97.7052|20|4445|P|M|1|186972
+GTO|WAMG|Jalaluddin Airport|Gorontalo|Gorontalo|ID|GO|0.6371|122.8500|105|8202|P|S|1|205390
 JIO|WAPM|Jos Orno Imsula Airport|Tiakur|Tiakur|ID|MA|-8.1407|127.9097|43|3000|G|S|1|5227
+KBF|WABK|Karubaga Airport|Karubaga|Karubaga|ID|PP|-3.6846|138.4790|5200|2402|P|S|0|4985
 KDI|WAWW|Haluoleo Airport|Kendari|Kendari|ID|SG|-4.0816|122.4180|538|6890|P|S|1|351085
+KEI|WAKP|Kepi Airport|Kepi|Kepi|ID|PS|-6.5430|139.3324|67|2005|P|S|0|8394
+KJT|WICA|Kertajati International Airport|Kertajati|Kertajati|ID|JB|-6.6474|108.1656|134|9843|P|M|1|2043224
 KNO|WIMM|Kualanamu International Airport|Beringin|Beringin|ID|SU|3.6378|98.8706|23|12303|P|L|1|4765892
 KOE|WATT|El Tari Airport|Kupang|Kupang|ID|NT|-10.1716|123.6710|335|8202|P|M|1|460330
-KSR|WAWH|Selayar - Haji Aroeppala Airport|Benteng|Benteng|ID|SN|-6.1792|120.4375|13|3000|G|S|1|150
-LKI|WIML|Lasikin Airport|Lubang|Lubang, ID|ID|AC|2.4113|96.3277|19|3000|G|S|1|15000
-LOP|WADL|Lombok International Airport|Mataram|Mataram|ID|NB|-8.7600|116.2782|319|10826|P|L|1|763290
+LBJ|WATO|Komodo Airport|Labuan Bajo|Labuan Bajo|ID|NT|-8.4807|119.8883|66|7381|P|S|1|188724
 LPU|WAQL|Long Apung Airport|Long Apung-Borneo Island|Long Apung-Borneo Island|ID|KU|1.7069|114.9699|2437|2620|P|S|1|150
+LUV|WAPF|Karel Sadsuitubun Airport|Langgur|Langgur|ID|MA|-5.7603|132.7594|78|7710|P|M|1|90470
 MDC|WAMM|Sam Ratulangi International Airport|Manado|Manado|ID|SA|1.5486|124.9262|264|8693|P|L|1|851707
 MKQ|WAKK|Mopah International Airport|Merauke|Merauke|ID|PS|-8.5239|140.4197|10|6070|P|M|1|116864
+MKW|WAUU|Rendani Airport|Manokwari|Manokwari|ID|PB|-0.8918|134.0490|23|6562|P|M|1|136308
 NBX|WABI|Douw Aturure Airport|Nabire|Nabire|ID|PT|-3.3980|135.3931|22|6000|G|M|0|99848
+NPO|WIOG|Nanga Pinoh Airport|Nanga Pinoh-Borneo|Nanga Pinoh-Borneo|ID|KB|-0.3486|111.7462|123|3272|P|M|1|12327
 NTX|WIDO|Ranai Airport|Ranai-Natuna Besar|Ranai-Natuna Besar|ID|KR|3.9087|108.3880|7|8410|P|M|1|8735
 OKL|WAJO|Oksibil Airport|Oksibil|Oksibil|ID|PP|-4.9071|140.6277|4315|2854|G|M|1|784
+OKQ|WAKO|Okaba Airport|Okaba|Okaba|ID|PS|-8.0946|139.7233|23|1968|P|S|0|1270
 PDG|WIEE|Minangkabau International Airport|Padang|Padang|ID|SB|-0.7860|100.2804|18|9843|P|L|1|1455576
-PGK|WIKK|Depati Amir Airport|Pangkal Pinang|Pangkal Pinang|ID|BB|-2.1622|106.1390|109|7382|P|M|1|327047
-PKU|WIBB|Sultan Syarif Kasim II International Airport / Roesmin Nurjadin AFB|Pekanbaru|Pekanbaru|ID|RI|0.4586|101.4443|102|7360|P|M|1|1193799
-PKY|WAGG|Tjilik Riwut Airport|Palangkaraya|Palangkaraya|ID|KT|-2.2271|113.9434|82|8202|P|M|1|318247
+PKN|WAGI|Iskandar Airport|Pangkalanbun|Pangkalanbun|ID|KT|-2.7052|111.6730|75|5415|P|S|1|108814
 PLM|WIPP|Sultan Mahmud Badaruddin II Airport|Palembang|Palembang|ID|SS|-2.8977|104.6981|49|8202|P|M|1|1862577
 PLW|WAFF|Mutiara - SIS Al-Jufrie Airport|Palu|Palu|ID|ST|-0.9165|119.9086|284|6781|P|M|1|389959
-PNK|WIOO|Supadio International Airport|Pontianak|Pontianak|ID|KB|-0.1523|109.4045|10|7380|P|L|1|841231
-SQG|WIOS|Tebelian Airport|Sintang|Sintang|ID|KB|-0.0452|111.4580|97|6000|G|M|1|72673
+SOC|WAHQ|Adisoemarmo International Airport|Surakarta|Surakarta|ID|JT|-7.5160|110.7575|421|8530|P|L|1|3037921
+SOQ|WASS|Domine Eduard Osok Airport|Sorong|Sorong|ID|PB|-0.8940|131.2870|10|6070|P|M|1|219958
 SQN|WAES|Emalamo Airport|Sanana|Sanana|ID|MU|-2.1004|125.9658|11|3000|G|S|0|29716
-SRG|WAHS|Jenderal Ahmad Yani Airport|Semarang|Semarang|ID|JT|-6.9707|110.3732|10|8399|P|L|1|4659312
 SUB|WARR|Juanda International Airport|Surabaya|Surabaya|ID|JI|-7.3798|112.7870|9|9843|P|L|1|6242749
 SXK|WAPS|Mathilda Batlayeri Airport|Saumlaki-Yamdena Island|Saumlaki-Yamdena Island|ID|MA|-7.8484|131.3371|446|6562|P|S|1|12916
-TKG|WILL|Radin Inten II International Airport|Bandar Lampung|Bandar Lampung|ID|LA|-5.2468|105.1825|282|9088|P|M|1|1443291
+TJQ|WIKT|H A S Hanandjoeddin International Airport|Tanjung Pandan|Tanjung Pandan|ID|BB|-2.7441|107.7545|164|8202|P|S|1|103062
 TMH|WAKT|Tanah Merah Airport|Tanah Merah|Tanah Merah|ID|PS|-6.0967|140.3035|57|6000|G|M|1|150
-TRK|WAQQ|Juwata International Airport / Suharnoko Harbani AFB|Tarakan|Tarakan|ID|KU|3.3251|117.5642|23|7382|P|M|1|263152
+TTE|WAEE|Sultan Babullah Airport|Ternate|Ternate|ID|MU|0.8310|127.3816|49|5875|P|M|1|238427
 UPG|WAAA|Sultan Hasanuddin International Airport|Makassar|Makassar|ID|SN|-5.0755|119.5537|47|10171|P|L|1|1917133
-WAJK|WAJK|Kiwirok Airstrip|Kiwirok|Kiwirok|ID|PP|-4.7135|140.7403|5470|1448|G|S|1|150
+BBM|VDBG|Battambang Airport|Battambang|Battambang|KH|2|13.0956|103.2240|59|5250|P|M|1|243941
 KTI|VDTI|Techo International Airport|Phnom Penh|Phnom Penh|KH|8|11.3600|104.9213|20|13123|P|L|1|3635272
-SAI|VDSA|Siem Reap-Angkor International Airport|Siem Reap|Siem Reap|KH|17|13.3697|104.2238|191|11827|P|L|1|497905
 LPQ|VLLB|Luang Phabang International Airport|Luang Phabang|Luang Phabang|LA|LP|19.9043|102.1672|955|8202|P|L|1|120663
-VTE|VLVT|Wattay International Airport|Vientiane|Vientiane|LA|VT|17.9851|102.5667|564|9843|P|L|1|1048959
-AKY|VYSW|Sittwe Airport|Sittwe|Sittwe|MM|16|20.1332|92.8707|27|6001|P|M|1|260502
-HEH|VYHH|Heho Airport|Heho|Heho|MM|17|20.7471|96.7920|3858|8500|P|M|1|534436
-KHM|VYKI|Kanti Airport|Kanti|Kanti|MM|01|25.9883|95.6744|6000|3000|G|S|1|35593
+PKZ|VLPS|Pakse International Airport|Pakse|Pakse|LA|CH|15.1340|105.7799|351|7874|P|L|1|273974
 KYP|VYKP|Kyaukpyu Airport|Kyaukpyu|Kyaukpyu|MM|16|19.4264|93.5348|20|4600|P|M|1|332139
-LSH|VYLS|Lashio Airport|Lashio|Lashio|MM|17|22.9779|97.7522|2450|5285|P|M|1|251837
 MDL|VYMD|Mandalay International Airport|Mandalay|Mandalay|MM|04|21.7022|95.9779|300|14003|P|L|1|2669940
-MNU|VYMM|Mawlamyine Airport|Mawlamyine|Mawlamyine|MM|15|16.4447|97.6607|52|5260|P|S|1|620928
-MWQ|VYMW|Magway Airport|Magway|Magway|MM|03|20.1656|94.9414|279|8530|P|S|1|256804
-NYT|VYNT|Nay Pyi Taw International Airport|Naypyitaw|Naypyitaw|MM|04|19.6235|96.2010|302|12000|P|L|1|1792177
+MGZ|VYME|Myeik Airport|Mkeik|Mkeik|MM|05|12.4398|98.6215|75|8795|P|M|1|213470
+PBU|VYPT|Putao Airport|Putao|Putao|MM|11|27.3299|97.4263|1500|7002|P|M|1|10982
 RGN|VYYY|Yangon International Airport|Yangon|Yangon|MM|06|16.9073|96.1332|109|11200|P|L|1|10031381
-AOR|WMKA|Sultan Abdul Halim Airport|Alor Satar|Alor Satar|MY|02|6.1897|100.3980|15|9005|P|M|1|850852
 BKI|WBKK|Kota Kinabalu International Airport|Kota Kinabalu|Kota Kinabalu|MY|12|5.9327|116.0493|10|12402|P|L|1|947111
-IPH|WMKI|Sultan Azlan Shah Airport|Ipoh|Ipoh|MY|08|4.5673|101.0916|130|5900|P|L|1|2635974
-KBR|WMKC|Sultan Ismail Petra Airport|Kota Baharu|Kota Baharu|MY|03|6.1669|102.2930|16|7874|P|M|1|1234798
 KCH|WBGG|Kuching International Airport|Kuching|Kuching|MY|13|1.4874|110.3529|89|12402|P|L|1|902790
-KUA|WMKD|Kuantan Airport|Kuantan|Kuantan|MY|06|3.7754|103.2090|58|9200|P|M|1|783744
-LBP|MY-LBP|Long Banga Airport|Long Banga|Long Banga|MY|13|3.2021|115.4018|750|3000|G|S|1|150
+KUL|WMKK|Kuala Lumpur International Airport|Sepang|Sepang|MY|10|2.7456|101.7100|69|13530|P|L|1|4321748
 MYY|WBGR|Miri Airport|Miri|Miri|MY|13|4.3220|113.9870|59|9006|P|M|1|311356
 PEN|WMKP|Penang International Airport|Penang|Penang|MY|07|5.2963|100.2762|11|10997|P|L|1|3461687
-SBW|WBGS|Sibu Airport|Sibu|Sibu|MY|13|2.2616|111.9850|122|9036|P|M|1|367809
-SDK|WBKS|Sandakan Airport|Sandakan|Sandakan|MY|12|5.9009|118.0590|46|8202|P|M|1|462402
-SZB|WMSA|Sultan Abdul Aziz Shah International Airport|Subang|Subang|MY|10|3.1306|101.5490|90|12401|P|L|1|11878052
 TGG|WMKN|Sultan Mahmud Airport|Kuala Terengganu|Kuala Terengganu|MY|11|5.3826|103.1030|21|11417|P|M|1|570256
 TWU|WBKW|Tawau Airport|Tawau|Tawau|MY|12|4.3134|118.1215|57|8800|P|M|1|405887
-BAG|RPUB|Loakan Airport|Baguio|Baguio|PH|BAG|16.3750|120.6199|4251|5912|P|M|0|1090670
-BCD|RPVB|Bacolod-Silay International Airport|Bacolod City|Bacolod City|PH|NEC|10.7762|123.0189|82|6562|P|L|1|3027862
-BPH|RPMF|Bislig Airport|Bislig|Bislig|PH|SUR|8.1951|126.3210|12|3937|P|M|0|388021
 BSO|RPUO|Basco Airport|Basco|Basco|PH|BTN|20.4513|121.9800|291|4101|P|M|1|14715
-BXU|RPME|Bancasi Airport|Butuan|Butuan|PH|BTC|8.9515|125.4788|141|6877|P|M|1|1098441
 CBO|RPMC|Cotabato (Awang) Airport|Datu Odin Sinsuat|Datu Odin Sinsuat|PH|MDN|7.1648|124.2099|189|6234|P|M|1|2951283
 CEB|RPVM|Mactan Cebu International Airport|Cebu City|Cebu City|PH|CEB|10.3093|123.9797|31|10860|P|L|1|4209423
 CGY|RPMY|Laguindingan International Airport|Laguindingan|Laguindingan|PH|MSR|8.6122|124.4565|190|6890|P|L|1|3674872
-CYP|RPVC|Calbayog Airport|Calbayog City|Calbayog City|PH|WSA|12.0726|124.5451|12|4843|P|M|1|284742
-CYU|RPLO|Cuyo Airport|Cuyo|Cuyo|PH|PLW|10.8581|121.0690|0|3000|G|S|1|23382
 CYZ|RPUY|Cauayan Airport|Cauayan City|Cauayan City|PH|ISA|16.9299|121.7530|200|6890|P|M|1|868520
-DGT|RPVD|Sibulan Airport|Dumaguete City|Dumaguete City|PH|NER|9.3342|123.3019|15|6220|P|M|1|741444
 DRP|RPLK|Bicol International Airport|Legazpi|Legazpi|PH|ALB|13.1119|123.6768|319|8202|P|L|1|1557107
 DVO|RPMD|Francisco Bangoy International Airport|Davao|Davao|PH|DVO|7.1255|125.6460|96|9842|P|L|1|5125352
-GES|RPMR|General Santos International Airport|General Santos|General Santos|PH|SCO|6.0572|125.0962|505|10587|P|L|1|2999428
-JOL|RPMJ|Jolo Airport|Jolo|Jolo|PH|SLU|6.0537|121.0110|118|4144|P|M|1|287048
-LAO|RPLI|Laoag International Airport|Laoag City|Laoag City|PH|ILN|18.1751|120.5310|25|9120|P|L|1|841266
-MBO|RPUM|Mamburao Airport|Mamburao|Mamburao|PH|MDC|13.2080|120.6055|13|4265|P|M|0|254672
+ILO|RPVI|Iloilo International Airport|Cabatuan|Cabatuan|PH|ILI|10.8330|122.4934|27|8202|P|L|1|1688908
 MNL|RPLL|Ninoy Aquino International Airport|Manila|Manila|PH|00|14.5086|121.0200|75|12261|P|L|1|27332124
-MRQ|RPUW|Marinduque Airport|Gasan|Gasan|PH|MAD|13.3610|121.8260|32|4785|P|M|0|498100
-PAG|RPMP|Pagadian Airport|Pagadian|Pagadian|PH|ZAS|7.8256|123.4596|5|6574|P|M|1|742920
 PPS|RPVP|Puerto Princesa International Airport / PAF Antonio Bautista Air Base|Puerto Princesa|Puerto Princesa|PH|PLW|9.7420|118.7591|71|8530|P|L|1|490442
-RPLT|RPLT|Itbayat Jorge Abad Airport|Itbayat|Itbayat|PH|BTN|20.7225|121.8100|328|2628|P|M|1|4777
-SJI|RPUH|San Jose Airport|San Jose|San Jose, PH|PH|MDC|12.3615|121.0470|14|6024|P|M|1|403442
-TAC|RPVA|Daniel Z. Romualdez Airport|Tacloban City|Tacloban City|PH|LEY|11.2278|125.0278|10|7014|P|M|1|937941
+USU|RPVV|Francisco B. Reyes (Busuanga) Airport|Coron|Coron|PH|PLW|12.1219|120.1008|148|3300|P|M|1|47798
 ZAM|RPMZ|Zamboanga International Airport|Zamboanga|Zamboanga|PH|ZMC|6.9224|122.0600|33|8560|P|L|1|1575995
-SIN|WSSS|Singapore Changi Airport|Singapore|Singapore|SG|04|1.3502|103.9940|22|13123|P|L|1|7540099
 BKK|VTBS|Suvarnabhumi Airport|Bangkok|Bangkok|TH|10|13.6811|100.7470|5|13123|P|L|1|15236500
-CEI|VTCT|Mae Fah Luang - Chiang Rai International Airport|Chiang Rai|Chiang Rai|TH|57|19.9523|99.8829|1280|9843|P|L|1|246123
 CNX|VTCC|Chiang Mai International Airport|Chiang Mai|Chiang Mai|TH|50|18.7668|98.9626|1036|11155|P|L|1|326468
-HHQ|VTPH|Hua Hin Airport|Hua Hin|Hua Hin|TH|76|12.6362|99.9515|62|6890|P|M|1|274504
 HKT|VTSP|Phuket International Airport|Phuket|Phuket|TH|83|8.1133|98.3174|82|10171|P|L|1|417869
-KKC|VTUK|Khon Kaen Airport|Khon Kaen|Khon Kaen|TH|40|16.4666|102.7840|670|10007|P|M|1|281440
-KKM|VTBL|Khok Kathiam Airport|Lop Buri|Lop Buri|TH|16|14.8746|100.6634|123|7252|P|M|0|357112
 PHS|VTPP|Phitsanulok Airport|Phitsanulok|Phitsanulok|TH|65|16.7829|100.2790|154|9843|P|M|1|280192
-TDX|VTBO|Trat Airport|Laem Ngop|Laem Ngop|TH|23|12.2746|102.3190|105|5899|P|M|1|250267
-UBP|VTUU|Ubon Ratchathani Airport|Ubon Ratchathani|Ubon Ratchathani|TH|34|15.2513|104.8700|406|9848|P|M|1|276279
-USM|VTSM|Samui International Airport|Na Thon|Na Thon|TH|84|9.5478|100.0620|64|6759|P|L|1|145518
-UTP|VTBU|U-TapaoRayongPattaya International Airport|Rayong|Rayong|TH|21|12.6799|101.0050|42|11500|P|L|1|1864750
+UTH|VTUD|Udon Thani International Airport|Udon Thani|Udon Thani|TH|41|17.3862|102.7886|579|10000|P|L|1|485049
 DIL|WPDL|Presidente Nicolau Lobato International Airport|Dili|Dili|TL|DI|-8.5466|125.5245|154|6065|P|L|1|288395
-OEC|WPOC|Oecusse Route of the Sandalwood International Airport|Oecussi-Ambeno|Oecussi-Ambeno|TL|OE|-9.1984|124.3379|0|7218|P|L|1|161721
-BMV|VVBM|Buon Ma Thuot Airport|Buon Ma Thuot|Buon Ma Thuot|VN|CH|12.6683|108.1200|1729|9843|P|M|1|784275
 CXR|VVCR|Cam Ranh International Airport / Cam Ranh Air Base|Nha Trang|Nha Trang|VN|SCC|11.9982|109.2190|40|10000|P|L|1|1271636
 DAD|VVDN|Da Nang International Airport|Da Nang|Da Nang|VN|SCC|16.0439|108.1990|33|11483|P|L|1|2996598
-DIN|VVDB|Dien Bien Phu Airport|Dien Bien Phu|Dien Bien Phu|VN|NW|21.3975|103.0080|1611|7874|P|M|1|315703
 HAN|VVNB|Noi Bai International Airport|Hanoi|Hanoi|VN|RRD|21.2212|105.8070|39|12466|P|L|1|17063950
-HPH|VVCI|Cat Bi International Airport|Haiphong|Haiphong|VN|RRD|20.8174|106.7243|6|10007|P|L|1|7115779
-PQC|VVPQ|Phu Quoc International Airport|Phu Quoc Island|Phu Quoc Island|VN|SW|10.1698|103.9935|37|10827|P|L|1|796291
-PXU|VVPK|Pleiku Airport|Pleiku|Pleiku|VN|CH|14.0045|108.0170|2434|7874|P|M|1|375611
 SGN|VVTS|Tan Son Nhat International Airport|Ho Chi Minh City|Ho Chi Minh City|VN|SE|10.8188|106.6520|33|12468|P|L|1|24167950
-TBB|VVTH|Dong Tac Airport|Tuy Hoa|Tuy Hoa|VN|SCC|13.0496|109.3340|20|9520|P|M|1|365424
-THD|VVTX|Tho Xuan Airport|Thanh Hoa|Thanh Hoa|VN|NC|19.9017|105.4678|59|10499|P|S|1|934739
-UIH|VVPC|Phu Cat Airport|Quy Nohn|Quy Nohn|VN|SCC|13.9550|109.0420|80|10010|P|M|1|836355
-VCA|VVCT|Can Tho International Airport|Can Tho|Can Tho|VN|SW|10.0834|105.7094|9|9843|P|L|1|5299847
-VDH|VVDH|Dong Hoi Airport|Dong Hoi|Dong Hoi|VN|NC|17.5150|106.5906|59|7874|P|M|1|491804
 VII|VVVH|Vinh Airport|Vinh|Vinh|VN|NC|18.7376|105.6710|23|7875|P|M|1|2041617
+VKG|VVRG|Rach Gia Airport|Rach Gia|Rach Gia|VN|SW|9.9580|105.1324|7|4921|P|M|1|818709
 """#
 }

@@ -5,113 +5,81 @@ enum AirportRows_SSA {
     static let rows = #"""
 CBT|FNCT|Catumbela Airport|Catumbela|Catumbela|AO|BGU|-12.4792|13.4869|23|12139|P|M|1|1055170
 DUE|FNDU|Dundo Airport|Chitato|Chitato|AO|LNO|-7.4009|20.8185|2451|6468|P|M|1|444484
-GXG|FNNG|Negage Airport|Negage|Negage|AO|UIG|-7.7545|15.2877|4105|7874|P|M|1|292205
-LUO|FNUE|Luena Airport|Luena|Luena|AO|MOX|-11.7681|19.8977|4360|7875|P|M|0|299287
 MEG|FNMA|Malanje Airport|Malanje|Malanje|AO|MAL|-9.5251|16.3124|3868|7283|P|M|1|639220
-MSZ|FNMO|Welwitschia Mirabilis International Airport|Mocamedes|Mocamedes|AO|NAM|-15.2612|12.1468|210|8202|P|M|1|301573
 NBJ|FNBJ|Dr. Antonio Agostinho Neto International Airport|Luanda|Luanda|AO|LUA|-9.0507|13.4991|550|13123|P|L|1|13362661
-NDD|FNSU|Sumbe Airport|Sumbe|Sumbe|AO|CUS|-11.1679|13.8475|36|3115|P|M|0|343289
-NOV|FNHU|Albano Machado Airport|Huambo|Huambo|AO|HUA|-12.8089|15.7605|5587|8727|P|M|1|1098474
 SDD|FNUB|Lubango Mukanka International Airport|Lubango|Lubango|AO|HUI|-14.9248|13.5767|5778|10335|P|M|1|621251
 SPP|FNME|Menongue Airport|Menongue|Menongue|AO|CCU|-14.6576|17.7198|4469|11483|P|M|1|266178
-SSY|FNBC|Mbanza Congo Airport|Mbanza Congo|Mbanza Congo|AO|ZAI|-6.2699|14.2470|1860|5905|P|M|1|332734
 SVP|FNKU|Kuito Airport|Kuito|Kuito|AO|BIE|-12.4046|16.9474|5618|8202|P|M|0|492986
-SZA|FNSO|Soyo Airport|Soyo|Soyo|AO|ZAI|-6.1411|12.3718|15|5905|P|M|1|614203
 VHC|FNSA|Saurimo Airport|Saurimo|Saurimo|AO|LSU|-9.6891|20.4319|3584|11155|P|M|0|393000
+VPE|FNGI|Ngjiva Pereira Airport|Ngiva|Ngiva|AO|CNN|-17.0435|15.6838|3566|10640|P|M|1|152429
 BOY|DFOO|Bobo Dioulasso Airport|Bobo Dioulasso|Bobo Dioulasso|BF|HOU|11.1601|-4.3310|1511|10826|P|L|1|1736452
 OUA|DFFD|Ouagadougou Thomas Sankara International Airport|Ouagadougou|Ouagadougou|BF|KAD|12.3532|-1.5124|1037|9843|P|L|1|3957011
 BJM|HBBA|Bujumbura Melchior Ndadaye International Airport|Bujumbura|Bujumbura|BI|BM|-3.3240|29.3185|2582|11811|P|L|1|1685450
-COO|DBBB|Cotonou Cadjehoun International Airport|Cotonou|Cotonou|BJ|AQ|6.3572|2.3843|19|7906|P|L|1|3637673
-FRW|FBPM|Phillip Gaonwe Matante International Airport|Francistown|Francistown|BW|FR|-21.1592|27.4688|3283|9843|P|L|1|246917
 GBE|FBSK|Sir Seretse Khama International Airport|Gaborone|Gaborone|BW|GA|-24.5552|25.9182|3299|13123|P|L|1|903581
 MUB|FBMN|Maun International Airport|Maun|Maun|BW|NW|-19.9705|23.4314|3093|6562|P|L|1|102264
+SXN|FBSN|Sua Pan Airport|Sowa|Sowa|BW|ST|-20.5534|26.1158|2985|5381|P|M|0|15021
+BDT|FZFD|Gbadolite Airport|Gbadolite|Gbadolite|CD|NU|4.2527|20.9753|1509|10499|P|M|1|113602
 BNB|FZGN|Boende Airport|Boende|Boende|CD|TU|-0.2867|20.8836|1168|3000|G|S|1|50794
 BUX|FZKA|Bunia Airport|Bunia|Bunia|CD|IT|1.5657|30.2207|4045|8202|P|M|1|509856
 BZU|FZKJ|Buta Zega Airport|Buta|Buta|CD|BU|2.8181|24.7940|1378|6890|P|M|0|80751
 FBM|FZQA|Lubumbashi International Airport|Lubumbashi|Lubumbashi|CD|HK|-11.5915|27.5308|4295|10623|P|L|1|3259916
-FDU|FZBO|Bandundu Airport|Bandundu|Bandundu|CD|KL|-3.3113|17.3817|1063|4528|P|M|1|326393
+FIH|FZAA|Ndjili International Airport|Kinshasa|Kinshasa|CD|KN|-4.3857|15.4446|1027|13123|P|L|1|6277556
 FKI|FZIC|Bangoka International Airport|Kisangani|Kisangani|CD|TO|0.4816|25.3380|1417|11483|P|L|1|1664226
-FZVJ|FZVJ|Tshumbe Airport|Tshumbe|Tshumbe|CD|SA|-4.0393|24.3656|1804|3000|G|S|1|150
-GOM|FZNA|Goma International Airport|Goma|Goma|CD|NK|-1.6668|29.2380|5089|9695|P|L|1|1059554
-INO|FZBA|Inongo Airport|Inongo|Inongo|CD|MN|-1.9472|18.2858|1040|3937|G|S|1|68852
+FMI|FZRF|Kalemie Airport|Kalemie|Kalemie|CD|TA|-5.8756|29.2500|2569|5741|P|M|1|160961
 IRP|FZJH|Matari Airport|Isiro|Isiro|CD|HU|2.8276|27.5883|2438|8202|P|M|1|272782
-KGA|FZUA|Kananga Airport|Kananga|Kananga|CD|KC|-5.9001|22.4692|2139|7218|P|M|1|1303110
 KKW|FZCA|Kikwit Airport|Kikwit|Kikwit|CD|KL|-5.0358|18.7856|1572|5151|P|M|1|678642
 KMN|FZSB|Kamina City Airport|Kamina|Kamina|CD|HL|-8.7289|24.9914|3475|4823|G|S|1|200184
 KND|FZOA|Kindu Airport|Kindu|Kindu|CD|MA|-2.9192|25.9154|1630|7218|P|M|1|234651
-KWZ|FZQM|Kolwezi Airport|Kolwezi|Kolwezi|CD|LU|-10.7659|25.5057|5007|5741|P|M|1|790248
-LIQ|FZGA|Lisala Airport|Lisala|Lisala|CD|MO|2.1707|21.4969|1509|7200|G|M|0|121569
 MDK|FZEA|Mbandaka Airport|Mbandaka|Mbandaka|CD|EQ|0.0226|18.2887|1040|7223|P|M|1|534659
 MJM|FZWA|Mbuji Mayi Airport|Mbuji Mayi|Mbuji Mayi|CD|KE|-6.1212|23.5690|2221|6558|P|M|1|2424262
-PFR|FZVS|Ilebo Airport|Ilebo|Ilebo|CD|KS|-4.3299|20.5901|1450|4117|G|S|1|117245
 BBT|FEFT|Berberati Airport|Berberati|Berberati|CF|HS|4.2216|15.7864|1929|5446|P|M|0|277716
 BGF|FEFF|Bangui M'Poko International Airport|Bangui|Bangui|CF|MP|4.3985|18.5188|1208|8530|P|L|1|1652920
-BZV|FCBB|Maya-Maya International Airport|Brazzaville|Brazzaville|CG|12|-4.2517|15.2530|1048|10827|P|L|1|9526122
-DIS|FCPD|Ngot Nzoungou Airport|Dolisie|Dolisie|CG|9|-4.2063|12.6599|1079|6725|P|M|0|322432
+OLL|FCOD|Oyo Ollombo Airport|Oyo|Oyo|CG|14|-1.2267|15.9100|1073|10827|P|M|0|62266
 PNR|FCPP|Antonio Agostinho-Neto International Airport|Pointe Noire|Pointe Noire|CG|5|-4.8160|11.8866|55|8530|P|L|1|1266163
 ABJ|DIAP|Felix-Houphouet-Boigny International Airport|Abidjan|Abidjan|CI|AB|5.2614|-3.9263|21|9843|P|L|1|11355541
 ASK|DIYO|Yamoussoukro International Airport|Yamoussoukro|Yamoussoukro|CI|YM|6.9032|-5.3656|699|9843|P|L|0|6010848
-HGO|DIKO|Korhogo Airport|Korhogo|Korhogo|CI|SV|9.3872|-5.5567|1214|6890|P|M|1|1487436
 SPY|DISP|San Pedro Airport|San-Pedro|San-Pedro|CI|BS|4.7467|-6.6608|26|6234|P|M|1|1249892
-BFX|FKKU|Bafoussam Airport|Bafoussam|Bafoussam|CM|OU|5.5369|10.3546|4347|8203|P|M|0|1057588
 DLA|FKKD|Douala International Airport|Douala|Douala|CM|LT|4.0061|9.7195|33|9350|P|L|1|2290106
 GOU|FKKR|Garoua International Airport|Garoua|Garoua|CM|NO|9.3348|13.3721|794|11032|P|L|1|642962
-MVR|FKKL|Salak Airport|Maroua|Maroua|CM|EN|10.4514|14.2574|1390|6890|P|M|1|551296
 NSI|FKYS|Yaounde Nsimalen International Airport|Yaounde|Yaounde|CM|CE|3.7226|11.5533|2278|11155|P|L|1|1929518
 RAI|GVNP|Nelson Mandela International Airport|Praia|Praia|CV|S|14.9411|-23.4847|230|6890|P|L|1|427154
-SID|GVAC|Amilcar Cabral International Airport|Espargos|Espargos|CV|B|16.7414|-22.9494|177|10760|P|L|1|57107
 VXE|GVSV|Cesaria Evora International Airport|Sao Pedro|Sao Pedro|CV|B|16.8334|-25.0553|66|6561|P|L|1|172843
-JIB|HDAM|Djibouti-Ambouli Airport|Djibouti City|Djibouti City|DJ|DJ|11.5473|43.1595|49|10335|P|L|1|1393454
+ASA|HHSB|Assab International Airport|Assab|Assab|ER|DK|13.0718|42.6450|46|11531|P|M|0|38894
 ASM|HHAS|Asmara International Airport|Asmara|Asmara|ER|SK|15.2919|38.9107|7661|9842|P|M|1|707809
+ABK|HAKD|Kebri Dahar Airport|Kebri Dahar|Kebri Dahar|ET|SO|6.7326|44.2413|1800|8202|P|M|1|45900
 ADD|HAAB|Addis Ababa Bole International Airport|Addis Ababa|Addis Ababa|ET|AA|8.9779|38.7993|7630|12467|P|L|1|6057073
-AMH|HAAM|Arba Minch Airport|Arba Minch|Arba Minch|ET|SN|6.0394|37.5905|3901|9170|P|M|1|393514
 AWA|HALA|Hawassa International Airport|Hawassa|Hawassa|ET|XSD|7.1006|38.3965|5450|9843|P|L|1|2857550
-AXU|HAAX|Axum Airport|Axum|Axum|ET|TI|14.1468|38.7728|6959|7874|P|M|1|382148
+BCO|HABC|Jinka Airport|Jinka|Jinka|ET|SN|5.7497|36.5602|4475|8612|P|M|1|134029
 BJR|HABD|Bahir Dar Airport|Bahir Dar|Bahir Dar|ET|AM|11.6081|37.3216|5978|9842|P|M|1|855752
-DBM|HADM|Debre Markos Airport|Debre Markos|Debre Markos|ET|AM|10.3215|37.7419|8136|3000|G|S|1|191400
-DIR|HADR|Aba Tenna Dejazmach Yilma International Airport|Dire Dawa|Dire Dawa|ET|DD|9.6235|41.8550|3827|8791|P|L|1|940753
 DSE|HADC|Kombolcha Airport|Dessie|Dessie|ET|AM|11.1098|39.7259|6120|3000|G|S|1|493100
-GDQ|HAGN|Gondar Airport|Azezo|Azezo|ET|AM|12.5199|37.4340|6449|9072|P|M|1|748048
-HIL|HASL|Shilavo Airport|Shilavo|Shilavo|ET|SO|6.0775|44.7637|1296|3000|G|S|1|150
-HUE|HAHU|Humera Airport|Akwi|Akwi|ET|TI|13.8301|36.8824|1930|3000|G|S|1|150
-JIJ|HAJJ|Gerad Wilwal International Airport|Jijiga|Jijiga|ET|SO|9.3319|42.9118|5954|8202|P|L|1|1180072
-JIM|HAJM|Jimma Airport|Jimma|Jimma|ET|OR|7.6661|36.8166|5500|10236|P|M|1|406894
-MQX|HAMK|Mekele Alula Aba Nega Airport|Mekele|Mekele|ET|TI|13.4674|39.5335|7396|11811|P|M|1|674142
-MTF|HAMT|Mizan Teferi Airport|Mizan Teferi|Mizan Teferi|ET|SW|6.9571|35.5547|4396|3000|G|S|1|115849
-BMM|FOOB|Bitam Airport|Bitam|Bitam|GA|9|2.0756|11.4932|1969|5726|G|M|0|65940
-LBQ|FOGR|Lambarene Airport|Lambarene|Lambarene|GA|3|-0.7044|10.2457|82|7555|G|M|0|90177
-LBV|FOOL|Libreville Leon M'ba International Airport|Libreville|Libreville|GA|1|0.4590|9.4121|39|9844|P|L|1|912795
-POG|FOOG|Port Gentil International Airport|Port Gentil|Port Gentil|GA|8|-0.7117|8.7544|13|6234|P|L|1|182997
+GMB|HAGM|Gambela Airport|Gambela|Gambela|ET|GA|8.1288|34.5631|1614|8248|P|M|1|112310
+MJL|FOGM|Mouilla Ville Airport|Mouila|Mouila|GA|4|-1.8451|11.0567|295|5891|P|M|0|73956
+MKU|FOOK|Makokou Airport|Makokou|Makokou|GA|6|0.5792|12.8909|1726|5892|P|M|1|28887
+MVB|FOON|M'Vengue El Hadj Omar Bongo Ondimba International Airport|Franceville|Franceville|GA|2|-1.6562|13.4380|1450|10105|P|M|1|236550
 ACC|DGAA|Kotoka International Airport|Accra|Accra|GH|AA|5.6052|-0.1668|205|11165|P|L|1|4499799
 KMS|DGSI|Prempeh I International Airport|Kumasi|Kumasi|GH|AH|6.7146|-1.5908|942|7612|P|L|1|3715190
-NYI|DGSN|Sunyani Airport|Sunyani|Sunyani|GH|BO|7.3618|-2.3288|1014|4594|P|M|1|619426
-TKD|DGTK|Takoradi Airport|Sekondi-Takoradi|Sekondi-Takoradi|GH|WP|4.8961|-1.7748|21|5745|P|M|1|1160239
-TML|DGLE|Yakubu Tali International Airport|Tamale|Tamale|GH|NP|9.5539|-0.8661|553|7999|P|L|1|776518
-BJL|GBYD|Banjul International Airport|Banjul|Banjul|GM|W|13.3380|-16.6522|95|11811|P|L|1|1772259
 CKY|GUCY|Ahmed Sekou Toure International Airport|Conakry|Conakry|GN|C|9.5769|-13.6120|72|10826|P|L|1|4614185
-BSG|FGBT|Bata International Airport|Bata|Bata|GQ|LI|1.9055|9.8057|13|10860|P|L|1|264060
-SSG|FGSL|Malabo International Airport|Malabo|Malabo|GQ|BN|3.7553|8.7087|76|9647|P|L|1|441959
+OCS|FGCO|Corisco International Airport|Corisco Island|Corisco Island|GQ|LI|0.9109|9.3303|55|10220|P|L|1|137862
 OXB|GGOV|Osvaldo Vieira International Airport|Bissau|Bissau|GW|BS|11.8943|-15.6536|129|10499|P|L|1|1244339
-KIS|HKKI|Kisumu International Airport|Kisumu|Kisumu|KE|42|-0.0861|34.7289|3734|10823|P|L|1|3097243
+EDL|HKEL|Eldoret International Airport|Eldoret|Eldoret|KE|27|0.4045|35.2389|6941|11480|P|L|1|2190737
+LOK|HKLO|Lodwar Airport|Lodwar|Lodwar|KE|23|3.1220|35.6087|1715|3281|P|M|0|95646
 MBA|HKMO|Moi International Airport|Mombasa|Mombasa|KE|01|-4.0348|39.5942|200|10991|P|L|1|2040419
 NBO|HKJK|Jomo Kenyatta International Airport|Nairobi|Nairobi|KE|47|-1.3189|36.9282|5330|13507|P|L|1|8659933
-NUU|HKNK|Nakuru Lanet Airport|Nakuru|Nakuru|KE|32|-0.2984|36.1592|6234|5607|P|M|0|677135
-NYK|HKNL|Nanyuki Civil Airport|Gathiuru|Gathiuru|KE|19|-0.0624|37.0413|6250|3900|P|M|1|579408
 WJR|HKWJ|Wajir Airport|Wajir|Wajir|KE|08|1.7332|40.0916|770|9193|P|M|1|101197
 HAH|FMCH|Prince Said Ibrahim International Airport|Moroni|Moroni|KM|G|-11.5337|43.2719|93|9514|P|L|1|203161
 ROB|GLRB|Roberts International Airport|Monrovia|Monrovia|LR|MG|6.2338|-10.3623|31|11000|P|L|1|1830044
-SNI|GLGE|Greenville/Sinoe Airport|Greenville|Greenville, LR|LR|SI|5.0321|-9.0642|10|6000|G|M|0|21127
-MSU|FXMM|Moshoeshoe I International Airport|Maseru|Maseru|LS|A|-29.4563|27.5545|5348|10498|P|L|1|1115903
 FTU|FMSD|Tolanaro Airport|Tolanaro|Tolanaro|MG|U|-25.0381|46.9561|29|5280|P|M|1|189228
 MJN|FMNM|Amborovy Airport|Mahajanga|Mahajanga|MG|M|-15.6668|46.3512|87|7218|P|L|1|416636
+MOQ|FMMV|Morondava Airport|Morondava|Morondava|MG|U|-20.2847|44.3176|30|4921|P|M|1|80571
 NOS|FMNN|Nosy Be International Airport|Nosy Be|Nosy Be|MG|D|-13.3121|48.3148|36|7185|P|L|1|286944
-TMM|FMMT|Toamasina Ambalamanasy Airport|Toamasina|Toamasina|MG|A|-18.1135|49.3923|22|7218|P|L|1|623759
+TLE|FMST|Toliara Airport|Toliara|Toliara|MG|U|-23.3834|43.7285|29|6562|P|M|1|219850
 TNR|FMMI|Ivato International Airport|Antananarivo|Antananarivo|MG|T|-18.7969|47.4788|4198|10171|P|L|1|2405954
-TTS|FMNT|Tsaratanana Airport|Tsaratanana|Tsaratanana|MG|M|-16.7511|47.6190|1073|3000|G|S|1|26446
 WFI|FMSF|Fianarantsoa Airport|Fianarantsoa|Fianarantsoa|MG|F|-21.4416|47.1117|3658|4101|P|M|0|314992
+WMN|FMNR|Maroantsetra Airport|Maroantsetra|Maroantsetra|MG|A|-15.4377|49.6891|9|4265|P|M|1|77519
 WTA|FMMU|Tambohorano Airport|Tambohorano|Tambohorano|MG|M|-17.4761|43.9728|23|3000|G|S|1|150
 BKO|GABS|Modibo Keita International Airport|Bamako|Bamako|ML|2|12.5335|-7.9499|1247|10498|P|L|1|5073508
 GAQ|GAGO|Gao International Airport|Gao|Gao|ML|7|16.2485|-0.0054|870|8202|P|M|1|178481
+KYS|GAKD|Kayes Dag Dag Airport|Kayes|Kayes|ML|1|14.4825|-11.3993|164|8858|P|M|1|202350
 MZI|GAMB|Mopti Airport|Sevare|Sevare|ML|5|14.5128|-4.0796|906|8340|P|M|1|283295
 TOM|GATB|Tombouktou Airport|Timbuktu|Timbuktu|ML|7|16.7305|-3.0076|863|6923|P|L|1|141857
 ATR|GQPA|Atar International Airport|Atar|Atar|MR|07|20.5058|-13.0437|734|9855|P|M|0|44031
@@ -120,64 +88,44 @@ NKC|GQNO|NouakchottOumtounsy International Airport|Nouakchott|Nouakchott|MR|NKC|
 OUZ|GQPZ|Tazadit Airport|Zouerate|Zouerate|MR|11|22.7573|-12.4822|1119|8202|P|M|1|59775
 MRU|FIMP|Sir Seewoosagur Ramgoolam International Airport|Plaine Magnien|Plaine Magnien|MU|GP|-20.4302|57.6836|186|11056|P|L|1|1240022
 RRG|FIMR|Sir Charles Gaetan Duval Airport|Port Mathurin|Port Mathurin|MU|RO|-19.7567|63.3593|95|4223|P|M|1|10850
-BLZ|FWCL|Chileka International Airport|Blantyre|Blantyre|MW|BL|-15.6772|34.9723|2555|7628|P|L|1|1337337
 LLW|FWKI|Kamuzu International Airport|Lumbadzi|Lumbadzi|MW|LI|-13.7894|33.7810|4035|11614|P|L|1|1521479
 ZZU|FWUU|Mzuzu Airport|Mzuzu|Mzuzu|MW|MZ|-11.4447|34.0118|4115|4291|P|M|0|342427
 APL|FQNP|Nampula Airport|Nampula|Nampula|MZ|N|-15.1056|39.2818|1444|6562|P|L|1|1078867
 BEW|FQBR|Beira International Airport|Beira|Beira|MZ|S|-19.7964|34.9076|33|7874|P|L|1|809534
 INH|FQIN|Inhambane Airport|Inhambane|Inhambane|MZ|I|-23.8764|35.4085|30|4921|P|M|1|276502
-MNC|FQNC|Nacala International Airport|Nacala|Nacala|MZ|N|-14.4882|40.7122|410|10171|P|M|1|336367
 MPM|FQMA|Maputo Airport|Maputo|Maputo|MZ|MPM|-25.9208|32.5726|145|12008|P|L|1|2854639
+POL|FQPB|Pemba Airport|Pemba|Pemba|MZ|P|-12.9933|40.5249|331|5905|P|M|1|238633
 TET|FQTT|Tete Airport|Tete|Tete|MZ|T|-16.1048|33.6402|525|8225|P|L|1|439948
 UEL|FQQL|Quelimane Airport|Quelimane|Quelimane|MZ|Q|-17.8555|36.8691|36|5905|P|M|1|372489
-VPY|FQCH|Chimoio Airport|Chimoio|Chimoio|MZ|B|-19.1513|33.4290|2287|7874|P|M|1|798930
-VXC|FQLC|Lichinga Airport|Lichinga|Lichinga|MZ|A|-13.2740|35.2663|4505|8300|P|M|1|300360
 FYTF|FYTF|Twyfelfontein Airport|Twyfelfontein|Twyfelfontein|NA|KU|-20.5442|14.3588|1772|6550|P|M|1|12676
 KMP|FYKT|Keetmanshoop Airport|Keetmanshoop|Keetmanshoop|NA|KA|-26.5398|18.1114|3506|7598|P|M|0|25978
-LUD|FYLZ|Luderitz Airport|Luderitz|Luderitz|NA|KA|-26.6874|15.2429|457|6004|P|M|1|15137
-OMD|FYOG|Oranjemund Airport|Oranjemund|Oranjemund|NA|KA|-28.5853|16.4464|14|5252|P|M|1|12771
+NDU|FYRU|Rundu Airport|Rundu|Rundu|NA|KE|-17.9565|19.7194|3627|11004|P|M|1|83921
+TSB|FYTM|Tsumeb Airport|Tsumeb|Tsumeb|NA|OT|-19.2621|17.7325|4353|4823|P|M|0|31351
 WDH|FYWH|Hosea Kutako International Airport|Windhoek|Windhoek|NA|KH|-22.4799|17.4709|5640|15010|P|L|1|482536
 WVB|FYWB|Walvis Bay International Airport|Walvis Bay|Walvis Bay|NA|ER|-22.9793|14.6471|299|11483|P|L|1|133860
 AJY|DRZA|Mano Dayak International Airport|Agadez|Agadez|NE|1|16.9660|8.0001|1657|9843|P|M|0|251063
 NIM|DRRN|Diori Hamani International Airport|Niamey|Niamey|NE|8|13.4815|2.1836|732|10499|G|L|1|1569883
-ZND|DRZR|Zinder Airport|Zinder|Zinder|NE|7|13.7790|8.9838|1516|5988|P|M|1|430225
 ABB|DNAS|Asaba International Airport|Asaba|Asaba|NG|DE|6.2042|6.6653|305|11155|P|L|1|3522965
 ABV|DNAA|Nnamdi Azikiwe International Airport|Abuja|Abuja|NG|FC|9.0068|7.2632|1123|11842|P|L|1|3794242
 AKR|DNAK|Akure Airport|Akure|Akure|NG|ON|7.2467|5.3010|1100|9195|P|M|1|3314514
-BCU|DNBC|Sir Abubakar Tafawa Balewa Bauchi State International Airport|Bauchi|Bauchi|NG|BA|10.4828|9.7440|1965|11154|P|L|1|1521799
-BNI|DNBE|Benin Airport|Benin|Benin|NG|ED|6.3170|5.5995|258|7870|P|M|1|1778758
-CBQ|DNCA|Margaret Ekpo International Airport|Calabar|Calabar|NG|CR|4.9760|8.3472|210|8040|P|M|1|697377
-DKA|DNKT|Umaru Musa Yar'adua Airport|Katsina|Katsina|NG|KT|13.0078|7.6604|1660|11352|P|M|1|768363
-ENU|DNEN|Akanu Ibiam International Airport|Enegu|Enegu|NG|EN|6.4737|7.5605|466|7879|P|L|1|2884086
 GMO|DNGO|Gombe Lawanti International Airport|Gombe|Gombe|NG|GO|10.2989|10.9000|1590|10827|P|M|1|803557
-IBA|DNIB|Ibadan Airport|Ibadan|Ibadan|NG|OY|7.3625|3.9783|725|7875|P|M|1|5389344
 ILR|DNIL|General Tunde Idiagbon International Airport|Ilorin|Ilorin|NG|KW|8.4402|4.4939|1126|10169|P|L|1|5968177
-JOS|DNJO|Yakubu Gowon Airport|Jos|Jos|NG|PL|9.6398|8.8691|4232|9845|P|M|1|967253
 KAD|DNKA|Kaduna International Airport|Kaduna|Kaduna|NG|KD|10.6960|7.3201|2073|9843|P|L|1|2427221
 KAN|DNKN|Mallam Aminu Kano International Airport|Kano|Kano|NG|KN|12.0456|8.5236|1562|10831|P|L|1|5551883
 LOS|DNMM|Murtala Muhammed International Airport|Lagos|Lagos|NG|LA|6.5774|3.3212|135|12794|P|L|1|21270055
-MDI|DNMK|Makurdi Airport|Makurdi|Makurdi|NG|BE|7.7039|8.6139|371|9830|P|M|1|867644
 MIU|DNMA|Maiduguri International Airport|Maiduguri|Maiduguri|NG|BO|11.8542|13.0807|1099|9846|P|L|1|1555986
-MXJ|DNMN|Minna Airport|Minna|Minna|NG|NI|9.6522|6.4623|834|11153|P|M|0|445496
-NG-0005|DNBK|Sir Ahmadu Bello International Airport|Birinin Kebbi|Birinin Kebbi|NG|KE|12.4790|4.3691|775|10171|P|L|1|663855
-PHC|DNPO|Port Harcourt International Airport|Port Harcourt|Port Harcourt|NG|RI|5.0155|6.9496|87|9843|P|L|1|4586163
 SKO|DNSO|Sadiq Abubakar III International Airport|Sokoto|Sokoto|NG|SO|12.9157|5.2075|1010|9844|P|L|1|1323501
-YOL|DNYO|Yola Airport|Yola|Yola|NG|AD|9.2576|12.4304|599|9840|P|M|1|716620
-RUN|FMEE|Roland Garros Airport|Sainte-Marie|Sainte-Marie|RE|SD|-20.8901|55.5189|66|10499|P|L|1|476745
+ZSE|FMEP|Saint-Pierre Pierrefonds Airport|Saint-Pierre|Saint-Pierre|RE|SR|-21.3194|55.4225|59|7000|P|L|1|445441
 KGL|HRYR|Kigali International Airport|Kigali|Kigali|RW|01|-1.9686|30.1395|4859|11483|P|L|1|2190161
 FSAL|FSAL|Alphonse Airport|Alphonse Island|Alphonse Island|SC|26|-7.0048|52.7262|10|3983|P|S|1|150
 SEZ|FSIA|Seychelles International Airport|Victoria|Victoria, SC|SC|20|-4.6743|55.5218|10|9800|P|L|1|107483
 ASI|FHAW|RAF Ascension Island|Cat Hill|Cat Hill|SH|AC|-7.9702|-14.3927|278|10019|P|M|1|5012
 HLE|FHSH|Saint Helena International Airport|Jamestown|Jamestown, SH|SH|SH|-15.9589|-5.6461|1017|6398|P|M|1|3364
-FNA|GFLL|Lungi International Airport|Freetown|Freetown|SL|N|8.6164|-13.1955|84|10498|P|L|1|1316242
-KBS|GFBO|Bo Airport|Bo|Bo|SL|S|7.9444|-11.7610|328|4003|G|M|0|370838
+WYE|GFYE|Yengema Airport|Yengema|Yengema|SL|E|8.6105|-11.0454|1300|3000|G|M|0|215669
 DSS|GOBD|Blaise Diagne International Airport|Dakar|Dakar|SN|DK|14.6709|-17.0728|290|11483|P|L|1|7933110
-KLC|GOOK|Kaolack Airport|Kaolack|Kaolack|SN|FK|14.1469|-16.0513|26|5249|P|M|0|793664
-MAX|GOSM|Ouro Sogui Airport|Ouro Sogui|Ouro Sogui|SN|MT|15.5936|-13.3228|85|6299|G|M|0|276666
 TUD|GOTT|Tambacounda Airport|Tambacounda|Tambacounda|SN|TC|13.7368|-13.6531|161|6562|P|M|0|357093
-XLS|GOSS|Saint Louis Airport|Saint Louis|Saint Louis|SN|SL|16.0498|-16.4610|9|6230|P|M|0|368034
-BLW|HCMN|Beledweyne Airport|Beledweyne|Beledweyne|SO|HI|4.7670|45.2388|559|7218|G|S|1|55410
 BSA|HCMF|Bender Qassim International Airport|Bosaso|Bosaso|SO|BR|11.2752|49.1392|3|7874|P|L|1|100528
+GLK|HCMR|Galcaio Airport|Galcaio|Galcaio|SO|MU|6.7808|47.4547|975|9859|P|S|1|61200
 HGA|HCMH|Egal International Airport|Hargeisa|Hargeisa|SO|WO|9.5141|44.0835|4471|12139|P|L|1|835134
 KMU|HCMK|Kismayo Airport|Kismayo|Kismayo|SO|JH|-0.3774|42.4592|49|12139|P|M|0|277122
 MGQ|HCMM|Aden Adde International Airport|Mogadishu|Mogadishu|SO|BN|2.0144|45.3047|29|10446|P|L|1|3017230
@@ -185,57 +133,39 @@ JUB|HJJJ|Juba International Airport|Juba|Juba|SS|EC|4.8720|31.6011|1513|10171|P|
 MAK|HSSM|Malakal International Airport|Malakal|Malakal|SS|NU|9.5587|31.6519|1291|6562|P|M|1|168474
 WUU|HSWW|Wau Airport|Wau|Wau|SS|BW|7.7258|27.9750|1529|8202|P|M|1|205384
 TMS|FPST|Sao Tome International Airport|Sao Tome|Sao Tome|ST|01|0.3782|6.7122|33|7283|P|L|1|132323
-MTS|FDMS|Matsapha International Airport|Manzini|Manzini|SZ|MA|-26.5289|31.3076|2075|8530|P|M|0|298515
 AEH|FTTC|Abeche Airport|Abeche|Abeche|TD|OD|13.8470|20.8443|1788|9186|P|M|0|175023
 FYT|FTTY|Faya-Largeau Airport|Faya-Largeau|Faya-Largeau|TD|BO|17.9171|19.1111|771|9186|P|M|0|53356
 MQQ|FTTD|Moundou Airport|Moundou|Moundou|TD|LO|8.6285|16.0742|1407|5906|P|M|0|515437
-NDJ|FTTJ|N'Djamena International Airport|N'Djamena|N'Djamena|TD|ND|12.1337|15.0340|968|9186|P|L|1|1773467
 LFW|DXXX|LomeTokoin International Airport|Lome|Lome|TG|M|6.1656|1.2545|72|9847|P|L|1|2824126
 LRL|DXNG|Niamtougou International Airport|Niamtougou|Niamtougou|TG|K|9.7667|1.0909|1515|8202|P|L|0|896551
-DAR|HTDA|Julius Nyerere International Airport|Dar es Salaam|Dar es Salaam|TZ|02|-6.8735|39.2073|182|9843|P|L|1|5627040
 DOD|HTDO|Dodoma Airport|Dodoma|Dodoma|TZ|03|-6.1706|35.7560|3673|6700|P|M|1|830452
-IRI|HTIR|Iringa Airport|Nduli|Nduli|TZ|04|-7.6686|35.7521|4678|5508|P|M|0|383956
-JRO|HTKJ|Kilimanjaro International Airport|Arusha|Arusha|TZ|01|-3.4270|37.0735|2932|11811|P|L|1|1246987
+LKY|HTLM|Lake Manyara Airport|Lake Manyara National|Lake Manyara National|TZ|26|-3.3763|35.8183|4150|4003|P|M|0|128308
 MBI|HTGW|Songwe Airport|Mbeya|Mbeya|TZ|14|-8.9199|33.2740|4412|10925|P|M|1|1351573
 MWZ|HTMW|Mwanza International Airport|Mwanza|Mwanza|TZ|18|-2.4466|32.9360|3763|10212|P|L|1|2705320
 MYW|HTMT|Mtwara Airport|Mtwara|Mtwara|TZ|17|-10.3362|40.1820|371|7410|P|M|1|351843
-SEU|HTSN|Seronera Airport|Seronera|Seronera|TZ|13|-2.4581|34.8225|5080|7480|G|S|1|150
 TBO|HTTB|Tabora Airport|Tabora|Tabora|TZ|24|-5.0764|32.8333|3868|6234|P|S|1|356961
-TGT|HTTG|Tanga Airport|Tanga|Tanga|TZ|25|-5.0924|39.0712|129|4160|P|M|1|496311
+ZNZ|HTZA|Abeid Amani Karume International Airport|Zanzibar|Zanzibar|TZ|07|-6.2220|39.2249|54|9915|P|L|1|1448530
 EBB|HUEN|Entebbe International Airport|Entebbe|Entebbe|UG|C|0.0424|32.4435|3782|12000|P|L|1|5942608
-KHX|UG-0002|Savannah Airstrip|Kihihi|Kihihi|UG|W|-0.7165|29.6997|3600|6004|G|M|1|518166
-RUA|HUAR|Arua Airport|Arua|Arua|UG|N|3.0492|30.9117|3951|5600|P|M|1|308916
-SRT|HUSO|Soroti Airport|Soroti|Soroti|UG|E|1.7277|33.6228|3697|6100|P|M|1|256108
-ULU|HUGU|Gulu Airport|Gulu|Gulu|UG|N|2.8056|32.2718|3510|10314|P|M|1|318591
 DZA|FMCZ|Dzaoudzi Pamandzi International Airport|Dzaoudzi|Dzaoudzi|YT|A|-12.8093|45.2818|23|6330|P|L|1|386459
 ALJ|FAAB|Alexander Bay Airport|Alexander Bay|Alexander Bay|ZA|NC|-28.5750|16.5333|98|6063|P|M|0|9360
 BFN|FABL|Bram Fischer International Airport|Bloemfontein|Bloemfontein|ZA|FS|-29.0927|26.3024|4457|8396|P|L|1|1844334
 CPT|FACT|Cape Town International Airport|Cape Town|Cape Town|ZA|WC|-33.9740|18.6043|151|10502|P|L|1|6788797
 DUR|FALE|King Shaka International Airport|Durban|Durban|ZA|NL|-29.6144|31.1197|295|12139|P|L|1|4056185
-ELS|FAEL|King Phalo Airport|East London|East London|ZA|EC|-33.0356|27.8259|435|6362|P|L|1|1179562
 GRJ|FAGG|George Airport|George|George|ZA|WC|-34.0056|22.3789|648|6562|P|L|1|497059
 JNB|FAOR|O.R. Tambo International Airport|Johannesburg|Johannesburg|ZA|GT|-26.1401|28.2468|5558|14495|P|L|1|18926202
-KIM|FAKM|Kimberley Airport|Kimberley|Kimberley|ZA|NC|-28.8054|24.7649|3950|9843|P|L|1|319416
-KXE|FAKD|P C Pelser Airport|Klerksdorp|Klerksdorp|ZA|NW|-26.8711|26.7180|4444|4921|P|M|0|686385
-MBD|FAMM|Mmabatho International Airport|Mafeking|Mafeking|ZA|NW|-25.7984|25.5480|4181|15157|P|M|1|300476
-MQP|FAKN|Kruger Mpumalanga International Airport|Mbombela|Mbombela|ZA|MP|-25.3833|31.1053|2829|10171|P|L|1|1130195
-NCS|FANC|Newcastle Airport|Newcastle|Newcastle|ZA|NL|-27.7706|29.9769|4074|4921|P|M|0|723605
-NTY|FAPN|Pilanesberg International Airport|Pilanesberg|Pilanesberg|ZA|NW|-25.3338|27.1734|3412|9022|P|M|0|324666
 PLZ|FAPE|Chief Dawid Stuurman International Airport|Gqeberha|Gqeberha|ZA|EC|-33.9897|25.6174|226|7087|P|L|1|1653064
 PTG|FAPP|Polokwane International Airport|Polokwane|Polokwane|ZA|LP|-23.8453|29.4586|4076|8400|P|L|1|983689
-RCB|FARB|Richards Bay Airport|Richards Bay|Richards Bay|ZA|NL|-28.7410|32.0921|109|4265|P|M|1|362760
+UTN|FAUP|Upington Airport|Upington|Upington|ZA|NC|-28.4002|21.2636|2782|16076|P|M|1|106254
 UTT|FAUT|K. D. Matanzima Airport|Mthatha|Mthatha|ZA|EC|-31.5464|28.6734|2400|8530|P|M|1|263639
-UTW|FAQT|Queenstown Airport|Queenstown|Queenstown|ZA|EC|-31.9202|26.8822|3637|3937|P|M|0|278642
 VRE|FAVR|Vredendal Airport|Vredendal|Vredendal|ZA|WC|-31.6410|18.5448|330|4265|G|M|0|69012
-ZEC|FASC|Secunda Airport|Secunda|Secunda|ZA|MP|-26.5241|29.1701|5250|3609|P|M|0|649472
+VRU|FAVB|Vryburg Airport|Vryburg|Vryburg|ZA|NW|-26.9824|24.7288|3920|3937|P|M|0|163765
 KAA|FLKS|Kasama Airport|Kasama|Kasama|ZM|05|-10.2102|31.1230|4541|6148|G|S|1|192172
+KIW|FLSO|Southdowns Airport|Kitwe|Kitwe|ZM|08|-12.9005|28.1499|4145|6562|P|M|0|352257
 LUN|FLKK|Kenneth Kaunda International Airport|Lusaka|Lusaka|ZM|09|-15.3308|28.4527|3779|12998|P|L|1|3382095
-LVI|FLHN|Harry Mwanga Nkumbula International Airport|Livingstone|Livingstone|ZM|07|-17.8215|25.8196|3302|9843|P|L|1|223612
-MFU|FLMF|Mfuwe International Airport|Mfuwe|Mfuwe|ZM|03|-13.2589|31.9366|1853|7349|P|L|1|350025
 MNR|FLMG|Mongu Airport|Mongu|Mongu|ZM|01|-15.2545|23.1623|3488|4800|G|M|0|140611
-NLA|FLSK|Simon Mwansa Kapwepwe International Airport|Ndola|Ndola|ZM|08|-12.9651|28.5156|4308|11483|P|L|1|1636544
-SLI|FLSW|Solwesi Airport|Solwesi|Solwesi|ZM|06|-12.1737|26.3651|4551|8858|P|S|1|305431
+BFO|FVCZ|Buffalo Range Airport|Chiredzi|Chiredzi|ZW|MV|-21.0081|31.5786|1421|5785|P|M|0|40100
 BUQ|FVJN|Joshua Mqabuko Nkomo International Airport|Bulawayo|Bulawayo|ZW|BU|-20.0163|28.6229|4359|8491|P|L|1|905095
 HRE|FVRG|Robert Gabriel Mugabe International Airport|Harare|Harare|ZW|HA|-17.9318|31.0928|4887|15502|P|L|1|2902688
+VFA|FVFA|Victoria Falls International Airport|Victoria Falls|Victoria Falls|ZW|MN|-18.0974|25.8369|3490|13123|P|L|1|82907
 """#
 }

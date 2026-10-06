@@ -5,33 +5,16 @@ enum AirportRows_CAS {
     static let rows = #"""
 HEA|OAHR|Herat - Khwaja Abdullah Ansari International Airport|Guzara|Guzara|AF|HER|34.2100|62.2283|3206|9888|P|L|1|765002
 KBL|OAKB|Kabul International Airport|Kabul|Kabul|AF|KAB|34.5659|69.2123|5877|11483|P|L|1|5163768
-KDH|OAKN|Ahmad Shah Baba International Airport|Kandahar|Kandahar|AF|KAN|31.5058|65.8480|3337|10532|P|L|1|714991
-KHT|OAKS|Khost International Airport|Khost|Khost|AF|KHO|33.2846|69.8073|4204|8740|P|M|1|826993
-MMZ|OAMN|Maymana Zahiraddin Faryabi Airport|Maymana|Maymana|AF|FYB|35.9308|64.7609|2743|5090|G|M|0|93298
 MZR|OAMS|Mazar-i-Sharif International Airport|Mazar-i-Sharif|Mazar-i-Sharif|AF|BAL|36.7041|67.2105|1284|9843|P|L|1|1036876
-UND|OAUZ|Kunduz Airport|Kunduz|Kunduz|AF|KDZ|36.6651|68.9108|1457|6558|P|M|0|336127
 EVN|UDYZ|Zvartnots International Airport|Yerevan|Yerevan|AM|ER|40.1489|44.3979|2838|12631|P|L|1|3971908
-GBB|UBBQ|Gabala International Airport|Gabala|Gabala|AZ|QAB|40.8086|47.7254|935|11811|P|M|1|341527
-GNJ|UBBG|Ganja International Airport|Ganja|Ganja|AZ|GA|40.7387|46.3204|1083|10827|P|L|1|1078416
 GYD|UBBB|Heydar Aliyev International Airport|Baku|Baku|AZ|BA|40.4728|50.0509|10|13123|P|L|1|3502338
-NAJ|UBBN|Nakhchivan International Airport|Nakhchivan|Nakhchivan|AZ|NX|39.1888|45.4584|2863|10826|P|L|1|945247
 BUS|UGSB|Alexander Kartveli Batumi International Airport|Batumi|Batumi|GE|AJ|41.6094|41.6003|105|8202|P|L|1|492754
-SUI|UGSS|Vladislav Ardzinba Sukhum International Airport|Sukhumi|Sukhumi|GE|AB|42.8582|41.1281|53|12012|P|L|1|281713
-TBS|UGTB|Tbilisi International Airport|Tbilisi|Tbilisi|GE|TB|41.6692|44.9547|1624|9843|P|L|1|1777844
-BSZ|UCFM|Manas International Airport|Bishkek|Bishkek|KG|C|43.0613|74.4776|2058|13780|P|L|1|1195034
-OSS|UCFO|Osh International Airport|Osh|Osh|KG|O|40.6090|72.7933|2927|10538|P|L|1|1041950
 AKX|UATT|Aktobe International Airport|Aktobe|Aktobe|KZ|AKT|50.2481|57.2041|738|10505|P|L|1|671097
 ALA|UAAA|Almaty International Airport|Almaty|Almaty|KZ|ALA|43.3543|77.0428|2234|14764|P|L|1|1909367
-ATX|KZ-ATX|Atbasar Airport|Atbasar|Atbasar|KZ|AKM|51.8523|68.3669|1010|3000|G|S|0|34797
+AYK|UAUR|Arkalyk North Airport|Arkalyk|Arkalyk|KZ|KUS|50.3186|66.9528|1266|8185|P|S|0|42000
 BXH|UAAH|Balkhash Airport|Balkhash|Balkhash|KZ|KAR|46.8942|75.0045|1446|8208|P|M|1|85818
-BXY|UAOL|Baikonur Krayniy International Airport|Baikonur|Baikonur|KZ|BAY|45.6220|63.2108|317|10500|P|L|1|143386
-CIT|UAII|Shymkent International Airport|Shymkent|Shymkent|KZ|YUZ|42.3650|69.4756|1385|9186|P|L|1|1394567
-DMB|UADD|Taraz International Airport|Taraz|Taraz|KZ|ZHA|42.8536|71.3036|2184|9514|P|L|1|472312
 DZN|UAKD|Zhezkazgan National Airport|Zhezkazgan|Zhezkazgan|KZ|ULY|47.7090|67.7381|1250|8530|P|L|1|180255
 GUW|UATG|Atyrau International Airport|Atyrau|Atyrau|KZ|ATY|47.1213|51.8203|-72|9842|P|L|1|365179
-HSA|UAIT|Hazrat Sultan International Airport|Turkstan|Turkstan|KZ|YUZ|43.3111|68.5504|951|10827|P|L|1|392015
-KGF|UAKK|Sary-Arka Airport|Karaganda|Karaganda|KZ|KAR|49.6708|73.3344|1765|10831|P|L|1|852907
-KOV|UACK|Kokshetau International Airport|Kokshetau|Kokshetau|KZ|AKM|53.3291|69.5946|900|8325|P|L|1|270079
 KSN|UAUU|Kostanay International Airport|Kostanay|Kostanay|KZ|KUS|53.2069|63.5503|595|9229|P|L|1|448354
 KZO|UAOO|Korkyt Ata International Airport|Kyzylorda|Kyzylorda|KZ|KZY|44.7069|65.5925|433|8858|P|L|1|426256
 NQZ|UACC|Nursultan Nazarbayev International Airport|Astana|Astana|KZ|AST|51.0270|71.4671|1165|11484|P|L|1|1643263
@@ -39,20 +22,14 @@ PLX|UASS|Semei International Airport|Semey|Semey|KZ|ABA|50.3513|80.2344|761|1015
 PPK|UACP|Petropavl International Airport|Petropavl|Petropavl|KZ|SEV|54.7756|69.1874|453|8190|P|L|1|341905
 PWQ|UASP|Pavlodar International Airport|Pavlodar|Pavlodar|KZ|PAV|52.1950|77.0731|410|8202|P|L|1|622412
 SCO|UATE|Aktau International Airport|Aktau|Aktau|KZ|MAN|43.8601|51.0909|73|10013|P|L|1|231244
-UKK|UASK|Oskemen International Airport|Ust-Kamenogorsk|Ust-Kamenogorsk|KZ|VOS|50.0350|82.4961|939|8234|P|L|1|543649
 URA|UARR|Manshuk Mametova International Airport|Uralsk|Uralsk|KZ|ZAP|51.1520|51.5437|125|9183|P|L|1|434827
-DYU|UTDD|Dushanbe International Airport|Dushanbe|Dushanbe|TJ|DU|38.5437|68.8230|2575|10170|P|L|1|943260
-LBD|UTDL|Khujand International Airport|Khujand|Khujand|TJ|SU|40.2154|69.6947|1450|10433|P|L|1|1362476
-ASB|UTAA|Ashgabat International Airport|Ashgabat|Ashgabat|TM|S|37.9868|58.3610|692|12467|P|L|1|1500394
+UZR|UASU|Urzhar Airport|Urzhar|Urzhar|KZ|ABA|47.0918|81.6682|0|3000|G|S|1|14826
+TJU|UTDK|Kulob International Airport|Kulob|Kulob|TJ|KT|37.9881|69.8050|2293|9843|P|L|1|428769
 CRZ|UTAV|Turkmenabat International Airport|Turkmenabat|Turkmenabat|TM|L|38.9307|63.5640|649|12467|P|L|1|345814
-MYP|UTAM|Mary International Airport|Mary|Mary|TM|M|37.6235|61.8957|728|12467|P|M|1|379634
-BHK|UZSB|Bukhara International Airport|Bukhara|Bukhara|UZ|BU|39.7753|64.4823|751|9843|P|L|1|594626
-KSQ|UZSK|Karshi Airport|Karshi|Karshi|UZ|QA|38.8022|65.7731|1230|9299|P|S|1|296951
-NCU|UZNN|Nukus International Airport|Nukus|Nukus|UZ|QR|42.4884|59.6233|246|9865|P|L|1|659582
-NMA|UZFN|Namangan International Airport|Namangan|Namangan|UZ|NG|40.9846|71.5578|1555|10698|P|L|1|1607826
-OMN|UZTZ|Zomin Airport|Zomin|Zomin|UZ|JI|40.0140|68.4110|1760|3937|P|M|1|367148
+KRW|UTAK|Turkmenbasy International Airport|Turkmenbasy|Turkmenbasy|TM|B|40.0628|53.0051|279|11483|P|M|1|125658
+TAZ|UTAT|Dashoguz International Airport|Dasoguz|Dasoguz|TM|D|41.7599|59.8361|272|12467|P|L|1|420027
+AZN|UZFA|Andijan International Airport|Andijan|Andijan|UZ|AN|40.7277|72.2940|1515|9770|P|M|1|707917
 SKD|UZSS|Samarkand International Airport|Samarkand|Samarkand|UZ|SA|39.7018|66.9815|2224|10187|P|L|1|1418231
 TAS|UZTT|Tashkent International Airport|Tashkent|Tashkent|UZ|TO|41.2579|69.2812|1417|13123|P|L|1|3597990
-UGC|UZNU|Urgench International Airport|Urgench|Urgench|UZ|XO|41.5827|60.6434|320|11065|P|L|1|470516
 """#
 }

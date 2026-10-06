@@ -3,145 +3,106 @@
 
 enum AirportRows_RUS {
     static let rows = #"""
-AAQ|URKA|Anapa Vityazevo Airport|Krasnyi Kurgan|Krasnyi Kurgan|RU|KDA|45.0021|37.3473|174|8202|P|M|0|436098
 ABA|UNAA|Abakan International Airport|Abakan|Abakan|RU|KK|53.7400|91.3850|831|10663|P|L|1|587886
-AER|URSS|Sochi International Airport|Sochi|Sochi|RU|KDA|43.4499|39.9566|89|9498|P|L|1|792319
 AMV|ULDD|Amderma Airport|Amderma|Amderma|RU|NEN|69.7637|61.5567|13|6000|G|M|1|609
 ARH|ULAA|Talagi Airport|Archangelsk|Archangelsk|RU|ARK|64.6003|40.7167|62|8202|P|M|1|469177
 ASF|URWA|Astrakhan Narimanovo Boris M. Kustodiev International Airport|Astrakhan|Astrakhan|RU|AST|46.2828|48.0105|-65|10499|P|L|1|719583
-BAX|UNBB|Barnaul Gherman Titov International Airport|Barnaul|Barnaul|RU|ALT|53.3613|83.5397|837|9350|P|L|1|1251452
-BGN|UESG|Belaya Gora Airport|Belaya Gora|Belaya Gora|RU|SA|68.5562|146.2278|118|6000|G|M|0|2383
 BGS|UNKB|Boguchany Airport|Boguchany|Boguchany|RU|KYA|58.3806|97.4723|446|3938|P|S|0|11209
 BKA|UNIB|Baykit Airport|Baykit|Baykit|RU|KYA|61.6767|96.3550|853|3581|P|M|0|3748
 BQJ|UEBB|Batagay Airport|Batagay|Batagay|RU|SA|67.6480|134.6950|696|3000|G|S|1|4266
 BQS|UHBB|Ignatyevo Airport|Blagoveschensk|Blagoveschensk|RU|AMU|50.4267|127.4155|638|9256|P|M|1|682393
 BTK|UIBB|Bratsk Airport|Bratsk|Bratsk|RU|IRK|56.3696|101.7018|1610|10368|P|M|1|280515
-BVJ|USDB|Bovanenkovo Airport|Bovanenkovo|Bovanenkovo|RU|YAN|70.3153|68.3336|24|8698|P|M|1|150
-BWO|UWSB|Balakovo Airport|Balakovo|Balakovo|RU|SAR|51.8583|47.7456|95|7710|P|M|1|331853
 BZK|UUBP|Bryansk International Airport|Bryansk|Bryansk|RU|BRY|53.2144|34.1760|663|7874|P|M|0|746776
 CEE|ULWC|Cherepovets Airport|Cherepovets|Cherepovets|RU|VLG|59.2736|38.0158|377|8202|P|M|1|398863
 CEK|USCC|Kurchatov Chelyabinsk International Airport|Chelyabinsk|Chelyabinsk|RU|CHE|55.3031|61.5049|769|10499|P|L|1|2380723
 CKH|UESO|Chokurdakh Airport|Chokurdah|Chokurdah|RU|SA|70.6231|147.9020|151|6233|P|M|1|2506
-CSY|UWKS|Cheboksary Airport|Cheboksary|Cheboksary|RU|CU|56.0903|47.3473|558|8241|P|M|1|833165
-CYX|UESS|Cherskiy Airport|Cherskiy|Cherskiy|RU|SA|68.7406|161.3380|20|5577|P|M|1|3707
 CZR|UIAR|Chara Airport|Chara|Chara|RU|ZAB|56.9144|118.2701|2201|5905|P|S|0|6339
 DHG|DHG|Dalnegorsk Airport|Dalnegorsk|Dalnegorsk|RU|PRI|44.5587|135.4900|833|3000|G|S|0|44589
 DKS|UODD|Dikson Airport|Dikson|Dikson|RU|KYA|73.5178|80.3797|47|4920|P|M|0|1113
-DLR|DLR|Dalnerechensk Airport|Dalnerechensk|Dalnerechensk|RU|PRI|45.8799|133.7376|272|3000|G|S|1|31540
 DPT|DPT|Deputatskiy Airport|Deputatskiy|Deputatskiy|RU|SA|69.3925|139.8900|950|3000|G|S|1|3484
 DYR|UHMA|Ugolny Yuri Ryktheu Airport|Anadyr|Anadyr|RU|CHU|64.7349|177.7410|194|11483|P|M|1|15604
 EIE|UNII|Yeniseysk Airport|Yeniseysk|Yeniseysk|RU|KYA|58.4742|92.1125|253|7217|P|M|1|91542
-EKS|UHSK|Shakhtyorsk Airport|Shakhtyorsk|Shakhtyorsk|RU|SAK|49.1903|142.0830|50|5249|G|S|1|23287
 ERG|UIKE|Yerbogachen Airport|Erbogachen|Erbogachen|RU|IRK|61.2750|108.0300|400|3000|G|S|0|2019
+ESL|URWI|Elista Airport|Elista|Elista|RU|KL|46.3739|44.3309|501|10499|P|M|1|151167
 ETL|UHTQ|Svetlaya Airport|Svetlaya|Svetlaya|RU|PRI|46.5417|138.3217|131|3000|G|S|0|1109
 EYA|UHBE|Zeya Airport|Zeya|Zeya|RU|AMU|53.6870|127.0910|905|3000|G|S|0|30587
+EYK|USHQ|Beloyarskiy Airport|Beloyarskiy|Beloyarskiy|RU|KHM|63.6869|66.6986|82|7028|P|M|1|27121
 GDX|UHMM|Sokol Airport|Magadan|Magadan|RU|MAG|59.9110|150.7200|574|11326|P|M|1|112283
 GOJ|UWGG|Nizhny Novgorod / Strigino International Airport|Nizhny Novgorod|Nizhny Novgorod|RU|NIZ|56.2274|43.7852|256|9843|P|L|1|2852220
 GOY|UNIT|Tura Mountain Airport|Tura|Tura|RU|KYA|64.3335|100.4329|2044|4593|P|S|1|5444
-GRV|URMG|Akhmat Kadyrov Grozny International Airport|Grozny|Grozny|RU|CE|43.3881|45.6998|548|8202|P|L|1|1304867
 GSV|UWSG|Gagarin International Airport|Saratov|Saratov|RU|SAR|51.7128|46.1711|103|9843|P|L|1|1460255
+GVN|UHKM|Sovetskaya Gavan (Maygatka) Airport|Sovetskaya Gavan|Sovetskaya Gavan|RU|KHA|48.9251|140.0353|768|9842|P|M|0|70343
+HMA|USHH|Khanty Mansiysk Airport|Khanty-Mansiysk|Khanty-Mansiysk|RU|KHM|61.0285|69.0861|76|9180|P|M|1|101466
 HTA|UIAA|Chita-Kadala International Airport|Chita|Chita|RU|ZAB|52.0248|113.3058|2272|9430|P|L|1|465719
 HTG|UOHH|Khatanga Airport|Khatanga|Khatanga|RU|KYA|71.9781|102.4910|95|8872|P|M|1|3205
-IAR|UUDL|Golden Ring Yaroslavl International Airport|Tunoshna|Tunoshna|RU|YAR|57.5607|40.1574|287|9870|P|L|1|1261525
-IJK|USII|Izhevsk Airport|Izhevsk|Izhevsk|RU|UD|56.8345|53.4622|531|8202|P|M|1|1100780
+IGT|URMS|Magas Airport|Sunzha|Sunzha|RU|IN|43.3233|45.0126|1165|9842|P|M|1|452731
 IKS|UEST|Tiksi Airport|Tiksi|Tiksi|RU|SA|71.6977|128.9030|26|9845|P|M|1|5700
 IKT|UIII|Irkutsk International Airport|Irkutsk|Irkutsk|RU|IRK|52.2667|104.3956|1675|11696|P|L|1|1255196
-INA|UUYI|Inta Airport|Inta|Inta|RU|KO|66.0556|60.1109|184|6000|G|M|0|34055
 ITU|UHSI|Iturup Airport|Kurilsk|Kurilsk|RU|SAK|45.2564|147.9555|387|7546|P|S|1|1607
-KEJ|UNEE|Alexei Leonov Kemerovo International Airport|Kemerovo|Kemerovo|RU|KEM|55.2701|86.1072|863|10499|P|L|1|1148804
-KGD|UMKK|Khrabrovo Airport|Kaliningrad|Kaliningrad|RU|KGD|54.8916|20.5986|42|10991|P|L|1|1103569
 KHV|UHHH|Khabarovsk Novy Airport|Khabarovsk|Khabarovsk|RU|KHA|48.5283|135.1886|244|13124|P|M|1|612213
 KJA|UNKL|Krasnoyarsk International Airport|Krasnoyarsk|Krasnoyarsk|RU|KYA|56.1757|92.4858|942|12139|P|L|1|1482926
-KLF|UUBC|Grabtsevo Airport|Kaluga|Kaluga|RU|KLU|54.5500|36.3667|656|6885|P|M|0|799384
 KPW|UHMK|Keperveem Airport|Keperveem|Keperveem|RU|CHU|67.8450|166.1400|623|11482|P|M|1|5757
-KRO|USUU|Kurgan Airport|Kurgan|Kurgan|RU|KGN|55.4753|65.4156|240|8530|P|M|1|406673
 KRR|URKK|Krasnodar Pashkovsky International Airport|Krasnodar|Krasnodar|RU|KDA|45.0345|39.1742|118|9835|P|L|1|2868235
 KUF|UWWW|Kurumoch International Airport|Samara|Samara|RU|SAM|53.5049|50.1643|477|9846|P|L|1|2930511
 KVM|UHMO|Markovo Airport|Markovo|Markovo|RU|CHU|64.6654|170.4176|75|7874|G|S|1|150
 KVX|USKK|Pobedilovo Airport|Kirov|Kirov|RU|KIR|58.5039|49.3478|479|7230|P|M|1|756274
-KXD|USHK|Kondinskoye Airport|Kondinskoye|Kondinskoye|RU|KHM|59.6551|67.4300|131|3000|G|S|0|4166
-KXK|UHKK|Komsomolsk-on-Amur Airport|Komsomolsk-on-Amur|Komsomolsk-on-Amur|RU|KHA|50.4090|136.9340|92|8202|P|M|1|377677
+KYZ|UNKY|Kyzyl Airport|Kyzyl|Kyzyl|RU|TY|51.6694|94.4006|2123|8858|P|M|1|153187
 KZN|UWKD|Kazan International Airport|Kazan|Kazan|RU|TA|55.6062|49.2787|411|12303|P|L|1|1900495
 LED|ULLI|Pulkovo Airport|St. Petersburg|St. Petersburg|RU|SPE|59.8003|30.2625|78|12402|P|L|1|10105429
-LNX|RU-10076|Smolensk North Airport|Smolensk|Smolensk|RU|SMO|54.8240|32.0250|820|8202|P|M|0|535190
-LPK|UUOL|Lipetsk Airport|Lipetsk|Lipetsk|RU|LIP|52.7028|39.5378|584|7546|P|M|0|771221
 MCX|URML|Makhachkala Uytash International Airport|Makhachkala|Makhachkala|RU|DA|42.8168|47.6523|12|8662|P|L|1|1559546
+MJZ|UERR|Mirny Airport|Mirny|Mirny|RU|SA|62.5347|114.0390|1156|9187|P|M|1|42007
 MMK|ULMM|Emperor Nicholas II Murmansk Airport|Murmansk|Murmansk|RU|MUR|68.7817|32.7508|266|8202|P|L|1|595582
-MQF|USCM|Magnitogorsk International Airport|Magnitogorsk|Magnitogorsk|RU|BA|53.3920|58.7552|1430|10663|P|L|1|715564
-MQJ|UEMA|Moma Airport|Khonuu|Khonuu|RU|SA|66.4509|143.2616|656|5906|P|M|1|150
 MRV|URMM|Mineralnye Vody Airport|Mineralnyye Vody|Mineralnyye Vody|RU|STA|44.2251|43.0819|1054|12795|P|L|1|1747950
-NBC|UWKE|Begishevo Airport|Nizhnekamsk|Nizhnekamsk|RU|TA|55.5647|52.0925|643|8209|P|M|1|992791
-NEI|UHWT|Terney Airport|Terney|Terney|RU|PRI|45.0825|136.5912|33|3000|G|S|0|2883
+NER|UELL|Chulman Airport|Neryungri|Neryungri|RU|SA|56.9139|124.9140|2812|11811|P|M|1|86154
 NJC|USNN|Nizhnevartovsk Airport|Nizhnevartovsk|Nizhnevartovsk|RU|KHM|60.9493|76.4836|177|10499|P|L|1|409226
+NLI|UHNN|Nikolayevsk-na-Amure Airport|Nikolayevsk-na-Amure|Nikolayevsk-na-Amure|RU|KHA|53.1550|140.6500|170|6233|P|M|1|29642
 NNM|ULAM|Naryan Mar Airport|Naryan Mar|Naryan Mar|RU|NEN|67.6400|53.1219|36|8202|P|M|1|48097
+NOJ|USRO|Noyabrsk Airport|Noyabrsk|Noyabrsk|RU|YAN|63.1833|75.2700|446|8202|P|M|1|149137
 NOZ|UNWW|Spichenkovo Airport|Novokuznetsk|Novokuznetsk|RU|KEM|53.8114|86.8772|1024|8789|P|M|1|1279513
 NSK|UOOO|Alykel International Airport|Norilsk|Norilsk|RU|KYA|69.3080|87.3259|574|11254|P|L|1|251474
-NYR|UENN|Nyurba Airport|Nyurba|Nyurba|RU|SA|63.2967|118.3420|394|4265|G|S|0|9972
+NUX|USMU|Novy Urengoy Airport|Novy Urengoy|Novy Urengoy|RU|YAN|66.0694|76.5203|210|8366|P|M|1|98741
 NZG|UIUN|Nizhneangarsk International Airport|Nizhneangarsk|Nizhneangarsk|RU|BU|55.8008|109.5950|1545|5249|P|S|1|32886
 ODO|UIKB|Bodaybo Airport|Bodaybo|Bodaybo|RU|IRK|57.8661|114.2430|919|5436|G|S|1|19837
 OHO|UHOO|Okhotsk Airport|Okhotsk|Okhotsk|RU|KHA|59.4101|143.0565|45|6562|P|M|1|5570
 OLZ|UEMO|Olyokminsk Airport|Olyokminsk|Olyokminsk|RU|SA|60.4018|120.4761|656|4265|P|M|1|9969
 OMS|UNOO|Omsk Central Airport|Omsk|Omsk|RU|OMS|54.9631|73.3124|311|9435|G|L|1|1416676
-ONK|UERO|Olenyok Airport|Olenyok|Olenyok|RU|SA|68.5150|112.4800|847|7874|G|S|0|2265
-OSW|UWOR|Orsk Airport|Orsk|Orsk|RU|ORE|51.0725|58.5956|909|9514|P|M|1|416634
 OVB|UNNT|Novosibirsk Tolmachevo Airport|Novosibirsk|Novosibirsk|RU|NVS|55.0198|82.6187|365|11818|P|L|1|2058867
+OVS|USHS|Sovetskiy Airport|Sovetskiy|Sovetskiy|RU|KHM|61.3266|63.6019|351|8202|P|M|1|69311
 PEE|USPP|Perm International Airport|Perm|Perm|RU|PER|57.9145|56.0212|404|10520|P|L|1|1662494
 PES|ULPB|Petrozavodsk Airport|Petrozavodsk|Petrozavodsk|RU|KR|61.8852|34.1547|151|8202|P|M|1|333241
-PEZ|UWPP|Penza Airport|Penza|Penza|RU|PNZ|53.1106|45.0211|614|9155|P|M|1|624001
 PKC|UHPP|Yelizovo Airport|Petropavlovsk-Kamchatsky|Petropavlovsk-Kamchatsky|RU|KAM|53.1687|158.4511|131|11155|P|L|1|248879
-PKV|ULOO|Princess Olga Pskov International Airport|Pskov|Pskov|RU|PSK|57.7813|28.3938|154|8281|P|M|1|296776
 PVS|UHMD|Provideniya Bay Airport|Chukotka|Chukotka|RU|CHU|64.3781|-173.2430|72|7190|G|M|0|2536
 PWE|UHMP|Pevek Airport|Apapelgino|Apapelgino|RU|CHU|69.7833|170.5970|11|8202|P|M|1|4837
 PYJ|UERP|Polyarny Airport|Yakutia|Yakutia|RU|SA|66.4004|112.0300|1660|10170|P|M|1|30533
-REN|UWOO|Orenburg Central Airport|Orenburg|Orenburg|RU|ORE|51.7927|55.4572|387|8212|P|M|1|672309
-RGK|UNBG|Gorno-Altaysk Airport|Gorno-Altaysk|Gorno-Altaysk|RU|AL|51.9692|85.8365|965|7546|P|M|0|252545
 ROV|URRP|Platov International Airport|Rostov-on-Don|Rostov-on-Don|RU|ROS|47.4939|39.9247|213|11811|P|L|0|4847049
-RZH|UIKP|Preobrazheniye Airport|Preobrazheniye|Preobrazheniye|RU|PRI|42.9217|133.9044|34|3000|G|S|0|9113
 SBT|USDA|Sabetta International Airport|Sabetta|Sabetta|RU|YAN|71.2192|72.0522|46|8858|P|M|1|150
 SCW|UUYY|Syktyvkar Airport|Syktyvkar|Syktyvkar|RU|KO|61.6470|50.8451|342|8203|P|M|1|355471
-SEK|UESK|Srednekolymsk Airport|Srednekolymsk|Srednekolymsk|RU|SA|67.4805|153.7364|60|5906|P|M|1|3459
-SES|UOIG|Svetlogorsk Airport|Svetlogorsk|Svetlogorsk|RU|KYA|66.8400|88.4033|394|5248|P|M|0|1398
-SGC|USRR|Surgut International Airport|Surgut|Surgut|RU|KHM|61.3405|73.4058|200|9154|P|L|1|516630
 SKX|UWPS|Saransk International Airport|Saransk|Saransk|RU|MO|54.1251|45.2123|676|9186|P|L|1|1065719
-STW|URMT|Stavropol Shpakovskoye Airport|Stavropol|Stavropol|RU|STA|45.1092|42.1128|1486|8530|P|M|1|1039921
-SUK|UEBS|Sakkyryr Airport|Batagay-Alyta|Batagay-Alyta|RU|SA|67.7920|130.3940|1686|3000|G|S|1|1666
+SLY|USDD|Salekhard Airport|Salekhard|Salekhard|RU|YAN|66.5908|66.6110|218|8917|P|M|1|86155
 SVO|UUEE|Sheremetyevo International Airport|Moscow|Moscow|RU|MOS|55.9775|37.3867|622|12139|P|L|1|25727715
 SVX|USSS|Koltsovo Airport|Yekaterinburg|Yekaterinburg|RU|SVE|56.7431|60.8027|764|9925|P|L|1|3442589
-SWV|UHMW|Severo-Evensk Airport|Evensk|Evensk|RU|MAG|61.9218|159.2291|32|5249|G|M|0|2024
 SYS|UERS|Saskylakh Airport|Saskylakh|Saskylakh|RU|SA|71.9279|114.0800|0|6000|G|M|1|1920
-TBW|UUOT|Donskoye Airport|Tambov|Tambov|RU|TAM|52.8061|41.4828|413|6889|P|M|0|579205
 TGP|UNIP|Podkamennaya Tunguska Airport|Bor|Bor|RU|KYA|61.5897|89.9940|213|5597|P|M|0|2300
 THX|UOTT|Turukhansk Airport|Turukhansk|Turukhansk|RU|KYA|65.7972|87.9353|128|5905|P|S|1|4774
 TJM|USTR|Roshchino International Airport|Tyumen|Tyumen|RU|TYU|57.1790|65.3277|378|9852|P|L|1|1162213
-TKM|RU-0056|Taksimo Airport|Taksimo|Taksimo|RU|BU|56.3617|114.9300|1634|3000|G|S|1|10359
-TLY|UHWP|Plastun Airport|Plastun|Plastun|RU|PRI|44.8150|136.2920|66|5249|G|S|1|7075
-TOF|UNTT|Tomsk Kamov Airport|Tomsk|Tomsk|RU|TOM|56.3803|85.2083|597|8202|P|L|1|983714
-TQL|USDS|Tarko-Sale Airport|Tarko-Sale|Tarko-Sale|RU|YAN|64.9305|77.8113|82|3000|G|S|0|18568
-UEN|USDU|Urengoy Airport|Urengoy|Urengoy|RU|YAN|65.9600|78.4370|56|3000|G|S|0|11824
+UCT|UUYH|Ukhta Airport|Ukhta|Ukhta|RU|KO|63.5669|53.8047|482|8691|P|M|1|162361
 UFA|UWUU|Ufa International Airport|Ufa|Ufa|RU|BA|54.5575|55.8744|449|12339|P|L|1|2165825
 UHMF|UHMF|Omsukchan Airport|Omsukchan|Omsukchan|RU|MAG|62.4570|155.7450|1732|6000|G|M|1|5395
 UHMH|UHMH|Susuman Airport|Susman|Susman|RU|MAG|62.7650|148.1470|2129|3000|G|S|1|9157
 UHMN|UHMN|Omolon Airport|Omolon|Omolon|RU|CHU|65.2400|160.5400|869|3000|G|S|1|150
 UHPK|UHPK|Ust'-Kamchatsk Airport|Ust'-Kamchatsk|Ust'-Kamchatsk|RU|KAM|56.2389|162.6900|200|4100|P|S|1|4939
 UHS|RU-0802|Aleksandrovsk-Sakhalinskiy Airport|Aleksandrovsk-Sakhalinsk|Aleksandrovsk-Sakhalinsk|RU|SAK|50.8771|142.1756|12|3000|G|S|0|21686
-UIIH|UIIH|Khuzhir Airport|Khuzhir|Khuzhir|RU|IRK|53.2179|107.4105|1626|3000|G|S|1|1118
-UKG|UEBT|Ust-Kuyga Airport|Ust-Kuyga|Ust-Kuyga|RU|SA|70.0110|135.6450|327|3000|G|S|1|1517
 UKX|UITT|Ust-Kut Airport|Ust-Kut|Ust-Kut|RU|IRK|56.8567|105.7300|2188|6561|P|M|1|51785
-ULK|UERL|Lensk Airport|Lensk|Lensk|RU|SA|60.7236|114.8253|801|6562|G|M|1|23694
-ULV|UWLL|Ulyanovsk Baratayevka Airport|Ulyanovsk|Ulyanovsk|RU|ULY|54.2702|48.2256|449|12533|P|M|1|505945
 UMS|UEMU|Ust-Maya Airport|Ust-Maya|Ust-Maya|RU|SA|60.3574|134.4373|561|3000|G|S|1|3062
-URS|UUOK|Kursk East Airport|Kursk|Kursk|RU|KRS|51.7506|36.2956|686|8202|P|M|0|642715
 USDO|USDO|Tolka Airport|Tolka|Tolka|RU|YAN|63.9878|82.0509|92|3000|G|S|1|150
-USHL|USHL|Lugovoy Airport|Lugovoy|Lugovoy|RU|KHM|59.7251|65.8333|0|3000|G|S|1|8694
+USK|UUYS|Usinsk Airport|Usinsk|Usinsk|RU|KO|66.0047|57.3672|262|8202|P|M|1|45739
 USR|UEMT|Ust-Nera Airport|Ust-Nera|Ust-Nera|RU|SA|64.5500|143.1150|1805|5020|P|M|1|9148
-UUA|UWKB|Bugulma Airport|Bugulma|Bugulma|RU|TA|54.6412|52.8002|991|6561|P|M|1|493176
-UUD|UIUU|Baikal International Airport|Ulan Ude|Ulan Ude|RU|BU|51.8086|107.4397|1690|11155|P|L|1|555418
 UUS|UHSS|Yuzhno-Sakhalinsk International Airport|Yuzhno-Sakhalinsk|Yuzhno-Sakhalinsk|RU|SAK|46.8855|142.7175|59|11155|P|L|1|341228
 VAQ|UNIW|Vanavara Airport|Vanavara|Vanavara|RU|KYA|60.3562|102.3096|892|4592|P|M|1|3090
-VGD|ULWW|Vologda Airport|Vologda|Vologda|RU|VLG|59.2825|39.9444|387|4921|P|M|0|398347
-VHV|UENI|Verkhnevilyuisk Airport|Verkhnevilyuisk|Verkhnevilyuisk|RU|SA|63.4581|120.2692|411|4593|P|S|1|5725
+VLU|ULOL|Velikiye Luki Airport|Velikiye Luki|Velikiye Luki|RU|PSK|56.3811|30.6078|328|6000|G|M|0|164866
 VOG|URWW|Volgograd International Airport|Volgograd|Volgograd|RU|VGG|48.7813|44.3392|482|9186|P|L|1|1710240
 VOZ|UUOO|Voronezh International Airport|Voronezh|Voronezh|RU|VOR|51.8143|39.2309|514|7546|P|M|1|1472749
+VUS|ULWU|Velikiy Ustyug Airport|Velikiy Ustyug|Velikiy Ustyug|RU|VLG|60.7883|46.2600|331|5069|P|M|1|75928
 VVO|UHWW|Vladivostok International Airport|Artyom|Artyom|RU|PRI|43.3963|132.1482|59|11483|P|L|1|1739683
 VYI|UENW|Vilyuisk Airport|Vilyuisk|Vilyuisk|RU|SA|63.7567|121.6933|361|5249|P|M|1|14055
 YKS|UEEE|Platon Oyunsky Yakutsk International Airport|Yakutsk|Yakutsk|RU|SA|62.0933|129.7710|325|11155|P|L|1|292299

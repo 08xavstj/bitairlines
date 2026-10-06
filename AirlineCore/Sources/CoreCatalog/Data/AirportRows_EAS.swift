@@ -3,230 +3,129 @@
 
 enum AirportRows_EAS {
     static let rows = #"""
-ACX|ZUYI|Xingyi Wanfenglin Airport|Xingyi|Xingyi|CN|52|25.0834|104.9608|4150|7546|P|M|1|535135
-AEB|ZGBS|Baise (Bose) Bama Airport|Baise|Baise|CN|45|23.7206|106.9600|490|8202|P|M|1|686078
-AKA|ZLAK|Ankang Fuqiang Airport|Ankang|Ankang|CN|61|32.7570|108.8734|1209|8530|P|S|1|937052
+AAT|ZWAT|Altay Xuedu Airport|Altay|Altay|CN|65|47.7499|88.0858|2460|7218|P|M|1|230626
 AKU|ZWAK|Aksu Hongqipo Airport|Aksu|Aksu|CN|65|41.2625|80.2917|3816|7874|P|M|1|630027
-AQG|ZSAQ|Anqing Tianzhushan Airport / Anqing North Air Base|Anqing|Anqing|CN|34|30.5822|117.0500|0|9186|P|M|1|1322073
+APJ|ZUPL|Ali Pulan Airport|Burang Town|Burang Town|CN|54|30.3979|81.1332|13943|15000|P|M|0|31480
 BAV|ZBOW|Baotou Donghe International Airport|Baotou|Baotou|CN|15|40.5600|109.9970|3321|9186|P|L|1|5072423
-BFY|ZSBA|Bengbu Tenghu Airport|Bengbu|Bengbu|CN|34|33.1663|117.0583|0|8530|P|M|1|2824189
-BHY|ZGBH|Beihai Fucheng Airport|Beihai|Beihai|CN|45|21.5387|109.2937|75|10499|P|M|1|1524045
 BPE|ZBDH|Qinhuangdao Beidaihe Airport|Qinhuangdao|Qinhuangdao|CN|13|39.6664|119.0614|46|8530|P|M|1|2058283
 BPX|ZUBD|Qamdo Bangda Airport|Bangda|Bangda|CN|54|30.5536|97.1083|14219|14764|P|M|1|86280
-BSD|ZPBS|Baoshan Yunrui Airport|Baoshan|Baoshan|CN|53|25.0533|99.1683|5453|7874|P|M|1|1427199
-CDE|ZBCD|Chengde Puning Airport|Chengde|Chengde|CN|13|41.1225|118.0739|0|9186|P|M|1|920395
-CGD|ZGCD|Changde Taohuayuan Airport|Changde|Changde|CN|43|28.9189|111.6400|128|8366|P|M|1|1886539
 CGO|ZHCC|Zhengzhou Xinzheng International Airport|Zhengzhou|Zhengzhou|CN|41|34.5265|113.8492|495|11811|P|L|1|13150718
 CGQ|ZYCC|Changchun Longjia International Airport|Changchun|Changchun|CN|22|43.9962|125.6850|706|10500|P|L|1|10028278
-CIF|ZBCF|Chifeng Yulong Airport|Chifeng|Chifeng|CN|15|42.1597|118.8410|2018|5774|P|M|1|613249
-CIH|ZBCZ|Changzhi Wangcun Airport|Changzhi|Changzhi|CN|14|36.2475|113.1260|0|8530|P|S|1|1214940
 CKG|ZUCK|Chongqing Jiangbei International Airport|Chongqing|Chongqing|CN|50|29.7123|106.6519|1365|12467|P|L|1|36694497
-CQW|ZUWL|Chongqing Xiannushan Airport|Wulong|Wulong|CN|50|29.4657|107.6937|1747|9186|P|M|1|1837102
 CSX|ZGHA|Changsha Huanghua International Airport|Changsha|Changsha|CN|43|28.1892|113.2200|217|12467|P|L|1|9261670
 CTU|ZUUU|Chengdu Shuangliu International Airport|Chengdu|Chengdu|CN|51|30.5583|103.9460|1625|11811|P|L|1|24425034
 DAT|ZBDT|Datong Yungang International Airport|Datong|Datong|CN|14|40.0614|113.4805|3442|9843|P|L|1|3283254
-DBC|ZYBA|Baicheng Chang'an Airport|Baicheng|Baicheng|CN|22|45.5053|123.0197|480|8202|P|M|1|560086
-DDG|ZYDD|Dandong Langtou International Airport|Dandong|Dandong|CN|21|40.0255|124.2867|30|8530|P|M|1|1329302
+DCY|ZUDC|Daocheng Yading Airport|Garze|Garze, CN DCY|CN|51|29.3163|100.0603|14472|13780|P|M|1|31113
+DDR|ZUDR|Shigatse Tingri Airport|Xigaze|Xigaze|CN|54|28.6046|86.7980|14108|14764|P|M|1|1444
 DLC|ZYTL|Dalian Zhoushuizi International Airport|Dalian|Dalian|CN|21|38.9657|121.5385|107|10827|P|L|1|8989238
-DLU|ZPDL|Dali Fengyi Airport|Dali|Dali|CN|53|25.6494|100.3190|7050|8202|P|M|1|1018731
 DNH|ZLDH|Dunhuang Mogao International Airport|Dunhuang|Dunhuang|CN|62|40.1620|94.8128|0|9186|P|L|1|186027
-DQA|ZYDQ|Daqing Sartu Airport|Daqing|Daqing|CN|23|46.7509|125.1386|496|8530|P|S|1|1002106
-DSN|ZBDS|Ordos Ejin Horo International Airport|Ordos|Ordos|CN|15|39.4935|109.8599|4557|10499|P|L|1|2715489
-DTU|ZYDU|Wudalianchi Dedu Airport|Heihe|Heihe|CN|23|48.4410|126.1284|984|8202|P|M|1|436444
-DYG|ZGDY|Zhangjiajie Hehua International Airport|Zhangjiajie|Zhangjiajie|CN|43|29.1047|110.4428|8530|8530|P|L|1|888772
-ENH|ZHES|Enshi Xujiaping Airport|Enshi|Enshi|CN|42|30.3203|109.4850|1605|6890|P|M|1|1011872
-ENY|ZLYA|Yan'an Nanniwan Airport|Yan'an|Yan'an|CN|61|36.4794|109.4641|0|9843|P|M|1|588932
 ERL|ZBER|Erenhot Saiwusu International Airport|Erenhot|Erenhot|CN|15|43.4241|112.0911|3301|9186|P|M|1|27954
 FOC|ZSFZ|Fuzhou Changle International Airport|Fuzhou|Fuzhou|CN|35|25.9293|119.6725|46|11811|P|L|1|5816966
-FUG|ZSFY|Fuyang Xiguan Airport|Yingzhou|Yingzhou|CN|34|32.8822|115.7344|104|7874|P|M|1|1972961
+GMQ|ZLGL|Golog Maqen Airport|Golog|Golog|CN|63|34.4181|100.3011|12426|12467|P|M|1|63083
 GOQ|ZLGM|Golmud Airport|Golmud|Golmud|CN|63|36.4006|94.7861|9334|15748|P|M|1|31941
-GXH|ZLXH|Gannan Xiahe Airport|Gannan|Gannan|CN|62|34.8190|102.6223|10510|10499|P|M|1|356618
-GYS|ZUGU|Guangyuan Panlong Airport|Guangyuan|Guangyuan|CN|51|32.3903|105.6946|0|8202|P|M|1|879514
-GYU|ZLGY|Guyuan Liupanshan Airport|Guyuan|Guyuan|CN|64|36.0789|106.2169|5727|9186|P|M|1|701297
 GZG|ZUGZ|Garze Gesar Airport|Garze|Garze, CN GZG|CN|51|31.7575|99.5542|13346|13123|G|S|1|150
 HAK|ZJHK|Haikou Meilan International Airport|Haikou|Haikou|CN|46|19.9349|110.4590|75|11811|P|L|1|5016238
-HCJ|ZGHC|Hechi Jinchengjiang Airport|Hechi|Hechi|CN|45|24.8043|107.7108|2221|7218|P|M|1|330481
-HCZ|ZGCZ|Chenzhou Beihu Airport|Chenzhou|Chenzhou|CN|43|25.7534|112.8454|1071|8530|P|M|1|963668
 HDG|ZBHD|Handan Airport|Handan|Handan|CN|13|36.5248|114.4241|229|8530|P|M|1|4105681
 HET|ZBHH|Hohhot Baita International Airport|Hohhot|Hohhot|CN|15|40.8497|111.8246|3556|11811|P|L|1|3555798
 HFE|ZSOF|Hefei Xinqiao International Airport|Hefei|Hefei|CN|34|31.9878|116.9769|207|11155|P|L|1|14676202
 HGH|ZSHC|Hangzhou Xiaoshan International Airport|Hangzhou|Hangzhou|CN|33|30.2361|120.4289|23|11811|P|L|1|17879089
 HIA|ZSSH|Huai'an Lianshui Airport|Huai'an|Huai'an|CN|32|33.7927|119.1267|28|9186|P|L|1|8207846
 HLD|ZBLA|Hulunbuir Hailar Airport|Hailar|Hailar|CN|15|49.2086|119.8223|2169|8530|P|L|1|727203
-HLH|ZBUL|Ulanhot Yilelite Airport|Ulanhot|Ulanhot|CN|15|46.1953|122.0083|0|5906|G|S|1|265600
 HMI|ZWHM|Hami Airport|Hami|Hami|CN|65|42.8414|93.6692|2703|7874|P|M|1|276886
-HNY|ZGHY|Hengyang Nanyue Airport|Hengyang|Hengyang|CN|43|26.7221|112.6180|0|8530|G|S|1|1075516
 HRB|ZYHB|Harbin Taiping International Airport|Harbin|Harbin|CN|23|45.6234|126.2500|457|11811|P|L|1|12241297
-HSC|ZGSG|Shaoguan Danxia Airport|Shaoguan|Shaoguan|CN|44|24.9786|113.4210|280|9186|P|M|1|1381599
 HTN|ZWTN|Hotan Airport|Hotan|Hotan|CN|65|37.0385|79.8649|4672|10499|P|M|1|1260940
 HTT|ZLHX|Huatugou Airport|Mengnai|Mengnai|CN|63|38.2016|90.8378|2945|11811|P|M|1|45856
+HUO|ZBHZ|Holingol Huolinhe Airport|Holingol|Holingol|CN|15|45.4872|119.4072|0|8858|P|M|1|150
 HZA|ZSHZ|Heze Mudan Airport|Heze|Heze|CN|37|35.2130|115.7367|151|8530|P|M|1|4594011
-HZG|ZLHZ|Hanzhong Chenggu Airport|Hanzhong|Hanzhong|CN|61|33.1335|107.2038|0|8202|P|M|1|1373954
-HZH|ZUNP|Liping Airport|Liping|Liping|CN|52|26.3222|109.1499|1620|7218|P|M|1|385977
 INC|ZLIC|Yinchuan Hedong International Airport|Yinchuan|Yinchuan|CN|64|38.3228|106.3932|3743|11811|P|L|1|11913401
+IQM|ZWCM|Qiemo Yudu Airport|Qiemo|Qiemo|CN|65|38.2345|85.4655|0|9186|P|M|1|46908
 IQN|ZLQY|Qingyang Xifeng Airport|Qingyang|Qingyang|CN|62|35.8026|107.5989|0|8530|P|M|1|2340805
-JDZ|ZSJD|Jingdezhen Luojia Airport|Jingdezhen|Jingdezhen|CN|36|29.3386|117.1760|112|7874|P|M|1|607302
 JGN|ZLJQ|Jiayuguan International Airport|Jiayuguan|Jiayuguan|CN|62|39.8591|98.3393|5112|9843|P|L|1|762984
-JGS|ZSGS|Jinggangshan Airport|Ji'an|Ji'an|CN|36|26.8569|114.7370|281|8530|P|M|1|633144
 JHG|ZPJH|Xishuangbanna Gasa International Airport|Jinghong|Jinghong|CN|53|21.9746|100.7622|1815|7874|P|L|1|697523
 JIC|ZLJC|Jinchang Jinchuan Airport|Jinchang|Jinchang|CN|62|38.5422|102.3483|4740|9843|P|M|1|1238856
-JIQ|ZUQJ|Qianjiang Wulingshan Airport|Qianjiang|Qianjiang|CN|50|29.5133|108.8311|2075|7874|P|M|1|1268461
-JMJ|ZPJM|Lancang Jingmai Airport|Pu'er|Pu'er|CN|53|22.4177|99.7840|0|8530|P|M|1|374807
 JMU|ZYJM|Jiamusi Songjiang International Airport|Jiamusi|Jiamusi|CN|23|46.8428|130.4643|262|8202|P|M|1|2267639
-JNG|ZSJG|Jining Da'an Airport|Jining|Jining|CN|37|35.6474|116.7433|171|9186|P|M|1|6123845
 JNZ|ZYJZ|Jinzhou Bay Airport|Jinzhou|Jinzhou|CN|21|40.9360|121.2771|0|8202|P|M|1|3716776
-JUZ|ZSJU|Quzhou Airport|Quzhou|Quzhou|CN|33|28.9661|118.8988|213|6234|P|M|1|1022291
-JXA|ZYJX|Jixi Xingkaihu Airport|Jixi|Jixi|CN|23|45.2930|131.1930|760|7546|P|M|1|1493033
+JZH|ZUJZ|Jiuzhai Huanglong Airport|Ngawa|Ngawa|CN|51|32.8533|103.6822|11327|10499|P|M|1|51248
 KHG|ZWSH|Kashgar Laining International Airport|Kashgar|Kashgar|CN|65|39.5423|76.0202|4529|10499|P|L|1|863052
 KHN|ZSCN|Nanchang Changbei International Airport|Nanchang|Nanchang|CN|36|28.8648|115.9027|143|11155|P|L|1|5397949
-KJH|ZUKJ|Kaili Huangping Airport|Kaili|Kaili|CN|52|26.9720|107.9880|3115|8530|P|M|1|360269
 KMG|ZPPP|Kunming Changshui International Airport|Kunming|Kunming|CN|53|25.1103|102.9367|6903|14764|P|L|1|8751495
 KOW|ZSGZ|Ganzhou Huangjin Airport|Ganzhou|Ganzhou|CN|36|25.8533|114.7789|387|8530|G|S|1|1977253
 KRL|ZWKL|Korla Licheng Airport|Korla|Korla|CN|65|41.6150|86.1408|3041|9121|P|M|1|681176
 KRY|ZWKM|Karamay Airport|Karamay|Karamay|CN|65|45.4665|84.9527|0|8530|G|S|1|312270
 KWE|ZUGY|Guiyang Longdongbao International Airport|Guiyang|Guiyang|CN|52|26.5418|106.8040|3736|13123|P|L|1|5651616
 KWL|ZGKL|Guilin Liangjiang International Airport|Guilin|Guilin|CN|45|25.2198|110.0396|570|10499|P|L|1|2129497
-LCX|ZSLO|Liancheng Guanzhishan Airport|Longyan|Longyan|CN|35|25.6759|116.7459|1225|7874|G|M|1|591618
-LDS|ZYLD|Yichun Lindu Airport|Yichun|Yichun, 23|CN|23|47.7521|129.0191|791|7546|P|M|1|468264
-LFQ|ZBLF|Linfen Yaodu Airport|Linfen|Linfen|CN|14|36.1326|111.6412|1483|8530|P|M|1|934493
 LGZ|ZUSH|Shannan Longzi Airport|Shannan|Shannan, 54|CN|54|28.4224|92.3481|12959|3000|G|S|1|150
 LHW|ZLLL|Lanzhou Zhongchuan International Airport|Lanzhou|Lanzhou|CN|62|36.5152|103.6200|6388|13123|P|L|1|5285042
 LJG|ZPLJ|Lijiang Sanyi International Airport|Lijiang|Lijiang|CN|53|26.6775|100.2449|7359|9843|P|L|1|1098051
-LLF|ZGLG|Yongzhou Lingling Airport|Yongzhou|Yongzhou|CN|43|26.3387|111.6100|340|8530|P|M|1|1262423
-LLV|ZBLL|Luliang Dawu Airport|Luliang|Luliang|CN|61|37.6833|111.1428|0|8530|P|M|1|2949850
-LPF|ZUPS|Liupanshui Yuezhao Airport|Liupanshui|Liupanshui|CN|52|26.6094|104.9790|0|8202|P|M|1|1509170
-LSG|CN-0249|Leshan Airport|Leshan|Leshan|CN|51|29.4386|103.7492|1189|6000|G|M|1|1000506
+LUM|ZPMS|Dehong Mangshi International Airport|Dehong|Dehong|CN|53|24.4011|98.5317|2890|7218|P|M|1|1259750
 LXA|ZULS|Lhasa Gonggar International Airport|Shannan|Shannan|CN|54|29.2980|90.9120|11713|13123|P|L|1|2161891
-LYA|ZHLY|Luoyang Beijiao Airport|Luoyang|Luoyang|CN|41|34.7411|112.3880|840|8202|P|L|1|4400379
 LYI|ZSLY|Linyi Qiyang Airport|Linyi|Linyi|CN|37|35.0529|118.4118|177|10498|P|M|1|6852142
 LZG|ZULA|Langzhong Gucheng Airport|Nanchong|Nanchong|CN|51|31.5019|106.0344|1444|11811|P|M|1|3880583
-LZH|ZGZH|Liuzhou Bailian Airport / Bailian Air Base|Liuzhou|Liuzhou|CN|45|24.2075|109.3910|295|8202|P|M|1|2398344
-LZO|ZULZ|Luzhou Yunlong Airport|Luzhou|Luzhou|CN|51|29.0304|105.4684|0|8858|P|M|1|6701600
 LZY|ZUNZ|Nyingchi Mainling Airport|Nyingchi|Nyingchi|CN|54|29.3033|94.3353|9675|9843|G|M|1|234710
-MDG|ZYMD|Mudanjiang Hailang International Airport|Mudanjiang|Mudanjiang|CN|23|44.5252|129.5686|883|8530|P|M|1|904629
-MIG|ZUMY|Mianyang Nanjiao Airport|Mianyang|Mianyang|CN|51|31.4281|104.7410|7874|7874|P|M|1|2348923
-NBS|ZYBS|Changbaishan Airport|Baishan|Baishan|CN|22|42.0669|127.6022|2874|8530|P|M|1|652644
 NDG|ZYQQ|Qiqihar Sanjiazi Airport|Qiqihar|Qiqihar|CN|23|47.2300|123.9142|477|11811|P|L|1|2323228
-NGB|ZSNB|Ningbo Lishe International Airport|Ningbo|Ningbo|CN|33|29.8267|121.4620|13|10499|P|L|1|7659862
+NGQ|ZUAL|Ngari Gunsa Airport|Shiquanhe|Shiquanhe|CN|54|32.0979|80.0540|14022|14764|P|M|1|25360
 NKG|ZSNJ|Nanjing Lukou International Airport|Nanjing|Nanjing|CN|32|31.7350|118.8659|49|11811|P|L|1|16868754
-NLT|ZWNL|Xinyuan Nalati Airport|Xinyuan|Xinyuan|CN|65|43.4318|83.3786|3050|7546|P|M|1|282718
 NNG|ZGNN|Nanning Wuxu International Airport|Nanning|Nanning|CN|45|22.5981|108.1819|421|10499|P|L|1|8209118
-NZH|ZBMZ|Manzhouli Xijiao Airport|Manzhouli|Manzhouli|CN|15|49.5667|117.3300|2231|9186|P|M|1|250357
+NNY|ZHNY|Nanyang Jiangying Airport|Nanyang|Nanyang|CN|41|32.9827|112.6175|840|9186|G|S|1|2132493
 OHE|ZYMH|Mohe Gulian Airport|Mohe|Mohe|CN|23|52.9169|122.4228|1836|7218|P|M|1|71717
 PEK|ZBAA|Beijing Capital International Airport|Beijing|Beijing|CN|11|40.0773|116.5967|116|12467|P|L|1|21136666
 PVG|ZSPD|Shanghai Pudong International Airport|Shanghai|Shanghai|CN|31|31.1434|121.8050|13|13123|P|L|1|47297627
-PZI|ZUZH|Panzhihua Bao'anying Airport|Panzhihua|Panzhihua|CN|51|26.5400|101.7985|1620|9186|P|M|1|803824
-QSZ|ZWSC|Shache Airport|Shache|Shache|CN|65|38.2454|77.0561|4232|9842|P|M|1|744971
-RLK|ZBYZ|Bayannur Tianjitai Airport|Bayannur|Bayannur|CN|15|40.9264|107.7409|3400|8530|P|M|1|1760000
 SHE|ZYTX|Shenyang Taoxian International Airport|Shenyang|Shenyang|CN|21|41.6398|123.4837|198|10499|P|L|1|15132403
-SHF|ZWHZ|Shihezi Huayuan Airport|Shihezi|Shihezi|CN|65|44.2421|85.8905|1700|7874|G|S|1|487621
 SJW|ZBSJ|Shijiazhuang Zhengding International Airport|Shijiazhuang|Shijiazhuang|CN|13|38.2807|114.6970|233|11155|P|L|1|11629721
-SQD|ZSSR|Shangrao Sanqingshan Airport|Shangrao|Shangrao|CN|36|28.3797|117.9643|340|7874|P|M|1|1076104
-SQJ|ZSSM|Sanming Shaxian Airport|Sanming|Sanming|CN|35|26.4263|117.8336|830|8530|P|M|1|1103846
 SWA|ZGOW|Jieyang Chaoshan International Airport|Jieyang|Jieyang|CN|44|23.5520|116.5033|0|10499|P|L|1|12460146
 SYX|ZJSY|Sanya Phoenix International Airport|Sanya|Sanya|CN|46|18.3029|109.4120|92|11155|P|L|1|2020416
-SZH|ZBSG|Shuozhou Zirun Airport|Shuozhou|Shuozhou|CN|14|39.2732|112.6916|0|8530|P|M|1|632883
 TAO|ZSQD|Qingdao Jiaodong International Airport|Qingdao|Qingdao|CN|37|36.3620|120.0882|30|11811|P|L|1|16453410
-TCG|ZWTC|Tacheng Qianquan Airport|Tacheng|Tacheng|CN|65|46.6725|83.3408|0|7808|G|S|1|218819
 TEN|ZUTR|Tongren Fenghuang Airport|Tongren|Tongren|CN|52|27.8833|109.3089|0|9022|P|M|1|1520067
-TGO|ZBTL|Tongliao Airport|Tongliao|Tongliao|CN|15|43.5567|122.2000|2395|7546|P|M|1|261110
 THQ|ZLTS|Tianshui Maijishan Airport|Tianshui|Tianshui|CN|62|34.5601|105.8603|3590|9186|P|M|1|3871973
-TLQ|ZWTL|Turpan Jiaohe Airport|Turpan|Turpan|CN|65|43.0308|89.0987|934|9186|P|M|1|273385
 TNA|ZSJN|Jinan Yaoqiang International Airport|Jinan|Jinan|CN|37|36.8572|117.2160|76|11812|P|L|1|20855604
-TNH|ZYTN|Tonghua Sanyuanpu Airport|Tonghua|Tonghua|CN|22|42.0484|125.7340|1347|7546|P|M|1|1138676
-TSN|ZBTJ|Tianjin Binhai International Airport|Tianjin|Tianjin|CN|12|39.1244|117.3460|10|11811|P|L|1|19173576
-TXN|ZSTX|Huangshan Tunxi International Airport|Huangshan|Huangshan|CN|34|29.7333|118.2560|0|8530|P|L|1|1421518
 TYN|ZBYN|Taiyuan Wusu International Airport|Taiyuan|Taiyuan|CN|14|37.7469|112.6280|2575|11811|P|L|1|8726671
-UCB|ZBUC|Ulanqab Jining Airport|Ulanqab|Ulanqab|CN|15|41.1303|113.1073|0|10499|P|M|1|636182
 URC|ZWWW|Urumqi Tianshan International Airport|Urumqi|Urumqi|CN|65|43.9136|87.4794|2125|11811|P|L|1|4552456
 WDS|ZHSY|Shiyan Wudangshan Airport|Shiyan|Shiyan|CN|42|32.5929|110.9063|0|8530|P|M|1|3657010
-WEH|ZSWH|Weihai Dashuibo Airport|Weihai|Weihai|CN|37|37.1871|122.2290|145|8530|P|M|1|1741627
-WGN|ZGSY|Shaoyang Wugang Airport|Shaoyang|Shaoyang|CN|43|26.8061|110.6410|1444|8530|P|M|1|771146
-WNH|ZPWS|Wenshan Puzhehei Airport|Wenshan|Wenshan|CN|53|23.5583|104.3255|5217|7874|G|S|1|514404
 WNZ|ZSWZ|Wenzhou Longwan International Airport|Wenzhou|Wenzhou|CN|33|27.9106|120.8535|13|10499|P|L|1|4860432
-WUA|ZBUH|Wuhai Airport|Wuhai|Wuhai|CN|15|39.7934|106.7993|3650|8530|P|M|1|410590
 WUH|ZHHH|Wuhan Tianhe International Airport|Wuhan|Wuhan|CN|42|30.7748|114.2137|113|11811|P|L|1|16926389
-WUX|ZSWX|Sunan Shuofang International Airport|Wuxi|Wuxi|CN|32|31.4970|120.4304|24|10499|P|L|1|29578960
-WUZ|ZGWZ|Wuzhou Xijiang Airport|Tangbu|Tangbu|CN|45|23.4032|111.0933|357|8202|P|M|1|1100119
 WXN|ZUWX|Wanzhou Wuqiao Airport|Wanzhou|Wanzhou|CN|50|30.8017|108.4330|0|7874|G|S|1|3830838
-XAI|ZHXY|Xinyang Minggang Airport|Xinyang|Xinyang|CN|41|32.5408|114.0791|312|8858|P|M|1|2266617
-XFN|ZHXF|Xiangyang Liuji Airport|Xiangyang|Xiangyang|CN|42|32.1522|112.2917|234|8530|P|M|1|2616402
-XIC|ZUXC|Xichang Qingshan Airport|Liangshan|Liangshan|CN|51|27.9891|102.1840|5112|11811|P|M|1|481796
 XIL|ZBXH|Xilinhot Airport|Xilinhot|Xilinhot|CN|15|43.9156|115.9640|0|9186|P|M|1|562953
 XIY|ZLXY|Xi'an Xianyang International Airport|Xi'an|Xi'an|CN|61|34.4422|108.7624|1572|12467|P|L|1|18415764
 XMN|ZSAM|Xiamen Gaoqi International Airport|Xiamen|Xiamen|CN|35|24.5439|118.1275|59|11155|P|L|1|5957888
-XNN|ZLXN|Xining Caojiabao International Airport|Haidong|Haidong|CN|63|36.5277|102.0402|7119|12467|P|L|1|3287114
-XUZ|ZSXZ|Xuzhou Guanyin International Airport|Xuzhou|Xuzhou|CN|32|34.0591|117.5553|108|11548|P|M|1|9726951
 YCU|ZBYC|Yuncheng Yanhu International Airport|Yuncheng|Yuncheng|CN|61|35.1178|111.0340|1242|10499|P|L|1|2810231
-YIC|ZSYC|Yichun Mingyueshan Airport|Yichun|Yichun|CN|36|27.8025|114.3062|430|7874|P|M|1|2473757
 YIH|ZHYC|Yichang Sanxia Airport|Yichang|Yichang|CN|42|30.5541|111.4826|673|10499|P|M|1|3709603
 YIN|ZWYN|Ili Yining International Airport|Ili|Ili|CN|65|43.9558|81.3303|0|7874|P|M|1|1198587
-YIW|ZSYW|Yiwu Airport|Yiwu|Yiwu|CN|33|29.3421|120.0312|262|9843|P|L|1|8808066
-YLX|ZGYL|Yulin Fumian Airport|Yulin|Yulin|CN|45|22.4330|110.1200|328|8530|P|M|1|1616365
-YNJ|ZYYJ|Yanji Chaoyangchuan Airport|Yanji|Yanji|CN|22|42.8828|129.4510|624|8530|P|M|1|1234329
 YNT|ZSYT|Yantai Penglai International Airport|Yantai|Yantai|CN|37|37.6597|120.9781|154|11155|P|L|1|8319114
-YNZ|ZSYN|Yancheng Nanyang International Airport|Yancheng|Yancheng|CN|32|33.4283|120.2054|10|9186|P|L|1|3393879
-YSQ|ZYSQ|Songyuan Chaganhu Airport|Qian Gorlos Mongol|Qian Gorlos Mongol|CN|22|44.9311|124.5521|459|8202|P|M|1|312418
-YTW|ZWYT|Yutian Wanfang Airport|Hotan|Hotan, 65|CN|65|36.8085|81.7827|4731|10499|G|S|1|205351
-YTY|ZSYA|Yangzhou Taizhou Airport|Yangzhou|Yangzhou|CN|32|32.5634|119.7198|7|10499|P|M|1|4132062
 YUS|ZLYS|Yushu Batang Airport|Yushu|Yushu|CN|63|32.8364|97.0364|12816|12467|P|M|1|141308
-YYA|ZGYY|Yueyang Sanhe Airport|Yueyang|Yueyang|CN|43|29.3117|113.2816|230|8530|P|M|1|1077136
-YZY|ZLZY|Zhangye Ganzhou Airport|Zhangye|Zhangye|CN|62|38.8019|100.6750|5280|9843|P|M|1|537075
-ZAT|ZPZT|Zhaotong Zhaoyang Airport|Zhaotong|Zhaotong|CN|53|27.2058|103.6915|0|6000|G|M|1|820100
 ZHA|ZGZJ|Zhanjiang Wuchuan International Airport|Zhanjiang|Zhanjiang|CN|44|21.4817|110.5903|0|10499|P|L|1|7622085
-ZHY|ZLZW|Zhongwei Shapotou Airport|Zhongwei|Zhongwei|CN|64|37.5731|105.1545|4088|9186|P|M|1|1110760
-ZQZ|ZBZJ|Zhangjiakou Ningyuan Airport|Zhangjiakou|Zhangjiakou|CN|13|40.7387|114.9334|2347|8202|P|M|1|962492
-ZYI|ZUZY|Zunyi Xinzhou Airport|Zunyi|Zunyi|CN|52|27.8107|107.2472|2723|9186|P|M|1|1609622
 HKG|VHHH|Hong Kong International Airport|Hong Kong|Hong Kong|HK|NT|22.3118|113.9149|28|12467|P|L|1|30915627
-AKJ|RJEC|Asahikawa Airport|Higashikagura|Higashikagura|JP|01|43.6708|142.4470|721|8200|P|M|1|578411
-AOJ|RJSA|Aomori Airport|Aomori|Aomori|JP|02|40.7338|140.6895|664|9846|P|L|1|1713585
+ASJ|RJKA|Amami Airport|Amami|Amami|JP|46|28.4306|129.7130|27|6560|P|M|1|91626
 CTS|RJCC|New Chitose Airport|Sapporo|Sapporo|JP|01|42.7748|141.6904|82|9843|P|L|1|3290458
-FKS|RJSF|Fukushima Airport|Sukagawa|Sukagawa|JP|07|37.2274|140.4310|1221|8202|P|M|1|1224320
-FSZ|RJNS|Mount Fuji Shizuoka Airport|Makinohara|Makinohara|JP|22|34.7950|138.1910|433|7218|P|L|1|4841253
-FUK|RJFF|Fukuoka Airport|Fukuoka|Fukuoka|JP|40|33.5859|130.4510|32|9186|P|L|1|4164226
-HKD|RJCH|Hakodate Airport|Hakodate|Hakodate|JP|01|41.7700|140.8220|151|9842|P|L|1|708313
-HNA|RJSI|Iwate Hanamaki Airport|Hanamaki|Hanamaki|JP|03|39.4286|141.1350|297|8202|P|M|1|995686
+HAC|RJTH|Hachijojima Airport|Hachijojima|Hachijojima|JP|13|33.1148|139.7856|303|6563|P|M|1|7211
 HND|RJTT|Tokyo Haneda International Airport|Tokyo|Tokyo|JP|13|35.5497|139.7870|35|11024|P|L|1|32460990
-IZO|RJOC|Izumo Enmusubi Airport|Izumo|Izumo|JP|32|35.4136|132.8900|15|6562|P|M|1|380466
+HSG|RJFS|Kyushu Saga International Airport|Saga|Saga|JP|41|33.1497|130.3020|6|6562|P|L|1|2207430
 KIJ|RJSN|Niigata Airport|Niigata|Niigata|JP|15|37.9542|139.1122|29|8200|P|L|1|3151441
+KIX|RJBB|Kansai International Airport|Osaka|Osaka|JP|27|34.4273|135.2440|26|13123|P|L|1|7171761
 KMQ|RJNK|Komatsu Airport / JASDF Komatsu Air Base|Kanazawa|Kanazawa|JP|17|36.3934|136.4069|36|8876|P|L|1|2153569
 KOJ|RJFK|Kagoshima Airport|Kagoshima|Kagoshima|JP|46|31.8034|130.7190|906|9840|P|L|1|1715891
-KTD|RORK|Kitadaito Airport|Kitadaitojima|Kitadaitojima|JP|47|25.9447|131.3270|80|4921|P|M|1|1092
 MMD|ROMD|Minamidaito Airport|Minamidaito|Minamidaito|JP|47|25.8465|131.2630|167|4921|P|M|1|1983
-MMJ|RJAF|Shinshu-Matsumoto Airport|Matsumoto|Matsumoto|JP|20|36.1668|137.9230|2182|6560|P|M|1|1858237
 MYJ|RJOM|Matsuyama Airport|Matsuyama|Matsuyama|JP|38|33.8269|132.7001|25|8200|P|L|1|2564386
 NGO|RJGG|Chubu Centrair International Airport|Tokoname|Tokoname|JP|23|34.8584|136.8050|15|11483|P|L|1|7433723
-OBO|RJCB|Tokachi-Obihiro Airport|Obihiro|Obihiro|JP|01|42.7333|143.2170|505|8202|P|M|1|255110
 OKA|ROAH|Naha International Airport|Naha|Naha|JP|47|26.1924|127.6398|12|9840|P|L|1|1453815
+OKI|RJNO|Oki Global Geopark Airport|Okinoshima|Okinoshima|JP|32|36.1784|133.3236|311|6531|P|M|1|41088
 SDJ|RJSS|Sendai Airport|Natori|Natori|JP|04|38.1397|140.9170|15|9842|P|L|1|3797897
-TJH|RJBT|Konotori Tajima Airport|Toyooka|Toyooka|JP|28|35.5128|134.7870|584|3937|P|M|1|380106
-UKB|RJBE|Kobe Airport|Kobe|Kobe|JP|28|34.6328|135.2240|22|8202|P|L|1|10073490
+SHB|RJCN|Nakashibetsu Airport|Nakashibetsu|Nakashibetsu|JP|01|43.5775|144.9600|234|6560|P|M|1|133230
+SHI|RORS|Shimojishima Airport|Miyakojima|Miyakojima|JP|47|24.8267|125.1450|54|9842|P|M|1|77372
 FNJ|ZKPY|Pyongyang Sunan International Airport|Pyongyang|Pyongyang|KP|01|39.2241|125.6700|117|11490|P|L|1|7320354
 RGO|ZKHM|Orang (Chongjin) Airport|Hoemun-ri|Hoemun-ri|KP|09|41.4285|129.6476|12|8202|P|M|1|1022842
-WOS|ZKWS|Wonsan Kalma Airport|Wonsan|Wonsan|KP|07|39.1652|127.4879|7|11482|P|M|1|1349856
-CJJ|RKTU|Cheongju International Airport/Cheongju Air Base (K-59/G-513)|Cheongju|Cheongju|KR|43|36.7156|127.5003|191|9000|P|L|1|8054993
-CJU|RKPC|Jeju International Airport|Jeju City|Jeju City|KR|49|33.5121|126.4925|118|10433|P|L|1|930149
 ICN|RKSI|Incheon International Airport|Seoul|Seoul|KR|28|37.4691|126.4510|23|13123|P|L|1|15769462
-KWJ|RKJJ|Gwangju Airport|Gwangju|Gwangju|KR|29|35.1232|126.8054|39|9300|P|M|1|1664924
+MWX|RKJB|Muan International Airport|Muan|Muan|KR|46|34.9914|126.3828|35|9186|P|L|1|1423496
 PUS|RKPK|Gimhae International Airport|Busan|Busan|KR|26|35.1795|128.9380|6|10499|P|L|1|5537893
-AVK|ZMAH|Arvaikheer Airport|Arvaikheer|Arvaikheer|MN|055|46.2503|102.8020|5932|7546|G|M|1|29420
+BYN|ZMBH|Bayankhongor Airport|Bayankhongor|Bayankhongor|MN|069|46.1633|100.7040|6085|9186|P|M|1|30931
 COQ|ZMCD|Choibalsan Airport|Choibalsan|Choibalsan|MN|061|48.1354|114.6472|2457|8530|P|M|1|48038
 DLZ|ZMDZ|Dalanzadgad Airport|Dalanzadgad|Dalanzadgad|MN|053|43.6086|104.3677|4787|7545|P|M|1|24863
-ERT|ERT|Erdenet Airport|Erdenet|Erdenet|MN|035|48.9831|104.1506|4200|3000|G|S|0|52107
-HBU|ZMBS|Bulgan Sum Airport|Bulgan|Bulgan, 043|MN|043|46.1006|91.5842|3921|5906|G|S|0|1768
+HVD|ZMKD|Khovd Airport|Khovd|Khovd|MN|043|47.9541|91.6282|4898|9352|P|M|1|29800
 LTI|ZMAT|Altai Airport|Altai|Altai|MN|065|46.3764|96.2211|7260|7513|G|M|1|17617
 MXV|ZMMN|Moron Airport|Moron|Moron|MN|041|49.6637|100.1000|4272|7874|P|M|1|47752
-MXW|ZMMG|Mandalgobi Airport|Mandalgobi|Mandalgobi|MN|059|45.7381|106.2690|4550|3000|G|S|1|12339
-TNZ|ZMTL|Tosontsengel Airport|Tosontsengel|Tosontsengel|MN|057|48.7389|98.2941|5610|3000|G|S|0|9526
-TSZ|ZMTG|Tsetserleg Airport|Tsetserleg|Tsetserleg|MN|073|47.4615|101.4838|5530|3000|G|S|0|21620
 UBN|ZMCK|Ulaanbaatar Chinggis Khaan International Airport|Ulaanbaatar|Ulaanbaatar|MN|047|47.6469|106.8198|4482|11811|P|L|1|939088
 UGA|ZMBN|Bulgan Airport|Bulgan|Bulgan|MN|067|48.8550|103.4760|4311|6234|G|M|1|75763
-ULG|ZMUL|Olgii Mongolei International Airport|Olgii|Olgii|MN|071|48.9933|89.9225|5732|7874|G|M|1|28400
-ULZ|ZMDN|Donoi Airport|Uliastai|Uliastai|MN|057|47.7093|96.5258|5800|3000|G|S|1|16265
 UNR|ZMUH|Ondorkhaan Airport|Ondorkhaan|Ondorkhaan|MN|039|47.3049|110.6092|3410|3000|G|S|0|22741
-HUN|RCYU|Hualien Chiashan Airport|Hualien City|Hualien City|TW|HUA|24.0232|121.6180|52|9022|P|L|1|906081
 KHH|RCKH|Kaohsiung International Airport|Kaohsiung|Kaohsiung|TW|KHH|22.5771|120.3500|31|10335|P|L|1|2795807
-RMQ|RCMQ|Taichung International Airport / Ching Chuang Kang Air Base|Taichung|Taichung|TW|TXG|24.2647|120.6210|663|12000|P|L|1|3898374
-TSA|RCSS|Taipei Songshan International Airport|Taipei|Taipei|TW|TPE|25.0672|121.5528|18|8547|P|L|1|11212197
+TPE|RCTP|Taiwan Taoyuan International Airport|Taoyuan|Taoyuan|TW|TAO|25.0777|121.2330|106|12008|P|L|1|3995341
 """#
 }

@@ -3,116 +3,59 @@
 
 enum AirportRows_MEA {
     static let rows = #"""
-AUH|OMAA|Zayed International Airport|Abu Dhabi|Abu Dhabi|AE|AZ|24.4410|54.6492|88|13471|P|L|1|2499573
 DXB|OMDB|Dubai International Airport|Dubai|Dubai|AE|DU|25.2498|55.3710|62|14590|P|L|1|5506549
 TLV|LLBG|Ben Gurion International Airport|Tel Aviv|Tel Aviv|IL|M|32.0114|34.8867|135|13327|P|L|1|9209085
 BGW|ORBI|Baghdad International Airport / New Al Muthana Air Base|Baghdad|Baghdad|IQ|BG|33.2625|44.2346|114|13124|P|L|1|11891888
 BSR|ORMM|Basra International Airport|Basra|Basra|IQ|BA|30.5491|47.6621|11|13124|P|L|1|2493658
-NJF|ORNI|Al Najaf International Airport|Najaf|Najaf|IQ|NA|31.9911|44.4050|103|9842|P|L|1|2945983
-OSM|ORBM|Mosul International Airport|Mosul|Mosul|IQ|NI|36.3058|43.1474|719|8695|P|L|0|4007574
-ADU|OITL|Ardabil Airport|Ardabil|Ardabil|IR|24|38.3257|48.4244|4315|10823|P|M|1|849287
-AFZ|OIMS|Sabzevar National Airport|Sabzevar|Sabzevar|IR|09|36.1681|57.5952|3010|10428|P|M|1|283427
-AWZ|OIAW|Qasem Soleimani International Airport|Ahvaz|Ahvaz|IR|06|31.3364|48.7638|66|11149|P|L|1|1613757
-AZD|OIYY|Shahid Sadooghi Airport|Yazd|Yazd|IR|21|31.9049|54.2765|4054|13446|P|M|1|692796
+EBL|ORER|Erbil International Airport|Arbil|Arbil|IQ|AR|36.2360|43.9466|1341|15748|P|L|1|3510954
 BJB|OIMN|Bojnord Airport|Bojnord|Bojnord|IR|28|37.4930|57.3082|3499|10582|P|M|1|300458
-BND|OIKB|Bandar Abbas International Airport|Bandar Abbas|Bandar Abbas|IR|22|27.2183|56.3778|22|12008|P|L|1|746871
-BUZ|OIBB|Bushehr Airport|Bushehr|Bushehr|IR|18|28.9448|50.8346|68|14664|P|M|1|400532
-CQD|OIFS|Shahrekord Airport|Shahrekord|Shahrekord|IR|14|32.2972|50.8422|6723|10819|P|M|0|598747
-DEF|OIAD|Dezful Airport|Dezful|Dezful|IR|06|32.4344|48.3976|474|12641|P|M|1|586486
-FAZ|OISF|Fasa Airport|Fasa|Fasa|IR|07|28.8918|53.7233|4261|6502|P|M|0|380371
 GBT|OING|Gorgan Airport|Gorgan|Gorgan|IR|27|36.9094|54.4013|-24|10827|P|M|0|1088486
-GCH|OIAH|Gachsaran Airport|Gachsaran|Gachsaran|IR|17|30.3339|50.8338|2414|6070|P|M|1|349064
-HDM|OIHH|Hamadan Airport|Hamadan|Hamadan|IR|13|34.8664|48.5607|5755|10611|P|M|1|1218491
 IFN|OIFM|Isfahan Shahid Beheshti International Airport|Isfahan|Isfahan|IR|10|32.7551|51.8839|5059|14425|P|L|1|3734887
-IIL|OICI|Ilam Airport|Ilam|Ilam|IR|16|33.5866|46.4048|4404|9183|P|M|0|289696
 IKA|OIIE|Imam Khomeini International Airport|Tehran|Tehran|IR|23|35.4161|51.1522|3305|13772|P|L|1|8977143
-JSK|OIZJ|Jask Airport|Bandar-e-Jask|Bandar-e-Jask|IR|22|25.6548|57.8017|19|3000|G|S|1|19189
-JWN|OITZ|Zanjan Airport|Zanjan|Zanjan|IR|19|36.7737|48.3594|5382|9840|P|M|0|473933
 KER|OIKK|Ayatollah Hashemi Rafsanjani International Airport|Kerman|Kerman|IR|08|30.2713|56.9497|5741|12635|P|L|1|902750
-KHD|OICK|Khoram Abad Airport|Khorramabad|Khorramabad|IR|15|33.4354|48.2829|3782|10498|P|M|1|1036119
-KIH|OIBK|Kish International Airport|Kish Island|Kish Island|IR|22|26.5254|53.9805|101|12004|P|L|1|93913
-KKS|OIFK|Kashan Airport|Kashan|Kashan|IR|10|33.8953|51.5770|3465|8845|P|M|1|722425
 KSH|OICC|Shahid Ashrafi Esfahani Airport|Kermanshah|Kermanshah|IR|05|34.3459|47.1581|4307|11213|P|M|1|962438
+LRR|OISL|Lar Airport|Lar|Lar|IR|07|27.6747|54.3833|2641|10397|P|M|1|185359
 MHD|OIMM|Mashhad International Airport|Mashhad|Mashhad|IR|09|36.2348|59.6429|3263|12877|P|L|1|3500281
-NSH|OINN|Nowshahr Airport|Nowshahr|Nowshahr|IR|02|36.6643|51.4627|-61|6677|P|M|1|422595
-OMH|OITR|Urmia Airport|Urmia|Urmia|IR|04|37.6681|45.0687|4343|10658|P|M|1|706118
 RAS|OIGG|Sardar-e-Jangal Airport|Rasht|Rasht|IR|01|37.3233|49.6178|-40|9571|P|M|1|1353813
-SDG|OICS|Sanandaj Airport|Sanandaj|Sanandaj|IR|12|35.2459|47.0092|4522|8660|P|M|1|702153
-SRY|OINZ|Sari Dasht-e Naz International Airport|Sari|Sari|IR|02|36.6444|53.1888|35|8688|P|M|1|1476722
-SYJ|OIKY|Sirjan Airport|Sirjan|Sirjan|IR|08|29.5509|55.6727|5846|12356|P|M|0|288300
 SYZ|OISS|Shiraz Shahid Dastghaib International Airport|Shiraz|Shiraz|IR|07|29.5392|52.5898|4927|14345|P|L|1|2527379
 TBZ|OITT|Tabriz International Airport|Tabriz|Tabriz|IR|03|38.1339|46.2350|4459|11825|P|L|1|3108095
 XBJ|OIMB|Birjand International Airport|Birjand|Birjand|IR|29|32.8965|59.2813|4952|9521|P|L|1|292194
 ZAH|OIZH|Zahedan International Airport|Zahedan|Zahedan|IR|11|29.4757|60.9062|4564|14042|P|L|1|668958
-AMM|OJAI|Queen Alia International Airport|Amman|Amman|JO|AM|31.7226|35.9932|2395|12008|P|L|1|5557663
-AQJ|OJAQ|King Hussein International Airport|Aqaba|Aqaba|JO|AQ|29.6116|35.0181|175|9855|P|L|1|169995
-KWI|OKKK|Kuwait International Airport|Kuwait City|Kuwait City|KW|FA|29.2245|47.9698|206|15026|P|L|1|1766156
+ZBR|OIZC|Chabahar Konarak International Airport|Konarak|Konarak|IR|11|25.4432|60.3822|13|12514|P|M|1|147783
 BEY|OLBA|Beirut Rafic Hariri International Airport|Beirut|Beirut|LB|JL|33.8198|35.4874|87|12467|P|L|1|5154737
-DQM|OODQ|Duqm International Airport|Duqm|Duqm|OM|WU|19.5019|57.6342|364|13123|P|L|1|150
 MCT|OOMS|Muscat International Airport|Muscat|Muscat|OM|MA|23.6002|58.2853|48|13386|P|L|1|2328585
 MSH|OOMA|RAFO Masirah|Masirah|Masirah|OM|SH|20.6754|58.8905|64|10005|P|M|0|18329
-OHS|OOSH|Suhar International Airport|Suhar|Suhar|OM|BA|24.3860|56.6254|20|13173|P|L|1|702077
 SLL|OOSA|Salalah International Airport|Salalah|Salalah|OM|ZU|17.0387|54.0913|73|13123|P|L|1|173692
 DOH|OTHH|Hamad International Airport|Doha|Doha|QA|DA|25.2731|51.6081|13|15912|P|L|1|1595606
+ABT|OEBA|King Saud Bin Abdulaziz (Al Baha) Airport|Al-Baha|Al-Baha|SA|11|20.2985|41.6362|5486|10991|P|M|1|230054
 AHB|OEAB|Abha International Airport|Abha|Abha|SA|14|18.2404|42.6566|6858|10991|P|L|1|843638
-AJF|OESK|Al-Jawf International Airport|Al-Jawf|Al-Jawf|SA|12|29.7833|40.1009|2261|12011|P|L|1|136847
 AQI|OEPA|QaisumahHafar Al-Batin International Airport|Qaisumah|Qaisumah|SA|04|28.3357|46.1271|1174|10007|P|L|1|341784
-DMM|OEDF|King Fahd International Airport|Ad Dammam|Ad Dammam|SA|04|26.4691|49.7982|72|13124|P|L|1|1757646
-EAM|OENG|Najran Domestic Airport|Najran|Najran|SA|10|17.6114|44.4192|3982|10007|P|M|1|549968
 ELQ|OEGS|Prince Naif bin Abdulaziz International Airport|Qassim|Qassim|SA|05|26.3028|43.7744|2126|9843|P|L|1|1387016
-GIZ|OEGN|Jizan Regional Airport / King Abdullah bin Abdulaziz Airport|Jizan|Jizan|SA|09|16.9011|42.5858|20|10006|P|M|1|446090
-HAS|OEHL|Hail International Airport|Hail|Hail|SA|06|27.4379|41.6863|3331|12204|P|L|1|630419
-HOF|OEAH|Al-Ahsa International Airport|Hofuf|Hofuf|SA|04|25.2853|49.4852|588|10039|P|L|1|781656
 JED|OEJN|King Abdulaziz International Airport|Jeddah|Jeddah|SA|02|21.6802|39.1574|48|13123|P|L|1|5445940
 MED|OEMA|Prince Mohammad Bin Abdulaziz Airport|Medina|Medina|SA|03|24.5534|39.7051|2151|14222|P|L|1|2255684
+RAE|OERR|Arar Domestic Airport|Arar|Arar|SA|08|30.9066|41.1382|1813|10007|P|M|1|148540
 RAH|OERF|Rafha Domestic Airport|Rafha|Rafha|SA|08|29.6264|43.4906|1474|9834|P|M|1|150
-RSI|OERS|Red Sea International Airport|Hanak|Hanak|SA|07|25.6280|37.0889|140|12139|P|L|1|28915
 RUH|OERK|King Khalid International Airport|Riyadh|Riyadh|SA|01|24.9576|46.6988|2049|13796|P|L|1|4876844
 SHW|OESH|Sharurah Domestic Airport|Sharurah|Sharurah|SA|10|17.4669|47.1214|2363|11975|P|M|1|8365
-TIF|OETF|Taif International Airport|Taif|Taif|SA|02|21.4847|40.5441|4848|12254|P|L|1|1779114
 TUU|OETB|Prince Sultan bin Abdulaziz International Airport|Tabuk|Tabuk|SA|07|28.3711|36.6249|2551|10991|P|L|1|658411
 ULH|OEAO|Al-Ula International Airport|Al-Ula|Al-Ula|SA|03|26.4836|38.1170|2050|10007|P|L|1|68017
 WAE|OEWD|Wadi Al Dawasir Domestic Airport|Wadi Al Dawasir|Wadi Al Dawasir|SA|01|20.5043|45.1996|2062|10007|P|M|1|24097
-YNB|OEYN|Prince Abdulmohsen Bin Abdulaziz International Airport|Yanbu|Yanbu|SA|03|24.1442|38.0634|26|10532|P|L|1|227399
-ALP|OSAP|Aleppo International Airport|Aleppo|Aleppo|SY|HL|36.1813|37.2269|1276|9547|P|L|1|4244209
-DAM|OSDI|Damascus International Airport|Damascus|Damascus|SY|DI|33.4115|36.5156|2020|11811|P|L|1|4105488
 DEZ|OSDZ|Deir ez-Zor Airport|Deir ez-Zor|Deir ez-Zor|SY|DY|35.2854|40.1760|700|9843|P|M|0|381085
-LTK|OSLK|Latakia International Airport|Latakia|Latakia|SY|LA|35.4011|35.9487|157|9175|P|M|1|1541390
 ADB|LTBJ|Adnan Menderes International Airport|Gaziemir|Gaziemir|TR|35|38.2924|27.1570|412|10630|P|L|1|5380600
-AJI|LTCO|Agr Airport|Agr|Agr|TR|04|39.6556|43.0257|5462|9843|P|M|1|344565
 AOE|LTBY|Hasan Polatkan Airport|Eskisehir|Eskisehir|TR|26|39.8116|30.5193|2588|8261|P|L|1|3544328
-ASR|LTAU|Kayseri Erkilet International Airport|Kayseri|Kayseri|TR|38|38.7704|35.4954|3463|9841|P|L|1|1979005
 AYT|LTAI|Antalya International Airport|Antalya|Antalya|TR|07|36.8987|30.8005|177|11155|P|L|1|2677075
-BJV|LTFE|Milas Bodrum International Airport|Bodrum|Bodrum|TR|48|37.2493|27.6640|21|9843|P|L|1|1006175
 COV|LTDB|Cukurova International Airport|Tarsus|Tarsus|TR|33|36.8915|35.0712|35|11482|P|L|1|4114745
 DIY|LTCC|Diyarbakr Airport|Diyarbakr|Diyarbakr|TR|21|37.8939|40.2010|2251|11644|P|M|1|1918399
-DLM|LTBS|Dalaman International Airport|Dalaman|Dalaman|TR|48|36.7131|28.7925|20|9842|P|L|1|566675
-DNZ|LTAY|Cardak Airport|Denizli|Denizli|TR|20|37.7856|29.7013|2795|9842|P|M|1|448706
-EDO|LTFD|Balkesir Koca Seyit Airport|Edremit|Edremit|TR|10|39.5525|27.0102|50|9842|P|L|1|944661
-ERC|LTCD|Erzincan Airport|Erzincan|Erzincan|TR|24|39.7102|39.5270|3783|9843|P|M|1|330750
-ERZ|LTCE|Erzurum International Airport|Erzurum|Erzurum|TR|25|39.9565|41.1702|5763|12500|P|M|1|925089
 ESB|LTAC|Esenboga International Airport|Ankara|Ankara|TR|06|40.1281|32.9951|3125|12303|P|L|1|5937573
-EZS|LTCA|Elazg Airport|Elazg|Elazg|TR|23|38.5980|39.2835|2927|9843|P|M|1|705513
-GNY|LTCS|Sanlurfa GAP Airport|Sanlurfa|Sanlurfa|TR|63|37.4457|38.8956|2708|13123|P|L|1|1368222
-GZP|LTFG|Gazipasa-Alanya Airport|Gazipasa|Gazipasa|TR|07|36.2988|32.2970|92|7710|P|M|1|505652
-KFS|LTAL|Kastamonu Airport|Kastamonu|Kastamonu|TR|37|41.3142|33.7958|3520|7382|P|M|1|281980
+GZT|LTAJ|Gaziantep Oguzeli International Airport|Gaziantep|Gaziantep|TR|27|36.9472|37.4787|2315|9842|P|L|1|3252780
+IST|LTFM|Istanbul Airport|Istanbul|Istanbul|TR|34|41.2749|28.7321|325|13451|P|L|1|14274488
 KYA|LTAN|Konya Airport|Konya|Konya|TR|42|37.9790|32.5619|3392|10990|P|L|1|2206276
-MLX|LTAT|Malatya Erhac Airport|Malatya|Malatya|TR|44|38.4353|38.0910|2828|10990|P|M|1|709190
-MSR|LTCK|Mus Airport|Mus|Mus|TR|49|38.7478|41.6612|4157|11649|P|M|1|392485
-MZH|LTAP|Amasya Merzifon Airport|Amasya|Amasya|TR|05|40.8294|35.5220|1758|9600|P|M|1|750822
-NKT|LTCV|Srnak Serafettin Elci Airport|Srnak|Srnak|TR|73|37.3647|42.0582|2038|9843|P|M|1|640417
-OGU|LTCB|OrduGiresun Airport|Ordu|Ordu|TR|52|40.9669|38.0860|11|9848|P|M|1|747936
-ONQ|LTAS|Zonguldak Caycuma Airport|Zonguldak|Zonguldak|TR|67|41.5064|32.0886|44|6991|P|M|1|557256
-SAW|LTFJ|Istanbul Sabiha Gokcen International Airport|Pendik|Pendik|TR|34|40.8986|29.3092|312|11614|P|L|1|16036653
-TZX|LTCG|Trabzon International Airport|Trabzon|Trabzon|TR|61|40.9951|39.7897|104|8661|P|M|1|660457
-USQ|LTBO|Usak Airport|Usak|Usak|TR|64|38.6815|29.4717|2897|8390|P|M|0|530167
-VAN|LTCI|Van Ferit Melen Airport|Van|Van|TR|65|38.4682|43.3323|5480|9022|P|M|1|721468
+NOP|LTCM|Sinop Airport|Sinop|Sinop, TR|TR|57|42.0183|35.0718|20|6482|P|M|1|127536
+VAS|LTAR|Sivas Nuri Demirag Airport|Sivas|Sivas|TR|58|39.8138|36.9035|5239|12503|P|M|1|341086
 ADE|OYAA|Aden International Airport|Aden|Aden|YE|AD|12.8296|45.0300|7|10171|P|L|1|1295460
 AXK|OYAT|Ataq Airport|Ataq|Ataq|YE|SH|14.5513|46.8262|3735|9482|P|M|0|43215
-GXF|OYSY|Seiyun Hadhramaut International Airport|Seiyun|Seiyun|YE|HD|15.9659|48.7881|2097|9843|P|L|1|17395
 RIY|OYRN|Riyan International Airport|Mukalla|Mukalla|YE|HD|14.6622|49.3753|54|9843|P|L|1|617122
 SAH|OYSN|Sanaa International Airport|Sanaa|Sanaa|YE|SA|15.4763|44.2197|7216|10669|P|L|1|2488616
 SCT|OYSQ|Socotra Airport|Mori|Mori|YE|SU|12.6321|53.9062|146|10827|P|M|1|12045
-TAI|OYTZ|Taiz International Airport|Taiz|Taiz|YE|TA|13.6860|44.1391|4838|10040|P|M|1|1679165
 """#
 }

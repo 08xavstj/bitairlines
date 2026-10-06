@@ -41,8 +41,14 @@ public struct Job: Sendable, Hashable, Codable, Identifiable {
     public var aircraftID: Int?
     /// True once the load is on board (on the way to `to`).
     public var loaded: Bool
+    /// The real day this job is the daily dispatch for (DailyDispatch.swift); nil for other jobs and in older saves.
+    public var dispatchDay: Int? = nil
+    /// The seasonal event this job belongs to (SeasonalEvents.swift); nil for other jobs and in older saves.
+    public var season: SeasonKind? = nil
 
     public var isTaken: Bool { aircraftID != nil }
+    /// A dispatch or seasonal job: it stays on the board while its real day or event lasts, not by game time.
+    public var isSpecial: Bool { dispatchDay != nil || season != nil }
 }
 
 extension World {

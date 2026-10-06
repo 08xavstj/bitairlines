@@ -3,8 +3,8 @@ import CoreCatalog
 import CoreWorld
 
 struct NewGameDraft {
-    var regionID = "arctic-canada"
-    var home = "YEV"
+    var regionID = "caribbean"
+    var home = "SXM"
     var name = "Aurora Air"
     var code = "ZZ"
     var branding = Branding.starter
