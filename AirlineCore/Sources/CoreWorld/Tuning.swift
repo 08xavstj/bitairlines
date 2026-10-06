@@ -99,7 +99,7 @@ public enum Tuning {
     /// Jobs and events happen at airports within this distance of the network.
     public static let jobAreaKm = 600.0
     public static let jobRecordsKept = 300
-    public static let eventChancePerWeek = 0.25
+    public static let eventChancePerWeek = 0.2
 
     // MARK: Hubs
     /// Through passengers only take a connection that is at most this much longer than flying direct.

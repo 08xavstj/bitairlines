@@ -1,6 +1,6 @@
 # Roadmap
 
-Status as of the first push. "Tested" means a test runs in CI; "written" means the code exists but has not run on a phone yet.
+Status in October 2026. "Tested" means a test runs in CI; "written" means the code exists but has not run on a phone yet.
 
 ## Done
 
@@ -18,24 +18,34 @@ Status as of the first push. "Tested" means a test runs in CI; "written" means t
 | Sound | Chiptune effects and two music loops synthesised on the device, with a settings toggle for effects and music and three volume levels. Synth and cue logic tested; not yet heard on a phone. |
 | Guided first route | Five steps derived from the world (open a route, assign the aircraft, start the clock, watch it fly, review), a coach strip and a highlight on the next control. Tested. |
 | Aircraft art | Windscreens, swept wings with a dark leading edge, engine pods with intakes, propeller discs, wheels. Regenerated from `tools/art/aircraft.py`. |
+| Game modes | Easy, Normal, Realism (fuel only at real fuel stops) and Sandbox, chosen when the airline is founded. Tested. |
+| Perks | Pick one of three at each certificate level (fuel deal, quick turns, good name and six more). Tested. |
+| Fuel market | Daily price drift and oil shocks, a price chart, fuel bought ahead used first. Tested. |
+| Service and punctuality | Basic, standard or premium service per route; an on-time record that feeds reputation. Tested. |
+| Bases | Fuel depot, hangar, runway lights, longer runway, paving and hub terminal at any airport served. Home apron scene with a departures board. Tested (scene not yet seen on a phone). |
+| Kits | Floats, amphibious floats, wheel-skis, gravel kit, STOL kit, freighter conversion. Lakes freeze in winter; skis land on the ice. Tested. |
+| Daylight | Unlit strips are open only in daylight plus twilight, so polar winter cuts the schedule until lights are built. Tested. |
+| Job board | Medevac, mail, fuel drums, crew changes, lodge charters, surveys and freight near the network, with deadlines; the aircraft returns to its route after. Tested. |
+| Events | Forest fire evacuations, early thaw, volcanic ash, film crew, winter games (with a sponsorship offer), oil shock, mining boom. Tested. |
+| Hubs | Passengers change planes at a hub terminal between the airline's routes. Tested. |
+| Slots | Busy airports (certificate level 3 and up) ration daily departures; slots are bought and sold. Tested. |
+| Rival airlines | Named computer airlines with routes and fares; they answer fare cuts and move into busy routes; a rankings table. Tested. |
+| Pilots | Pilots with ratings, hours, salaries, sickness and type courses; spares step in; automatic hiring for new aircraft. Tested. |
+| Scenarios | Six short games with a goal, a deadline and medals; best medals kept on the phone. Tested. |
 
 ## Next
 
-1. **Run it on a phone and fix what looks wrong.** The UI has been compile-checked and screenshotted in a simulator, not played. Expect layout and feel problems, and listen to the sound.
-2. **Contracts and jobs.** Medevac, mail, charter offers, a subsidised essential service for a village; a job board with deadlines and reputation.
-3. **Airport investment in remote places.** Lighting, gravel to paved, fuel depot, hangar base.
-4. **Easy, Realism and Sandbox modes, and a perk to pick at each certificate level.** Easy ignores runway, surface and weather limits; Realism sells fuel only where it is really sold; Sandbox has no money limit.
-5. **Competitor airlines** as real entities in the world instead of an average market share.
-6. **Hubs and connecting passengers.**
-7. **Seasons and time of day.** Daylight limits on unlit strips, polar night, holiday peaks.
-8. **Maintenance policy** (own hangar, planned checks), **crew** as a resource, **leasing**.
-9. **App Store work.** Name check, privacy page, icon polish, TestFlight.
+1. **Run it on a phone and fix what looks wrong.** Everything above is compile-checked, tested in CI and screenshotted in a simulator, not played. Expect layout and balance problems.
+2. **Balance pass** with the added systems together (pilot pay, rivals, daylight and events change what a route earns).
+3. **Holiday peaks and the economy**: demand that moves with events beyond the current ones.
+4. **Leasing** aircraft instead of buying.
+5. **App Store work.** Name check, privacy page, icon polish, TestFlight.
 
-The reasoning and the other ideas considered are in [feature-research.md](feature-research.md).
+The reasoning and the other ideas considered are in [feature-research.md](feature-research.md). Eras were considered and left out.
 
 ## Known limits
 
-- Passengers are per leg (a milk run A-B-C does not carry A-to-C passengers through B).
-- The market share model is an average; there are no named competitors yet.
+- On one route, passengers ride a single leg (a milk run A-B-C does not carry A-to-C passengers through B); between routes they connect only at a hub terminal.
+- Rival airlines are estimated, not simulated aircraft by aircraft.
 - Population per airport comes from nearby towns, so a few places (for example Lukla) have more people than they should.
-- Demand does not change with the economy, news or events yet.
+- Demand changes with events near the network, but not yet with the wider economy.

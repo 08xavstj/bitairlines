@@ -55,8 +55,10 @@ extension World {
 
     /// Once a day: a little noise on the price, and a line on the chart.
     mutating func dailyFuelMarket() {
+        // A little noise each day, and a gentle pull back towards normal so the price wanders but does not drift away.
         let noise = ops.rng.uniform(-0.012, 0.012)
-        market.fuelIndex = min(2.4, max(0.5, market.fuelIndex * (1.0 + noise)))
+        let pull = (1.0 - market.fuelIndex) * 0.01
+        market.fuelIndex = min(2.4, max(0.5, market.fuelIndex * (1.0 + noise) + pull))
         ops.fuelHistory.append(market.fuelIndex)
         if ops.fuelHistory.count > World.fuelHistoryDays { ops.fuelHistory.removeFirst(ops.fuelHistory.count - World.fuelHistoryDays) }
     }

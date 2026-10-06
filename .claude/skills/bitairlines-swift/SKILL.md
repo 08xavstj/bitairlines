@@ -12,6 +12,8 @@ AirlineCore/            pure Swift package, Swift 6 strict. No UI, no Foundation
   Sources/CoreSim/      SeededRandom, GeoMath (no libm), LinearTable, Powers
   Sources/CoreCatalog/  static data: Airport(+Data/ generated rows), Country, LandMask, AircraftType(+AircraftRows), StartRegions, PixelPalette
   Sources/CoreWorld/    the live game: World, Airline, Aircraft, Route, Demand, LegCost, Flights, Simulation, DailyUpdate, Issue, Progression, Tuning
+                        added systems: Operations (one value in World; older saves lack it), GameMode, Perks, FuelMarket, Service, Capability, Bases, Kits,
+                        Jobs, JobFlights, Events, Hubs, Slots, Rivals, Pilots, Scenarios, FlightCosts, OperationsDaily
 BitAirlines/            the iPhone app, SwiftUI, landscape, Swift 5 language mode (on purpose: simpler for the local agent)
   App/                  entry, GameSession (clock, speeds, autosave), SaveStore (JSON files), AppSettings, Messages (the words)
   DesignSystem/         Theme, PixelFont (RingPixel), PixelUI (shapes, icons), PixelComponents, Components, Format, LogoSprite
@@ -33,6 +35,9 @@ Dependency direction: `Features -> App -> DesignSystem/Art -> AirlineCore`. Core
 5. No player-visible text in Core: emit codes and numbers; the app writes the words (`Messages.swift`).
 6. Never decide by iterating a `Dictionary` or `Set` without sorting.
 7. Every balance number lives in `Tuning.swift`.
+8. New saved state goes in `Operations` (decoded with `decodeIfPresent`, so older saves load) or in an optional stored field with a public computed facade (see `Route.service`, `Aircraft.kits`). Never add a non-optional stored property to a saved type.
+9. The added systems draw from `ops.rng`, never the world's own `rng`, so the original simulation and its calibration stay the same.
+10. Do not mutate `ops` inside a closure that reads `self` (`ops.jobs.removeAll { $0.x <= clock.minute }` is an exclusivity error); copy the value to a local first.
 
 ## Working without a Mac (the author is on Windows)
 

@@ -38,9 +38,24 @@ extension World {
         ops.events.removeAll { $0.untilMinute <= now }
         ops.offers.removeAll { $0.expiresMinute <= now }
         guard ops.rng.chance(Tuning.eventChancePerWeek), !ops.jobArea.isEmpty else { return }
-        let kind = EventKind.allCases[ops.rng.int(0...(EventKind.allCases.count - 1))]
+        let kinds = EventKind.allCases
+        let weights = kinds.map { eventWeight($0, month: clock.date.month) }
+        let kind = kinds[ops.rng.weightedIndex(weights)]
         let place = ops.jobArea[ops.rng.int(0...(ops.jobArea.count - 1))]
         startEvent(kind, at: place)
+    }
+
+    /// How likely each kind of event is in a month: fires in summer, the thaw in spring, the games in winter, oil shocks rarely.
+    func eventWeight(_ kind: EventKind, month: Int) -> Double {
+        switch kind {
+        case .forestFire: (6...8).contains(month) ? 1.5 : ((5...9).contains(month) ? 0.6 : 0)
+        case .earlyThaw: (3...5).contains(month) ? 1.5 : 0
+        case .volcanicAsh: 0.3
+        case .filmCrew: 0.7
+        case .winterGames: month == 12 || month <= 3 ? 0.6 : 0
+        case .oilShock: 0.15
+        case .miningBoom: 0.5
+        }
     }
 
     mutating func startEvent(_ kind: EventKind, at place: String) {
@@ -67,7 +82,7 @@ extension World {
             ops.events.append(ActiveEvent(id: id, kind: kind, airport: place, radiusKm: 50, passengerFactor: 1.6, cargoFactor: 1.2, untilMinute: clock.minute + 14 * day))
             ops.offers.append(EventOffer(id: id, kind: kind, airport: place, costUSD: 40_000 * airline.level, reputation: 3, expiresMinute: clock.minute + 7 * day))
         case .oilShock:
-            market.fuelIndex = min(2.4, market.fuelIndex * 1.35)
+            market.fuelIndex = min(2.4, market.fuelIndex * 1.25)
         case .miningBoom:
             ops.events.append(ActiveEvent(id: id, kind: kind, airport: place, radiusKm: 150, passengerFactor: 1.4, cargoFactor: 1.6, untilMinute: clock.minute + 180 * day))
         }
