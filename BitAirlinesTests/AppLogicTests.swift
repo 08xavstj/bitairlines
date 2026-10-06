@@ -85,7 +85,7 @@ import CoreWorld
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent("bitairlines-test-\(UUID().uuidString)")
         let session = GameSession(world: w, slot: 1, store: SaveStore(directory: dir))
         #expect(session.perform { _ = try $0.createRoute(stops: ["YEV", "YEG"]) } == false)
-        #expect(session.notice?.contains("YEG") == true)
+        #expect(session.notice?.contains("Edmonton") == true)
         #expect(session.perform { _ = try $0.createRoute(stops: ["YEV", "YUB"]) } == true)
         #expect(session.notice == nil && session.world.routes.count == 1)
     }

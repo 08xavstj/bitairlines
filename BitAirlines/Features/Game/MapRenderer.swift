@@ -210,6 +210,10 @@ enum MapRenderer {
                 let box = CGRect(x: pt.x + 6, y: pt.y - 6, width: CGFloat(a.label.count) * 7 + 4, height: 12)
                 if !mine && placed.contains(where: { $0.intersects(box.insetBy(dx: -2, dy: -1)) }) { continue }
                 placed.append(box)
+                let outline = context.resolve(Text(a.label).font(Theme.pixel(8)).foregroundColor(.black))
+                for (dx, dy) in [(-1.0, 0.0), (1.0, 0.0), (0.0, -1.0), (0.0, 1.0)] {
+                    context.draw(outline, at: CGPoint(x: box.minX + dx, y: pt.y + dy), anchor: .leading)
+                }
                 let text = Text(a.label).font(Theme.pixel(8)).foregroundColor(mine ? Theme.gold : Theme.textPrimary)
                 context.draw(context.resolve(text), at: CGPoint(x: box.minX, y: pt.y), anchor: .leading)
             }
