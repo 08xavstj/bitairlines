@@ -28,9 +28,10 @@ struct ForecastRow: View {
     var body: some View {
         let name = AircraftCatalog.type(forecast.typeID)?.name ?? forecast.typeID
         VStack(alignment: .leading, spacing: 1) {
-            HStack(spacing: 6) {
-                Text(forecast.aircraftNeeded > 1 ? "\(name) x\(forecast.aircraftNeeded)" : name).pixelFont(10.667).foregroundStyle(Theme.textPrimary).lineLimit(1)
-                Spacer(minLength: 4)
+            HStack(alignment: .top, spacing: 6) {
+                Text(forecast.aircraftNeeded > 1 ? "\(name) x\(forecast.aircraftNeeded)" : name)
+                    .pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
+                Spacer(minLength: 8)
                 Text(Format.perDay(forecast.profitPerDay)).pixelFont(10.667).foregroundStyle(Theme.good).lineLimit(1).fixedSize()
             }
             Text("About \(Format.compactMoney(forecast.investment)) to buy, back in \(Format.payback(years: forecast.paybackYears))" + (canAfford ? "" : ". Not enough cash yet."))

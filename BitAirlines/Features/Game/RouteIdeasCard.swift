@@ -39,14 +39,17 @@ final class RouteIdeasCache {
 
 /// The words for a suggested route.
 enum RouteIdeaWords {
-    /// "Inuvik to Tuktoyaktuk: about +$1,200 a day with a Cessna 208B Grand Caravan EX."
-    static func headline(_ idea: RouteIdea) -> String {
-        let from = Place.name(idea.stops.first ?? "")
-        let to = Place.name(idea.stops.last ?? "")
+    /// "Inuvik to Tuktoyaktuk"
+    static func route(_ idea: RouteIdea) -> String {
+        "\(Place.name(idea.stops.first ?? "")) to \(Place.name(idea.stops.last ?? ""))"
+    }
+
+    /// "About +$1,200 a day with a Cessna 208B Grand Caravan EX."
+    static func profit(_ idea: RouteIdea) -> String {
         let name = AircraftCatalog.type(idea.typeID)?.displayName ?? idea.typeID
         let startsWithVowel = name.first.map { "AEIOU".contains($0) } ?? false
         let article = startsWithVowel ? "an" : "a"
-        return "\(from) to \(to): about \(Format.perDay(idea.profitPerDay)) with \(article) \(name)."
+        return "About \(Format.perDay(idea.profitPerDay)) with \(article) \(name)."
     }
 
     /// The distance and why the route is worth a look.
@@ -98,17 +101,22 @@ struct RouteIdeaRow: View {
 
     var body: some View {
         let planeID = session.world.idleAircraftID(for: idea)
-        VStack(alignment: .leading, spacing: 4) {
-            Text(RouteIdeaWords.headline(idea)).pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
-            Text(RouteIdeaWords.reason(idea)).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
-            HStack(spacing: 8) {
-                Button("Open route") { open() }.buttonStyle(.small)
+        let registration = planeID.flatMap { id in session.world.aircraft.first { $0.id == id }?.registration }
+        HStack(alignment: .top, spacing: 12) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(RouteIdeaWords.route(idea)).pixelFont(13.333).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
+                Text(RouteIdeaWords.profit(idea)).pixelFont(10.667).foregroundStyle(Theme.good).fixedSize(horizontal: false, vertical: true)
+                Text(RouteIdeaWords.reason(idea)).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            VStack(alignment: .trailing, spacing: 6) {
                 if let planeID {
-                    Button("Open and assign") { openAndAssign(planeID) }.buttonStyle(.smallProminent)
+                    Button("Open with \(registration ?? "a parked aircraft")") { openAndAssign(planeID) }.buttonStyle(.smallProminent)
                 }
+                Button(planeID == nil ? "Open route" : "Open route only") { open() }.buttonStyle(.small)
             }
         }
-        .padding(.top, 4)
+        .padding(.top, 6)
     }
 
     private func open() {

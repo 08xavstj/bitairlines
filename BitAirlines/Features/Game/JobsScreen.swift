@@ -18,19 +18,24 @@ struct JobsScreen: View {
                 SectionTitle("Being flown")
                 ForEach(taken) { job in
                     JobCard(world: world, job: job) {
-                        if !job.loaded { Button("Give back") { session.perform { try $0.dropJob(jobID: job.id) } }.buttonStyle(.smallDanger) }
+                        if !job.loaded {
+                            Button("Drop job") { session.perform { try $0.dropJob(jobID: job.id) } }
+                                .buttonStyle(.smallDanger)
+                                .accessibilityHint("The aircraft goes back to its route. Costs a little reputation.")
+                        }
                     }
                 }
             }
             SectionTitle("On offer")
-            if open.isEmpty { EmptyNote("No jobs right now. New ones turn up every day around your network.") }
+            if open.isEmpty { EmptyNote("No jobs right now. New ones turn up every day near the airports you fly to.") }
             RewardButton(session: session, kind: .newJobs)
             ForEach(open) { job in
                 JobCard(world: world, job: job) {
-                    VStack(alignment: .trailing, spacing: 6) {
-                        Button("Fly it") { picking = job.id }.buttonStyle(.smallProminent)
-                        RewardButton(session: session, kind: .doubleJobPay, target: job.id)
-                    }
+                    Button("Fly it") { picking = job.id }
+                        .buttonStyle(.smallProminent)
+                        .accessibilityHint("Choose the aircraft that flies this job.")
+                } footer: {
+                    RewardButton(session: session, kind: .doubleJobPay, target: job.id)
                 }
             }
             Text("A job takes an aircraft off its route until it is done; then it goes back by itself. Late jobs pay half.")
@@ -43,28 +48,42 @@ struct JobsScreen: View {
 }
 
 /// One job: what, where, how much, by when.
-struct JobCard<Trailing: View>: View {
+/// The route is the bold first line and always wraps in full; the kind tags sit on their own row under it, so they never
+/// push the city names off. `trailing` is a narrow column of actions on the right; `footer` is a full-width row under the details.
+struct JobCard<Trailing: View, Footer: View>: View {
     let world: World
     let job: Job
-    @ViewBuilder var trailing: Trailing
+    let trailing: Trailing
+    let footer: Footer
+
+    init(world: World, job: Job, @ViewBuilder trailing: () -> Trailing, @ViewBuilder footer: () -> Footer) {
+        self.world = world
+        self.job = job
+        self.trailing = trailing()
+        self.footer = footer()
+    }
 
     var body: some View {
         let km = AirportCatalog.airport(job.from).flatMap { a in AirportCatalog.airport(job.to).map { a.distanceKm(to: $0) } } ?? 0
         Card {
-            HStack(alignment: .top, spacing: 10) {
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack(spacing: 8) {
+            HStack(alignment: .top, spacing: 12) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("\(Place.name(job.from)) to \(Place.name(job.to))")
+                        .pixelFont(13.333).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
+                    HStack(spacing: 6) {
                         Tag(text: Words.name(job.kind), color: job.kind == .medevac || job.kind == .evacuation ? Theme.bad : Theme.info)
                         if let tag = CalendarWords.jobTag(job) { Tag(text: tag, color: Theme.gold) }
-                        Text("\(Place.name(job.from)) to \(Place.name(job.to))").pixelFont(13.333).foregroundStyle(Theme.textPrimary).lineLimit(1)
                     }
-                    Text(load + ", \(Format.km(km)). Pays \(Format.dollars(job.pay)).").pixelFont(10.667).foregroundStyle(Theme.good)
-                    Text(timing).pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                    Text(load + ", \(Format.km(km)). Pays \(Format.dollars(job.pay)).")
+                        .pixelFont(10.667).foregroundStyle(Theme.good).fixedSize(horizontal: false, vertical: true)
+                    Text(timing).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                     if let id = job.aircraftID, let plane = world.aircraft.first(where: { $0.id == id }) {
-                        Text("\(plane.registration): \(job.loaded ? "on the way" : "going to the pickup")").pixelFont(10.667).foregroundStyle(Theme.info)
+                        Text("\(plane.registration): \(job.loaded ? "on the way" : "going to the pickup")")
+                            .pixelFont(10.667).foregroundStyle(Theme.info).fixedSize(horizontal: false, vertical: true)
                     }
+                    footer
                 }
-                Spacer(minLength: 4)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 trailing
             }
         }
@@ -85,6 +104,13 @@ struct JobCard<Trailing: View>: View {
     }
 }
 
+extension JobCard where Footer == EmptyView {
+    /// A job card with no footer row.
+    init(world: World, job: Job, @ViewBuilder trailing: () -> Trailing) {
+        self.init(world: world, job: job, trailing: trailing, footer: { EmptyView() })
+    }
+}
+
 /// Choosing which aircraft flies a job.
 struct JobAssignSheet: View {
     let session: GameSession
@@ -97,27 +123,31 @@ struct JobAssignSheet: View {
             ScreenHeader(title: "Who flies it?") { Button("Close") { dismiss() }.buttonStyle(.small) }
             if let job = world.ops.jobs.first(where: { $0.id == jobID }) {
                 JobCard(world: world, job: job) { EmptyView() }
+                if world.aircraft.isEmpty {
+                    EmptyNote("You have no aircraft yet. Buy one in the Hangar, then come back to fly this job.")
+                }
                 ScrollView {
                     VStack(spacing: 8) {
                         ForEach(world.aircraft) { plane in
                             let problem = world.jobProblem(jobID: jobID, aircraftID: plane.id)
-                            HStack {
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text("\(plane.registration)  \(plane.type?.name ?? "")").pixelFont(13.333).foregroundStyle(Theme.textPrimary)
+                            HStack(alignment: .top, spacing: 12) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("\(plane.registration)  \(plane.type?.name ?? "")")
+                                        .pixelFont(13.333).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
                                     if let problem {
                                         Text(Messages.describe(problem)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
                                     } else {
                                         Text(plane.routeID == nil ? "Parked at \(Place.name(plane.location))" : "Leaves \(FleetText.routeName(plane, in: world)) until the job is done")
-                                            .pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                                            .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                                     }
                                 }
-                                Spacer()
-                                Button("Take the job") {
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                Button("Fly this job") {
                                     if session.perform({ try $0.takeJob(jobID: jobID, aircraftID: plane.id) }) { dismiss() }
                                 }
                                 .buttonStyle(.smallProminent).disabled(problem != nil)
                             }
-                            .padding(10).background(PixelPanel())
+                            .padding(12).background(PixelPanel())
                         }
                     }
                 }
@@ -148,12 +178,13 @@ struct EventsCard: View {
                     }
                 }
                 ForEach(world.ops.offers) { offer in
-                    HStack {
+                    VStack(alignment: .leading, spacing: 6) {
                         Text("Sponsor the \(Words.name(offer.kind).lowercased()) at \(Place.name(offer.airport)) for \(Format.compactMoney(offer.costUSD)): people remember who helped.")
                             .pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
-                        Spacer()
-                        Button("Yes") { session.perform(sound: .coin) { try $0.acceptOffer(id: offer.id) } }.buttonStyle(.smallProminent)
-                        Button("No") { session.perform { try $0.declineOffer(id: offer.id) } }.buttonStyle(.small)
+                        HStack(spacing: 8) {
+                            Button("Sponsor it") { session.perform(sound: .coin) { try $0.acceptOffer(id: offer.id) } }.buttonStyle(.smallProminent)
+                            Button("No thanks") { session.perform { try $0.declineOffer(id: offer.id) } }.buttonStyle(.small)
+                        }
                     }
                 }
             }

@@ -8,12 +8,12 @@ struct ServicePicker: View {
     let route: Route
 
     var body: some View {
-        HStack {
+        HStack(spacing: 10) {
             Text("Service").pixelFont(10.667).foregroundStyle(Theme.textMuted)
-            Spacer()
+            Spacer(minLength: 8)
             PixelChoice(options: ServiceLevel.allCases.map { (label: Words.name($0), value: $0) },
                         selection: Binding(get: { route.service }, set: { level in session.perform { try $0.setService(routeID: route.id, level: level) } }))
-                .frame(width: 330)
+                .frame(maxWidth: 330)
         }
     }
 }

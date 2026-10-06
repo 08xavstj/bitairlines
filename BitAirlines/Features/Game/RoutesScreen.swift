@@ -13,10 +13,10 @@ struct ListStepper: View {
     var body: some View {
         let index = values.enumerated().min { abs($0.element - current) < abs($1.element - current) }?.offset ?? 0
         HStack(spacing: 10) {
-            Text(label).pixelFont(10.667).foregroundStyle(Theme.textMuted)
-            Spacer()
+            Text(label).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 8)
             PixelSquareButton(icon: .minus, label: "Decrease \(label)") { onChange(values[max(0, index - 1)]) }.disabled(index <= 0)
-            Text(display(values[index])).pixelFont(13.333).foregroundStyle(Theme.textPrimary).frame(minWidth: 70)
+            Text(display(values[index])).pixelFont(13.333).foregroundStyle(Theme.textPrimary).lineLimit(1).fixedSize().frame(minWidth: 70)
             PixelSquareButton(icon: .plus, label: "Increase \(label)") { onChange(values[min(values.count - 1, index + 1)]) }.disabled(index >= values.count - 1)
         }
     }
@@ -42,7 +42,7 @@ struct RoutesScreen: View {
             ScreenHeader(title: "Routes") { Text("\(world.routes.count) routes").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
             RouteIdeasCard(session: session)
             if world.routes.isEmpty {
-                Card { Text("No routes yet. Open the Map, tap New route, and tap airports in the order you want to fly them. Then assign an aircraft from Fleet.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true) }
+                Card { Text("No routes yet. Open one of the suggested routes above, or go to the Map, tap New route and tap the airports in the order you want to fly them. Then assign an aircraft from Fleet.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true) }
             }
             ForEach(world.routes) { route in RouteCard(session: session, route: route, onDelete: { deleting = route.id }) }
         }
@@ -68,18 +68,20 @@ struct RouteCard: View {
         let first = route.legs.first
         Card {
             VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text(route.name).pixelFont(16).foregroundStyle(Theme.accent).lineLimit(1)
-                    Spacer()
-                    Tag(text: "\(planes.count) aircraft", color: planes.isEmpty ? Theme.bad : Theme.good)
-                    Button("Close") { onDelete() }.buttonStyle(.smallDanger)
+                HStack(alignment: .top, spacing: 12) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(route.name).pixelFont(16).foregroundStyle(Theme.accent).fixedSize(horizontal: false, vertical: true)
+                        Tag(text: "\(planes.count) aircraft", color: planes.isEmpty ? Theme.bad : Theme.good)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    Button("Close route") { onDelete() }.buttonStyle(.smallDanger)
                 }
                 RouteProfitLine(route: route)
                 ListStepper(label: "Flights", values: RouteSteps.frequencies, current: route.frequency, display: RouteSteps.frequencyText) { v in
                     session.perform { try $0.setFrequency(routeID: route.id, perDay: v) }
                 }
                 if !route.autoFrequency && !planes.isEmpty {
-                    Button("Suggest a schedule") { session.perform { try $0.applySuggestedFrequency(routeID: route.id) } }.buttonStyle(.small)
+                    Button("Use the suggested schedule") { session.perform { try $0.applySuggestedFrequency(routeID: route.id) } }.buttonStyle(.small)
                 }
                 ListStepper(label: "Fare", values: RouteSteps.fares, current: route.fareMultiplier, display: { fareText($0, first: first) }) { v in
                     session.perform { try $0.setFare(routeID: route.id, multiplier: v) }
@@ -106,7 +108,8 @@ struct RouteCard: View {
                 KeyValueRow("Last month", Format.signedMoney(route.revenueLastMonth - route.costLastMonth), color: route.revenueLastMonth >= route.costLastMonth ? Theme.good : Theme.bad)
                 ForEach(Array(route.legs.enumerated()), id: \.offset) { _, leg in
                     VStack(alignment: .leading, spacing: 3) {
-                        Text("\(Place.name(leg.from)) to \(Place.name(leg.to))  \(Format.km(leg.distanceKm))").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
+                        Text("\(Place.name(leg.from)) to \(Place.name(leg.to)), \(Format.km(leg.distanceKm))")
+                            .pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
                         Text("Market \(Format.oneDecimal(leg.marketPaxPerDay)) people and \(Format.number(Int(leg.marketCargoKgPerDay))) kg a day. Carried \(Format.number(leg.passengersCarried)) so far.")
                             .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                         StatBar(label: "Awareness", value: leg.maturity * 100, color: Theme.info, valueText: Format.percent(leg.maturity))
