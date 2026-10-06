@@ -334,12 +334,13 @@ struct IssueOptions: View {
 
     var body: some View {
         VStack(spacing: 8) {
+            if case .certificateReady = issue.kind { certificateButton }
             ForEach(issue.options, id: \.choice) { option in
                 Button {
                     if option.choice == .declareBankruptcy { confirmingBankruptcy = true } else { session.resolve(issueID: issue.id, choice: option.choice) }
                 } label: {
                     HStack {
-                        Text(Messages.name(option.choice))
+                        Text(Messages.name(option, of: issue, in: session.world))
                         Spacer()
                         if option.costUSD > 0 { Text(Format.dollars(option.costUSD)) }
                         if option.days > 0 { Text("\(option.days) day\(option.days == 1 ? "" : "s")") }

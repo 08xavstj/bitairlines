@@ -67,6 +67,32 @@ import CoreCatalog
         #expect(abs((before - after) - Double(expected) * Tuning.reputationPerMissedDeparture) < 1e-9)
     }
 
+    @Test func aFullPunctualFlightEarnsTheTunedAmount() throws {
+        let w = try Fixtures.world()
+        // Nothing has departed yet, so the on-time share is 1 and the punctuality term is 1; no perks.
+        let full = w.reputationGain(passengers: 9, seats: 9, service: .standard)
+        #expect(abs(full - 2 * Tuning.reputationPerFlight) < 1e-12)
+        let empty = w.reputationGain(passengers: 0, seats: 9, service: .standard)
+        #expect(abs(empty - Tuning.reputationPerFlight) < 1e-12)
+        let premium = w.reputationGain(passengers: 9, seats: 9, service: .premium)
+        #expect(premium > full)
+        // Punctuality keeps its weight: a late departure costs more than a full flight at standard service earns.
+        #expect(Tuning.reputationPerLateDeparture > full)
+    }
+
+    @Test func campaignsAreABoostNotTheMainSource() throws {
+        var w = try Fixtures.flyingWorld()
+        w.airline.cash = 10_000_000
+        let before = w.airline.reputation
+        try w.startCampaign(.national)
+        let after = w.airline.reputation
+        #expect(abs(after - before - Tuning.campaignReputation(.national)) < 1e-9)
+        #expect(Tuning.campaignReputation(.national) == 2 && Tuning.campaignReputation(.radio) == 1)
+        // A national campaign is worth well under two thousand full, punctual flights.
+        let flights = Tuning.campaignReputation(.national) / (2 * Tuning.reputationPerFlight)
+        #expect(flights < 2_000)
+    }
+
     @Test func aNewAirlineIsBelowTheFloorSoItNeverDrifts() throws {
         var w = try Fixtures.world()
         w.pausePolicy = .never
