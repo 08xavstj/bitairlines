@@ -4,7 +4,11 @@
 enum AirportRows_CAR {
     static let rows = #"""
 ANU|TAPA|V. C. Bird International Airport|Osbourn|Osbourn|AG|03|17.1367|-61.7927|62|9003|P|L|1|114097
+BBQ|TAPB|Burton-Nibbs International Airport|Codrington|Codrington|AG|10|17.6212|-61.7983|28|6100|P|M|1|5438
 AUA|TNCA|Queen Beatrix International Airport|Oranjestad|Oranjestad|AW|A|12.5011|-70.0143|60|9000|P|L|1|233843
+SBH|TFFJ|St. Jean Airport|Gustavia|Gustavia|BL|A|17.9044|-62.8433|49|2119|P|M|1|9903
+EUX|TNCE|F. D. Roosevelt Airport|Oranjestad|Oranjestad, BQ|BQ|SE|17.4965|-62.9794|129|4265|P|M|1|5949
+SAB|TNCS|Juancho E. Yrausquin Airport|Zion's Hill|Zion's Hill|BQ|SA|17.6453|-63.2205|60|1312|P|M|1|5930
 NAS|MYNN|Lynden Pindling International Airport|Nassau|Nassau|BS|NP|25.0390|-77.4662|16|11353|P|L|1|214146
 NSB|BS-NSB|Bimini North Seaplane Base|Bimini|Bimini|BS|BI|25.7670|-79.2500|0|0|W|W|1|150
 SML|MYLS|Stella Maris Airport|Stella Maris|Stella Maris|BS|LI|23.5823|-75.2686|10|4000|P|M|1|1032
@@ -15,13 +19,16 @@ SDQ|MDSD|Las Americas International Airport|Santo Domingo|Santo Domingo|DO|01|18
 GBJ|TFFM|Marie-Galante Airport|Grand-Bourg|Grand-Bourg|GP|A|15.8689|-61.2701|16|4068|P|M|1|30265
 PAP|MTPP|Toussaint Louverture International Airport|Port-au-Prince|Port-au-Prince|HT|OU|18.5800|-72.2926|122|9974|P|L|1|3955285
 KIN|MKJP|Norman Manley International Airport|Kingston|Kingston|JM|01|17.9357|-76.7875|10|8900|P|L|1|1437146
+NEV|TKPN|Vance W. Amory International Airport|Charlestown|Charlestown, KN|KN|A|17.2057|-62.5899|14|3996|P|M|1|7423
 SKB|TKPK|Robert L. Bradshaw International Airport|Basseterre|Basseterre|KN|A|17.3108|-62.7191|170|7602|P|L|1|31894
 GCM|MWCR|Owen Roberts International Airport|George Town|George Town|KY|GC|19.2928|-81.3577|8|7867|P|L|1|461950
 FDF|TFFF|Martinique Aime Cesaire International Airport|Fort-de-France|Fort-de-France|MQ|A|14.5910|-61.0032|16|9843|P|L|1|314890
+MNI|TRPG|John A. Osborne Airport|Gerald's Park|Gerald's Park|MS|SP|16.7918|-62.1932|550|1968|P|L|1|36139
 SJU|TJSJ|Luis Munoz Marin International Airport|San Juan|San Juan|PR|A|18.4394|-66.0018|9|10002|P|L|1|1413631
 SXM|TNCM|Princess Juliana International Airport|Sint Maarten|Sint Maarten|SX|A|18.0410|-63.1089|13|7546|P|L|1|63607
 PLS|MBPV|Providenciales International Airport|Providenciales|Providenciales|TC|PR|21.7737|-72.2683|15|9199|P|L|1|33110
 POS|TTPP|Piarco International Airport|Port of Spain|Port of Spain|TT|TUP|10.5953|-61.3376|58|10500|P|L|1|507446
 EIS|TUPJ|Terrance B. Lettsome International Airport|Beef Island|Beef Island|VG|A|18.4455|-64.5417|15|4642|P|L|1|32618
+VIJ|TUPW|Virgin Gorda Airport|Spanish Town|Spanish Town|VG|A|18.4466|-64.4279|9|3100|G|M|1|5521
 """#
 }

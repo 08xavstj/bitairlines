@@ -13,7 +13,6 @@ KDH|OAKN|Ahmad Shah Baba International Airport|Kandahar|Kandahar|AF|KAN|31.5058|
 KHT|OAKS|Khost International Airport|Khost|Khost|AF|KHO|33.2846|69.8073|4204|8740|P|M|1|826993
 MMZ|OAMN|Maymana Zahiraddin Faryabi Airport|Maymana|Maymana|AF|FYB|35.9308|64.7609|2743|5090|G|M|0|93298
 UND|OAUZ|Kunduz Airport|Kunduz|Kunduz|AF|KDZ|36.6651|68.9108|1457|6558|P|M|0|336127
-BBQ|TAPB|Burton-Nibbs International Airport|Codrington|Codrington|AG|10|17.6212|-61.7983|28|6100|P|M|1|5438
 TIA|LATI|Tirana International Airport Mother Teresa|Rinas|Rinas|AL|02|41.4147|19.7206|126|9843|P|L|1|1404925
 BUG|FNBG|Benguela Airport|Benguela|Benguela|AO|BGU|-12.6090|13.4037|118|5315|P|M|0|582289
 CAB|FNCA|Cabinda Airport|Cabinda|Cabinda|AO|CAB|-5.5984|12.1881|66|8202|P|M|1|532669
@@ -263,7 +262,6 @@ VAR|LBWN|Varna Airport|Varna|Varna|BG|03|43.2321|27.8251|230|8258|P|L|1|774096
 BAH|OBBI|Bahrain International Airport|Manama|Manama|BH|15|26.2673|50.6376|6|12979|P|L|1|1589426
 GID|HBBE|Gitega Airport|Gitega|Gitega|BI|GI|-3.4172|29.9113|5741|3248|G|M|1|235500
 COO|DBBB|Cotonou Cadjehoun International Airport|Cotonou|Cotonou|BJ|AQ|6.3572|2.3843|19|7906|P|L|1|3637673
-SBH|TFFJ|St. Jean Airport|Gustavia|Gustavia|BL|A|17.9044|-62.8433|49|2119|P|M|1|9903
 BWN|WBSB|Brunei International Airport|Bandar Seri Begawan|Bandar Seri Begawan|BN|BM|4.9442|114.9280|73|12000|P|L|1|448196
 BYC|SLYA|Yacuiba Airport|Yacuiba|Yacuiba|BO|T|-21.9609|-63.6517|2112|6890|P|M|0|113308
 CBB|SLCB|Jorge Wilsterman International Airport|Cochabamba|Cochabamba|BO|C|-17.4211|-66.1771|8360|12460|P|L|1|1460848
@@ -277,8 +275,6 @@ TJA|SLTJ|Capitan Oriel Lea Plaza Airport|Tarija|Tarija|BO|T|-21.5557|-64.7013|60
 UYU|SLUY|Joya Andina International Airport|Quijarro|Quijarro|BO|P|-20.4413|-66.8576|11136|13123|P|L|1|44352
 VLM|SLVM|Teniente Coronel Rafael Pabon Airport|Villamontes|Villamontes|BO|T|-21.2552|-63.4056|1305|4918|P|M|0|41435
 BON|TNCB|Flamingo International Airport|Kralendijk|Kralendijk|BQ|BO|12.1310|-68.2685|20|9449|P|L|1|54449
-EUX|TNCE|F. D. Roosevelt Airport|Oranjestad|Oranjestad, BQ|BQ|SE|17.4965|-62.9794|129|4265|P|M|1|5949
-SAB|TNCS|Juancho E. Yrausquin Airport|Zion's Hill|Zion's Hill|BQ|SA|17.6453|-63.2205|60|1312|P|M|1|5930
 AAX|SBAX|Romeu Zema Airport|Araxa|Araxa|BR|MG|-19.5632|-46.9604|3276|6234|P|M|1|340471
 AFL|SBAT|Piloto Osvaldo Marques Dias Airport|Alta Floresta|Alta Floresta|BR|MT|-9.8664|-56.1063|948|8202|P|M|1|22313
 AIF|SNAX|Marcelo Pires Halzhausen Airport|Assis|Assis|BR|SP|-22.6386|-50.4560|1850|5541|P|S|0|129733
@@ -1960,7 +1956,6 @@ AAK|NGUK|Aranuka Airport|Buariki|Buariki|KI|G|0.1853|173.6370|6|3000|G|S|1|738
 BBG|NGTU|Butaritari Airport|Butaritari|Butaritari|KI|G|3.0858|172.8110|5|3000|G|S|1|3020
 AJN|FMCV|Ouani Airport|Ouani|Ouani|KM|A|-12.1310|44.4300|62|4429|P|M|1|166035
 NWA|FMCI|Moheli Bandar Es Eslam Airport|Fomboni|Fomboni|KM|M|-12.2981|43.7665|46|4265|P|M|0|34004
-NEV|TKPN|Vance W. Amory International Airport|Charlestown|Charlestown, KN|KN|A|17.2057|-62.5899|14|3996|P|M|1|7423
 WOS|ZKWS|Wonsan Kalma Airport|Wonsan|Wonsan|KP|07|39.1652|127.4879|7|11482|P|M|1|1349856
 CJJ|RKTU|Cheongju International Airport/Cheongju Air Base (K-59/G-513)|Cheongju|Cheongju|KR|43|36.7156|127.5003|191|9000|P|L|1|8054993
 HIN|RKPS|Sacheon Airport / Sacheon Air Base|Sacheon|Sacheon|KR|48|35.0886|128.0717|25|9000|P|M|1|619996
@@ -2092,7 +2087,6 @@ MFM|VMMC|Macau International Airport|Nossa Senhora do Carmo|Nossa Senhora do Car
 ROP|PGRO|Rota International Airport|Rota Island|Rota Island|MP|A|14.1733|145.2411|607|6000|P|L|1|13277
 SPN|PGSN|Saipan International Airport|I Fadang|I Fadang|MP|A|15.1194|145.7288|215|8700|P|M|1|42986
 TIQ|PGWT|Francisco Manglona Borja / Tinian International Airport|Tinian Island|Tinian Island|MP|A|14.9992|145.6194|271|8600|P|M|1|25584
-MNI|TRPG|John A. Osborne Airport|Gerald's Park|Gerald's Park|MS|SP|16.7918|-62.1932|550|1968|P|L|1|36139
 DRV|VRMD|Dharavandhoo Airport|Baa Atoll|Baa Atoll|MV|20|5.1561|73.1302|6|3901|P|S|1|3192
 FMT|VRQF|Faresmaathoda Airport|Faresmaathodaa|Faresmaathodaa|MV|28|0.1926|73.1968|0|3000|G|S|1|677
 FND|VRCF|Funadhoo Airport|Funadhoo|Funadhoo|MV|24|6.1624|73.2875|0|3000|G|S|1|1858
@@ -3573,7 +3567,6 @@ TUV|SVTC|Tucupita Airport|Tucupita|Tucupita|VE|Y|9.0890|-62.0942|16|5512|P|M|0|9
 VIG|SVVG|Juan Pablo Perez Alfonso Airport|El Vigia|El Vigia|VE|L|8.6241|-71.6727|250|10645|P|M|1|440891
 VLN|SVVA|Arturo Michelena International Airport|Valencia|Valencia|VE|G|10.1497|-67.9284|1411|9842|P|L|1|3622224
 VLV|SVVL|Dr. Antonio Nicolas Briceno Airport|Valera|Valera|VE|T|9.3405|-70.5841|2060|6791|P|M|1|657034
-VIJ|TUPW|Virgin Gorda Airport|Spanish Town|Spanish Town|VG|A|18.4466|-64.4279|9|3100|G|M|1|5521
 STT|TIST|Cyril E. King Airport|Charlotte Amalie|Charlotte Amalie|VI|ST|18.3371|-64.9773|23|7000|P|L|1|131394
 STX|TISX|Henry E. Rohlsen Airport|Christiansted|Christiansted|VI|SC|17.7014|-64.8026|74|10002|P|M|1|39396
 BMV|VVBM|Buon Ma Thuot Airport|Buon Ma Thuot|Buon Ma Thuot|VN|CH|12.6683|108.1200|1729|9843|P|M|1|784275

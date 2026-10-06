@@ -58,6 +58,13 @@ extension Aircraft {
     }
 }
 
+extension Tuning {
+    /// A home whose country has fewer other airports than this on the map gets permits for its neighbours at the start.
+    public static let islandStartDomesticAirports = 3
+    /// How far those neighbours may be.
+    public static let islandStartPermitKm = 250.0
+}
+
 extension World {
     static let workingCapitalFloor = 600_000
 
@@ -70,6 +77,15 @@ extension World {
         }
     }
 
+    /// The permits a new airline starts with: its own country, and when that country has hardly any other airports (a small island
+    /// nation such as Sint Maarten), the countries close by too, so the first route has somewhere to go.
+    public static func startingPermits(home: Airport) -> [String] {
+        let domestic = AirportCatalog.inCountry(home.country).count - 1
+        guard domestic < Tuning.islandStartDomesticAirports else { return [home.country] }
+        let near = AirportCatalog.all.filter { $0.country != home.country && $0.distanceKm(to: home) <= Tuning.islandStartPermitKm }.map(\.country)
+        return [home.country] + Array(Set(near)).sorted()
+    }
+
     public static func newGame(_ config: NewGameConfig) throws -> World {
         guard let home = AirportCatalog.airport(config.homeAirport) else { throw WorldError.unknownAirport(config.homeAirport) }
         guard let type = AircraftCatalog.type(config.starterTypeID) else { throw WorldError.unknownType(config.starterTypeID) }
@@ -79,7 +95,7 @@ extension World {
         guard let offer else { throw WorldError.notEnoughCash(needed: Valuation.value(type: type, ageYears: 12, condition: 78) + workingCapitalFloor) }
 
         let airline = Airline(name: config.airlineName, code: config.airlineCode, home: home.code, cash: config.difficulty.startingBudget - offer.price,
-                              level: 1, reputation: 10, branding: config.branding, permits: [home.country], loans: [], stats: AirlineStats())
+                              level: 1, reputation: 10, branding: config.branding, permits: startingPermits(home: home), loans: [], stats: AirlineStats())
         var world = World(rulesVersion: WorldInfo.rulesVersion, rng: SeededRandom(seed: config.seed), clock: GameClock(minute: 6 * 60), airline: airline,
                           aircraft: [], routes: [], issues: [], market: Market(fuelIndex: 1.0, listings: [], nextListingID: 1, closures: []), news: [],
                           pausePolicy: .critical, books: [], today: DayBook(day: 0, revenue: 0, flightCosts: 0, overhead: 0),

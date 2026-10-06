@@ -18,7 +18,7 @@ for f in ci-out/*.log; do
   [ -f "$f" ] || continue
   {
     echo "### matches"
-    grep -E "error:|warning: var|warning: imm|Fatal error|Issue recorded|Expectation failed|failed|FAILED|VIOLATION|CALIBRATION" "$f" | head -150
+    grep -E "error:|warning: var|warning: imm|Fatal error|Issue recorded|Expectation failed|failed|FAILED|VIOLATION|CALIBRATION|PLAYTEST" "$f" | head -150
     echo
     echo "### last 80 lines"
     tail -n 80 "$f"

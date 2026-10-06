@@ -120,6 +120,13 @@ import CoreCatalog
         #expect(w.airline.stats.flights > 0, "\(home): nothing flew")
     }
 
+    @Test func anIslandStartGetsPermitsForItsNeighbours() throws {
+        let island = World.startingPermits(home: try Fixtures.airport("SXM"))
+        #expect(island.first == "SX")
+        #expect(island.contains("BL") && island.contains("KN"))
+        #expect(World.startingPermits(home: try Fixtures.airport("YEV")) == ["CA"])
+    }
+
     @Test func everyStartRegionHasAProfitableFirstRoute() throws {
         for region in StartRegions.all {
             for home in region.headquarters {
