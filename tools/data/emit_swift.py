@@ -24,13 +24,15 @@ def airport_row(a):
     ])
 
 
-def emit(out_dir, airports, country_table, mask_rows, mask_size):
+def emit(out_dir, airports, country_table, mask_rows, mask_size, retired=()):
     data_dir = os.path.join(out_dir, 'Data')
     groups = {g: [] for g in GROUP_ORDER}
     for a in sorted(airports, key=lambda a: (a['cc'], a['code'])):
         groups[country_table[a['cc']][1]].append(airport_row(a))
     for g in GROUP_ORDER:
         _write(os.path.join(data_dir, f'AirportRows_{g}.swift'), _literal(f'AirportRows_{g}', groups[g]))
+    retired_rows = [airport_row(a) for a in sorted(retired, key=lambda a: (a['cc'], a['code']))]
+    _write(os.path.join(data_dir, 'AirportRows_Retired.swift'), _literal('AirportRows_Retired', retired_rows))
     names = ', '.join(f'AirportRows_{g}.rows' for g in GROUP_ORDER)
     _write(os.path.join(data_dir, 'AirportRows.swift'), f'{BANNER}\nenum AirportRows {{\n    static let groups: [String] = [{names}]\n}}\n')
 

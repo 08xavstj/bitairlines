@@ -3,8 +3,18 @@ import Testing
 
 @Suite struct AirportCatalogTests {
     @Test func loadsEveryRow() {
-        #expect(AirportCatalog.all.count > 4500 && AirportCatalog.all.count < 5500)
+        #expect(AirportCatalog.all.count > 2200 && AirportCatalog.all.count < 2700)
         #expect(AirportCatalog.byCode.count == AirportCatalog.all.count, "airport codes must be unique")
+        #expect(AirportCatalog.retired.count > 2000)
+        #expect(Set(AirportCatalog.retired.keys).isDisjoint(with: AirportCatalog.byCode.keys), "a retired airport is never also on the map")
+    }
+
+    @Test func theMapKeepsCitiesAndRemotePlacesAndDropsRoadTowns() throws {
+        for code in ["YEV", "YHI", "YCB", "YSY", "YUB", "YZF", "YVR", "YXY"] { #expect(AirportCatalog.byCode[code] != nil, "\(code) stays on the map") }
+        for code in ["YXX", "YQZ"] {
+            #expect(AirportCatalog.byCode[code] == nil, "\(code) is a road town and leaves the map")
+            #expect(AirportCatalog.airport(code) != nil, "\(code) still loads for an older save")
+        }
     }
 
     @Test func inuvikIsThere() throws {
@@ -63,7 +73,7 @@ import Testing
     @Test func coverageIsWorldWide() {
         let countries = Set(AirportCatalog.all.map(\.country))
         #expect(countries.count > 200)
-        #expect(AirportCatalog.all.filter { $0.kind == .large }.count > 900)
+        #expect(AirportCatalog.all.filter { $0.kind == .large }.count > 850)
         #expect(AirportCatalog.all.filter { $0.surface == .gravel }.count > 500, "bush flying needs plenty of gravel strips")
     }
 }

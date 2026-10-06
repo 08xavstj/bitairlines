@@ -3,156 +3,41 @@
 
 enum AirportRows_NRD {
     static let rows = #"""
-AAL|EKYT|Aalborg Airport|Aalborg|Aalborg|DK|81|57.0948|9.8499|10|8707|P|L|1|495275
-AAR|EKAH|Aarhus Airport|Aarhus|Aarhus|DK|82|56.3033|10.6183|82|9111|P|L|1|797400
-BLL|EKBI|Billund Airport|Billund|Billund|DK|83|55.7403|9.1570|247|10172|P|L|1|657253
-BYR|EKLS|Ls Airport|Ls|Ls|DK|81|57.2772|11.0001|25|3045|P|S|1|4231
-CNL|EKSN|Sindal Airport|Sindal|Sindal|DK|81|57.5035|10.2294|92|3934|P|M|0|30095
 CPH|EKCH|Copenhagen Kastrup Airport|Copenhagen|Copenhagen|DK|84|55.6179|12.6560|17|11811|P|L|1|3656219
-EBJ|EKEB|Esbjerg Airport|Esbjerg|Esbjerg|DK|83|55.5259|8.5534|97|8527|P|M|1|136812
-EKAT|EKAT|Anholt Airfield|Anholt|Anholt|DK|82|56.6983|11.5557|23|2133|G|S|1|150
-MRW|EKMB|Lolland Falster Maribo Airport|Rdby|Rdby|DK|85|54.6994|11.4382|16|3937|P|M|0|115392
 ODE|EKOD|Odense Hans Christian Andersen Airport|Odense|Odense|DK|83|55.4753|10.3272|56|6053|P|L|1|1061176
-RNN|EKRN|Bornholm Airport|Rnne|Rnne|DK|84|55.0633|14.7596|52|6568|P|M|1|41506
-SQW|EKSV|Skive Airport|Skive|Skive|DK|82|56.5502|9.1730|74|3933|P|M|0|78418
-TED|EKTS|Thisted Airport|Thisted|Thisted|DK|81|57.0688|8.7052|23|5249|P|M|0|23636
-ENF|EFET|Enontekio Airport|Enontekio|Enontekio|FI|10|68.3626|23.4243|1005|6565|P|M|1|4255
 HEL|EFHK|Helsinki Vantaa Airport|Helsinki|Helsinki|FI|18|60.3184|24.9633|179|11483|P|L|1|3545271
 IVL|EFIV|Ivalo Airport|Ivalo|Ivalo|FI|10|68.6073|27.4053|481|8199|P|L|1|15601
-JOE|EFJO|Joensuu Airport|Joensuu|Joensuu|FI|13|62.6588|29.6194|398|8202|P|M|1|117277
-JYV|EFJY|Jyvaskyla Airport|Jyvaskylan Maalaiskunta|Jyvaskylan Maalaiskunta|FI|08|62.3995|25.6783|459|8533|P|M|1|227473
-KAJ|EFKI|Kajaani Airport|Kajaani|Kajaani|FI|05|64.2855|27.6924|483|8199|P|M|1|79890
-KAO|EFKS|Kuusamo Airport|Kuusamo|Kuusamo|FI|14|65.9876|29.2394|866|8202|P|M|1|22676
-KAU|EFKA|Kauhava Airfield|Kauhava|Kauhava|FI|03|63.1271|23.0514|151|8858|P|M|0|46892
-KEM|EFKE|Kemi-Tornio Airport|Kemi|Kemi|FI|10|65.7787|24.5821|61|8212|P|M|1|52258
-KHJ|EFKJ|Kauhajoki Airfield|Kauhajoki|Kauhajoki|FI|03|62.4632|22.3908|407|3806|P|M|0|36822
-KOK|EFKK|Kokkola-Pietarsaari Airport|Kokkola|Kokkola|FI|07|63.7212|23.1431|84|8202|P|M|1|107457
-KTQ|EFIT|Kitee Airport|Kitee|Kitee|FI|13|62.1661|30.0736|364|4921|P|M|0|62064
 KTT|EFKT|Kittila International Airport|Kittila|Kittila|FI|10|67.7010|24.8468|644|8202|P|L|1|18337
 KUO|EFKU|Kuopio Airport|Kuopio|Kuopio|FI|15|63.0071|27.7978|323|9186|P|L|1|341559
 LPP|EFLP|Lappeenranta Airport|Lappeenranta|Lappeenranta|FI|02|61.0446|28.1447|349|8202|P|L|1|593271
-MHQ|EFMA|Mariehamn Airport|Mariehamn|Mariehamn|FI|01|60.1222|19.8982|17|6243|P|M|1|45628
-MIK|EFMI|Mikkeli Airport|Mikkeli|Mikkeli|FI|04|61.6866|27.2018|329|5584|P|M|0|55017
 OUL|EFOU|Oulu Airport|Oulu|Oulu|FI|14|64.9301|25.3546|47|8205|P|L|1|541283
-POR|EFPO|Pori Airport|Pori|Pori|FI|17|61.4617|21.8000|44|7713|P|M|1|159141
 RVN|EFRO|Rovaniemi Airport|Rovaniemi|Rovaniemi|FI|10|66.5633|25.8298|642|9849|P|L|1|109993
-SJY|EFSI|Seinajoki Airport|Seinajoki|Seinajoki|FI|03|62.6921|22.8323|302|6562|P|M|0|60140
-SOT|EFSO|Sodankyla Airport|Sodankyla|Sodankyla|FI|10|67.3950|26.6191|602|4921|P|M|0|7934
-SVL|EFSA|Savonlinna Airport|Savonlinna|Savonlinna|FI|04|61.9431|28.9451|311|7546|P|M|1|63891
 TKU|EFTU|Turku Airport|Turku|Turku|FI|19|60.5141|22.2628|161|8202|P|L|1|847761
 TMP|EFTP|Tampere-Pirkkala Airport|Tampere|Tampere|FI|11|61.4141|23.6044|390|8858|P|L|1|1145556
 VAA|EFVA|Vaasa Airport|Vaasa|Vaasa|FI|12|63.0502|21.7625|19|8727|P|L|1|246612
-VRK|EFVR|Varkaus Airport|Varkaus|Varkaus|FI|04|62.1711|27.8686|286|6562|P|M|0|29003
-YLI|EFYL|Ylivieska Airfield|Ylivieska|Ylivieska|FI|14|64.0547|24.7253|252|4921|P|M|0|44961
 FAE|EKVG|Vagar Airport|Vagar|Vagar|FO|A|62.0633|-7.2758|280|5905|P|L|1|46493
 AEY|BIAR|Akureyri International Airport|Akureyri|Akureyri|IS|6|65.6566|-18.0720|6|8858|P|L|1|24168
 BLO|BIBL|Blonduos Airport|Blonduos|Blonduos|IS|5|65.6450|-20.2875|131|3182|G|S|0|735
-EGS|BIEG|Egilsstair Airport|Egilsstair|Egilsstair|IS|7|65.2833|-14.4014|76|7054|P|M|1|5788
-GRY|BIGR|Grimsey Airport|Grimsey|Grimsey|IS|6|66.5458|-18.0173|66|3399|P|M|1|733
-GUU|BIGF|Grundarfjorur Airport|Grundarfjorur|Grundarfjorur|IS|3|64.9914|-23.2247|17|2936|G|S|0|740
-HFN|BIHN|Hornafjorur Airport|Hofn|Hofn|IS|8|64.2956|-15.2272|24|4921|P|M|1|1690
-HZK|BIHU|Husavik Airport|Husavik|Husavik|IS|6|65.9523|-17.4260|48|5266|P|M|0|2043
-IFJ|BIIS|Isafjorur Airport|Isafjorur|Isafjorur|IS|4|66.0581|-23.1353|8|4593|P|M|1|4411
 KEF|BIKF|Keflavik International Airport|Reykjavik|Reykjavik|IS|2|63.9850|-22.6056|171|10056|P|L|1|292290
 NOR|BINF|Norfjorur Airport|Norfjorur|Norfjorur|IS|7|65.1319|-13.7464|13|3648|G|S|0|1290
-OLI|BIRF|Rif Airport|Rif|Rif|IS|3|64.9114|-23.8182|18|3937|P|S|0|1050
-SAK|BIKR|Sauarkrokur Airport|Sauarkrokur|Sauarkrokur|IS|5|65.7317|-19.5728|8|6191|P|S|0|1224
-SIJ|BISI|Siglufjorur Airport|Siglufjorur|Siglufjorur|IS|6|66.1378|-18.9082|10|3556|P|M|0|1938
-SYK|BIST|Stykkisholmur Airport|Stykkisholmur|Stykkisholmur|IS|3|65.0589|-22.7646|42|3675|G|S|0|899
-THO|BITN|orshofn Airport|orshofn|orshofn|IS|6|66.2185|-15.3347|65|3937|P|S|1|150
-VEY|BIVM|Vestmannaeyjar Airport|Vestmannaeyjar|Vestmannaeyjar|IS|8|63.4243|-20.2789|326|3937|P|M|0|8127
-VPN|BIVO|Vopnafjorur Airport|Vopnafjorur|Vopnafjorur|IS|7|65.7206|-14.8506|16|2904|P|M|1|1388
 AES|ENAL|Alesund Airport|Alesund|Alesund|NO|15|62.5604|6.1108|69|7592|P|L|1|103643
-ALF|ENAT|Alta Airport|Alta|Alta|NO|56|69.9761|23.3717|9|7165|P|M|1|14639
-ANX|ENAN|Andya Airport, Andenes|Andenes|Andenes|NO|18|69.2952|16.1394|43|8097|P|M|1|9088
-BDU|ENDU|Bardufoss Airport|Malselv|Malselv|NO|55|69.0558|18.5404|252|8015|P|M|1|11033
 BGO|ENBR|Bergen Airport, Flesland|Bergen|Bergen|NO|46|60.2934|5.2181|170|9810|P|L|1|479127
-BJF|ENBS|Batsfjord Airport|Batsfjord|Batsfjord|NO|56|70.6003|29.6926|490|3281|P|M|1|2115
-BNN|ENBN|Brnnysund Airport, Brnny|Brnny|Brnny|NO|18|65.4611|12.2175|25|3937|P|M|1|7113
 BOO|ENBO|Bod Airport|Bod|Bod|NO|18|67.2692|14.3653|42|9167|P|L|1|54676
-BVG|ENBV|Berlevag Airport|Berlevag|Berlevag|NO|56|70.8715|29.0341|42|3372|P|M|1|1166
 EVE|ENEV|Harstad/Narvik Airport|Evenes|Evenes|NO|18|68.4913|16.6781|84|9236|P|L|1|43362
-FDE|ENBL|Frde Airport, Bringeland|Frde|Frde|NO|46|61.3911|5.7569|1046|3084|P|S|1|6737
-FRO|ENFL|Flor Airport|Flor|Flor|NO|46|61.5836|5.0247|37|4144|P|M|1|15851
-GLL|ENKL|Gol Airport|Klanten flyplass|Klanten flyplass|NO|33|60.7911|9.0487|2770|3281|G|S|0|6651
-HAA|ENHK|Hasvik Airport|Hasvik|Hasvik|NO|56|70.4867|22.1397|21|3179|P|S|1|150
-HAU|ENHD|Haugesund Airport, Karmy|Karmy|Karmy|NO|11|59.3453|5.2084|86|6957|P|M|1|72235
-HFT|ENHF|Hammerfest Airport|Hammerfest|Hammerfest|NO|56|70.6797|23.6686|266|3061|P|M|1|13589
-HOV|ENOV|rsta-Volda Airport, Hovden|rsta|rsta|NO|15|62.1800|6.0741|243|3510|P|M|1|31626
-HVG|ENHV|Honningsvag Airport, Valan|Honningsvag|Honningsvag|NO|56|71.0097|25.9836|44|2887|P|M|1|3172
-KKN|ENKR|Kirkenes Airport, Hybuktmoen|Kirkenes|Kirkenes|NO|56|69.7258|29.8913|283|6939|P|M|1|22330
 KRS|ENCN|Kristiansand Airport|Kristiansand|Kristiansand|NO|42|58.2042|8.0854|57|6677|P|L|1|272073
-KSU|ENKB|Kristiansund Airport, Kvernberget|Kvernberget|Kvernberget|NO|15|63.1118|7.8245|204|7841|P|M|1|30696
-LKL|ENNA|Lakselv Airport, Banak|Lakselv|Lakselv|NO|56|70.0688|24.9735|25|9147|P|M|1|4766
-LKN|ENLK|Leknes Airport|Leknes|Leknes|NO|18|68.1525|13.6094|78|2881|P|M|1|8248
 LYR|ENSB|Svalbard Airport, Longyear|Longyearbyen|Longyearbyen|NO|21|78.2461|15.4656|88|7608|P|M|1|2368
-MEH|ENMH|Mehamn Airport|Mehamn|Mehamn|NO|56|71.0297|27.8267|39|2887|P|M|1|1551
-MJF|ENMS|Mosjen Airport, Kjrstad|Mosjen|Mosjen|NO|18|65.7840|13.2149|237|3015|P|M|1|11797
-MOL|ENML|Molde Airport, Ar|Ar|Ar|NO|15|62.7447|7.2625|10|6922|P|M|1|32782
-MQN|ENRA|Mo i Rana Airport, Rssvoll|Mo i Rana|Mo i Rana|NO|18|66.3639|14.3014|229|2759|P|M|1|19971
-NTB|ENNO|Notodden Airport|Notodden|Notodden|NO|40|59.5651|9.2132|63|5745|P|M|0|46648
-OLA|ENOL|rland Airport|rland|rland|NO|50|63.6989|9.6040|28|10755|P|M|1|43046
 OSL|ENGM|Oslo-Gardermoen International Airport|Oslo|Oslo|NO|32|60.1939|11.1004|681|11811|P|L|1|1384528
-OSY|ENNM|Namsos Airport|Namsos|Namsos|NO|50|64.4722|11.5786|7|2749|P|S|1|7225
-RET|ENRS|Rst Airport|Rst|Rst|NO|18|67.5265|12.1016|7|3386|P|S|1|181
-RRS|ENRO|Rros Airport|Rros|Rros|NO|50|62.5784|11.3423|2054|5643|P|M|1|13962
-RVK|ENRM|Rrvik Airport, Ryum|Rrvik|Rrvik|NO|50|64.8383|11.1461|14|2887|P|M|1|7436
-SDN|ENSD|Sandane Airport, Anda|Sandane|Sandane|NO|46|61.8300|6.1058|196|3182|P|S|1|3957
-SKN|ENSK|Stokmarknes Airport, Skagen|Hadsel|Hadsel|NO|18|68.5788|15.0334|11|3031|P|M|1|14379
-SOG|ENSG|Sogndal Airport, Haukasen|Sogndal|Sogndal|NO|46|61.1561|7.1378|1633|3150|P|S|1|17205
-SOJ|ENSR|Srkjosen Airport|Srkjosen|Srkjosen|NO|55|69.7868|20.9594|16|3015|P|M|1|4954
-SRP|ENSO|Stord Airport, Srstokken|Leirvik|Leirvik|NO|46|59.7919|5.3408|160|3937|P|M|1|51625
-SSJ|ENST|Sandnessjen Airport, Stokka|Alstahaug|Alstahaug|NO|18|65.9568|12.4689|56|4619|P|M|1|8321
 SVG|ENZV|Stavanger Airport, Sola|Stavanger|Stavanger|NO|11|58.8767|5.6378|29|9369|P|L|1|394602
-SVJ|ENSH|Svolvr Airport, Helle|Svolvr|Svolvr|NO|18|68.2433|14.6692|27|3104|P|M|1|8892
 TOS|ENTC|Troms Airport|Troms|Troms|NO|55|69.6833|18.9189|31|8041|P|L|1|72815
 TRD|ENVA|Trondheim Airport, Vrnes|Trondheim|Trondheim|NO|50|63.4578|10.9240|56|9052|P|L|1|307824
 TRF|ENTO|Sandefjord Airport, Torp|Sandefjord|Sandefjord|NO|39|59.1867|10.2586|286|9216|P|L|1|911760
-VAW|ENSS|Vard Airport, Svartnes|Vard|Vard|NO|56|70.3554|31.0449|42|3707|P|M|1|2224
-VDS|ENVD|Vads Airport|Vads|Vads|NO|56|70.0653|29.8447|127|3278|P|M|1|11547
-AJR|ESNX|Arvidsjaur Airport|Arvidsjaur|Arvidsjaur|SE|BD|65.5903|19.2819|1245|8201|P|M|1|11375
 ARN|ESSA|Stockholm-Arlanda Airport|Stockholm|Stockholm|SE|AB|59.6485|17.9288|137|10830|P|L|1|2897209
-BLE|ESSD|Dala Airport|Borlange|Borlange|SE|W|60.4220|15.5152|503|7579|P|M|1|173331
-EKT|ESSU|Eskilstuna Airport|Eskilstuna|Eskilstuna|SE|D|59.3511|16.7084|139|6187|P|M|0|216619
-EVG|ESND|Sveg Airport|Sveg|Sveg|SE|Z|62.0478|14.4229|1178|5579|P|S|1|2774
-GEV|ESNG|Gallivare Airport|Gallivare|Gallivare|SE|BD|67.1324|20.8146|1027|5623|P|M|1|17016
 GOT|ESGG|Goteborg Landvetter Airport|Goteborg|Goteborg|SE|Q|57.6628|12.2798|506|10823|P|L|1|1286916
-GVX|SE-0120|GavleSandviken Airport|Sandviken|Sandviken|SE|A|60.5944|16.9511|0|6000|G|M|0|112495
-HAD|ESMT|Halmstad Airport|Halmstad|Halmstad|SE|N|56.6911|12.8202|101|7419|P|M|1|225510
-HFS|ESOH|Hagfors Airport|Rada|Rada|SE|S|60.0201|13.5789|474|4951|P|S|1|5252
-HLF|ESSF|Hultsfred Airport|Hultsfred|Hultsfred|SE|H|57.5258|15.8233|366|6383|P|S|0|8269
-HMV|ESUT|Hemavan Airport|Hemavan|Hemavan|SE|AC|65.8061|15.0828|1503|5254|P|S|1|150
-HUV|ESNH|Hudiksvall Airport|Hudiksvall|Hudiksvall|SE|X|61.7681|17.0807|93|3000|G|S|0|19193
-IDB|ESUE|Idre Airport|Idre|Idre|SE|W|61.8697|12.6894|1480|5100|P|S|0|506
-JKG|ESGJ|Jonkoping Airport|Jonkoping|Jonkoping|SE|F|57.7576|14.0687|741|7228|P|M|1|239741
-KLR|ESMQ|Kalmar Airport|Kalmar|Kalmar|SE|H|56.6855|16.2876|17|6726|P|M|1|117116
-KRF|ESNK|Kramfors-Solleftea Hoga Kusten Airport|Nyland|Nyland|SE|Y|63.0486|17.7689|34|6565|P|M|1|49574
 KRN|ESNQ|Kiruna Airport|Kiruna|Kiruna|SE|BD|67.8220|20.3368|1508|8209|P|L|1|24552
-KSD|ESOK|Karlstad Airport|Karlstad|Karlstad|SE|S|59.4447|13.3374|352|8255|P|M|1|159883
-KVB|ESGR|Skovde Airport|Skovde|Skovde|SE|Q|58.4564|13.9727|324|5696|P|M|0|69062
-LDK|ESGL|Lidkoping-Hovby Airport|Lidkoping|Lidkoping|SE|Q|58.4655|13.1744|200|6529|P|S|0|16160
 LLA|ESPA|Lulea Airport|Lulea|Lulea|SE|BD|65.5438|22.1220|65|10990|P|L|1|185712
-LPI|ESSL|Linkoping City Airport|Linkoping|Linkoping|SE|E|58.4049|15.6845|172|7004|P|L|1|491746
-LYC|ESNL|Lycksele Airport|Lycksele|Lycksele|SE|AC|64.5483|18.7162|705|6564|P|M|1|13733
-MXX|ESKM|Mora Airport|Mora|Mora|SE|W|60.9579|14.5114|634|5951|P|M|1|49482
-NRK|ESSP|Norrkoping Airport|Norrkoping|Norrkoping|SE|E|58.5863|16.2506|32|7228|P|M|1|113098
 NYO|ESKN|Stockholm Skavsta Airport|Nykoping|Nykoping|SE|D|58.7897|16.9115|140|9442|P|L|1|903309
-OER|ESNO|Ornskoldsvik Airport|Ornskoldsvik|Ornskoldsvik|SE|Y|63.4083|18.9900|354|6607|P|M|1|33019
-ORB|ESOE|Orebro Airport|Orebro|Orebro|SE|T|59.2237|15.0380|188|10728|P|M|1|241784
-OSD|ESNZ|Are Ostersund Airport|Ostersund|Ostersund|SE|Z|63.1935|14.5042|1233|8202|P|M|1|76049
-OSK|ESMO|Oskarshamn Airport|Oskarshamn|Oskarshamn|SE|H|57.3505|16.4980|96|4921|P|S|0|8120
-PJA|ESUP|Pajala Airport|Pajala|Pajala|SE|BD|67.2446|23.0749|542|7552|P|S|1|1733
-RNB|ESDF|Ronneby Airport|Ronneby|Ronneby|SE|K|56.2667|15.2650|191|7648|P|M|1|194041
 SCR|ESKS|Scandinavian Mountains Airport|Malung-Salen|Malung-Salen|SE|W|61.1651|12.8335|1608|8202|P|L|1|73740
-SDL|ESNN|Sundsvall-Harnosand Airport|Sundsvall|Sundsvall|SE|Y|62.5281|17.4439|16|6857|P|M|1|129439
-SFT|ESNS|Skelleftea Airport|Skelleftea|Skelleftea|SE|AC|64.6248|21.0769|157|8268|P|M|1|52600
-SOO|ESNY|Soderhamn Airport|Soderhamn|Soderhamn|SE|X|61.2615|17.0991|88|8281|P|M|0|66726
-THN|ESGT|Trollhattan-Vanersborg Airport|Trollhattan|Trollhattan|SE|Q|58.3181|12.3450|137|5610|P|M|1|231145
-TYF|ESST|Torsby Airport|Torsby|Torsby|SE|S|60.1576|12.9913|393|5219|P|M|1|23998
 UME|ESNU|Umea Airport|Umea|Umea|SE|AC|63.7918|20.2828|24|7551|P|L|1|190456
 VBY|ESSV|Visby Airport|Visby|Visby|SE|I|57.6628|18.3462|164|6562|P|L|1|52665
-VHM|ESNV|Vilhelmina South Lapland Airport|Vilhelmina|Vilhelmina|SE|AC|64.5791|16.8336|1140|4928|P|M|1|12366
-VVK|ESSW|Vastervik Airport|Vastervik|Vastervik|SE|H|57.7800|16.5236|118|3934|P|S|0|7981
-VXO|ESMX|Vaxjo Kronoberg Airport|Vaxjo|Vaxjo|SE|G|56.9291|14.7280|610|6900|P|M|1|165766
 """#
 }

@@ -1,10 +1,10 @@
 """The airport pipeline in one place, so the Swift data build and the economy prototypes always use the same airports.
 
-    airports = pipeline.build_airports(raw_dir)     # curated, with catchment populations and labels
+    airports, retired = pipeline.build_airports(raw_dir)     # curated, with catchment populations and labels; retired = cut from the map
 """
 import os
 
-from . import airports, curate, populations
+from . import airports, curate, declutter, populations
 
 
 def build_airports(raw_dir):
@@ -14,4 +14,4 @@ def build_airports(raw_dir):
     selected = curate.curate(selected, cities)      # communities only, one airport per city or town
     populations.assign(selected, cities)            # again, so each city's people belong to the airport that stays
     curate.add_labels(selected)
-    return selected
+    return declutter.split(selected)                # big cities and remote places stay; road towns are retired

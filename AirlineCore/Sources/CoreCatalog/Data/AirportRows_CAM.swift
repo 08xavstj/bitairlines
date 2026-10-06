@@ -3,53 +3,19 @@
 
 enum AirportRows_CAM {
     static let rows = #"""
-BGK|MZBG|Big Creek Airport|Big Creek|Big Creek|BZ|SC|16.5194|-88.4079|22|3000|G|S|1|6036
 BZE|MZBZ|Philip S. W. Goldson International Airport|Belize City|Belize City|BZ|BZ|17.5400|-88.3036|15|9678|P|L|1|220746
-DGA|MZPB|Dangriga Airport|Dangriga|Dangriga|BZ|SC|16.9825|-88.2310|10|6000|G|M|1|36615
-INB|MZSV|Independence Airport|Independence|Independence|BZ|SC|16.5346|-88.4416|18|3000|G|S|1|6657
-ORZ|MZTH|H.E Alfredo Martinez (Tower Hill) Airstrip|Orange Walk|Orange Walk|BZ|OW|18.0468|-88.5839|69|3000|G|S|1|29547
-PLJ|MZPL|Placencia Airport|Placencia|Placencia|BZ|SC|16.5370|-88.3615|3|2133|P|M|1|26167
-PND|MZPG|Punta Gorda Airport|Punta Gorda|Punta Gorda|BZ|TOL|16.1024|-88.8083|7|2372|P|S|1|17991
-SPR|MZSP|John Greif II Airport|San Pedro|San Pedro|BZ|CY|17.9139|-87.9711|4|6000|G|M|1|41490
-BAI|MRBA|Buenos Aires Airport|Punta Arenas|Punta Arenas, CR|CR|P|9.1639|-83.3302|1214|3248|P|M|0|26249
-GLF|MRGF|Golfito Airport|Golfito|Golfito|CR|P|8.6540|-83.1822|49|4593|P|M|1|64449
-LIO|MRLM|Limon International Airport|Limon|Limon|CR|L|9.9580|-83.0220|7|5906|P|M|1|74764
 LIR|MRLB|Daniel Oduber Quiros International Airport|Liberia|Liberia|CR|G|10.5933|-85.5444|270|9022|P|L|1|184822
-LSL|MRLC|Los Chiles Airport|Los Chiles|Los Chiles|CR|A|11.0353|-84.7061|131|4265|P|M|0|37058
-MRAO|MRAO|Aerotortuguero Airport|Roxana|Roxana|CR|L|10.4200|-83.6095|92|3118|P|M|1|95963
-NOB|MRNS|Nosara Airport|Nicoya|Nicoya|CR|G|9.9765|-85.6530|33|3281|P|M|1|24542
-PMZ|MRPM|Palmar Sur Airport|Palmar Sur|Palmar Sur|CR|P|8.9510|-83.4686|49|4570|P|M|0|17511
 SJO|MROC|Juan Santamaria International Airport|San Jose|San Jose, CR|CR|A|9.9939|-84.2088|3021|9882|P|L|1|1474342
-UPL|MRUP|Upala Airport|Upala|Upala|CR|A|10.8922|-85.0162|184|3536|P|M|0|26128
-AAZ|MGQZ|Quezaltenango Airport|Quezaltenango|Quezaltenango|GT|QZ|14.8656|-91.5020|7779|6900|P|S|1|455139
-FRS|MGMM|Mundo Maya International Airport|San Benito|San Benito|GT|PE|16.9137|-89.8661|427|9842|P|M|1|135527
 GUA|MGGT|La Aurora International Airport|Guatemala City|Guatemala City|GT|GU|14.5829|-90.5275|4952|9800|P|L|1|6383378
-HUG|MGHT|Huehuetenango Airport|Huehuetenango|Huehuetenango|GT|HU|15.3167|-91.5056|6135|3000|G|S|1|206409
 RER|MGRT|Retalhuleu Airport|Retalhuleu|Retalhuleu|GT|RE|14.5214|-91.6970|656|5065|P|M|1|1056168
-GJA|MHNJ|La Laguna Airport|Guanaja|Guanaja|HN|IB|16.4454|-85.9066|49|3990|P|M|1|37638
 LCE|MHLC|Goloson International Airport|La Ceiba|La Ceiba|HN|AT|15.7425|-86.8530|39|9875|P|M|1|514424
 PEU|MHPL|Puerto Lempira Airport|Puerto Lempira|Puerto Lempira|HN|GD|15.2622|-83.7812|33|3000|G|S|1|8088
-RTB|MHRO|Juan Manuel Galvez International Airport|Coxen Hole|Coxen Hole|HN|IB|16.3168|-86.5230|39|7349|P|L|1|277193
 SAP|MHLM|Ramon Villeda Morales International Airport|San Pedro Sula|San Pedro Sula|HN|CR|15.4526|-87.9236|91|9203|P|L|1|2360711
-TGU|MHTG|Toncontin Airport|Tegucigalpa|Tegucigalpa|HN|FM|14.0609|-87.2172|3294|6112|P|M|1|1133868
-TJI|MHTJ|Trujillo Airport|Trujillo|Trujillo, HN|HN|CL|15.9266|-85.9386|3|3515|P|M|0|92748
 XPL|MHPR|Palmerola International Airport|Palmerola|Palmerola|HN|CM|14.3824|-87.6212|2061|8064|P|L|1|1732022
-BEF|MNBL|Bluefields Airport|Bluefields|Bluefields|NI|AS|11.9910|-83.7741|20|6625|P|M|1|112766
 MGA|MNMG|Augusto C. Sandino (Managua) International Airport|Managua|Managua|NI|MN|12.1415|-86.1682|194|8012|P|L|1|2713421
-PUZ|MNPC|Puerto Cabezas Airport|Puerto Cabezas|Puerto Cabezas|NI|AN|14.0472|-83.3867|52|8130|P|M|1|34890
-RNI|MNCI|Corn Island Airport|Corn Island|Corn Island|NI|AS|12.1748|-83.0594|1|6234|P|S|1|7332
 BFQ|MPPI|Bahia Pina Airport|Puerto Pina|Puerto Pina|PA|5|7.5874|-78.1799|14|3000|G|S|1|2349
-BLB|MPPA|Panama Pacifico International Airport|Panama City|Panama City|PA|10|8.9148|-79.5996|52|8500|P|S|1|122455
-BOC|MPBO|Bocas del Toro 'Isla Colon' International Airport|Isla Colon|Isla Colon|PA|1|9.3408|-82.2508|10|4921|P|M|1|34352
-CHX|MPCH|Changuinola Captain Manuel Nino International Airport|Changuinola|Changuinola|PA|1|9.4590|-82.5151|19|3609|P|M|1|48619
-CTD|MPCE|Alonso Valderrama Airport|Chitre|Chitre|PA|6|7.9878|-80.4098|33|4921|P|M|1|184470
 DAV|MPDA|Enrique Malek International Airport|David|David|PA|4|8.3890|-82.4364|89|8530|P|M|1|256487
-ONX|MPEJ|Enrique Adolfo Jimenez Airport|Colon|Colon|PA|3|9.3566|-79.8674|25|8858|P|M|1|217733
-PAC|MPMG|Marcos A. Gelabert International Airport|Albrook|Albrook|PA|8|8.9733|-79.5556|31|5906|P|M|1|514501
-PDM|MPPD|Capt. J. Montenegro Airport|Pedasi|Pedasi|PA|7|7.5348|-80.0433|148|3281|P|S|1|7923
 PTY|MPTO|Tocumen International Airport|Tocumen|Tocumen|PA|8|9.0714|-79.3835|135|10006|P|L|1|994810
-RIH|MPSM|Scarlett Martinez International Airport|Rio Hato|Rio Hato|PA|2|8.3759|-80.1279|105|8038|P|S|1|33277
-SYP|MPSA|Ruben Cantu Airport|Santiago|Santiago, PA|PA|9|8.0856|-80.9453|272|3937|P|M|0|120352
 SAL|MSLP|El Salvador International Airport Saint Oscar Arnulfo Romero y Galdamez|San Salvador|San Salvador|SV|PA|13.4445|-89.0558|101|10500|P|L|1|2885635
 """#
 }

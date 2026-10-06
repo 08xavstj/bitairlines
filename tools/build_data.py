@@ -19,12 +19,13 @@ OUT = os.path.join(ROOT, 'AirlineCore', 'Sources', 'CoreCatalog')
 
 def main():
     table = countries.load()
-    selected = pipeline.build_airports(RAW)
+    selected, retired = pipeline.build_airports(RAW)
     unknown = sorted({a['cc'] for a in selected} - set(table))
     if unknown:
         sys.exit(f'countries missing from tools/data/countries.py: {unknown}')
     mask_rows = landmask.encode(landmask.rasterise(os.path.join(RAW, 'ne_50m_land.shp')))
-    counts = emit_swift.emit(OUT, selected, table, mask_rows, (landmask.WIDTH, landmask.HEIGHT))
+    counts = emit_swift.emit(OUT, selected, table, mask_rows, (landmask.WIDTH, landmask.HEIGHT), retired)
+    print(f'{len(retired)} airports retired from the map')
     print(f'{len(selected)} airports in {len({a["cc"] for a in selected})} countries; per group: {counts}')
     print(f'land mask {landmask.WIDTH}x{landmask.HEIGHT}, {sum(len(r) for r in mask_rows)} bytes')
 

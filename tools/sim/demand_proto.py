@@ -82,7 +82,7 @@ def load_airports():
     if os.path.exists(cache):
         return pickle.load(open(cache, 'rb'))
     root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-    data = pipeline.build_airports(os.path.join(root, 'data', 'raw'))
+    data, _ = pipeline.build_airports(os.path.join(root, "data", "raw"))
     pickle.dump(data, open(cache, 'wb'))
     return data
 

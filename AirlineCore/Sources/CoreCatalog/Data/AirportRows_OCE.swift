@@ -3,106 +3,60 @@
 
 enum AirportRows_OCE {
     static let rows = #"""
-FTI|NSFQ|Fitiuta Airport|Fitiuta Village|Fitiuta Village|AS|MA|-14.2161|-169.4238|110|3190|P|S|1|508
-OFU|NSAS|Ofu Airport|Ofu|Ofu|AS|MA|-14.1844|-169.6700|9|2000|P|S|1|477
 PPG|NSTU|Pago Pago International Airport|Pago Pago|Pago Pago|AS|WT|-14.3310|-170.7100|32|10000|P|L|1|62311
 ABM|YNPE|Northern Peninsula Airport|Bamaga|Bamaga|AU|QLD|-10.9462|142.4551|34|5462|P|S|1|1314
-ABX|YMAY|Albury Airport|East Albury|East Albury|AU|NSW|-36.0668|146.9591|539|6234|P|M|1|137375
 ADL|YPAD|Adelaide International Airport|Adelaide|Adelaide|AU|SA|-34.9475|138.5334|20|10171|P|L|1|2934612
 ALH|YABA|Albany Airport|Albany|Albany, AU|AU|WA|-34.9433|117.8089|233|5906|P|M|1|75056
-ARM|YARM|Armidale Airport|Armidale|Armidale|AU|NSW|-30.5281|151.6170|3556|5702|P|M|1|29658
-ARY|YARA|Ararat Airport|Ararat|Ararat|AU|VIC|-37.3100|142.9887|1008|4068|P|M|0|56383
 ASP|YBAS|Alice Springs Airport|Alice Springs|Alice Springs|AU|NT|-23.8066|133.9034|1789|7999|P|M|1|52290
 AUU|YAUR|Aurukun Airport|Aurukun|Aurukun|AU|QLD|-13.3540|141.7200|31|4140|G|S|1|1181
 AYQ|YAYE|Ayers Rock Connellan Airport|Yulara|Yulara|AU|NT|-25.1859|130.9770|1626|8527|P|M|1|2244
-AYR|YAYR|Ayr Airport|Ayr|Ayr|AU|QLD|-19.5958|147.3245|41|4796|P|S|0|8470
 BCI|YBAR|Barcaldine Airport|Barcaldine|Barcaldine|AU|QLD|-23.5663|145.3021|878|5591|P|M|1|1638
-BDB|YBUD|Bundaberg Airport|Bundaberg|Bundaberg|AU|QLD|-24.9050|152.3226|107|6562|P|M|1|162589
 BDD|YBAU|Badu Island Airport|Badu Island|Badu Island|AU|QLD|-10.1495|142.1737|14|2788|G|S|1|150
 BEU|YBIE|Bedourie Airport|Bedourie|Bedourie|AU|QLD|-24.3461|139.4600|300|4921|P|M|1|150
 BHQ|YBHI|Broken Hill Airport|Broken Hill|Broken Hill|AU|NSW|-32.0014|141.4720|958|8251|P|M|1|17456
-BHS|YBTH|Bathurst Airport|Bathurst|Bathurst|AU|NSW|-33.4068|149.6512|2435|5594|P|M|1|132015
 BKQ|YBCK|Blackall Airport|Blackall|Blackall|AU|QLD|-24.4317|145.4297|928|5538|P|M|1|1365
-BLN|YBLA|Benalla Airport|Benalla|Benalla|AU|VIC|-36.5519|146.0070|569|3422|G|M|0|62898
 BME|YBRM|Broome International Airport|Broome|Broome|AU|WA|-17.9492|122.2283|56|7769|P|L|1|30980
 BNE|YBBN|Brisbane International Airport|Brisbane|Brisbane|AU|QLD|-27.3842|153.1170|13|11680|P|L|1|5832368
-BNK|YBNA|Ballina Byron Gateway Airport|Ballina|Ballina|AU|NSW|-28.8332|153.5615|7|6234|P|M|1|139022
-BQB|YBLN|Busselton Margaret River Regional Airport|Busselton|Busselton|AU|WA|-33.6872|115.4003|55|8071|P|S|1|76089
 BRK|YBKE|Bourke Airport|Bourke|Bourke|AU|NSW|-30.0392|145.9520|352|6004|P|M|1|3725
-BRT|YBTI|Bathurst Island Airport|Wurrumiyanga|Wurrumiyanga|AU|NT|-11.7650|130.6158|67|4823|P|M|0|3195
-BSJ|YBNS|Bairnsdale Airport|Bairnsdale|Bairnsdale|AU|VIC|-37.8875|147.5694|165|3612|P|M|0|39971
-BWT|YWYY|Wynyard Airport|Burnie|Burnie|AU|TAS|-40.9970|145.7260|62|5413|P|M|1|50564
-BXG|YBDG|Bendigo Airport|Bendigo|Bendigo|AU|VIC|-36.7394|144.3300|705|5249|P|S|1|168450
 CAZ|YCBA|Cobar Airport|Cobar|Cobar|AU|NSW|-31.5383|145.7940|724|5564|P|M|1|4173
 CBR|YSCB|Canberra Airport|Canberra|Canberra|AU|ACT|-35.3069|149.1950|1886|10771|P|M|1|913899
-CCL|YCCA|Chinchilla Airport|Chinchilla|Chinchilla|AU|QLD|-26.7719|150.6176|1028|3497|P|M|0|14504
 CED|YCDU|Ceduna Airport|Ceduna|Ceduna|AU|SA|-32.1306|133.7100|77|5709|P|M|1|4678
-CFS|YCFS|Coffs Harbour Airport|Coffs Harbour|Coffs Harbour|AU|NSW|-30.3206|153.1160|18|6824|P|M|1|158706
 CIE|YCOI|Collie Airport|Collie|Collie|AU|WA|-33.3667|116.2170|818|3772|G|S|0|9903
-CKW|YCHK|Christmas Creek Airport|Christmas Creek Mine|Christmas Creek Mine|AU|WA|-22.3543|119.6426|1462|8202|P|S|1|150
 CMA|YCMU|Cunnamulla Airport|Cunnamulla|Cunnamulla|AU|QLD|-28.0300|145.6220|630|5686|P|M|1|1235
-CNB|YCNM|Coonamble Airport|Coonamble|Coonamble|AU|NSW|-30.9809|148.3778|604|5010|P|M|1|5199
-CNJ|YCCY|Cloncurry Airport|Cloncurry|Cloncurry|AU|QLD|-20.6686|140.5040|616|6562|P|M|1|3167
 CNS|YBCS|Cairns International Airport|Cairns|Cairns|AU|QLD|-16.8789|145.7495|10|10489|P|L|1|367101
 CPD|YCBP|Coober Pedy Airport|Coober Pedy|Coober Pedy|AU|SA|-29.0383|134.7222|740|4685|G|M|1|2106
 CTL|YBCV|Charleville Airport|Charleville|Charleville|AU|QLD|-26.4133|146.2620|1003|5000|P|M|1|3515
-CTN|YCKN|Cooktown Airport|Cooktown|Cooktown|AU|QLD|-15.4436|145.1832|26|5338|P|M|1|3707
 CUQ|YCOE|Coen Airport|Coen|Coen|AU|QLD|-13.7611|143.1133|532|4107|P|M|1|150
 CVQ|YCAR|Carnarvon Airport|Carnarvon|Carnarvon|AU|WA|-24.8843|113.6664|13|5509|P|M|1|9682
-DBO|YSDU|Dubbo City Regional Airport|Dubbo|Dubbo|AU|NSW|-32.2167|148.5750|935|5604|P|M|1|59768
-DGE|YMDG|Mudgee Airport|Mudgee|Mudgee|AU|NSW|-32.5648|149.6095|1545|5705|P|M|0|20424
-DKI|YDKI|Dunk Island Airport|Dunk Island|Dunk Island|AU|QLD|-17.9391|146.1414|6|2673|G|S|0|5527
 DMD|YDMG|Doomadgee Airport|Doomadgee|Doomadgee|AU|QLD|-17.9403|138.8220|153|5433|P|S|1|1468
-DNQ|YDLQ|Deniliquin Airport|Deniliquin|Deniliquin|AU|NSW|-35.5594|144.9460|316|3999|P|M|0|57885
 DOX|YDRA|Dongara Airport|Port Denison|Port Denison|AU|WA|-29.2981|114.9273|0|3280|G|S|0|1823
-DPO|YDPO|Devonport Airport|Devonport|Devonport|AU|TAS|-41.1697|146.4300|33|6030|P|M|1|85889
-DRB|YDBY|Derby Airport|Derby|Derby|AU|WA|-17.3719|123.6622|24|5696|P|M|0|4848
 DRW|YPDN|Darwin International Airport / RAAF Darwin|Darwin|Darwin|AU|NT|-12.4150|130.8818|103|11004|P|L|1|303979
 EDR|YPMP|Pormpuraaw Airport|Pormpuraaw|Pormpuraaw|AU|QLD|-14.8965|141.6091|10|4462|P|S|1|699
 ELC|YELD|Elcho Island Airport|Elcho Island|Elcho Island|AU|NT|-12.0194|135.5710|101|4724|P|M|1|2484
-EMD|YEML|Emerald Airport|Emerald|Emerald|AU|QLD|-23.5675|148.1790|624|6234|P|M|1|28480
 EPR|YESP|Esperance Airport|Esperance|Esperance|AU|WA|-33.6844|121.8230|470|4921|P|M|1|22072
 FIZ|YFTZ|Fitzroy Crossing Airport|Fitzroy Crossing|Fitzroy Crossing|AU|WA|-18.1836|125.5598|368|4265|P|M|1|1783
 FLS|YFLI|Flinders Island Airport|Whitemark|Whitemark|AU|TAS|-40.0917|147.9930|10|5643|G|S|1|150
-FRB|YFBS|Forbes Airport|Forbes|Forbes|AU|NSW|-33.3636|147.9350|760|4029|P|M|0|13188
-GAH|YGAY|Gayndah Airport|Gayndah|Gayndah|AU|QLD|-25.6159|151.6206|369|4150|P|S|0|3374
-GEE|YGTO|George Town Airport|George Town|George Town, AU|AU|TAS|-41.0795|146.8391|131|3280|G|S|0|3341
 GET|YGEL|Geraldton Airport|Moonyoonooka|Moonyoonooka|AU|WA|-28.7961|114.7070|121|7838|P|M|1|76086
 GFE|YGNF|Grenfell Airport|Grenfell|Grenfell|AU|NSW|-34.0000|148.1330|1080|2657|G|S|0|5946
-GFF|YGTH|Griffith Airport|Griffith|Griffith|AU|NSW|-34.2508|146.0670|439|4931|P|M|1|28919
-GFN|YGFN|Clarence Valley Regional Airport|Grafton|Grafton|AU|NSW|-29.7548|153.0312|110|5607|P|M|0|36271
 GIC|YBOI|Boigu Island Airport|Boigu Island|Boigu Island|AU|QLD|-9.2328|142.2180|23|2165|G|S|1|150
-GKL|YGKL|Great Keppel Is Airport|Great Keppel Island|Great Keppel Island|AU|QLD|-23.1846|150.9416|21|2870|G|S|0|7232
 GLI|YGLI|Glen Innes Airport|Glen Innes|Glen Innes|AU|NSW|-29.6760|151.6912|3433|5499|G|M|0|12513
-GLT|YGLA|Gladstone Airport|Gladstone|Gladstone|AU|QLD|-23.8698|151.2254|64|5364|P|M|1|100429
-GOS|YSMB|Somersby Airstrip|Gosford|Gosford|AU|NSW|-33.3677|151.2998|860|3000|G|S|0|137842
 GOV|YPGV|Gove Airport|Nhulunbuy|Nhulunbuy|AU|NT|-12.2694|136.8180|192|7244|P|M|1|4201
 GTE|YGTE|Groote Eylandt Airport|Groote Eylandt|Groote Eylandt|AU|NT|-13.9724|136.4586|53|6237|P|M|1|1191
 GYZ|YGRM|Gruyere Airport|Cosmo Newbery|Cosmo Newbery|AU|WA|-28.0345|123.8151|1542|6890|P|S|1|150
 HBA|YMHB|Hobart International Airport|Hobart|Hobart|AU|TAS|-42.8370|147.5130|13|8947|P|L|1|483025
 HGD|YHUG|Hughenden Airport|Hughenden|Hughenden|AU|QLD|-20.8150|144.2250|1043|5394|P|S|1|1253
 HID|YHID|Horn Island Airport|Horn|Horn|AU|QLD|-10.5856|142.2928|43|4557|P|M|1|4296
-HIS|AU-HIS|Hayman Island Resort Seaplane Base|Hayman Island|Hayman Island|AU|QLD|-20.0600|148.8810|0|0|W|W|1|2333
 HMG|YHMB|Hermannsburg Airport|Hermannsburg|Hermannsburg|AU|NT|-23.9265|132.8078|593|3704|G|S|0|619
 HOK|YHOO|Hooker Creek Airport|Lajamanu|Lajamanu|AU|NT|-18.3367|130.6380|320|5118|G|S|1|606
 HPE|YHPV|Hope Vale Airport|Hope Vale|Hope Vale|AU|QLD|-15.2923|145.1035|228|3000|G|S|0|515
-HTI|YBHM|Hamilton Island Airport|Hamilton Island|Hamilton Island|AU|QLD|-20.3581|148.9520|15|5591|P|M|1|14337
-HVB|YHBA|Hervey Bay Airport|Hervey Bay|Hervey Bay|AU|QLD|-25.3201|152.8807|60|6561|P|M|1|128643
 IRG|YLHR|Lockhart River Airport|Lockhart River|Lockhart River|AU|QLD|-12.7869|143.3050|77|4919|P|M|1|761
 ISA|YBMA|Mount Isa Airport|Mount Isa|Mount Isa|AU|QLD|-20.6664|139.4885|1121|8399|P|M|1|34906
-IVR|YIVL|Inverell Airport|Inverell|Inverell|AU|NSW|-29.8883|151.1440|2667|6936|P|M|0|15180
-JCK|YJLC|Julia Creek Airport|Julia Creek|Julia Creek|AU|QLD|-20.6683|141.7230|404|4600|P|S|1|667
 JUR|YJUR|Jurien Bay Airport|Jurien Bay|Jurien Bay|AU|WA|-30.3027|115.0556|15|4265|G|S|0|2326
-KAX|YKBR|Kalbarri Airport|Kalbarri|Kalbarri|AU|WA|-27.6928|114.2592|157|5246|P|S|1|2602
 KBJ|YKCA|Kings Canyon Airport|Petermann|Petermann|AU|NT|-24.2602|131.4889|2100|4908|G|S|0|522
 KDB|YKBL|Kambalda Airport|Kambalda West|Kambalda West|AU|WA|-31.1907|121.5978|1073|3576|G|S|0|1693
-KGC|YKSC|Kingscote Airport|Kingscote|Kingscote|AU|SA|-35.7139|137.5210|24|4600|P|M|1|2457
 KGI|YPKG|Kalgoorlie Boulder Airport|Broadwood|Broadwood|AU|WA|-30.7915|121.4646|1203|6562|P|M|1|55083
-KNS|YKII|King Island Airport|Currie|Currie|AU|TAS|-39.8775|143.8780|132|5198|P|M|1|659
 KNX|YPKU|East Kimberley Regional (Kununurra) Airport|Kununurra|Kununurra|AU|WA|-15.7781|128.7080|145|6000|P|M|1|6129
-KQR|YKAR|Karara Airport|Karara|Karara|AU|WA|-29.2172|116.6872|1011|4593|P|S|1|150
 KRB|YKMB|Karumba Airport|Karumba|Karumba|AU|QLD|-17.4567|140.8300|5|4169|G|S|1|927
-KTA|YPKA|Karratha Airport|Karratha|Karratha|AU|WA|-20.7122|116.7730|29|7480|P|M|1|36011
 KUG|YKUB|Kubin Island Airport|Kubin Island|Kubin Island|AU|QLD|-10.2265|142.2196|15|3281|G|S|1|157
 KWM|YKOW|Kowanyama Airport|Kowanyama|Kowanyama|AU|QLD|-15.4854|141.7526|35|4528|P|M|1|1048
 LDH|YLHI|Lord Howe Island Airport|Lord Howe Island|Lord Howe Island|AU|NSW|-31.5382|159.0755|5|2906|G|S|1|150
@@ -110,89 +64,48 @@ LEA|YPLM|Learmonth Airport|Exmouth|Exmouth|AU|WA|-22.2352|114.0900|19|9997|P|M|1
 LEL|YLEV|Lake Evella Airport|Gapuwiyak|Gapuwiyak|AU|NT|-12.4989|135.8060|256|3494|G|S|1|812
 LER|YLST|Leinster Airport|Leinster|Leinster|AU|WA|-27.8433|120.7030|1631|5906|P|M|1|1334
 LHG|YLRD|Lightning Ridge Airport|Lightning Ridge|Lightning Ridge|AU|NSW|-29.4529|147.9771|540|4613|P|M|1|2986
-LNO|YLEO|Leonora Airport|Leonora|Leonora|AU|WA|-28.8781|121.3150|1217|6621|P|M|1|1267
 LRE|YLRE|Longreach Airport|Longreach|Longreach|AU|QLD|-23.4320|144.2775|627|6352|P|M|1|3690
-LST|YMLT|Launceston Airport|Launceston|Launceston|AU|TAS|-41.5449|147.2108|562|6499|P|M|1|175194
-LSY|YLIS|Lismore Airport|Lismore|Lismore|AU|NSW|-28.8307|153.2584|35|5404|P|M|1|138728
 LVO|YLTN|Laverton Airport|Laverton|Laverton|AU|WA|-28.6143|122.4287|1530|5906|P|S|1|2121
-MBH|YMYB|Maryborough Airport|Maryborough|Maryborough|AU|QLD|-25.5135|152.7136|38|5207|P|S|0|18016
-MCY|YBSU|Sunshine Coast Airport|Maroochydore|Maroochydore|AU|QLD|-26.5933|153.0832|15|9186|P|L|1|1245193
-MEB|YMEN|Melbourne Essendon Airport|Essendon Fields|Essendon Fields|AU|VIC|-37.7281|144.9020|282|6302|P|M|1|3986998
 MEL|YMML|Melbourne Airport|Melbourne|Melbourne|AU|VIC|-37.6707|144.8379|434|11998|P|L|1|7383566
-MGB|YMTG|Mount Gambier Airport|Mount Gambier|Mount Gambier|AU|SA|-37.7444|140.7806|0|5394|P|M|1|43405
 MGT|YMGB|Milingimbi Airport|Milingimbi Island|Milingimbi Island|AU|NT|-12.0944|134.8940|53|4626|G|S|1|1035
-MHU|YHOT|Mount Hotham Airport|Mount Hotham|Mount Hotham|AU|VIC|-37.0475|147.3340|4260|4762|P|M|1|14046
-MIM|YMER|Merimbula Airport|Merimbula|Merimbula|AU|NSW|-36.9086|149.9010|7|5256|P|M|1|24074
 MJK|YSHK|Shark Bay Airport|Denham|Denham|AU|WA|-25.8973|113.5758|111|5545|P|M|1|723
 MKR|YMEK|Meekatharra Airport|Meekatharra|Meekatharra|AU|WA|-26.6117|118.5480|1713|7156|P|M|1|675
-MKY|YBMK|Mackay Airport|Mackay|Mackay|AU|QLD|-21.1708|149.1826|19|6499|P|M|1|177028
 MMG|YMOG|Mount Magnet Airport|Mount Magnet|Mount Magnet|AU|WA|-28.1161|117.8420|1354|5906|G|M|1|660
 MNG|YMGD|Maningrida Airport|Maningrida|Maningrida|AU|NT|-12.0561|134.2340|123|5020|P|M|1|3260
-MOV|YMRB|Moranbah Airport|Moranbah|Moranbah|AU|QLD|-22.0578|148.0770|770|5000|P|M|1|20143
 MQL|YMIA|Mildura Airport|Mildura|Mildura|AU|VIC|-34.2292|142.0860|167|6004|P|M|1|63083
-MRZ|YMOR|Moree Airport|Moree|Moree|AU|NSW|-29.4989|149.8450|701|5292|P|M|1|11857
-MYA|YMRY|Moruya Airport|Moruya|Moruya|AU|NSW|-35.8978|150.1440|14|4997|P|M|1|63809
 MYI|YMAE|Murray Island Airport|Murray Island|Murray Island|AU|QLD|-9.9151|144.0546|300|1722|G|S|1|150
-NAA|YNBR|Narrabri Airport|Narrabri|Narrabri|AU|NSW|-30.3192|149.8270|788|5000|P|M|1|16599
 NLF|YDNI|Darnley Island Airport|Darnley Island|Darnley Island|AU|QLD|-9.5792|143.7803|0|1640|G|S|1|150
-NRA|YNAR|Narrandera Airport|Narrandera|Narrandera|AU|NSW|-34.7022|146.5120|474|5302|P|M|1|17613
 NRG|YNRG|Narrogin Airport|Narrogin|Narrogin|AU|WA|-32.9300|117.0800|1080|4101|G|S|0|4699
 NSM|YNSM|Norseman Aerodrome|Norseman|Norseman|AU|WA|-32.2030|121.7581|263|4960|G|S|0|640
 NTL|YWLM|Newcastle Airport|Williamtown|Williamtown|AU|NSW|-32.7961|151.8350|31|10033|P|L|1|1697416
 NTN|YNTN|Normanton Airport|Normanton|Normanton|AU|QLD|-17.6841|141.0697|73|5499|P|M|1|1903
-OAG|YORG|Orange Airport|Orange|Orange|AU|NSW|-33.3820|149.1313|3115|5499|P|M|0|40709
 OKR|YYKI|Yorke Island Airport|Yorke Island|Yorke Island|AU|QLD|-9.7528|143.4057|10|3281|G|S|1|150
-OLP|YOLD|Olympic Dam Airport|Olympic Dam|Olympic Dam|AU|SA|-30.4839|136.8767|344|6102|P|S|1|4616
-OOM|YCOM|Cooma Snowy Mountains Airport|Cooma|Cooma|AU|NSW|-36.3004|148.9724|3088|6955|P|M|1|26883
 OYN|YOUY|Ouyen Airport|Ouyen|Ouyen|AU|VIC|-35.0888|142.3548|0|3280|G|S|0|1185
 PBO|YPBO|Paraburdoo Airport|Paraburdoo|Paraburdoo|AU|WA|-23.1711|117.7450|1406|6995|P|M|1|3381
 PER|YPPH|Perth International Airport|Perth|Perth|AU|WA|-31.9403|115.9670|67|11299|P|L|1|4526272
 PHE|YPPD|Port Hedland International Airport|Port Hedland|Port Hedland|AU|WA|-20.3828|118.6298|33|8202|P|L|1|27271
-PKE|YPKS|Parkes Airport|Parkes|Parkes|AU|NSW|-33.1314|148.2390|1069|5525|P|M|1|27293
 PKT|YPKT|Port Keats Airport|Wadeye|Wadeye|AU|NT|-14.2497|129.5295|91|4626|P|M|0|1924
-PLO|YPLC|Port Lincoln Airport|Port Lincoln|Port Lincoln|AU|SA|-34.6053|135.8800|36|4918|P|M|1|17041
-PMK|YPAM|Palm Island Airport|Palm Island|Palm Island|AU|QLD|-18.7553|146.5810|28|3730|P|S|1|3147
-PPP|YBPN|Proserpine Whitsunday Coast Airport|Proserpine|Proserpine|AU|QLD|-20.4944|148.5536|82|6801|P|M|1|18618
-PQQ|YPMQ|Port Macquarie Airport|Port Macquarie|Port Macquarie|AU|NSW|-31.4358|152.8630|12|5203|P|M|1|113886
-PTJ|YPOD|Portland Airport|Portland|Portland, AU|AU|VIC|-38.3181|141.4710|265|5302|P|M|1|66987
-PUG|YPAG|Port Augusta Airport|Port Augusta|Port Augusta|AU|SA|-32.5069|137.7170|56|5413|P|M|1|31985
 PXH|YPMH|Prominent Hill Airport|Mount Eba|Mount Eba|AU|SA|-29.7160|135.5244|745|7218|G|S|1|150
 RAM|YRNG|Ramingining Airport|Ramingining|Ramingining|AU|NT|-12.3564|134.8980|206|4825|G|S|1|748
 RBC|YROI|Robinvale Airport|Robinvale|Robinvale|AU|VIC|-34.6429|142.7730|87|3854|G|S|0|2739
 RBU|YROE|Roebourne Airport|Roebourne|Roebourne|AU|WA|-20.7639|117.1552|0|5137|G|S|0|2491
 RCM|YRMD|Richmond Airport|Richmond|Richmond, AU|AU|QLD|-20.7019|143.1150|676|5000|P|S|1|758
 RMA|YROM|Roma Airport|Roma|Roma|AU|QLD|-26.5450|148.7750|1032|4934|P|M|1|8283
-ROK|YBRK|Rockhampton Airport|Rockhampton|Rockhampton|AU|QLD|-23.3800|150.4754|34|8622|P|M|1|180442
 RPM|YNGU|Ngukurr Airport|Roper River|Roper River|AU|NT|-14.7228|134.7470|45|5020|P|M|0|1154
 SBR|YSII|Saibai Island Airport|Saibai Island|Saibai Island|AU|QLD|-9.3783|142.6250|15|2099|G|S|1|150
 SGO|YSGE|St George Airport|St George|St George, AU|AU|QLD|-28.0497|148.5950|656|4987|P|S|1|3124
-SNB|YSNK|Snake Bay Airport|Milikapiti|Milikapiti|AU|NT|-11.4177|130.6485|173|4734|P|M|1|252
-SXE|YWSL|West Sale Airport|Sale|Sale|AU|VIC|-38.0908|146.9653|72|5010|P|M|0|36284
 SYD|YSSY|Sydney Kingsford Smith International Airport|Sydney|Sydney|AU|NSW|-33.9461|151.1770|21|12999|P|L|1|10859731
 SYU|YWBS|Warraber Island Airport|Sue Islet|Sue Islet|AU|QLD|-10.2083|142.8250|3|2362|G|S|1|150
 TCA|YTNK|Tennant Creek Airport|Tennant Creek|Tennant Creek|AU|NT|-19.6344|134.1830|1236|6427|P|M|1|3080
-TEM|YTEM|Temora Airport|Temora|Temora|AU|NSW|-34.4214|147.5120|921|6454|P|M|0|15022
-TGN|YLTV|Latrobe Valley Airport|Morwell|Morwell|AU|VIC|-38.2110|146.4708|180|4692|P|M|0|94682
-THG|YTNG|Thangool Airport|Biloela|Biloela|AU|QLD|-24.4949|150.5780|644|4993|P|M|1|11376
-TMW|YSTW|Tamworth Airport|Tamworth|Tamworth|AU|NSW|-31.0779|150.8455|1334|7218|P|M|1|109587
 TPR|YTMP|Tom Price Airport|Tom Price|Tom Price|AU|WA|-22.7460|117.8690|2300|3000|G|S|0|1672
-TRO|YTRE|Taree Airport|Taree|Taree|AU|NSW|-31.8886|152.5140|38|4934|P|M|0|39676
 TSV|YBTL|Townsville Airport / RAAF Base Townsville|Townsville|Townsville|AU|QLD|-19.2529|146.7665|18|7999|P|M|1|386280
-TUM|YTMU|Tumut Aerodrome|Tumut|Tumut|AU|NSW|-35.2683|148.2405|878|3478|P|M|0|40135
 UBB|YMAA|Mabuiag Island Airport|Mabuiag Island|Mabuiag Island|AU|QLD|-9.9502|142.1952|0|1312|G|S|1|150
 ULP|YQLP|Quilpie Airport|Quilpie|Quilpie|AU|QLD|-26.6092|144.2537|655|4898|P|M|1|645
 WEI|YBWP|Weipa Airport|Weipa|Weipa|AU|QLD|-12.6775|141.9226|63|5397|P|M|1|6256
-WGA|YSWG|Wagga Wagga Airport|Forest Hill|Forest Hill|AU|NSW|-35.1635|147.4683|724|5807|P|M|1|67772
-WGE|YWLG|Walgett Airport|Walgett|Walgett|AU|NSW|-30.0328|148.1260|439|5335|P|M|1|2432
-WGT|YWGT|Wangaratta Airport|Laceby|Laceby|AU|VIC|-36.4179|146.3069|504|5381|P|M|0|60142
 WHL|WHL|Welshpool Airport|Welshpool|Welshpool|AU|VIC|-38.6824|146.4453|35|3000|G|S|0|3035
 WIN|YWTN|Winton Airport|Winton|Winton|AU|QLD|-22.3636|143.0860|638|4600|P|M|1|1238
 WNR|YWDH|Windorah Airport|Windorah|Windorah|AU|QLD|-25.4106|142.6684|452|4508|P|M|1|150
-WSY|YSHR|Shute Harbour/Whitsunday Airport|Shute Harbour|Shute Harbour|AU|QLD|-20.2761|148.7550|40|3608|G|S|0|3091
 WTB|YBWW|Toowoomba Wellcamp Airport|Toowoomba|Toowoomba|AU|QLD|-27.5583|151.7933|1509|9416|P|L|1|619208
-WWY|YWWL|West Wyalong Airport|West Wyalong|West Wyalong|AU|NSW|-33.9372|147.1910|859|5200|P|M|0|4819
-WYA|YWHA|Whyalla Airport|Whyalla|Whyalla|AU|SA|-33.0589|137.5140|41|5531|P|M|1|62422
-XCO|YOLA|Colac Airport|Colac Otway Shire|Colac Otway Shire|AU|VIC|-38.2867|143.6800|450|2788|P|S|0|9736
 XMY|YYMI|Yam Island Airport|Yam Island|Yam Island|AU|QLD|-9.8992|142.7743|0|2329|G|S|1|150
 XTG|YTGM|Thargomindah Airport|Thargomindah|Thargomindah|AU|QLD|-27.9864|143.8121|433|4800|P|M|1|150
 YLG|YYAL|Yalgoo Airport|Yalgoo|Yalgoo|AU|WA|-28.3553|116.6840|0|4593|G|S|0|672
@@ -205,21 +118,14 @@ MOI|NCMR|Mitiaro Island Airport|Mitiaro Island|Mitiaro Island|CK|A|-19.8425|-157
 MUK|NCMK|Mauke Airport|Mauke Island|Mauke Island|CK|A|-20.1361|-157.3450|26|4921|G|S|1|150
 RAR|NCRG|Rarotonga International Airport|Avarua|Avarua|CK|A|-21.2027|-159.8060|19|7638|P|L|1|14391
 ICI|NFCI|Cicia Airport|Cicia|Cicia|FJ|E|-17.7433|-179.3420|13|3000|G|S|1|150
-KDV|NFKD|Vunisea Airport|Vunisea|Vunisea|FJ|E|-19.0581|178.1570|6|3000|G|S|1|150
-KXF|NFNO|Koro Island Airport|Koro Island|Koro Island|FJ|E|-17.3458|179.4220|358|3000|G|S|1|150
-LBS|NFNL|Labasa Airport|Labasa|Labasa|FJ|N|-16.4667|179.3400|44|3507|P|M|1|29831
 LKB|NFNK|Lakeba Island Airport|Lakeba Island|Lakeba Island|FJ|E|-18.1992|-178.8170|280|3000|G|S|1|150
 MFJ|NFMO|Moala Airport|Moala|Moala|FJ|E|-18.5667|179.9510|13|3000|G|S|1|150
-MNF|NFMA|Mana Island Airport|Mana Island|Mana Island|FJ|W|-17.6728|177.0985|0|3000|G|S|1|2743
 NAN|NFFN|Nadi International Airport|Nadi|Nadi|FJ|W|-17.7618|177.4378|59|10739|P|L|1|135568
-NGI|NFNG|Ngau Airport|Ngau|Ngau|FJ|E|-18.1156|179.3400|50|3000|G|S|1|6010
-PTF|NFFO|Malolo Lailai Island Airport|Malolo Lailai Island|Malolo Lailai Island|FJ|W|-17.7784|177.1970|10|3000|G|S|1|3841
 RTA|NFNR|Rotuma Airport|Rotuma|Rotuma|FJ|R|-12.4825|177.0710|22|4806|G|S|1|150
 SUV|NFNA|Nausori International Airport|Nausori|Nausori|FJ|C|-18.0442|178.5615|17|7047|P|L|1|207414
 SVU|NFNS|Savusavu Airport|Savusavu|Savusavu|FJ|N|-16.8034|179.3406|17|2833|G|S|1|4951
 TVU|NFNM|Matei Airport|Matei|Matei|FJ|N|-16.6906|-179.8770|60|3232|G|S|1|150
 VBV|NFVB|Vanua Balavu Airport|Vanua Balavu|Vanua Balavu|FJ|E|-17.2690|-178.9760|76|3000|G|S|1|150
-YAS|NFSW|Yasawa Island Airport|Yasawa Island|Yasawa Island|FJ|W|-16.7589|177.5450|29|1950|G|S|1|150
 KSA|PTSA|Kosrae International Airport|Okat|Okat|FM|KSA|5.3570|162.9580|11|5750|P|L|1|13015
 PNI|PTPN|Pohnpei International Airport|Pohnpei Island|Pohnpei Island|FM|PNI|6.9851|158.2099|10|6600|P|M|1|18697
 TKK|PTKK|Chuuk International Airport|Weno Island|Weno Island|FM|TRK|7.4619|151.8430|11|6006|P|L|1|16169
@@ -245,58 +151,19 @@ UJE|MH-0004|Ujae Atoll Airport|Ujae Atoll|Ujae Atoll|MH|UJA|8.9281|165.7620|29|3
 UTK|03N|Utirik Airport|Utirik Island|Utirik Island|MH|UTI|11.2222|169.8514|4|2400|G|S|1|409
 WTE|MH-WTE|Wotje Airport|Wotje|Wotje|MH|WTJ|9.4583|170.2386|4|4275|G|S|1|880
 WTO|MH-WTO|Wotho Island Airport|Wotho Island|Wotho Island|MH|WTN|10.1733|166.0030|0|3000|G|S|1|160
-ROP|PGRO|Rota International Airport|Rota Island|Rota Island|MP|A|14.1733|145.2411|607|6000|P|L|1|13277
-SPN|PGSN|Saipan International Airport|I Fadang|I Fadang|MP|A|15.1194|145.7288|215|8700|P|M|1|42986
-TIQ|PGWT|Francisco Manglona Borja / Tinian International Airport|Tinian Island|Tinian Island|MP|A|14.9992|145.6194|271|8600|P|M|1|25584
 BMY|NWWC|Ile Art - Waala Airport|Waala|Waala|NC|02|-19.7205|163.6611|306|1969|P|S|1|890
-ILP|NWWE|Ile des Pins Airport|Ile des Pins|Ile des Pins|NC|03|-22.5889|167.4560|315|3608|P|M|1|2325
-KNQ|NWWD|Kone Airport|Kone|Kone|NC|02|-21.0536|164.8388|23|3281|P|M|1|16574
 KOC|NWWK|Koumac Airport|Koumac|Koumac|NC|02|-20.5463|164.2556|42|3616|P|S|1|6151
-LIF|NWWL|Lifou Airport|Lifou|Lifou|NC|01|-20.7746|167.2393|92|3609|P|M|1|8222
-MEE|NWWR|Mare Airport|Mare|Mare|NC|01|-21.4824|168.0385|141|3281|P|M|1|6508
 NOU|NWWW|La Tontouta International Airport|Noumea|Noumea|NC|03|-22.0146|166.2130|52|10663|P|L|1|264218
 TGJ|NWWA|Tiga Airport|Tiga|Tiga|NC|01|-21.0964|167.8038|128|6000|G|M|1|2938
-TOU|NWWU|Touho Airport|Touho|Touho|NC|02|-20.7901|165.2595|10|3609|P|M|1|14299
-UVE|NWWV|Ouvea Airport|Ouvea|Ouvea|NC|01|-20.6409|166.5730|23|3609|P|M|1|4150
 NLK|YSNF|Norfolk Island International Airport|Burnt Pine|Burnt Pine|NF|A|-29.0418|167.9395|371|6398|P|M|1|880
 INU|ANYN|Nauru International Airport|Yaren|Yaren|NR|14|-0.5479|166.9195|22|7054|P|M|1|13833
 IUE|NIUE|Niue International Airport|Alofi|Alofi|NU|A|-19.0801|-169.9235|209|7660|P|M|1|624
 AKL|NZAA|Auckland International Airport|Auckland|Auckland|NZ|AUK|-37.0120|174.7863|23|11926|P|L|1|3151160
-ALR|NZLX|Alexandra Aerodrome|Alexandra|Alexandra|NZ|OTA|-45.2105|169.3711|752|3937|G|M|0|5800
-AMZ|NZAR|Ardmore Airport|Manurewa|Manurewa|NZ|AUK|-37.0297|174.9730|111|4630|P|M|0|335940
-ASG|NZAS|Ashburton Airport|Ashburton|Ashburton|NZ|CAN|-43.9033|171.7970|302|4554|G|S|0|15860
-BHE|NZWB|Woodbourne Airport|Blenheim|Blenheim|NZ|MBH|-41.5183|173.8700|109|4675|G|M|1|73248
 CHC|NZCH|Christchurch International Airport|Christchurch|Christchurch|NZ|CAN|-43.4890|172.5321|123|10787|P|L|1|891682
 CHT|NZCI|Inia William Tuuta Memorial Airport|Te One|Te One|NZ|WGN|-43.8119|-176.4651|43|4462|P|M|1|150
-DGR|NZDA|Dargaville Aerodrome|Dargaville|Dargaville|NZ|NTL|-35.9393|173.8929|6|3281|G|S|0|2915
-DUD|NZDN|Dunedin International Airport|Dunedin|Dunedin|NZ|OTA|-45.9290|170.1978|4|6234|P|M|1|249555
-GBZ|NZGB|Great Barrier Aerodrome|Claris|Claris|NZ|AUK|-36.2414|175.4720|20|3051|G|S|1|150
-GIS|NZGS|Gisborne Airport|Gisborne|Gisborne|NZ|GIS|-38.6633|177.9780|15|4298|P|M|1|73517
-HKK|NZHK|Hokitika Airfield|Hokitika|Hokitika|NZ|WTC|-42.7136|170.9850|146|4311|P|M|1|15359
-HLZ|NZHN|Hamilton International Airport|Hamilton|Hamilton, NZ|NZ|WKO|-37.8670|175.3320|172|6755|P|M|1|267876
-IVC|NZNV|Invercargill Airport|Invercargill|Invercargill|NZ|STL|-46.4124|168.3130|5|7251|P|M|1|129385
-KAT|NZKT|Kaitaia Airport|Awanui|Awanui|NZ|NTL|-35.0698|173.2871|270|4600|P|M|1|5916
-KKE|NZKK|Kerikeri Airport|Kerikeri|Kerikeri|NZ|NTL|-35.2591|173.9133|492|3904|P|M|1|28013
 KKO|NZKO|Kaikohe Airport|Kaikohe|Kaikohe|NZ|NTL|-35.4511|173.8170|571|3000|G|S|0|2026
-MRO|NZMS|Hood Airport|Masterton|Masterton|NZ|WGN|-40.9746|175.6345|364|4101|P|M|0|68609
-NPE|NZNR|Hawke's Bay Airport|Napier|Napier|NZ|HKB|-39.4658|176.8700|6|5741|P|M|1|225901
-NPL|NZNP|New Plymouth Airport|New Plymouth|New Plymouth|NZ|TKI|-39.0086|174.1790|97|4298|P|M|1|174012
-NSN|NZNS|Nelson Airport|Nelson|Nelson|NZ|NSN|-41.2967|173.2243|17|4420|P|M|1|125815
 NZ-0026|NZPT|Pitt Island Aerodrome|Pitt Island|Pitt Island|NZ|WGN|-44.2932|-176.2035|0|3000|G|S|1|150
-PMR|NZPM|Palmerston North Airport|Palmerston North|Palmerston North|NZ|MWT|-40.3206|175.6170|151|6240|G|M|1|187091
-ROT|NZRO|Rotorua Regional Airport|Rotorua|Rotorua|NZ|BOP|-38.1092|176.3170|935|5321|P|M|1|97912
-TIU|NZTU|Timaru Airport|Timaru|Timaru|NZ|CAN|-44.3028|171.2250|89|4200|P|M|1|73435
-TKZ|NZTO|Tokoroa Airfield|Tokoroa|Tokoroa|NZ|WKO|-38.2367|175.8920|1220|2789|G|S|0|7420
-TRG|NZTG|Tauranga Airport|Tauranga|Tauranga|NZ|BOP|-37.6719|176.1960|13|5988|P|M|1|223449
-TUO|NZAP|Taupo Airport|Taupo|Taupo|NZ|WKO|-38.7397|176.0840|1335|4547|P|M|1|45884
-TWZ|NZUK|Pukaki Airport|Twitzel|Twitzel|NZ|CAN|-44.2350|170.1180|1575|3550|P|M|0|7699
-WAG|NZWU|Wanganui Airport|Wanganui|Wanganui|NZ|MWT|-39.9635|175.0244|27|4521|P|M|1|81036
-WHK|NZWK|Whakatane Airport|Whakatane|Whakatane|NZ|BOP|-37.9222|176.9170|20|4200|P|M|1|47469
-WIR|NZWO|Wairoa Airport|Wairoa|Wairoa|NZ|HKB|-39.0119|177.4044|42|3000|P|M|0|18440
-WKA|NZWF|Wanaka Airport|Wanaka|Wanaka|NZ|OTA|-44.7221|169.2463|1142|3937|P|M|1|14090
 WLG|NZWN|Wellington International Airport|Wellington|Wellington|NZ|WGN|-41.3268|174.8069|41|6352|P|L|1|1067696
-WRE|NZWR|Whangarei Airport|Whangarei|Whangarei|NZ|NTL|-35.7693|174.3637|133|3599|P|M|1|89936
-WSZ|NZWS|Westport Airport|Westport|Westport|NZ|WTC|-41.7371|171.5790|13|4200|P|M|1|9018
 ZQN|NZQN|Queenstown Airport|Queenstown|Queenstown, NZ|NZ|OTA|-45.0192|168.7464|1171|6204|P|L|1|45903
 AAA|NTGA|Anaa Airport|Anaa|Anaa|PF|A|-17.3526|-145.5100|10|4921|P|M|1|530
 AHE|NTHE|Ahe Airport|Ahe Atoll|Ahe Atoll|PF|A|-14.4281|-146.2570|11|4068|P|M|1|150
@@ -308,7 +175,6 @@ FHZ|NTKH|Fakahina Airport|Fakahina|Fakahina|PF|A|-15.9923|-140.1642|3|3000|G|S|1
 GMR|NTGJ|Totegegie Airport|Rikitea|Rikitea|PF|A|-23.0799|-134.8900|7|6562|P|M|1|1103
 HHZ|NTGH|Hikueru Airport|Hikueru|Hikueru|PF|A|-17.5483|-142.6120|12|3000|G|S|1|150
 HOI|NTTO|Hao Airport|Otepa|Otepa|PF|A|-18.0748|-140.9460|10|11089|P|M|1|1009
-HUH|NTTH|Huahine-Fare Airport|Fare|Fare|PF|A|-16.6871|-151.0216|7|4921|P|M|1|4275
 KHZ|NTKA|Kauehi Airport|Kauehi|Kauehi|PF|A|-15.7806|-145.1284|13|3000|G|S|1|150
 KKR|NTGK|Kaukura Airport|Raitahiti|Raitahiti|PF|A|-15.6633|-146.8850|11|3543|P|M|1|150
 MKP|NTGM|Makemo Airport|Makemo|Makemo|PF|A|-16.5839|-143.6580|3|4920|P|M|1|150
@@ -316,7 +182,6 @@ NAU|NTGN|Napuka Island Airport|Napuka Island|Napuka Island|PF|A|-14.1774|-141.26
 NHV|NTMD|Nuku Hiva Airport|Nuku Hiva|Nuku Hiva|PF|A|-8.7956|-140.2290|220|5578|P|M|1|1224
 NIU|NTKN|Naiu Airport|Naiu Atoll|Naiu Atoll|PF|A|-16.1193|-146.3688|50|3000|G|S|1|150
 PPT|NTAA|Fa'a'a International Airport|Papeete|Papeete|PF|A|-17.5535|-149.6069|5|11360|P|L|1|190552
-RFP|NTTR|Raiatea Airport|Uturoa|Uturoa|PF|A|-16.7229|-151.4660|3|4593|P|M|1|11394
 RGI|NTTG|Rangiroa Airport|Avatoru|Avatoru|PF|A|-14.9543|-147.6610|10|6890|P|M|1|655
 RMT|NTAM|Rimatara Airport|Rimatara Island|Rimatara Island|PF|A|-22.6373|-152.8059|60|4565|G|S|1|150
 RRR|NTKO|Raroia Airport|Raroia|Raroia|PF|A|-16.0505|-142.4766|18|3000|G|S|1|150
@@ -329,14 +194,10 @@ UAP|NTMP|Ua Pou Airport|Ua Pou|Ua Pou|PF|A|-9.3517|-140.0780|16|2723|P|S|1|150
 ATN|AYNX|Namatanai Airport|Namatanai|Namatanai|PG|NIK|-3.6695|152.4380|150|3494|G|S|0|1258
 AUJ|AYAT|Ambunti Airport|Ambunti|Ambunti|PG|ESW|-4.2157|142.8232|50|2461|G|S|0|2073
 AYU|AYAY|Aiyura Airport|Aiyura Valley|Aiyura Valley|PG|EHG|-6.3381|145.9042|5355|4200|G|S|0|3513
-BNM|AYBD|Bodinumu Airport|Bodinumu|Bodinumu|PG|CPM|-9.1078|147.6667|3700|3000|G|S|0|458
 BOT|AYET|Bosset Airport|Bosset|Bosset|PG|WPD|-7.2373|141.1063|80|2297|G|S|1|150
-BUA|AYBK|Buka Airport|Buka Island|Buka Island|PG|NSB|-5.4223|154.6727|11|5125|P|M|1|150
 BUL|AYBU|Bulolo Airport|Bulolo|Bulolo|PG|MPL|-7.2163|146.6495|2240|4373|G|S|0|10112
-CMU|AYCH|Chimbu Airport|Kundiawa|Kundiawa|PG|CPK|-6.0243|144.9710|4974|3330|P|M|1|11188
 DAU|AYDU|Daru Airport|Daru|Daru|PG|WPD|-9.0868|143.2080|20|4593|P|M|1|15214
 DOI|AYDO|Doini Airport|Castori Islets|Castori Islets|PG|MBA|-10.7009|150.7218|31|2051|G|S|0|413
-EFG|AYEF|Efogi Airport|Efogi|Efogi|PG|CPM|-9.1538|147.6598|3900|1598|G|S|0|367
 FIN|AYFI|Finschhafen Airport|Buki|Buki|PG|MPL|-6.6218|147.8541|60|3000|G|S|0|809
 GKA|AYGA|Goroka Airport|Goronka|Goronka|PG|EHG|-6.0817|145.3920|5282|5400|P|M|1|20344
 GMI|AYGT|Gasmata Island Airport|Gasmata Island|Gasmata Island|PG|WBK|-6.2711|150.3310|23|3000|G|S|1|150
@@ -345,9 +206,6 @@ HGU|AYMH|Mount Hagen Kagamuga Airport|Mount Hagen|Mount Hagen|PG|WHM|-5.8282|144
 HKN|AYHK|Hoskins Airport|Kimbe|Kimbe|PG|WBK|-5.4638|150.4073|66|6644|P|M|1|18847
 IHU|PG-IHU|Ihu Airport|Ihu|Ihu|PG|GPK|-7.8976|145.3960|70|2648|G|S|0|408
 KDR|AYKC|Kandrian Airport|Kandrian|Kandrian|PG|WBK|-6.1922|149.5478|280|3000|G|S|0|1014
-KIE|AYIQ|Aropa Airport|Kieta|Kieta|PG|NSB|-6.3057|155.7282|20|5397|P|S|1|17799
-KKD|AYKO|Kokoda Airport|Kokoda|Kokoda|PG|NPP|-8.8847|147.7310|1240|2805|G|S|0|2699
-KMA|AYKM|Kerema Airport|Kerema|Kerema|PG|GPK|-7.9636|145.7710|10|3044|P|M|1|9672
 KRI|AYKK|Kikori Airport|Kikori|Kikori|PG|GPK|-7.4244|144.2501|50|3000|G|S|1|150
 KVG|AYKV|Kavieng Airport|Kavieng|Kavieng|PG|NIK|-2.5794|150.8080|7|5592|P|M|1|14490
 LAE|AYNZ|Nadzab Tomodachi International Airport|Lae|Lae|PG|MPL|-6.5680|146.7265|239|8000|P|L|1|89138
@@ -357,16 +215,11 @@ LNV|AYKY|Londolovit Airport|Londolovit|Londolovit|PG|NIK|-3.0436|152.6290|167|39
 LSA|AYKA|Losuia Airport|Losuia|Losuia|PG|MBA|-8.5058|151.0810|27|5348|G|S|1|150
 MAG|AYMD|Madang Airport|Madang|Madang|PG|MPM|-5.2071|145.7890|20|5174|P|M|1|27419
 MAS|AYMO|Momote Airport|Manus Island|Manus Island|PG|MRL|-2.0619|147.4240|12|6136|P|M|1|5806
-MDU|AYMN|Mendi Airport|Mendi|Mendi|PG|SHM|-6.1477|143.6570|5680|4411|P|M|1|31302
-MHY|AYEH|Morehead Airport|Morehead|Morehead|PG|WPD|-8.7141|141.6444|100|4298|G|S|0|2246
 MIS|AYMS|Misima Island Airport|Misima Island|Misima Island|PG|MBA|-10.6892|152.8380|26|3937|G|S|1|150
 MLQ|AYMP|Malalaua Airport|Malalaua|Malalaua|PG|GPK|-8.0714|146.1555|20|3609|G|S|0|1233
-MRM|AYMA|Manari Airport|Manari|Manari|PG|CPM|-9.1908|147.6219|2630|3000|G|S|0|304
 MXH|AYMR|Moro Airport|Moro|Moro|PG|SHM|-6.3633|143.2380|2740|5774|G|S|1|150
-OBX|AYOB|Obo Airport|Obo|Obo|PG|WPD|-7.5906|141.3243|29|1969|G|S|1|150
 OLQ|AYOV|Olsobip Airport|Olsobip|Olsobip|PG|WPD|-5.3897|141.5153|1500|2018|G|S|0|1179
 OPU|AYBM|Balimo Airport|Balimo|Balimo|PG|WPD|-8.0500|142.9330|51|6000|G|M|1|150
-PNP|AYGR|Girua Airport|Popondetta|Popondetta|PG|NPP|-8.8045|148.3090|311|5485|P|M|1|27179
 POM|AYPY|Port Moresby Jacksons International Airport|Port Moresby|Port Moresby|PG|NCD|-9.4434|147.2200|146|9022|P|L|1|288732
 RAB|AYTK|Tokua Airport|Kokopo|Kokopo|PG|EBR|-4.3405|152.3800|49|5643|P|M|1|34631
 RAW|RAW|Arawa Airport|Arawa|Arawa|PG|NSB|-6.2206|155.5714|20|3000|G|S|0|28994
@@ -377,18 +230,13 @@ TDS|AYSS|Sasereme Airport|Sasereme|Sasereme|PG|WPD|-7.6217|142.8680|121|2953|G|S
 TEO|AYTY|Terapo Airport|Terapo Mission|Terapo Mission|PG|GPK|-8.1697|146.1944|15|2756|G|S|0|1798
 TFI|AYTU|Tufi Airport|Tufi|Tufi|PG|NPP|-9.0760|149.3198|85|2887|G|S|1|150
 TIZ|AYTA|Tari Airport|Tari|Tari|PG|HLA|-5.8450|142.9480|5500|5197|G|S|1|7663
-TPI|AYTI|Tapini Airport|Tapini|Tapini|PG|CPM|-8.3567|146.9892|3100|3000|G|S|1|150
 UBI|AYUI|Buin Airport|Buin|Buin|PG|NSB|-6.7292|155.6833|230|1640|G|S|0|574
 UNG|AYKI|Kiunga Airport|Kiunga|Kiunga|PG|WPD|-6.1257|141.2820|88|3691|G|S|1|11536
-UUU|UUU|Manumu Airport|Manumu|Manumu|PG|CPM|-9.0746|147.5735|1800|3000|G|S|0|552
-VAI|AYVN|Vanimo Airport|Vanimo|Vanimo|PG|SAN|-2.6926|141.3028|10|5775|P|M|1|42888
 VMU|AYBA|Baimuru Airport|Baimuru|Baimuru|PG|GPK|-7.4970|144.8218|27|2953|G|M|1|150
-WBM|AYWD|Wapenamanda Airport|Wapenamanda|Wapenamanda|PG|EPW|-5.6353|143.8922|5889|5052|P|M|1|11437
 WKN|AYWQ|Wakunai Airport|Wakunai|Wakunai|PG|NSB|-5.8603|155.2223|20|3000|G|S|0|448
 WUG|AYWU|Wau Airport|Wau|Wau, PG|PG|MPL|-7.3456|146.7186|3600|3000|G|S|0|10478
 WWK|AYWK|Wewak International Airport|Wewak|Wewak|PG|ESW|-3.5838|143.6690|19|5234|P|M|1|18230
 ROR|PTRO|Roman Tmetuchl International Airport|Babelthuap Island|Babelthuap Island|PW|004|7.3670|134.5441|176|7200|P|L|1|41006
-AKS|AGGA|Gwaunaru'u Airport|Auki|Auki|SB|ML|-8.7026|160.6820|5|3100|G|S|1|5419
 BAS|AGGE|Ballalae Airport|Ballalae|Ballalae|SB|WE|-6.9907|155.8867|5|5413|G|S|1|176
 BNY|AGGB|Bellona/Anua Airport|Anua|Anua|SB|RB|-11.3022|159.7983|60|2187|G|S|1|150
 CHY|AGGC|Choiseul Bay Airport|Choiseul Bay|Choiseul Bay|SB|CH|-6.7119|156.3961|0|2164|G|S|1|1053
@@ -398,34 +246,27 @@ GZO|AGGN|Nusatupe Airport|Gizo|Gizo|SB|WE|-8.0978|156.8640|13|2871|G|S|1|6583
 HIR|AGGH|Honiara International Airport|Honiara|Honiara|SB|GU|-9.4280|160.0550|28|7218|P|L|1|239044
 IRA|AGGK|Ngorangora Airport|Kirakira|Kirakira|SB|MK|-10.4497|161.8980|54|4377|G|S|1|2107
 KGE|AGKG|Kaghau Airport|Kagau Island|Kagau Island|SB|CH|-7.3305|157.5850|30|2428|G|S|1|150
-MHM|AGOB|Manaoba Airport|Manaoba|Manaoba|SB|ML|-8.3250|160.8005|14|3000|G|S|1|150
 MNY|AGGO|Mono Airport|Stirling Island|Stirling Island|SB|WE|-7.4169|155.5650|35|3281|G|S|1|150
 MUA|AGGM|Munda Airport|Munda|Munda|SB|WE|-8.3280|157.2630|10|4593|P|M|1|10942
 NNB|AGGT|Santa Ana Airport|Santa Ana Island|Santa Ana Island|SB|MK|-10.8480|162.4541|3|2655|G|S|1|150
 RBV|AGRM|Ramata Airport|Ramata|Ramata|SB|WE|-8.1681|157.6430|0|2500|G|S|1|150
 RNL|AGGR|Rennell/Tingoa Airport|Rennell Island|Rennell Island|SB|RB|-11.5500|160.0628|550|2206|G|S|1|150
-RUS|AGGU|Marau Airport|Marau|Marau|SB|GU|-9.8617|160.8250|3|2001|G|S|1|150
 SCZ|AGGL|Santa Cruz/Graciosa Bay/Luova Airport|Santa Cruz|Santa Cruz, SB|SB|TE|-10.7203|165.7950|18|2999|G|S|1|553
 VAO|AGGV|Suavanao Airport|Suavanao|Suavanao|SB|IS|-7.5856|158.7310|20|2789|G|S|1|150
-XYA|AGGY|Yandina Airport|Yandina|Yandina|SB|CE|-9.0928|159.2184|60|3000|G|S|1|150
-HPA|NFTL|Lifuka Island Airport|Lifuka|Lifuka|TO|02|-19.7770|-174.3410|31|3937|P|M|1|3610
 NTT|NFTP|Kuini Lavenia Airport|Niuatoputapu|Niuatoputapu|TO|03|-15.9773|-173.7911|30|3000|G|S|1|301
 TBU|NFTF|Fua'amotu International Airport|Nuku'alofa|Nuku'alofa|TO|04|-21.2414|-175.1492|126|8795|P|L|1|73053
 VAV|NFTV|Vava'u International Airport|Vava'u Island|Vava'u Island|TO|05|-18.5853|-173.9620|236|5593|P|L|1|8346
 FUN|NGFU|Funafuti International Airport|Funafuti|Funafuti|TV|FUN|-8.5239|179.1970|9|5040|P|M|1|10529
-CCV|NVSF|Craig Cove Airport|Craig Cove|Craig Cove|VU|MAP|-16.2650|167.9240|69|2674|P|S|1|150
 FTA|NVVF|Futuna Airport|Futuna Island|Futuna Island, VU|VU|TAE|-19.5164|170.2320|95|2297|G|S|1|150
 LNB|NVSM|Lamen Bay Airport|Lamen Bay|Lamen Bay|VU|SEE|-16.5842|168.1590|7|2789|G|S|1|150
 LNE|NVSO|Lonorore Airport|Lonorore|Lonorore|VU|PAM|-15.8656|168.1720|43|2175|G|S|1|150
 LOD|NVSG|Longana Airport|Longana|Longana|VU|PAM|-15.3067|167.9670|167|2887|G|S|1|150
 LPM|NVSL|Lamap Airport|Lamap|Lamap|VU|MAP|-16.4611|167.8293|7|3000|G|S|1|150
-NUS|NVSP|Norsup Airport|Norsup|Norsup|VU|MAP|-16.0797|167.4010|23|2972|P|S|1|3276
 OLJ|NVSZ|North West Santo Airport|Olpoi|Olpoi|VU|SAM|-14.8817|166.5580|50|2362|G|S|1|150
 PBJ|NVSI|Tavie Airport|Paama Island|Paama Island|VU|MAP|-16.4320|168.2355|69|1968|G|S|1|150
 SLH|NVSC|Sola Airport|Sola|Sola|VU|TOB|-13.8517|167.5370|7|2723|G|S|1|1171
 SON|NVSS|Santo Pekoa International Airport|Luganville|Luganville|VU|SAM|-15.5050|167.2200|184|6523|P|M|1|16124
 SSR|NVSH|Sara Airport|Pentecost Island|Pentecost Island|VU|PAM|-15.4708|168.1520|493|1969|G|S|1|150
-TAH|NVVW|Whitegrass Airport|Tanna Island|Tanna Island|VU|TAE|-19.4551|169.2240|19|4035|P|M|1|1437
 TGH|NVST|Tongoa Airport|Tongoa Island|Tongoa Island|VU|SEE|-16.8911|168.5510|443|2329|G|S|1|150
 VLI|NVVV|Bauerfield International Airport|Port Vila|Port Vila|VU|SEE|-17.6993|168.3200|70|8530|P|L|1|38386
 VLS|NVSV|Valesdir Airport|Epi Island|Epi Island|VU|SEE|-16.7961|168.1770|10|2625|G|S|1|150

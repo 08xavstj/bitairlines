@@ -4,108 +4,37 @@
 enum AirportRows_CAR {
     static let rows = #"""
 ANU|TAPA|V. C. Bird International Airport|Osbourn|Osbourn|AG|03|17.1367|-61.7927|62|9003|P|L|1|114097
-BBQ|TAPB|Burton-Nibbs International Airport|Codrington|Codrington|AG|10|17.6212|-61.7983|28|6100|P|M|1|5438
 AUA|TNCA|Queen Beatrix International Airport|Oranjestad|Oranjestad|AW|A|12.5011|-70.0143|60|9000|P|L|1|233843
 BGI|TBPB|Grantley Adams International Airport|Bridgetown|Bridgetown|BB|01|13.0747|-59.4910|169|11000|P|L|1|119425
-SBH|TFFJ|St. Jean Airport|Gustavia|Gustavia|BL|A|17.9044|-62.8433|49|2119|P|M|1|9903
-BON|TNCB|Flamingo International Airport|Kralendijk|Kralendijk|BQ|BO|12.1310|-68.2685|20|9449|P|L|1|54449
-EUX|TNCE|F. D. Roosevelt Airport|Oranjestad|Oranjestad, BQ|BQ|SE|17.4965|-62.9794|129|4265|P|M|1|5949
-SAB|TNCS|Juancho E. Yrausquin Airport|Zion's Hill|Zion's Hill|BQ|SA|17.6453|-63.2205|60|1312|P|M|1|5930
-ASD|MYAF|Andros Town Airport|Andros Town|Andros Town|BS|NS|24.6979|-77.7956|5|4058|P|M|1|12461
-ATC|MYCA|Arthur's Town Airport|Arthur's Town|Arthur's Town|BS|CI|24.6294|-75.6738|18|7015|P|M|1|1320
-AXP|MYAP|Spring Point Airport|Spring Point|Spring Point|BS|AK|22.4418|-73.9709|11|5000|P|M|1|150
-BIM|MYBS|South Bimini Airport|South Bimini|South Bimini|BS|BI|25.6999|-79.2647|10|5409|P|M|1|3222
-CCZ|MYBC|Chub Cay Airport|Chub Cay|Chub Cay|BS|NS|25.4171|-77.8809|5|5000|P|M|1|9260
-CRI|MYCI|Colonel Hill Airport|Colonel Hill|Colonel Hill|BS|CK|22.7456|-74.1824|5|4061|P|M|1|214
-ELH|MYEH|North Eleuthera Airport|North Eleuthera|North Eleuthera|BS|HI|25.4758|-76.6808|13|6020|P|M|1|8795
 FPO|MYGF|Grand Bahama International Airport|Freeport|Freeport|BS|FP|26.5580|-78.6956|7|11019|P|L|1|114900
-GGT|MYEF|Exuma International Airport|Moss Town|Moss Town|BS|EX|23.5626|-75.8780|9|7051|P|M|1|5754
-GHB|MYEM|Governor's Harbour Airport|Governor's Harbour|Governor's Harbour|BS|CE|25.2847|-76.3310|26|8024|P|M|1|709
-IGA|MYIG|Inagua Airport|Matthew Town|Matthew Town|BS|IN|20.9750|-73.6669|8|7020|P|M|1|452
 LGI|MYLD|Deadman's Cay Airport|Deadman's Cay|Deadman's Cay|BS|LI|23.1790|-75.0936|9|4000|P|M|1|1800
-MHH|MYAM|Leonard M. Thompson International Airport|Marsh Harbour|Marsh Harbour|BS|CO|26.5107|-77.0843|6|6100|P|M|1|6362
-MYG|MYMM|Mayaguana Airport|Abraham Bay Settlement|Abraham Bay Settlement|BS|MG|22.3795|-73.0135|11|7297|P|M|1|217
 NAS|MYNN|Lynden Pindling International Airport|Nassau|Nassau|BS|NP|25.0390|-77.4662|16|11353|P|L|1|214146
-NSB|BS-NSB|Bimini North Seaplane Base|Bimini|Bimini|BS|BI|25.7670|-79.2500|0|0|W|W|1|150
-RSD|MYER|Rock Sound International Airport|Rock Sound|Rock Sound|BS|SE|24.8916|-76.1776|10|7213|P|M|1|2028
-SAQ|MYAN|San Andros Airport|Andros Island|Andros Island|BS|NS|25.0538|-78.0490|5|5025|P|M|1|14183
 SML|MYLS|Stella Maris Airport|Stella Maris|Stella Maris|BS|LI|23.5823|-75.2686|10|4000|P|M|1|1032
-TBI|MYCB|New Bight Airport|Cat Island|Cat Island|BS|CI|24.3153|-75.4523|5|5050|P|M|1|150
-TCB|MYAT|Treasure Cay Airport|Treasure Cay|Treasure Cay|BS|CO|26.7453|-77.3913|8|7001|P|M|1|7891
-TYM|MYES|Staniel Cay Airport|Staniel Cay|Staniel Cay|BS|EX|24.1691|-76.4391|5|3030|P|M|0|457
-TZN|MYAK|Congo Town Airport|Andros|Andros|BS|SA|24.1587|-77.5898|15|5300|P|M|1|150
 ZSA|MYSM|San Salvador International Airport|San Salvador|San Salvador, BS|BS|SS|24.0630|-74.5232|24|8000|P|L|1|1501
-AVI|MUCA|Maximo Gomez Airport|Ciro Redondo|Ciro Redondo|CU|08|22.0271|-78.7896|335|11588|P|M|0|183607
-BCA|MUBA|Gustavo Rizo Airport|Baracoa|Baracoa|CU|14|20.3653|-74.5062|26|6070|P|M|1|116383
-BYM|MUBY|Carlos Manuel de Cespedes Airport|Bayamo|Bayamo|CU|12|20.3964|-76.6214|203|6887|P|M|1|278125
-CCC|MUCC|Jardines Del Rey Airport|Cayo Coco|Cayo Coco|CU|08|22.4610|-78.3284|13|9842|P|M|1|61757
-CFG|MUCF|Jaime Gonzalez Airport|Cienfuegos|Cienfuegos|CU|06|22.1500|-80.4142|102|7874|P|M|1|346739
 CMW|MUCM|Ignacio Agramonte International Airport|Camaguey|Camaguey|CU|09|21.4199|-77.8480|413|9842|P|L|1|765866
-CYO|MUCL|Vilo Acuna International Airport|Cayo Largo del Sur|Cayo Largo del Sur|CU|99|21.6165|-81.5460|10|9869|P|M|1|150
-GAO|MUGT|Mariana Grajales Airport|Guantanamo|Guantanamo|CU|14|20.0853|-75.1583|56|8025|P|M|0|162021
-GER|MUNG|Rafael Cabrera Airport|Nueva Gerona|Nueva Gerona|CU|99|21.8347|-82.7838|79|8202|P|M|1|19145
 HAV|MUHA|Jose Marti International Airport|Havana|Havana|CU|03|22.9892|-82.4091|210|13123|P|L|1|6377467
 HOG|MUHG|Frank Pais International Airport|Holguin|Holguin|CU|11|20.7851|-76.3155|361|10624|P|L|1|776394
-MOA|MUMO|Orestes Acosta Airport|Moa|Moa|CU|11|20.6539|-74.9222|16|6102|P|M|0|91608
-MZO|MUMZ|Sierra Maestra International Airport|Manzanillo|Manzanillo, CU|CU|12|20.2886|-77.0875|112|7875|P|M|1|256086
 SCU|MUCU|Antonio Maceo International Airport|Santiago|Santiago, CU|CU|13|19.9747|-75.8355|249|13130|P|L|1|875234
 SNU|MUSC|Abel Santamaria International Airport|Santa Clara|Santa Clara|CU|05|22.4922|-79.9431|338|9898|P|L|1|1152898
-TND|MUTD|Alberto Delgado Airport|Trinidad|Trinidad|CU|07|21.7883|-79.9972|125|5909|P|M|1|210563
 VRO|MUKW|Kawama Airport|Santa Marta|Santa Marta, CU|CU|04|23.1240|-81.3016|16|4850|P|M|0|261015
-VTU|MUVT|Hermanos Ameijeiras Airport|Las Tunas|Las Tunas|CU|10|20.9876|-76.9358|328|5971|P|M|1|287982
 CUR|TNCC|Hato International Airport|Willemstad|Willemstad|CW|A|12.1889|-68.9598|29|11188|P|L|1|219501
-DCF|TDCF|Canefield Airport|Canefield|Canefield|DM|10|15.3367|-61.3921|13|3130|P|M|1|34596
-DOM|TDPD|Douglas-Charles Airport|Marigot|Marigot|DM|02|15.5467|-61.3011|73|6352|P|M|1|24841
 BRX|MDBH|Maria Montez International Airport|Barahona|Barahona|DO|04|18.2515|-71.1204|10|9843|P|M|1|254418
-JBQ|MDJB|La Isabela International Airport|La Isabela|La Isabela|DO|01|18.5725|-69.9856|98|5412|P|M|1|1799605
-LRM|MDLR|Casa De Campo International Airport|La Romana|La Romana|DO|12|18.4522|-68.9111|213|9678|P|L|1|700967
-POP|MDPP|Gregorio Luperon International Airport|Puerto Plata|Puerto Plata|DO|18|19.7579|-70.5700|15|10108|P|M|1|338471
-PUJ|MDPC|Punta Cana International Airport|Punta Cana|Punta Cana|DO|11|18.5671|-68.3646|47|10171|P|L|1|215469
 SDQ|MDSD|Las Americas International Airport|Santo Domingo|Santo Domingo|DO|01|18.4297|-69.6689|59|11000|P|L|1|2624116
 STI|MDST|Cibao International Airport|Santiago|Santiago, DO|DO|25|19.4041|-70.6044|565|8595|P|L|1|2192276
-CRU|TGPZ|Lauriston Airport|Carriacou Island|Carriacou Island|GD|PA|12.4761|-61.4728|5|2625|P|S|1|488
 GND|TGPY|Maurice Bishop International Airport|Saint George's|Saint George's|GD|GE|12.0040|-61.7853|41|9003|P|L|1|22236
-DSD|TFFA|La Desirade Airport|Grande Anse|Grande Anse|GP|A|16.2969|-61.0844|10|1985|P|S|1|4539
-GBJ|TFFM|Marie-Galante Airport|Grand-Bourg|Grand-Bourg|GP|A|15.8689|-61.2701|16|4068|P|M|1|30265
 PTP|TFFR|Maryse Conde International Airport|Pointe-a-Pitre|Pointe-a-Pitre|GP|A|16.2654|-61.5328|36|11499|P|L|1|278670
 CAP|MTCH|Cap Haitien International Airport|Cap Haitien|Cap Haitien|HT|ND|19.7255|-72.2007|10|8701|P|L|1|992227
-CYA|MTCA|Antoine-Simon International Airport|Les Cayes|Les Cayes|HT|SD|18.2711|-73.7883|203|3220|P|M|1|181793
-JAK|MTJA|Jacmel Airport|Jacmel|Jacmel|HT|SE|18.2411|-72.5185|167|3300|P|M|0|254740
-JEE|MTJE|Jeremie Airport|Carrefour Sanon|Carrefour Sanon|HT|GA|18.6631|-74.1703|147|6000|G|M|1|137344
 PAP|MTPP|Toussaint Louverture International Airport|Port-au-Prince|Port-au-Prince|HT|OU|18.5800|-72.2926|122|9974|P|L|1|3955285
-PAX|MTPX|Port-de-Paix Airport|Port-de-Paix|Port-de-Paix|HT|NO|19.9340|-72.8480|9|2100|G|M|0|314012
 KIN|MKJP|Norman Manley International Airport|Kingston|Kingston|JM|01|17.9357|-76.7875|10|8900|P|L|1|1437146
-KTP|MKTP|Tinson Pen Airport|Tinson Pen|Tinson Pen|JM|02|17.9886|-76.8238|16|4300|P|M|1|720780
 MBJ|MKJS|Sangster International Airport|Montego Bay|Montego Bay|JM|08|18.5034|-77.9132|4|10039|P|L|1|361168
-NEV|TKPN|Vance W. Amory International Airport|Charlestown|Charlestown, KN|KN|A|17.2057|-62.5899|14|3996|P|M|1|7423
 SKB|TKPK|Robert L. Bradshaw International Airport|Basseterre|Basseterre|KN|A|17.3108|-62.7191|170|7602|P|L|1|31894
-CYB|MWCB|Charles Kirkconnell International Airport|West End|West End|KY|CB|19.6870|-79.8828|8|6000|P|M|1|11484
 GCM|MWCR|Owen Roberts International Airport|George Town|George Town|KY|GC|19.2928|-81.3577|8|7867|P|L|1|461950
-SLU|TLPC|George F. L. Charles Airport|Castries|Castries|LC|02|14.0202|-60.9929|22|5735|P|M|1|67277
-UVF|TLPL|Hewanorra International Airport|Vieux Fort|Vieux Fort|LC|11|13.7332|-60.9526|14|9003|P|L|1|81010
 FDF|TFFF|Martinique Aime Cesaire International Airport|Fort-de-France|Fort-de-France|MQ|A|14.5910|-61.0032|16|9843|P|L|1|314890
-MNI|TRPG|John A. Osborne Airport|Gerald's Park|Gerald's Park|MS|SP|16.7918|-62.1932|550|1968|P|L|1|36139
-ARE|TJAB|Antonio Nery Juarbe Pol Airport|Arecibo|Arecibo|PR|A|18.4508|-66.6758|23|3975|P|M|0|136756
-BQN|TJBQ|Rafael Hernandez International Airport|Aguadilla|Aguadilla|PR|A|18.4949|-67.1294|237|11702|P|M|1|112854
-CPX|TJCP|Benjamin Rivera Noriega Airport|Culebra|Culebra|PR|A|18.3130|-65.3039|49|2600|P|M|1|58946
-MAZ|TJMZ|Eugenio Maria De Hostos Airport|Mayaguez|Mayaguez|PR|A|18.2557|-67.1485|28|4998|P|M|1|173708
-PSE|TJPS|Mercedita International Airport|Ponce|Ponce|PR|A|18.0083|-66.5630|29|6904|P|M|1|330279
 SJU|TJSJ|Luis Munoz Marin International Airport|San Juan|San Juan|PR|A|18.4394|-66.0018|9|10002|P|L|1|1413631
 SXM|TNCM|Princess Juliana International Airport|Sint Maarten|Sint Maarten|SX|A|18.0410|-63.1089|13|7546|P|L|1|63607
-GDT|MBGT|JAGS McCartney International Airport|Cockburn Town|Cockburn Town|TC|GT|21.4445|-71.1423|13|6362|P|M|1|3622
-NCA|MBNC|North Caicos Airport|North Caicos|North Caicos|TC|NC|21.9161|-71.9430|10|4245|P|M|1|3314
 PLS|MBPV|Providenciales International Airport|Providenciales|Providenciales|TC|PR|21.7737|-72.2683|15|9199|P|L|1|33110
 SLX|MBSY|Salt Cay Airport|Salt Cay|Salt Cay|TC|SL|21.3330|-71.2000|3|3000|G|S|1|383
-XSC|MBSC|South Caicos Airport|South Caicos|South Caicos|TC|SC|21.5157|-71.5285|6|6335|P|M|1|1484
 POS|TTPP|Piarco International Airport|Port of Spain|Port of Spain|TT|TUP|10.5953|-61.3376|58|10500|P|L|1|507446
-TAB|TTCP|A.N.R. Robinson International Airport|Scarborough|Scarborough|TT|TOB|11.1496|-60.8313|38|9002|P|L|1|75012
-CIW|TVSC|Canouan Airport|Canouan|Canouan|VC|06|12.6990|-61.3424|11|5900|P|M|1|3576
-MQS|TVSM|Mustique Airport|Lovell|Lovell|VC|06|12.8879|-61.1802|8|3255|P|M|1|6085
-SVD|TVSA|Argyle International Airport|Kingstown|Kingstown|VC|04|13.1597|-61.1488|136|9000|P|L|1|66866
-UNI|TVSU|Union Island International Airport|Union Island|Union Island|VC|06|12.6001|-61.4119|16|2467|P|M|1|3347
-EIS|TUPJ|Terrance B. Lettsome International Airport|Beef Island|Beef Island|VG|A|18.4455|-64.5417|15|4642|P|L|1|32618
-VIJ|TUPW|Virgin Gorda Airport|Spanish Town|Spanish Town|VG|A|18.4466|-64.4279|9|3100|G|M|1|5521
 STT|TIST|Cyril E. King Airport|Charlotte Amalie|Charlotte Amalie|VI|ST|18.3371|-64.9773|23|7000|P|L|1|131394
-STX|TISX|Henry E. Rohlsen Airport|Christiansted|Christiansted|VI|SC|17.7014|-64.8026|74|10002|P|M|1|39396
 """#
 }

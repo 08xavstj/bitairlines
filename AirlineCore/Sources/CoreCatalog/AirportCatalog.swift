@@ -8,7 +8,11 @@ public enum AirportCatalog {
 
     public static let byCode: [String: Airport] = Dictionary(uniqueKeysWithValues: all.map { ($0.code, $0) })
 
-    public static func airport(_ code: String) -> Airport? { byCode[code] }
+    /// Towns taken off the map (road towns near a city, see tools/data/declutter.py). Not offered anywhere, but an older save
+    /// that flies to one still finds it.
+    public static let retired: [String: Airport] = Dictionary(uniqueKeysWithValues: AirportRows_Retired.rows.split(separator: "\n").compactMap { Airport(row: $0) }.map { ($0.code, $0) })
+
+    public static func airport(_ code: String) -> Airport? { byCode[code] ?? retired[code] }
 
     public static func inCountry(_ country: String) -> [Airport] { all.filter { $0.country == country } }
 
