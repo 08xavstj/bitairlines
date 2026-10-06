@@ -42,7 +42,8 @@ import CoreSim
 
     @Test func aRareFindStaysTwoWeeksThenLeaves() throws {
         var w = try Fixtures.world()
-        let id = try #require(w.addRareFind(.barnFind))
+        let idFound = w.addRareFind(.barnFind)
+        let id = try #require(idFound)
         Self.nextWeek(&w)
         #expect(w.market.listings.contains { $0.id == id }, "still there after one turnover")
         Self.nextWeek(&w)
@@ -52,7 +53,8 @@ import CoreSim
     @Test func eachKindIsPricedByItsShareOfTheValue() throws {
         var w = try Fixtures.world()
         for kind in RareFind.allCases {
-            let id = try #require(w.addRareFind(kind))
+            let idFound = w.addRareFind(kind)
+            let id = try #require(idFound)
             let listing = try #require(w.market.listings.first { $0.id == id })
             let type = try Fixtures.type(listing.typeID)
             let value = Valuation.value(type: type, ageYears: listing.ageYears, condition: listing.condition)
@@ -74,7 +76,8 @@ import CoreSim
     @Test func buyingAHeritageFindPaintsTheAircraft() throws {
         var w = try Fixtures.world()
         w.airline.cash = 100_000_000
-        let id = try #require(w.addRareFind(.heritage))
+        let idFound = w.addRareFind(.heritage)
+        let id = try #require(idFound)
         let planeID = try w.buyUsed(listingID: id)
         let plane = try #require(w.aircraft.first { $0.id == planeID })
         let livery = try #require(plane.livery)
@@ -86,7 +89,8 @@ import CoreSim
     @Test func buyingAnOrdinaryFindKeepsTheAirlineLivery() throws {
         var w = try Fixtures.world()
         w.airline.cash = 100_000_000
-        let id = try #require(w.addRareFind(.lowHours))
+        let idFound = w.addRareFind(.lowHours)
+        let id = try #require(idFound)
         let planeID = try w.buyUsed(listingID: id)
         #expect(w.aircraft.first { $0.id == planeID }?.livery == nil)
     }
@@ -100,7 +104,8 @@ import CoreSim
 
     @Test func aRareListingSurvivesASaveAndLoad() throws {
         var w = try Fixtures.world()
-        let id = try #require(w.addRareFind(.heritage))
+        let idFound = w.addRareFind(.heritage)
+        let id = try #require(idFound)
         let back = try JSONDecoder().decode(World.self, from: Fixtures.encode(w))
         #expect(back.market.listings.first { $0.id == id }?.rare == .heritage)
     }

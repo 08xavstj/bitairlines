@@ -25,7 +25,8 @@ import CoreCatalog
 
     @Test func aNewGameHasAWeeklyGoalAndMeetingItPaysOnce() throws {
         var w = try Fixtures.world()
-        let goal = try #require(w.ops.weeklyGoal)
+        let goalFound = w.ops.weeklyGoal
+        let goal = try #require(goalFound)
         #expect(goal.target >= (Tuning.weeklyGoalFloor[goal.kind] ?? 1))
         #expect(goal.reward >= Tuning.weeklyGoalMinimumReward && !goal.done)
         #expect(w.weeklyGoalProgress == 0)
@@ -48,9 +49,11 @@ import CoreCatalog
     @Test func eachMondayBringsTheNextKindOfGoal() throws {
         var w = try Fixtures.world()
         w.pausePolicy = .never
-        let first = try #require(w.ops.weeklyGoal)
+        let firstFound = w.ops.weeklyGoal
+        let first = try #require(firstFound)
         w.advance(byMinutes: 8 * 1440)
-        let next = try #require(w.ops.weeklyGoal)
+        let nextFound = w.ops.weeklyGoal
+        let next = try #require(nextFound)
         #expect(next.week > first.week)
         #expect(next.kind != first.kind || WeeklyGoalKind.allCases.count == 1)
     }
