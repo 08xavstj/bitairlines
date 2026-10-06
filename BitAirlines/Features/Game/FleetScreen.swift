@@ -25,8 +25,13 @@ enum FleetText {
         if let jobID = plane.jobID, let job = world.ops.jobs.first(where: { $0.id == jobID }) {
             return "On a job: \(Words.name(job.kind).lowercased()) to \(Place.name(job.to))"
         }
-        guard let id = plane.routeID, let route = world.routes.first(where: { $0.id == id }) else { return "No route" }
-        return route.name
+        let names = routeNames(plane, in: world)
+        return names.isEmpty ? "No route" : names.joined(separator: ", ")
+    }
+
+    /// The names of every route the aircraft flies, the current one first.
+    static func routeNames(_ plane: Aircraft, in world: World) -> [String] {
+        plane.allRouteIDs.compactMap { id in world.routes.first { $0.id == id }?.name }
     }
 }
 
@@ -123,6 +128,7 @@ struct AircraftSheet: View {
                         SectionTitle("Crew and kit")
                         KitsCard(session: session, aircraftID: aircraftID)
                         SectionTitle("Route")
+                        if plane.routeID != nil { SharedRoutesCard(session: session, plane: plane) }
                         routePicker(plane: plane, type: type, world: world)
                         SectionTitle("Paint")
                         Card {
@@ -172,6 +178,43 @@ struct AircraftSheet: View {
                         } else {
                             Button("Assign") { session.perform { try $0.assign(aircraftID: aircraftID, toRoute: route.id) } }.buttonStyle(.smallProminent)
                                 .disabled(problem != nil || !plane.isDelivered)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/// One aircraft on more than one route: what it flies, and the routes it could also fly.
+struct SharedRoutesCard: View {
+    let session: GameSession
+    let plane: Aircraft
+
+    var body: some View {
+        let world = session.world
+        let others = plane.otherRouteIDs.compactMap { id in world.routes.first { $0.id == id } }
+        let candidates = world.routesToShare(aircraftID: plane.id)
+        Card {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Flies: \(FleetText.routeNames(plane, in: world).joined(separator: ", "))").pixelFont(13.333).foregroundStyle(Theme.accent)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text("Sharing an aircraft fills the days its first route leaves it on the ground.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+                ForEach(others) { route in
+                    HStack {
+                        Text(route.name).pixelFont(10.667).foregroundStyle(Theme.textPrimary).lineLimit(1)
+                        Spacer()
+                        Button("Stop flying this one") { session.perform { try $0.removeRoute(aircraftID: plane.id, routeID: route.id) } }.buttonStyle(.small)
+                    }
+                }
+                if !candidates.isEmpty && plane.allRouteIDs.count < World.maxRoutesPerAircraft {
+                    Text("Also fly").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                    ForEach(candidates) { route in
+                        HStack {
+                            Text(route.name).pixelFont(10.667).foregroundStyle(Theme.textPrimary).lineLimit(1)
+                            Spacer()
+                            Button("Also fly") { session.perform { try $0.addRoute(aircraftID: plane.id, routeID: route.id) } }.buttonStyle(.smallProminent)
                         }
                     }
                 }

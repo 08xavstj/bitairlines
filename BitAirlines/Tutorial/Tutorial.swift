@@ -53,19 +53,11 @@ enum Tutorial {
         return nil
     }
 
-    /// A good first route from home for the starting aircraft: the nearby place where it would earn the most.
+    /// A good first route from home for the starting aircraft: the best of the suggested routes that starts at home.
     static func suggestion(world: World) -> (code: String, perDay: Double)? {
-        guard let home = AirportCatalog.airport(world.airline.home), let type = world.aircraft.first?.type else { return nil }
-        var best: (code: String, perDay: Double)?
-        for airport in AirportCatalog.all where airport.code != home.code {
-            let km = home.distanceKm(to: airport)
-            guard km < 600, type.canFly(km: km), type.canLand(at: airport) else { continue }
-            let stops = [home.code, airport.code]
-            guard world.routeProblem(stops: stops) == nil else { continue }
-            let forecast = world.forecast(stops: stops, type: type)
-            if forecast.isViable, forecast.profitPerDay > (best?.perDay ?? 0) { best = (airport.code, forecast.profitPerDay) }
-        }
-        return best
+        let home = world.airline.home
+        guard let idea = world.routeIdeas(limit: 20).first(where: { $0.stops.first == home }), idea.stops.count == 2 else { return nil }
+        return (code: idea.stops[1], perDay: idea.profitPerDay)
     }
 
     /// What the guide says on each step. Plain words, no jargon.

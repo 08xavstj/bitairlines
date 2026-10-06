@@ -36,11 +36,12 @@ extension World {
         if let problem = jobProblem(jobID: jobID, aircraftID: aircraftID) { throw problem }
         guard let j = ops.jobs.firstIndex(where: { $0.id == jobID }), let i = aircraftIndex(aircraftID) else { throw WorldError.jobUnavailable }
         ops.jobs[j].aircraftID = aircraftID
-        if let rid = aircraft[i].routeID, let r = routeIndex(rid) {
-            routes[r].aircraftIDs.removeAll { $0 == aircraftID }
+        if let rid = aircraft[i].routeID, routeIndex(rid) != nil {
             aircraft[i].returnRouteID = rid
+            let others = aircraft[i].otherRouteIDs
+            aircraft[i].returnOtherRoutesStore = others.isEmpty ? nil : others
         }
-        aircraft[i].routeID = nil
+        detachFromAllRoutes(i)
         aircraft[i].jobID = jobID
         switch aircraft[i].status {
         case .idle, .boarding: aircraft[i].status = .boarding(until: clock.minute)
@@ -120,7 +121,13 @@ extension World {
         aircraft[i].returnRouteID = nil
         // An aircraft still in the air rejoins its route when it lands (assign leaves a flying aircraft to finish its flight).
         if case .flying = aircraft[i].status {} else { aircraft[i].status = .idle }
-        if let back, routeIndex(back) != nil { try? assign(aircraftID: aircraft[i].id, toRoute: back) }
+        let others = aircraft[i].returnOtherRoutesStore ?? []
+        aircraft[i].returnOtherRoutesStore = nil
+        if let back, routeIndex(back) != nil {
+            try? assign(aircraftID: aircraft[i].id, toRoute: back)
+            // A shared aircraft takes up its other routes again (those that still exist and still fit).
+            for rid in others { try? addRoute(aircraftID: aircraft[i].id, routeID: rid) }
+        }
     }
 }
 

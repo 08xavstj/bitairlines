@@ -39,6 +39,8 @@ enum Messages {
         case .kitDoesNotFit: return "That kit is not made for this aircraft."
         case .jobUnavailable: return "That job is no longer on offer."
         case .notEnoughRoom: return "This aircraft has too few seats or too small a hold for the job."
+        case .routesDoNotMeet: return "That route does not touch any airport this aircraft already flies to."
+        case .tooManyRoutes: return "An aircraft can fly at most \(World.maxRoutesPerAircraft) routes."
         }
     }
 

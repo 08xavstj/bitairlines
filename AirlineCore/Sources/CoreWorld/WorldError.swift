@@ -37,4 +37,8 @@ public enum WorldError: Error, Sendable, Hashable {
     case kitDoesNotFit
     case jobUnavailable
     case notEnoughRoom
+    /// A shared aircraft's routes must share an airport.
+    case routesDoNotMeet
+    /// An aircraft already flies the most routes it can (`World.maxRoutesPerAircraft`).
+    case tooManyRoutes
 }

@@ -63,6 +63,10 @@ public struct Aircraft: Sendable, Hashable, Codable, Identifiable {
     public var jobID: Int?
     /// The route it goes back to after the job.
     public var returnRouteID: Int?
+    /// The other routes it flies besides `routeID` (see SharedAircraft.swift); missing from older saves.
+    var otherRoutesStore: [Int]?
+    /// The other routes it goes back to after a job; missing from older saves.
+    var returnOtherRoutesStore: [Int]?
 
     public var eventMinute: Int? {
         switch status {

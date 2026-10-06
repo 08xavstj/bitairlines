@@ -120,11 +120,13 @@ extension World {
         leaveRouteIfItNoLongerFits(i)
     }
 
+    /// Takes the aircraft off each of its routes it can no longer fly (a shared aircraft keeps the ones that still fit).
     mutating func leaveRouteIfItNoLongerFits(_ i: Int) {
-        guard let rid = aircraft[i].routeID, let r = routeIndex(rid), let type = aircraft[i].type else { return }
-        if fitProblem(type: type, route: routes[r], kits: aircraft[i].kits) != nil {
-            routes[r].aircraftIDs.removeAll { $0 == aircraft[i].id }
-            aircraft[i].routeID = nil
+        guard let type = aircraft[i].type else { return }
+        let kits = aircraft[i].kits
+        for rid in aircraft[i].allRouteIDs {
+            guard let r = routeIndex(rid) else { continue }
+            if fitProblem(type: type, route: routes[r], kits: kits) != nil { detach(i, fromRoute: rid) }
         }
     }
 }

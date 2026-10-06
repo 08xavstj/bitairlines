@@ -40,6 +40,7 @@ struct RoutesScreen: View {
         let world = session.world
         Page {
             ScreenHeader(title: "Routes") { Text("\(world.routes.count) routes").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
+            RouteIdeasCard(session: session)
             if world.routes.isEmpty {
                 Card { Text("No routes yet. Open the Map, tap New route, and tap airports in the order you want to fly them. Then assign an aircraft from Fleet.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true) }
             }

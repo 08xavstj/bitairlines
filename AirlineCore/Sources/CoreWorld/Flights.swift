@@ -58,13 +58,20 @@ extension World {
             departOnJob(i, jobID: jobID)
             return
         }
+        // A shared aircraft takes whichever of its routes leaves from here first.
+        pickSharedRoute(i)
         guard let rid = aircraft[i].routeID, let r = routeIndex(rid), let type = aircraft[i].type else {
             aircraft[i].status = .idle
             return
         }
         let route = routes[r]
         guard let l = route.firstLeg(from: aircraft[i].location) else {
-            if !startFerry(index: i, to: route.stops[0]) { aircraft[i].status = .idle; aircraft[i].routeID = nil }
+            if !startFerry(index: i, to: route.stops[0]) {
+                // It cannot reach this route: drop it (another of its routes takes over, or it parks).
+                aircraft[i].status = .idle
+                detach(i, fromRoute: rid)
+                if aircraft[i].routeID != nil { aircraft[i].status = .boarding(until: clock.minute + 1) }
+            }
             return
         }
         let leg = route.legs[l]

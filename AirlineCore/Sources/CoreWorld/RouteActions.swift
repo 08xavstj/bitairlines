@@ -51,7 +51,10 @@ extension World {
 
     public mutating func deleteRoute(id: Int) throws {
         guard let r = routeIndex(id) else { throw WorldError.unknownRoute(id) }
-        for planeID in routes[r].aircraftIDs { try? unassign(aircraftID: planeID) }
+        // A shared aircraft keeps its other routes; one with no route left parks.
+        for planeID in routes[r].aircraftIDs {
+            if let i = aircraftIndex(planeID) { detach(i, fromRoute: id) }
+        }
         routes.removeAll { $0.id == id }
     }
 
@@ -96,7 +99,8 @@ extension World {
         guard let r = routeIndex(routeID) else { throw WorldError.unknownRoute(routeID) }
         let planes = routes[r].aircraftIDs.compactMap { id in aircraft.first { $0.id == id } }
         guard let type = planes.first?.type else { return }
-        routes[r].frequency = suggestedFrequency(route: routes[r], type: type, aircraftCount: planes.count)
+        let share = aircraftShare(onRoute: routeID)
+        routes[r].frequency = suggestedFrequency(route: routes[r], type: type, aircraftShare: share)
         routes[r].autoFrequency = true
     }
 
@@ -138,7 +142,7 @@ extension World {
         return nil
     }
 
-    /// Puts an aircraft on a route. If it is parked somewhere else it first flies there empty.
+    /// Puts an aircraft on a route, and on this route only (it stops flying any other). If it is parked somewhere else it first flies there empty.
     public mutating func assign(aircraftID: Int, toRoute routeID: Int) throws {
         guard let i = aircraftIndex(aircraftID) else { throw WorldError.unknownAircraft(aircraftID) }
         guard let r = routeIndex(routeID) else { throw WorldError.unknownRoute(routeID) }
@@ -148,10 +152,16 @@ extension World {
         if aircraft[i].jobID != nil { throw WorldError.aircraftBusy }
         if let problem = fitProblem(type: type, route: routes[r], kits: aircraft[i].kits) { throw problem }
 
-        if let old = aircraft[i].routeID, let oldIndex = routeIndex(old) { routes[oldIndex].aircraftIDs.removeAll { $0 == aircraftID } }
+        let before = aircraft[i].allRouteIDs
+        detachFromAllRoutes(i)
         aircraft[i].routeID = routeID
         routes[r].aircraftIDs.append(aircraftID)
-        if routes[r].autoFrequency { routes[r].frequency = suggestedFrequency(route: routes[r], type: type, aircraftCount: routes[r].aircraftIDs.count) }
+        if routes[r].autoFrequency {
+            let share = aircraftShare(onRoute: routeID)
+            routes[r].frequency = suggestedFrequency(route: routes[r], type: type, aircraftShare: share)
+        }
+        // Routes it shared before now have less of it.
+        if before.count > 1 { refreshAutoFrequency(routeIDs: before.filter { $0 != routeID }) }
         if case .idle = aircraft[i].status {
             if let leg = routes[r].firstLeg(from: aircraft[i].location) {
                 aircraft[i].legIndex = leg
@@ -164,11 +174,10 @@ extension World {
         }
     }
 
-    /// Takes an aircraft off its route. If it is in the air it finishes the flight and then parks.
+    /// Takes an aircraft off all its routes. If it is in the air it finishes the flight and then parks.
     public mutating func unassign(aircraftID: Int) throws {
         guard let i = aircraftIndex(aircraftID) else { throw WorldError.unknownAircraft(aircraftID) }
-        if let rid = aircraft[i].routeID, let r = routeIndex(rid) { routes[r].aircraftIDs.removeAll { $0 == aircraftID } }
-        aircraft[i].routeID = nil
+        detachFromAllRoutes(i)
         if case .boarding = aircraft[i].status { aircraft[i].status = .idle }
     }
 }
