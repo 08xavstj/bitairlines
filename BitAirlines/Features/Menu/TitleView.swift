@@ -146,15 +146,20 @@ struct SettingsSheet: View {
         @Bindable var settings = settings
         VStack(alignment: .leading, spacing: 10) {
             ScreenHeader(title: "Settings") { Button("Close") { dismiss() }.buttonStyle(.small) }
-            Card {
-                VStack(alignment: .leading, spacing: 12) {
-                    Toggle(isOn: $settings.scanlines) { Text("CRT scanlines").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
-                    Toggle(isOn: $settings.haptics) { Text("Vibration").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
-                    Text("Text size").pixelFont(10.667).foregroundStyle(Theme.textMuted)
-                    PixelChoice(options: TextSize.allCases.map { (label: $0.label, value: $0) }, selection: $settings.textSize)
+            ScrollView {
+                Card {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Toggle(isOn: $settings.scanlines) { Text("CRT scanlines").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                        Toggle(isOn: $settings.haptics) { Text("Vibration").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                        Toggle(isOn: $settings.soundEffects) { Text("Sound effects").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                        Toggle(isOn: $settings.music) { Text("Music").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                        Text("Volume").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                        PixelChoice(options: VolumeLevel.allCases.map { (label: $0.label, value: $0) }, selection: $settings.volume)
+                        Text("Text size").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                        PixelChoice(options: TextSize.allCases.map { (label: $0.label, value: $0) }, selection: $settings.textSize)
+                    }
                 }
             }
-            Spacer()
         }
         .padding(16)
         .screenBackground()

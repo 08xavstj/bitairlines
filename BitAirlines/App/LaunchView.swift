@@ -4,6 +4,8 @@ import SwiftUI
 struct LaunchView: View {
     @Environment(AppSettings.self) private var settings
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.audio) private var audio
     @State private var showSplash = LaunchView.splashWanted
 
     private static var splashWanted: Bool {
@@ -24,5 +26,6 @@ struct LaunchView: View {
             }
         }
         .environment(\.pixelStep, max(PixelFont.step(for: dynamicTypeSize), settings.textSize.rawValue))
+        .onChange(of: scenePhase) { _, phase in audio?.setSuspended(phase != .active) }
     }
 }

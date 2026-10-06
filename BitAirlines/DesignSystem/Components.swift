@@ -42,7 +42,7 @@ struct Chip: View {
                 .foregroundStyle(selected ? Theme.onAccent : Theme.textPrimary)
                 .background(selected ? Theme.accent : Theme.surfaceRaised, in: PixelShape(step: 2))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.tap)
         .accessibilitySelected(selected)
     }
 }

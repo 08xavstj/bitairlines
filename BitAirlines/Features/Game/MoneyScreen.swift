@@ -53,13 +53,13 @@ struct MoneyScreen: View {
                         HStack {
                             Text("\(Format.dollars(loan.remaining)) at \(Int((loan.annualRate * 100).rounded()))%, \(loan.monthsLeft) months left").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
                             Spacer()
-                            Button("Repay") { session.perform { try $0.repayLoan(id: loan.id) } }.buttonStyle(.small).disabled(world.airline.cash < loan.remaining)
+                            Button("Repay") { session.perform(sound: .coin) { try $0.repayLoan(id: loan.id) } }.buttonStyle(.small).disabled(world.airline.cash < loan.remaining)
                         }
                     }
                     if world.airline.loans.isEmpty { Text("No loans.").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
                     PixelStepper(label: "Borrow", value: $loanAmount, range: 100_000...Double(max(100_000, world.borrowingLimit)), step: 100_000, display: { Format.compactMoney(Int($0)) })
                     Text("You can borrow up to \(Format.compactMoney(world.borrowingLimit)) in all. Interest is 8.5% a year, paid back over five years.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
-                    Button("Take the loan") { session.perform { try $0.takeLoan(amount: Int(loanAmount)) } }.buttonStyle(.smallProminent)
+                    Button("Take the loan") { session.perform(sound: .coin) { try $0.takeLoan(amount: Int(loanAmount)) } }.buttonStyle(.smallProminent)
                 }
             }
             SectionTitle("Permits")

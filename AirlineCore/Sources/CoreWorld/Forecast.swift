@@ -47,13 +47,14 @@ extension World {
         return forecast(on: route, type: type, frequency: frequency, aircraftCount: aircraftCount)
     }
 
-    /// The same for a route that exists, using its own schedule and fare, with `aircraftCount` aircraft of this type on it.
-    public func forecast(route: Route, type: AircraftType, aircraftCount: Int) -> RouteForecast {
+    /// The same for a route that exists, using its own fare and (unless `suggestedSchedule`) its own schedule, with `aircraftCount` aircraft of this type on it.
+    /// `suggestedSchedule` is for an aircraft about to be assigned to a route that picks its own schedule.
+    public func forecast(route: Route, type: AircraftType, aircraftCount: Int, suggestedSchedule: Bool = false) -> RouteForecast {
         if let problem = fitProblem(type: type, route: route) {
             return RouteForecast(typeID: type.id, frequency: route.frequency, aircraftNeeded: aircraftCount, passengersPerDay: 0, cargoKgPerDay: 0, loadFactor: 0,
                                  revenuePerDay: 0, costPerDay: 0, profitPerDay: 0, investment: 0, paybackYears: nil, problem: problem)
         }
-        return forecast(on: route, type: type, frequency: route.frequency, aircraftCount: aircraftCount)
+        return forecast(on: route, type: type, frequency: suggestedSchedule ? nil : route.frequency, aircraftCount: aircraftCount)
     }
 
     func forecast(on route: Route, type: AircraftType, frequency: Double?, aircraftCount: Int?) -> RouteForecast {
@@ -79,8 +80,11 @@ extension World {
             mature.maturity = 1.0
             mature.departuresLastWeek = max(1, Int((f * 7).rounded()))
             let share = capture(route: route, leg: mature, from: a, to: b)
-            let carriedPax = min(leg.marketPaxPerDay * share, f * Double(type.seats) * Tuning.loadFactorCap)
-            let carriedCargo = route.carriesCargo ? min(leg.marketCargoKgPerDay * share, f * Double(type.cargoKg) * Tuning.cargoLoadLimit) : 0
+            // Only so many people (and so much freight) wait at a gate at once, which caps what a sparse schedule can ever carry.
+            let paxPerDay = leg.marketPaxPerDay * share
+            let cargoPerDay = leg.marketCargoKgPerDay * share
+            let carriedPax = min(paxPerDay, f * (2.0 * paxPerDay + 4.0), f * Double(type.seats) * Tuning.loadFactorCap)
+            let carriedCargo = route.carriesCargo ? min(cargoPerDay, f * (2.0 * cargoPerDay + 40.0), f * Double(type.cargoKg) * Tuning.cargoLoadLimit) : 0
             let fare = leg.marketFare * route.fareMultiplier
             revenue += carriedPax * fare * (1.0 - Tuning.salesShare) + carriedCargo * Fares.cargoRate(distanceKm: leg.distanceKm)
             let flight = LegEconomics.cost(type: type, from: a, to: b, distanceKm: leg.distanceKm, fuelIndex: market.fuelIndex, wearFactor: wear).total

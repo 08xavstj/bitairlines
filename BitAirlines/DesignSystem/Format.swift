@@ -35,6 +35,20 @@ enum Format {
 
     static func percent(_ value: Double) -> String { "\(Int((value * 100).rounded()))%" }
 
+    /// A forecast daily result: "+$1,246 a day".
+    static func perDay(_ amount: Double) -> String { signedMoney(Int(amount.rounded())) + " a day" }
+
+    /// How long a purchase takes to earn itself back: "5 months", "3.2 years", "never".
+    static func payback(years: Double?) -> String {
+        guard let years, years.isFinite else { return "never" }
+        if years < 1 {
+            let months = max(1, Int((years * 12).rounded()))
+            return months == 1 ? "1 month" : "\(months) months"
+        }
+        if years >= 10 { return "over 10 years" }
+        return oneDecimal(years) + " years"
+    }
+
     static func km(_ value: Double) -> String { number(Int(value.rounded())) + " km" }
 
     static func people(_ n: Int) -> String {

@@ -41,6 +41,7 @@ struct PrimaryButtonChrome<Label: View>: View {
             )
             .padding(.bottom, 4)
             .offset(y: pressed ? 2 : 0)
+            .pressSound(pressed)
     }
 }
 
@@ -67,6 +68,7 @@ struct SecondaryButtonChrome<Label: View>: View {
             )
             .padding(.bottom, 4)
             .offset(y: pressed ? 2 : 0)
+            .pressSound(pressed)
     }
 }
 
@@ -177,6 +179,7 @@ struct SmallButtonChrome<Label: View>: View {
             )
             .padding(.bottom, 3)
             .offset(y: pressed ? 1 : 0)
+            .pressSound(pressed)
     }
 }
 
@@ -201,7 +204,7 @@ struct PixelToggleStyle: ToggleStyle {
                 .frame(width: 52, height: 28)
             }
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.tap)
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isToggle)
         .accessibilityValue(configuration.isOn ? "On" : "Off")
@@ -223,7 +226,7 @@ struct PixelChoice<Value: Hashable>: View {
                         .background(PixelShape(step: 2).fill(on ? Theme.accent : Theme.surfaceRaised))
                         .overlay(PixelShape(step: 2).inset(by: 1).stroke(on ? Theme.accentDark : Theme.panelBorder, lineWidth: 2))
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.tap)
                 .accessibilitySelected(on)
             }
         }
@@ -264,7 +267,7 @@ struct PixelSquareButton: View {
                 .background(PixelShape(step: 2).fill(Theme.surfaceRaised))
                 .overlay(PixelShape(step: 2).inset(by: 1).stroke(isEnabled ? Theme.accent.opacity(0.6) : Theme.panelBorder, lineWidth: 2))
         }
-        .buttonStyle(.plain).accessibilityLabel(label)
+        .buttonStyle(.tap).accessibilityLabel(label)
     }
 }
 
@@ -348,6 +351,7 @@ struct DangerWideChrome<Label: View>: View {
                 PixelShape(step: 2).fill(Theme.bad).offset(y: pressed ? 3 : 0)
             })
             .padding(.bottom, 4).offset(y: pressed ? 2 : 0)
+            .pressSound(pressed)
     }
 }
 

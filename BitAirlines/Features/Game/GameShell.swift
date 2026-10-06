@@ -53,6 +53,7 @@ struct GameShell: View {
             }
         }
         .background(Theme.background.ignoresSafeArea())
+        .background { SoundWatcher(session: session) }
         .overlay { IssueOverlay(session: session, onExit: onExit) }
         .overlay(alignment: .bottom) { NoticeBanner(session: session) }
         .pixelConfirm("Leave the game?", message: "Your airline is saved. You can continue it from the title screen.", confirm: "Leave", isPresented: $confirmExit) { onExit() }
@@ -82,7 +83,7 @@ struct TopBar: View {
                 Text(world.airline.code.uppercased()).pixelFont(13.333).foregroundStyle(Theme.accent).padding(.horizontal, 8).frame(height: 32)
                     .background(PixelShape(step: 2).fill(Theme.surfaceRaised))
             }
-            .buttonStyle(.plain).accessibilityLabel("Menu")
+            .buttonStyle(.tap).accessibilityLabel("Menu")
             VStack(alignment: .leading, spacing: 1) {
                 Text(Format.date(world.clock.date)).pixelFont(10.667).foregroundStyle(Theme.textPrimary)
                 Text("\(Format.weekdays[world.clock.weekday]) \(Format.time(world.clock))").pixelFont(10.667).foregroundStyle(Theme.textMuted)
@@ -116,7 +117,7 @@ struct SpeedControls: View {
                     .frame(minWidth: 34, minHeight: 32)
                     .background(PixelShape(step: 2).fill(on ? Theme.accent : Theme.surfaceRaised))
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.tap)
                 .accessibilityLabel(speed == .paused ? "Pause" : "Speed \(speed.label)")
                 .accessibilitySelected(on)
             }
@@ -148,7 +149,7 @@ struct Rail: View {
                             }
                         }
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.tap)
                     .accessibilityLabel(s.title)
                     .accessibilitySelected(on)
                 }
@@ -229,7 +230,7 @@ struct NoticeBanner: View {
                 Text(notice).pixelFont(10.667).foregroundStyle(Theme.onAccent).padding(.horizontal, 12).padding(.vertical, 6)
                     .background(PixelShape(step: 2).fill(Theme.gold))
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.tap)
             .padding(.bottom, 8)
             .accessibilityLabel(notice)
         }

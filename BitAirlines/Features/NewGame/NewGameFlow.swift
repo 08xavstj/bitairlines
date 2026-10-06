@@ -120,7 +120,7 @@ struct RegionStep: View {
                     .padding(12)
                     .background(PixelPanel(fill: selected ? Theme.surfaceRaised : Theme.surface, border: selected ? Theme.accent : Theme.panelBorder))
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.tap)
                 .accessibilitySelected(selected)
             }
         }
@@ -169,7 +169,7 @@ struct BaseStep: View {
                         .padding(12)
                         .background(PixelPanel(fill: selected ? Theme.surfaceRaised : Theme.surface, border: selected ? Theme.accent : Theme.panelBorder))
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.tap)
                     .accessibilitySelected(selected)
                 }
             }
@@ -240,7 +240,7 @@ struct AircraftStep: View {
                         .padding(10)
                         .background(PixelPanel(fill: selected ? Theme.surfaceRaised : Theme.surface, border: selected ? Theme.accent : Theme.panelBorder))
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.tap)
                     .accessibilitySelected(selected)
                 }
             }

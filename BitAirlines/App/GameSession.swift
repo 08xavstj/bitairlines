@@ -38,6 +38,8 @@ final class GameSession {
     /// A message about the last thing the player tried (for example why a purchase was refused).
     var notice: String?
     let slot: Int
+    /// Set by the game screen, so changes the player makes can be heard.
+    @ObservationIgnored var audio: AudioEngine?
 
     @ObservationIgnored private let store: SaveStore
     @ObservationIgnored private var loop: Task<Void, Never>?
@@ -97,18 +99,21 @@ final class GameSession {
 
     // MARK: Actions (each wraps a World call and reports a refusal as a notice)
 
-    /// Runs a change to the world; if the core refuses, the reason becomes a notice.
+    /// Runs a change to the world; if the core refuses, the reason becomes a notice (and a refusal sound). `sound` plays when it goes through.
     @discardableResult
-    func perform(_ change: (inout World) throws -> Void) -> Bool {
+    func perform(sound: SoundEffect? = nil, _ change: (inout World) throws -> Void) -> Bool {
         do {
             try change(&world)
             notice = nil
+            if let sound { audio?.play(sound) }
             return true
         } catch let error as WorldError {
             notice = Messages.describe(error)
+            audio?.play(.denied)
             return false
         } catch {
             notice = "That did not work."
+            audio?.play(.denied)
             return false
         }
     }

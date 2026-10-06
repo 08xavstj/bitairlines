@@ -58,7 +58,7 @@ struct FleetScreen: View {
                         .padding(10)
                         .background(PixelPanel())
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.tap)
                 }
             }
         }
@@ -124,7 +124,7 @@ struct AircraftSheet: View {
         .padding(16)
         .screenBackground()
         .pixelConfirm("Sell this aircraft?", message: "The dealer pays less than it is worth.", confirm: "Sell", destructive: true, isPresented: $confirmSell) {
-            if session.perform({ _ = try $0.sell(aircraftID: aircraftID) }) { dismiss() }
+            if session.perform(sound: .coin, { _ = try $0.sell(aircraftID: aircraftID) }) { dismiss() }
         }
         .sheet(isPresented: $editingLivery) { LiverySheet(session: session, aircraftID: aircraftID) }
     }
@@ -140,6 +140,7 @@ struct AircraftSheet: View {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(route.name).pixelFont(13.333).foregroundStyle(current ? Theme.accent : Theme.textPrimary)
                             if let problem { Text(Messages.describe(problem)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true) }
+                            else if !current { AssignOutlook(world: world, route: route, type: type) }
                         }
                         Spacer()
                         if current {

@@ -6,6 +6,7 @@ enum AppScreen { case title, newGame, game }
 /// Chooses between the title screen, the new-airline flow and a game in progress.
 struct RootView: View {
     @Environment(AppSettings.self) private var settings
+    @Environment(\.audio) private var audio
     @State private var screen: AppScreen = .title
     @State private var session: GameSession?
     @State private var store = SaveStore()
@@ -27,6 +28,7 @@ struct RootView: View {
             if settings.scanlines { ScanlineOverlay() }
         }
         .background(Theme.background.ignoresSafeArea())
+        .onChange(of: screen, initial: true) { _, now in audio?.setMusic(now == .game ? .flying : .title) }
         #if DEBUG
         .task { launchDemo() }
         #endif

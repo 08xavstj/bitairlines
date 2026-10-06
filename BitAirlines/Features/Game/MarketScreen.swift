@@ -61,7 +61,7 @@ struct UsedCard: View {
                     if locked {
                         Tag(text: "Level \(type.level)", color: Theme.bad)
                     } else {
-                        Button("Buy") { session.perform { _ = try $0.buyUsed(listingID: listing.id) } }.buttonStyle(.smallProminent).disabled(world.airline.cash < listing.price)
+                        Button("Buy") { session.perform(sound: .coin) { _ = try $0.buyUsed(listingID: listing.id) } }.buttonStyle(.smallProminent).disabled(world.airline.cash < listing.price)
                     }
                 }
             }
@@ -90,7 +90,7 @@ struct NewCard: View {
                     if locked {
                         Tag(text: "Level \(type.level)", color: Theme.bad)
                     } else {
-                        Button("Order") { session.perform { _ = try $0.orderNew(typeID: type.id) } }.buttonStyle(.smallProminent).disabled(world.airline.cash < type.priceUSD)
+                        Button("Order") { session.perform(sound: .coin) { _ = try $0.orderNew(typeID: type.id) } }.buttonStyle(.smallProminent).disabled(world.airline.cash < type.priceUSD)
                     }
                 }
             }

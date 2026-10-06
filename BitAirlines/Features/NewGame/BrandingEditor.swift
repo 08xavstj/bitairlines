@@ -40,7 +40,7 @@ struct PaletteGrid: View {
             .frame(width: size, height: size)
             .overlay(Rectangle().stroke(selected ? Theme.textPrimary : Theme.panelBorder, lineWidth: selected ? 3 : 1))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.tap)
         .accessibilityLabel("Colour \(index)")
         .accessibilitySelected(selected)
     }

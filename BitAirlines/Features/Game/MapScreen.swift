@@ -199,9 +199,10 @@ struct RoutePlannerPanel: View {
                 if stops.count >= 2, let problem {
                     Text(Messages.describe(problem)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
                     if case .permitRequired(let country, let price) = problem {
-                        Button("Buy permit \(Format.compactMoney(price))") { session.perform { try $0.buyPermit(country: country) } }.buttonStyle(.small)
+                        Button("Buy permit \(Format.compactMoney(price))") { session.perform(sound: .coin) { try $0.buyPermit(country: country) } }.buttonStyle(.small)
                     }
                 }
+                if stops.count >= 2, problem == nil { ForecastList(session: session, stops: stops) }
                 if let notice = session.notice { Text(notice).pixelFont(10.667).foregroundStyle(Theme.gold) }
                 HStack(spacing: 8) {
                     Button("Open route") { open() }.buttonStyle(.smallProminent).disabled(stops.count < 2 || problem != nil)

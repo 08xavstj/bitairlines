@@ -16,6 +16,16 @@ import CoreWorld
         #expect(Format.signedMoney(-300_000) == "-$300k")
     }
 
+    @Test func forecastFigures() {
+        #expect(Format.perDay(1246.4) == "+$1,246 a day")
+        #expect(Format.perDay(-22) == "-$22 a day")
+        #expect(Format.payback(years: 0.04) == "1 month")
+        #expect(Format.payback(years: 0.5) == "6 months")
+        #expect(Format.payback(years: 3.24) == "3.2 years")
+        #expect(Format.payback(years: 14) == "over 10 years")
+        #expect(Format.payback(years: nil) == "never")
+    }
+
     @Test func datesAndTimes() {
         #expect(Format.date(CalendarDate(year: 2027, month: 1, day: 5)) == "Jan 5, 2027")
         #expect(Format.time(GameClock(minute: 6 * 60 + 5)) == "06:05")
