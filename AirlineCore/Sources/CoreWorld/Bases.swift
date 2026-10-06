@@ -96,7 +96,7 @@ extension World {
     public mutating func build(_ facility: Facility, at code: String) throws {
         if let problem = facilityProblem(facility, at: code) { throw problem }
         guard let airport = AirportCatalog.airport(code) else { throw WorldError.unknownAirport(code) }
-        spendOnOverhead(facilityPrice(facility, at: airport))
+        spendOnInvestment(facilityPrice(facility, at: airport))
         if let b = ops.bases.firstIndex(where: { $0.airport == code }) {
             ops.bases[b].facilities.append(facility)
             ops.bases[b].facilities.sort { Facility.allCases.firstIndex(of: $0)! < Facility.allCases.firstIndex(of: $1)! }

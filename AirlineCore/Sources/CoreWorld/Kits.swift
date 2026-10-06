@@ -100,7 +100,7 @@ extension World {
     public mutating func fit(_ kit: Kit, aircraftID: Int) throws {
         if let problem = kitProblem(kit, aircraftID: aircraftID) { throw problem }
         guard let i = aircraftIndex(aircraftID), let type = aircraft[i].type else { throw WorldError.unknownAircraft(aircraftID) }
-        spendOnOverhead(kitPrice(kit, type: type))
+        spendOnInvestment(kitPrice(kit, type: type))
         aircraft[i].kits = aircraft[i].kits.filter { !kit.exclusiveWith.contains($0) } + [kit]
         aircraft[i].status = .maintenance(until: clock.minute + kit.days * GameClock.minutesPerDay)
         addNews(.kitFitted, subject: aircraft[i].registration, amount: Kit.allCases.firstIndex(of: kit) ?? 0)

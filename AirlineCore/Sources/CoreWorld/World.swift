@@ -8,6 +8,13 @@ public struct DayBook: Sendable, Hashable, Codable {
     public var revenue: Int
     public var flightCosts: Int
     public var overhead: Int
+    /// Money put into the airline that day (aircraft, bases, kits, slots, training, permits, certificates). Older saves lack it.
+    public var investmentStore: Int?
+    public var investments: Int {
+        get { investmentStore ?? 0 }
+        set { investmentStore = newValue }
+    }
+    /// The day's operating result: what flying earned less what running the airline cost. Investments are not in it.
     public var net: Int { revenue - flightCosts - overhead }
 }
 
@@ -24,7 +31,7 @@ public struct World: Sendable, Codable {
     public var pausePolicy: PausePolicy
     /// The last few months of daily results, oldest first.
     public var books: [DayBook]
-    var today: DayBook
+    public internal(set) var today: DayBook
     var nextAircraftID: Int
     var nextRouteID: Int
     var nextIssueID: Int
@@ -68,6 +75,13 @@ public struct World: Sendable, Codable {
         airline.cash -= amount
         airline.stats.expenses += amount
         today.flightCosts += amount
+    }
+
+    /// Money spent on something the airline keeps (an aircraft, a base, a kit): out of the bank, but not an operating cost.
+    mutating func spendOnInvestment(_ amount: Int) {
+        airline.cash -= amount
+        airline.stats.expenses += amount
+        today.investments += amount
     }
 
     mutating func spendOnOverhead(_ amount: Int) {

@@ -117,7 +117,7 @@ extension World {
         guard !ops.pilots[p].isRated(group), ops.pilots[p].trainingFor == nil else { throw WorldError.alreadyBuilt }
         let price = trainingPrice(group)
         guard airline.cash >= price else { throw WorldError.notEnoughCash(needed: price) }
-        spendOnOverhead(price)
+        spendOnInvestment(price)
         ops.pilots[p].trainingFor = group
         ops.pilots[p].trainingUntilMinute = clock.minute + World.trainingDays(group) * GameClock.minutesPerDay
         ops.pilots[p].aircraftID = nil

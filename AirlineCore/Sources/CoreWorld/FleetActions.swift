@@ -14,6 +14,7 @@ extension World {
         if let problem = homeProblem(type) { throw problem }
         guard airline.cash >= listing.price else { throw WorldError.notEnoughCash(needed: listing.price) }
         airline.cash -= listing.price
+        today.investments += listing.price
         let id = takeAircraftID()
         let delivery = clock.minute + Valuation.usedDeliveryMinutes(listing)
         aircraft.append(Aircraft(id: id, typeID: type.id, registration: nextRegistration(), builtDay: clock.dayIndex - Int(listing.ageYears * 365.25),
@@ -35,6 +36,7 @@ extension World {
         if let problem = homeProblem(type) { throw problem }
         guard airline.cash >= type.priceUSD else { throw WorldError.notEnoughCash(needed: type.priceUSD) }
         airline.cash -= type.priceUSD
+        today.investments += type.priceUSD
         let id = takeAircraftID()
         let delivery = clock.minute + Valuation.newDeliveryMinutes(level: type.level)
         aircraft.append(Aircraft(id: id, typeID: type.id, registration: nextRegistration(), builtDay: clock.dayIndex, condition: 100,
@@ -87,6 +89,7 @@ extension World {
         let price = permitPrice(country: country)
         guard airline.cash >= price else { throw WorldError.notEnoughCash(needed: price) }
         airline.cash -= price
+        today.investments += price
         airline.permits.append(country)
         addNews(.permit, subject: country, amount: price)
     }
@@ -103,6 +106,7 @@ extension World {
         guard Progression.meets(r, airline: airline) else { throw WorldError.requirementsNotMet }
         guard airline.cash >= r.fee else { throw WorldError.notEnoughCash(needed: r.fee) }
         airline.cash -= r.fee
+        today.investments += r.fee
         airline.level = r.level
         issues.removeAll { if case .certificateReady = $0.kind { return true } else { return false } }
         addNews(.certificate, subject: "level", amount: r.level)

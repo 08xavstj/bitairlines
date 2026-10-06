@@ -34,16 +34,20 @@ struct MoneyScreen: View {
         let recent = world.books.suffix(30)
         let revenue = recent.reduce(0) { $0 + $1.revenue }
         let costs = recent.reduce(0) { $0 + $1.flightCosts + $1.overhead }
+        let invested = recent.reduce(0) { $0 + $1.investments } + world.today.investments
         Page {
             ScreenHeader("Money")
             WeeklyGoalCard(world: world)
             Card {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(Format.dollars(world.airline.cash)).pixelFont(21.333).foregroundStyle(world.airline.cash < 0 ? Theme.bad : Theme.good)
-                    KeyValueRow("Last 30 days: money in", Format.compactMoney(revenue), color: Theme.good)
-                    KeyValueRow("Last 30 days: money out", Format.compactMoney(costs), color: Theme.bad)
-                    KeyValueRow("Result", Format.signedMoney(revenue - costs), color: revenue >= costs ? Theme.good : Theme.bad)
+                    KeyValueRow("Last 30 days: earned from flying", Format.compactMoney(revenue), color: Theme.good)
+                    KeyValueRow("Last 30 days: running costs", Format.compactMoney(costs), color: Theme.bad)
+                    KeyValueRow("Operating result", Format.signedMoney(revenue - costs), color: revenue >= costs ? Theme.good : Theme.bad)
+                    KeyValueRow("Last 30 days: invested", Format.compactMoney(invested))
                     DailyBars(books: world.books)
+                    Text("Invested is money spent on things the airline keeps: aircraft, bases, kits, slots, training, permits and certificates. The result and the bars leave it out.")
+                        .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                     KeyValueRow("Pilot salaries", "\(Format.dollars(world.pilotPayroll)) a month")
                     KeyValueRow("Base upkeep", "\(Format.dollars(world.baseUpkeepPerDay)) a day")
                 }

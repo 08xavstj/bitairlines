@@ -57,4 +57,17 @@ import CoreCatalog
         #expect(next.week > first.week)
         #expect(next.kind != first.kind || WeeklyGoalKind.allCases.count == 1)
     }
+
+    @Test func investmentsAreBookedApartFromTheOperatingResult() throws {
+        var w = try Fixtures.world()
+        w.airline.cash = 50_000_000
+        let overhead = w.today.overhead
+        try w.build(.fuelDepot, at: "YEV")
+        let listingFound = w.market.listings.first { (AircraftCatalog.type($0.typeID).map { $0.level <= 1 && w.homeProblem($0) == nil } ?? false) }
+        let listing = try #require(listingFound)
+        try w.buyUsed(listingID: listing.id)
+        #expect(w.today.overhead == overhead, "a base and an aircraft are not running costs")
+        let depot = w.facilityPrice(.fuelDepot, at: try Fixtures.airport("YEV"))
+        #expect(w.today.investments == depot + listing.price)
+    }
 }

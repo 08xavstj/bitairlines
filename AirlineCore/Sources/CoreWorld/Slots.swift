@@ -44,7 +44,7 @@ extension World {
         guard count >= 1 else { throw WorldError.invalidAmount }
         let price = slotPrice(at: airport) * count
         guard airline.cash >= price else { throw WorldError.notEnoughCash(needed: price) }
-        spendOnOverhead(price)
+        spendOnInvestment(price)
         if let s = ops.slots.firstIndex(where: { $0.airport == code }) { ops.slots[s].daily += count } else {
             ops.slots.append(SlotHolding(airport: code, daily: count))
             ops.slots.sort { $0.airport < $1.airport }
