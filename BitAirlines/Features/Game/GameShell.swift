@@ -37,18 +37,21 @@ struct GameShell: View {
     let onExit: () -> Void
     @State private var section: GameSection
     @State private var confirmExit = false
+    @State private var coach: TutorialCoach
 
     init(session: GameSession, onExit: @escaping () -> Void, initialSection: GameSection = .map) {
         self.session = session
         self.onExit = onExit
         _section = State(initialValue: initialSection)
+        _coach = State(initialValue: TutorialCoach(slot: session.slot))
     }
 
     var body: some View {
         VStack(spacing: 0) {
-            TopBar(session: session, onMenu: { confirmExit = true })
+            TopBar(session: session, coach: coach, onMenu: { confirmExit = true })
+            CoachStrip(session: session, coach: coach)
             HStack(spacing: 0) {
-                Rail(session: session, section: $section)
+                Rail(session: session, coach: coach, section: $section)
                 content
             }
         }
@@ -74,6 +77,7 @@ struct GameShell: View {
 
 struct TopBar: View {
     let session: GameSession
+    let coach: TutorialCoach
     let onMenu: () -> Void
 
     var body: some View {
@@ -89,7 +93,7 @@ struct TopBar: View {
                 Text("\(Format.weekdays[world.clock.weekday]) \(Format.time(world.clock))").pixelFont(10.667).foregroundStyle(Theme.textMuted)
             }
             .frame(width: 122, alignment: .leading)
-            SpeedControls(session: session)
+            SpeedControls(session: session, coach: coach)
             Spacer(minLength: 4)
             VStack(alignment: .trailing, spacing: 1) {
                 Text(Format.compactMoney(world.airline.cash)).pixelFont(13.333).foregroundStyle(world.airline.cash < 0 ? Theme.bad : Theme.good)
@@ -104,6 +108,7 @@ struct TopBar: View {
 
 struct SpeedControls: View {
     let session: GameSession
+    let coach: TutorialCoach
 
     var body: some View {
         HStack(spacing: 4) {
@@ -122,11 +127,14 @@ struct SpeedControls: View {
                 .accessibilitySelected(on)
             }
         }
+        .padding(3)
+        .coachOutline(coach.step?.highlightsSpeed == true)
     }
 }
 
 struct Rail: View {
     let session: GameSession
+    let coach: TutorialCoach
     @Binding var section: GameSection
 
     var body: some View {
@@ -148,6 +156,7 @@ struct Rail: View {
                                 Text("\(waiting)").pixelFont(8).foregroundStyle(Theme.onAccent).padding(.horizontal, 4).background(Theme.bad)
                             }
                         }
+                        .coachOutline(coach.step?.section == s && !on)
                     }
                     .buttonStyle(.tap)
                     .accessibilityLabel(s.title)

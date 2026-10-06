@@ -17,6 +17,8 @@ BitAirlines/            the iPhone app, SwiftUI, landscape, Swift 5 language mod
   DesignSystem/         Theme, PixelFont (RingPixel), PixelUI (shapes, icons), PixelComponents, Components, Format, LogoSprite
   Art/                  AircraftSpriteData (GENERATED), Livery (role characters to colours), LogoTemplates
   Features/             Menu, NewGame (wizard, logo editor), Game (shell, map, fleet, routes, hangar, money, inbox, airline)
+  Audio/                chiptune sound: ChipSynth + ChipMusic (pure sample arrays, tested), AudioOutput (silent or AVAudioEngine), AudioEngine, SoundCues (world changes to sounds)
+  Tutorial/             the guided first route: Tutorial (steps derived from the world), TutorialCoach, CoachStrip
 tools/                  data pipeline (build_data.py), art (art/), economy prototypes (sim/), local model helper, project generator
 ```
 
@@ -50,7 +52,10 @@ Dependency direction: `Features -> App -> DesignSystem/Art -> AirlineCore`. Core
 - 8-bit look: text is always the pixel font via `.pixelFont(size)`; panels are `PixelShape` (stepped corners), never `RoundedRectangle` or `Capsule`; flat colours, no gradients; icons are 12 x 12 grids in `PixelIcon`; use the game's buttons and dialogs, not system alerts or SF Symbols.
 - Aircraft are drawn from role characters (`Livery.colours`): the same rule is in `tools/art/preview.py`. Change both together.
 - Keep files short (a few hundred lines) and views simple: one idea per file, helper views over long bodies.
-- Game state changes go through `GameSession.perform { try $0.someWorldAction() }`; a refusal becomes a notice.
+- Game state changes go through `GameSession.perform { try $0.someWorldAction() }`; a refusal becomes a notice. `perform(sound: .coin)` plays a sound when it goes through; a refusal always plays `.denied`.
+- Buttons make a tap sound through their style (`Primary`, `Secondary`, `Small`, `DangerWide`, `.tap`). Use `.buttonStyle(.tap)` where the old code used `.plain`, so every press is heard. The sound comes from `@Environment(\.audio)`, which is nil in previews and tests.
+- Sound is synthesised on the device; the game ships no audio files. A new effect is a case in `SoundEffect` plus a recipe in `ChipSynth.render`; `AudioTests` checks it is audible, in range and has its own priority.
+- The guide follows the world, not a stored step: add a step by adding a case to `TutorialStep` and a rule in `Tutorial.step`. Only "the guide is still running for this slot" is stored (`TutorialStore`).
 - Reduce Motion and the text-size steps are honoured (`Motion`, `pixelStep`).
 
 ## Gotchas found

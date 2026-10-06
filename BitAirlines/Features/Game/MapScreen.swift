@@ -16,6 +16,12 @@ struct MapScreen: View {
         self.session = session
         let home = AirportCatalog.airport(session.world.airline.home)
         _camera = State(initialValue: MapCamera(lat: home?.latitude ?? 0, lon: home?.longitude ?? 0, ppd: 30))
+        #if DEBUG
+        if let demoStops = Demo.plannerStops {
+            _planning = State(initialValue: true)
+            _stops = State(initialValue: demoStops)
+        }
+        #endif
     }
 
     var body: some View {

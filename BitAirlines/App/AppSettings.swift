@@ -48,7 +48,7 @@ final class AppSettings {
     var volume: VolumeLevel { didSet { persist() } }
 
     /// Called after any setting changes, so the audio engine can follow.
-    @ObservationIgnored var onChange: (() -> Void)?
+    @ObservationIgnored var onChange: (@MainActor () -> Void)?
     @ObservationIgnored private let defaults: UserDefaults
 
     init(defaults: UserDefaults = .standard) {

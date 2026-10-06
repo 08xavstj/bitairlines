@@ -21,6 +21,18 @@ enum Demo {
         return b
     }
 
+    /// A brand new airline for the guide: stage 1 has nothing, 2 has a route, 3 has the aircraft assigned to it.
+    static func freshWorld(stage: Int) throws -> World {
+        var w = try World.newGame(NewGameConfig(airlineName: "Aurora Air", airlineCode: "AU", homeAirport: "YEV", branding: branding,
+                                                difficulty: .easy, starterTypeID: "c208", seed: 42))
+        if stage >= 2 { try w.createRoute(stops: ["YEV", "YUB"]) }
+        if stage >= 3, let route = w.routes.first { try w.assign(aircraftID: w.aircraft[0].id, toRoute: route.id) }
+        return w
+    }
+
+    /// The map opens with these stops already chosen, to show the route planner.
+    static var plannerStops: [String]? { screen == "planner" ? ["YEV", "YUB", "YSY"] : nil }
+
     /// An airline a few weeks in: two aircraft, two routes, some money earned.
     static func world(issue: Bool) throws -> World {
         var w = try World.newGame(NewGameConfig(airlineName: "Aurora Air", airlineCode: "AU", homeAirport: "YEV", branding: branding,

@@ -13,7 +13,7 @@ xcrun simctl boot "$UDID" 2>/dev/null || true
 xcrun simctl bootstatus "$UDID" -b > /dev/null 2>&1 || true
 xcrun simctl install "$UDID" "$APP"
 
-for name in title new0 new1 new2 new3 new4 map fleet routes market money inbox airline issue; do
+for name in title new0 new1 new2 new3 new4 map planner fleet routes market money inbox airline issue tutorial1 tutorial2 tutorial3; do
   xcrun simctl terminate "$UDID" "$BUNDLE" 2> /dev/null || true
   xcrun simctl launch "$UDID" "$BUNDLE" -SkipSplash -DemoScreen "$name" > /dev/null
   sleep 6
