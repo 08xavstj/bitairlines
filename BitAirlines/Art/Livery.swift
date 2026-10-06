@@ -39,8 +39,25 @@ enum Livery {
         return c
     }()
 
+    /// The last logo seen and its hash. Nearly every sprite wears the airline's own logo (the same array), so the hash of its 576
+    /// pixels is worked out once, not for every aircraft on every redraw; comparing the same array again costs next to nothing.
+    /// Behind a lock, because tests draw sprites from several threads at once.
+    private static let logoLock = NSLock()
+    private static var lastLogo: [UInt8] = []
+    private static var lastLogoHash = 0
+
+    private static func logoKey(_ logo: [UInt8]) -> Int {
+        logoLock.lock()
+        defer { logoLock.unlock() }
+        if logo != lastLogo {
+            lastLogo = logo
+            lastLogoHash = logo.hashValue
+        }
+        return lastLogoHash
+    }
+
     static func image(family: SpriteFamily, branding: Branding) -> UIImage? {
-        let key = "\(family.rawValue)|\(branding.primary)|\(branding.secondary)|\(branding.accent)|\(branding.style.rawValue)|\(branding.logo.hashValue)" as NSString
+        let key = "\(family.rawValue)|\(branding.primary)|\(branding.secondary)|\(branding.accent)|\(branding.style.rawValue)|\(logoKey(branding.logo))" as NSString
         if let hit = cache.object(forKey: key) { return hit }
         guard let rows = AircraftSpriteData.rows[family.rawValue] else { return nil }
         let image = render(rows: rows, logoRect: AircraftSpriteData.logoRects[family.rawValue] ?? [0, 0, 0, 0], branding: branding)
@@ -119,15 +136,28 @@ struct AircraftSpriteView: View {
     let branding: Branding
     /// Screen points per sprite pixel.
     var pixel: CGFloat = 2
+    /// The widest it may be drawn (a card's sprite column). A bigger aircraft is drawn smaller to fit, in whole screen pixels.
+    var maxWidth: CGFloat? = nil
+    @Environment(\.displayScale) private var displayScale
 
     var body: some View {
         if let image = Livery.image(family: family, branding: branding) {
+            let scale = AircraftSpriteView.fitted(pixel: pixel, imageWidth: image.size.width, maxWidth: maxWidth, displayScale: displayScale)
             Image(uiImage: image)
                 .resizable()
                 .interpolation(.none)
-                .frame(width: image.size.width * pixel, height: image.size.height * pixel)
+                .frame(width: image.size.width * scale, height: image.size.height * scale)
                 .accessibilityHidden(true)
         }
+    }
+
+    /// Points per sprite pixel so the sprite fits `maxWidth`: `pixel` when it fits, else the largest size that does and is still a
+    /// whole number of screen pixels (so every sprite pixel is drawn the same size).
+    static func fitted(pixel: CGFloat, imageWidth: CGFloat, maxWidth: CGFloat?, displayScale: CGFloat) -> CGFloat {
+        guard let maxWidth, imageWidth > 0, imageWidth * pixel > maxWidth else { return pixel }
+        let screen = max(1, displayScale)
+        let devicePixels = max(1, (maxWidth / imageWidth * screen).rounded(.down))
+        return devicePixels / screen
     }
 }
 

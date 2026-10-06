@@ -23,10 +23,37 @@ public struct WeeklyGoal: Sendable, Hashable, Codable {
     public var place: String? = nil
     /// For a place goal, what has landed there this week. Missing from older saves; use `placeCount`.
     var placeCountStore: Int? = nil
+    /// What landed at each airport this game week (passengers and freight kg, keyed by `arrivalKey`), so the next place goal is
+    /// sized by what really lands there. Only on the game-week goal; missing from older saves.
+    var arrivalsStore: [String: Int]? = nil
+    /// The same for the game week before (the real-week goal reads it).
+    var lastWeekArrivalsStore: [String: Int]? = nil
+    /// Last week's goal, when it was met: its week and bonus, so the bonus can still be paid again (the optional ad) after the
+    /// new goal starts on Monday. Missing from older saves.
+    public var previousMetWeek: Int? = nil
+    public var previousMetReward: Int? = nil
 
     public var placeCount: Int {
         get { placeCountStore ?? 0 }
         set { placeCountStore = newValue }
+    }
+
+    static func arrivalKey(_ kind: WeeklyGoalKind, _ code: String) -> String { code + (kind == .freightKg ? ":kg" : ":pax") }
+
+    /// What landed at an airport this week, or nil when this goal does not count landings (an older save).
+    func arrivals(_ kind: WeeklyGoalKind, at code: String) -> Int? { arrivalsStore.map { $0[WeeklyGoal.arrivalKey(kind, code)] ?? 0 } }
+
+    /// The same for the week before.
+    func lastWeekArrivals(_ kind: WeeklyGoalKind, at code: String) -> Int? {
+        lastWeekArrivalsStore.map { $0[WeeklyGoal.arrivalKey(kind, code)] ?? 0 }
+    }
+
+    /// Adds a landing to this week's table (a goal from an older save has none until next Monday's goal starts one).
+    mutating func noteArrival(_ kind: WeeklyGoalKind, at code: String, amount: Int) {
+        guard var table = arrivalsStore else { return }
+        arrivalsStore = nil
+        table[WeeklyGoal.arrivalKey(kind, code), default: 0] += amount
+        arrivalsStore = table
     }
 }
 
@@ -101,6 +128,16 @@ extension World {
         return all > 0 ? Double(there) / Double(all) : 0
     }
 
+    /// The goal whose bonus the optional ad pays again: this week's once it is met, else last week's if that was met (a goal
+    /// met late on Sunday is paid at midnight, just as the next goal starts). Nil when neither was met. Rewards.swift checks
+    /// that its bonus was not paid again already.
+    public var goalToDouble: (week: Int, reward: Int)? {
+        guard let goal = ops.weeklyGoal else { return nil }
+        if goal.done { return (goal.week, goal.reward) }
+        guard let week = goal.previousMetWeek, let reward = goal.previousMetReward else { return nil }
+        return (week, reward)
+    }
+
     /// Sets the goal for the week that starts now. Called when a game starts and every Monday.
     mutating func startWeeklyGoal() {
         // Weeks are counted from Mondays (weekday 0), the day a new goal starts.
@@ -111,8 +148,9 @@ extension World {
         let rotation = Tuning.weeklyGoalRotation
         let slot = rotation[week % rotation.count]
         let kind = slot.kind
+        let previous = ops.weeklyGoal
         // What the airline did last week in this kind of goal.
-        let lastWeek = ops.weeklyGoal.flatMap { $0.startTotals[kind.rawValue] }.map { goalTotal(kind) - $0 } ?? 0
+        let lastWeek = previous.flatMap { $0.startTotals[kind.rawValue] }.map { goalTotal(kind) - $0 } ?? 0
         var target = max(Tuning.weeklyGoalFloor[kind] ?? 1, Int((Double(lastWeek) * Tuning.weeklyGoalStretch).rounded()))
 
         // A place goal: the airport follows the week number through the sorted list of places.
@@ -122,7 +160,11 @@ extension World {
             if !places.isEmpty {
                 let offset = kind == .freightKg ? 1 : 0
                 let code = places[(week / rotation.count + offset) % places.count]
-                let expected = Double(lastWeek) * shareOfArrivals(at: code) * Tuning.weeklyGoalStretch
+                // What landed there last week, counted landing by landing (freight follows the people at the destination, so
+                // a village gets far less than its share of departures). A save from before that was counted falls back to
+                // last week's result shared out by departures.
+                let landed = previous?.arrivals(kind, at: code).map { Double($0) } ?? Double(lastWeek) * shareOfArrivals(at: code)
+                let expected = landed * Tuning.weeklyGoalStretch
                 let step = max(1, Tuning.placeGoalStep[kind] ?? 1)
                 let raw = max(Tuning.placeGoalFloor[kind] ?? 1, Int(expected.rounded()))
                 target = (raw + step - 1) / step * step
@@ -132,15 +174,28 @@ extension World {
 
         var totals: [String: Int] = [:]
         for k in WeeklyGoalKind.allCases { totals[k.rawValue] = goalTotal(k) }
-        ops.weeklyGoal = WeeklyGoal(week: week, kind: kind, target: target, baseline: goalTotal(kind), startTotals: totals,
-                                    reward: Tuning.weeklyGoalBonus(level: airline.level), done: false,
-                                    place: place, placeCountStore: place == nil ? nil : 0)
+        var goal = WeeklyGoal(week: week, kind: kind, target: target, baseline: goalTotal(kind), startTotals: totals,
+                              reward: Tuning.weeklyGoalBonus(level: airline.level), done: false,
+                              place: place, placeCountStore: place == nil ? nil : 0)
+        goal.arrivalsStore = [:]
+        goal.lastWeekArrivalsStore = previous?.arrivalsStore
+        if let previous, previous.done {
+            goal.previousMetWeek = previous.week
+            goal.previousMetReward = previous.reward
+        }
+        ops.weeklyGoal = goal
     }
 
-    /// Counts a landing towards a place goal: the passengers or freight it brought, if it landed at the goal's airport.
-    /// Called from `arrive` for every loaded landing (route flights and job deliveries).
+    /// Counts a landing: what it brought is noted against the airport it landed at (for next week's place goal), and towards
+    /// a place goal if it landed at the goal's airport. A goal already met by earlier landings is paid first, so it shows as
+    /// done during the week instead of at the next midnight. Called from `arrive` for every landing (route flights and job
+    /// deliveries).
     mutating func countGoalArrival(_ flight: Flight) {
-        guard !flight.isFerry, var goal = ops.weeklyGoal, !goal.done, let place = goal.place, place == flight.to else { return }
+        checkWeeklyGoal()
+        guard !flight.isFerry, ops.weeklyGoal != nil else { return }
+        if flight.passengers > 0 { ops.weeklyGoal?.noteArrival(.passengers, at: flight.to, amount: flight.passengers) }
+        if flight.cargoKg > 0 { ops.weeklyGoal?.noteArrival(.freightKg, at: flight.to, amount: flight.cargoKg) }
+        guard var goal = ops.weeklyGoal, !goal.done, let place = goal.place, place == flight.to else { return }
         switch goal.kind {
         case .passengers: goal.placeCount += flight.passengers
         case .freightKg: goal.placeCount += flight.cargoKg

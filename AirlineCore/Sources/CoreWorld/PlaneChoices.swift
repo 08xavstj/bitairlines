@@ -19,35 +19,46 @@ extension World {
     /// Why this aircraft cannot be put on this route now (nil if it can): not here yet, busy, the route's airports or legs do not
     /// suit it, or there is no way to fly there empty, even with stops on the way.
     public func assignProblem(aircraftID: Int, routeID: Int) -> WorldError? {
-        guard let i = aircraftIndex(aircraftID) else { return .unknownAircraft(aircraftID) }
-        guard let r = routeIndex(routeID) else { return .unknownRoute(routeID) }
+        planeChoice(aircraftID: aircraftID, routeID: routeID).problem
+    }
+
+    /// One aircraft weighed for a route: why it cannot be put on it, or the empty flight it needs first. The way there is searched
+    /// once and gives both answers.
+    public func planeChoice(aircraftID: Int, routeID: Int) -> PlaneChoice {
+        func cannot(_ problem: WorldError) -> PlaneChoice { PlaneChoice(aircraftID: aircraftID, problem: problem, ferry: nil) }
+        guard let i = aircraftIndex(aircraftID) else { return cannot(.unknownAircraft(aircraftID)) }
+        guard let r = routeIndex(routeID) else { return cannot(.unknownRoute(routeID)) }
         let plane = aircraft[i]
-        guard plane.isDelivered else { return .notDelivered }
-        if case .grounded = plane.status { return .aircraftBusy }
-        guard let type = plane.type else { return .unknownType(plane.typeID) }
-        if plane.jobID != nil || plane.awaitingRestoration { return .aircraftBusy }
-        if let problem = fitProblem(type: type, route: routes[r], kits: plane.kits) { return problem }
-        return positioningProblem(aircraftIndex: i, toAny: routes[r].stops)
+        guard plane.isDelivered else { return cannot(.notDelivered) }
+        if case .grounded = plane.status { return cannot(.aircraftBusy) }
+        guard let type = plane.type else { return cannot(.unknownType(plane.typeID)) }
+        if plane.jobID != nil || plane.awaitingRestoration { return cannot(.aircraftBusy) }
+        if let problem = fitProblem(type: type, route: routes[r], kits: plane.kits) { return cannot(problem) }
+        let way = positioning(aircraftIndex: i, toAny: routes[r].stops)
+        if let problem = way.problem { return cannot(problem) }
+        return PlaneChoice(aircraftID: aircraftID, problem: nil, ferry: way.plan)
+    }
+
+    /// One aircraft weighed for a job: why it cannot take it, or the empty flight to the pickup.
+    public func planeChoice(aircraftID: Int, jobID: Int) -> PlaneChoice {
+        let problem = jobProblem(jobID: jobID, aircraftID: aircraftID)
+        guard problem == nil, let job = ops.jobs.first(where: { $0.id == jobID }) else {
+            return PlaneChoice(aircraftID: aircraftID, problem: problem, ferry: nil)
+        }
+        return PlaneChoice(aircraftID: aircraftID, problem: nil, ferry: ferryPlan(aircraftID: aircraftID, toAny: [job.from]))
     }
 
     /// Every aircraft weighed for a route: those that can fly it first, then the others with the reason, each group in fleet order.
     public func planeChoices(forRoute routeID: Int) -> [PlaneChoice] {
-        guard let r = routeIndex(routeID) else { return [] }
-        let stops = routes[r].stops
-        let choices = aircraft.map { plane -> PlaneChoice in
-            let problem = assignProblem(aircraftID: plane.id, routeID: routeID)
-            return PlaneChoice(aircraftID: plane.id, problem: problem, ferry: problem == nil ? ferryPlan(aircraftID: plane.id, toAny: stops) : nil)
-        }
+        guard routeIndex(routeID) != nil else { return [] }
+        let choices = aircraft.map { planeChoice(aircraftID: $0.id, routeID: routeID) }
         return choices.filter(\.canDo) + choices.filter { !$0.canDo }
     }
 
     /// Every aircraft weighed for a job: those that can fly it first, then the others with the reason, each group in fleet order.
     public func planeChoices(forJob jobID: Int) -> [PlaneChoice] {
-        guard let job = ops.jobs.first(where: { $0.id == jobID }) else { return [] }
-        let choices = aircraft.map { plane -> PlaneChoice in
-            let problem = jobProblem(jobID: jobID, aircraftID: plane.id)
-            return PlaneChoice(aircraftID: plane.id, problem: problem, ferry: problem == nil ? ferryPlan(aircraftID: plane.id, toAny: [job.from]) : nil)
-        }
+        guard ops.jobs.contains(where: { $0.id == jobID }) else { return [] }
+        let choices = aircraft.map { planeChoice(aircraftID: $0.id, jobID: jobID) }
         return choices.filter(\.canDo) + choices.filter { !$0.canDo }
     }
 

@@ -29,7 +29,7 @@ struct DailyDispatchCard: View {
 
     private var status: String {
         if world.dispatchStampedToday { return "Flown and stamped. A new dispatch comes tomorrow." }
-        guard let job = world.dispatchToday else { return "No dispatch today: your network has nowhere to send one yet." }
+        guard let job = world.dispatchToday else { return "No dispatch today: nothing near your network suits your aircraft yet." }
         let line = "\(Words.name(job.kind)), \(Place.name(job.from)) to \(Place.name(job.to)). Pays \(Format.dollars(job.pay))."
         return line + (job.isTaken ? " Being flown." : " Find it on the Jobs board.")
     }

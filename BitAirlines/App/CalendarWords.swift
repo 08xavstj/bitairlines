@@ -52,8 +52,9 @@ enum CalendarWords {
 
     static func days(_ n: Int) -> String { n == 1 ? "1 day" : "\(n) days" }
 
-    /// A news line for the real-calendar milestones (nil for other milestones). Subjects are set in Core:
-    /// "stamp:<total>", "stampreward:<livery code>", "season:<kind>", "seasonlivery:<kind>", "realgoal:<kind>:<airport>".
+    /// A news line for the real-calendar milestones, and for a job an aircraft gave back by itself (nil for other milestones).
+    /// Subjects are set in Core: "stamp:<total>", "stampreward:<livery code>", "season:<kind>", "seasonlivery:<kind>",
+    /// "realgoal:<kind>:<airport>", "jobgone:<registration>:<airport>" (amount a JobGiveUpReason).
     static func news(_ item: NewsItem) -> String? {
         let parts = item.subject.split(separator: ":", omittingEmptySubsequences: false).map(String.init)
         guard let head = parts.first, parts.count > 1 else { return nil }
@@ -77,8 +78,19 @@ enum CalendarWords {
             guard parts.count > 2 else { return nil }
             let what = parts[1] == WeeklyGoalKind.freightKg.rawValue ? "freight" : "passengers"
             return "Real-week goal met: \(what) to \(Place.name(parts[2])). Bonus of \(Format.dollars(item.amount)) paid."
+        case "jobgone":
+            guard parts.count > 2 else { return nil }
+            return "\(parts[1]) gave up its job to \(Place.name(parts[2])): " + jobGoneReason(JobGiveUpReason(rawValue: item.amount))
         default:
             return nil
+        }
+    }
+
+    static func jobGoneReason(_ reason: JobGiveUpReason?) -> String {
+        switch reason {
+        case .noSlots: return "you hold no slots at the pickup any more."
+        case .noFuel: return "no fuel stop is close enough for the trip any more."
+        case .cannotUseAirport, .none: return "it can no longer use one of the job's airports."
         }
     }
 }

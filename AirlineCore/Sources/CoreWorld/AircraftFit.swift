@@ -53,8 +53,12 @@ extension World {
     }
 
     /// How a type, as delivered with no kits, fits the airline's airports.
-    public func fit(of type: AircraftType) -> AircraftFit {
-        let fits = networkAirports.compactMap { code in
+    public func fit(of type: AircraftType) -> AircraftFit { fit(of: type, airports: networkAirports) }
+
+    /// The same for a list of airports read once from `networkAirports` (which builds and sorts a set each time it is read), so a
+    /// screen that weighs every type does that work once, not once per type.
+    public func fit(of type: AircraftType, airports: [String]) -> AircraftFit {
+        let fits = airports.compactMap { code in
             AirportCatalog.airport(code).map { AirportFit(code: code, needs: needs(of: type, at: $0)) }
         }
         return AircraftFit(levelNeeded: type.level > airline.level ? type.level : nil, airports: fits)

@@ -59,11 +59,18 @@ extension World {
     /// The app calls this with today's real day when a game opens, when the app comes back to the front, and every so often
     /// while it is open. A new day posts the day's dispatch, a new real week sets a new real-week goal, and seasonal events
     /// switch on and off. Calling it again with the same day only fills in what is missing.
+    /// The real calendar only moves forward. An earlier day (the phone's clock set back, or a flight west across midnight)
+    /// changes nothing, so a day already played never posts a second dispatch, re-arms a met real-week goal or resets an
+    /// event. A jump forward cannot be told from time passing, so it is kept; set back again, the game waits for the real date.
     public mutating func setRealDay(_ day: Int) {
         guard day > 0 else { return }
-        if ops.realDay != day { ops.realDay = day }
+        if day > ops.realDay { ops.realDay = day }
         refreshRealCalendar()
     }
+
+    /// The real day to count a capped reward against: the day passed in, or the latest real day this game has seen (set by the
+    /// app, or a reward already counted) if that is later. Setting the phone's clock back never opens a day's caps again.
+    public func rewardDay(_ day: Int) -> Int { max(day, ops.realDay, ops.rewards.realDay) }
 
     /// Brings the real-calendar systems up to date with the stored real day. Also runs at every game midnight (before the job
     /// board is cleared), so a dispatch that could not be placed yet is retried as the network grows.
@@ -75,9 +82,11 @@ extension World {
         keepSpecialJobsOpen()
     }
 
-    /// The game-midnight part (OperationsDaily.swift): the refresh above, and the running event's jobs topped up.
+    /// The game-midnight part (OperationsDaily.swift): dispatch and event jobs no aircraft can fly any more go, then the
+    /// refresh above (which posts today's dispatch again if it went), and the running event's jobs topped up.
     mutating func dailyRealCalendar() {
         guard ops.realDay > 0 else { return }
+        dropUnflyableSpecialJobs()
         refreshRealCalendar()
         topUpSeasonJobs()
     }

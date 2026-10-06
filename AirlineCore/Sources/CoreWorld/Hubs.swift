@@ -26,7 +26,7 @@ extension LegState {
 }
 
 /// One way through a hub: leg l1 of route r1 into the hub, then leg l2 of route r2 out of it.
-struct ConnectionPath {
+struct ConnectionPath: Equatable {
     var from: String
     var to: String
     var r1: Int
@@ -53,11 +53,35 @@ extension World {
             pax[r] = [Double](repeating: 0, count: routes[r].legs.count)
             revenue[r] = [Double](repeating: 0, count: routes[r].legs.count)
         }
+        // Each pair's people are counted once and split across its paths by how often each path flies.
+        for group in World.pathsByPair(connectionPaths()) {
+            let options = group.paths
+            guard let first = options.first, let a = AirportCatalog.airport(first.from), let b = AirportCatalog.airport(first.to) else { continue }
+            let ab = a.distanceKm(to: b)
+            let people = Demand.passengersPerDay(from: a, to: b, distanceKm: ab) * Tuning.connectingShare
+            let fare = Fares.market(from: a, to: b, distanceKm: ab) * Tuning.connectingFareDiscount
+            let totalWeight = options.reduce(0.0) { $0 + $1.weight }
+            for path in options {
+                let part = people * path.weight / totalWeight
+                pax[path.r1][path.l1] += part
+                revenue[path.r1][path.l1] += part * fare * path.inboundShare
+                pax[path.r2][path.l2] += part
+                revenue[path.r2][path.l2] += part * fare * (1 - path.inboundShare)
+            }
+        }
+        for r in routes.indices {
+            for l in routes[r].legs.indices {
+                routes[r].legs[l].connectingPaxPerDay = pax[r][l]
+                routes[r].legs[l].connectingFare = pax[r][l] > 0 ? revenue[r][l] / pax[r][l] : 0
+            }
+        }
+    }
+
+    /// Every way the airline could carry someone from A to B through a hub. Overlapping routes give several ways for one pair.
+    func connectionPaths() -> [ConnectionPath] {
         // Pairs the airline already flies directly need no connection.
         var direct = Set<String>()
         for route in routes { for leg in route.legs { direct.insert(leg.from + leg.to) } }
-
-        // Every way the airline could carry someone from A to B through a hub. Overlapping routes give several ways for one pair.
         var paths: [ConnectionPath] = []
         for hub in hubs {
             guard let h = AirportCatalog.airport(hub) else { continue }
@@ -78,29 +102,14 @@ extension World {
                 }
             }
         }
-        // Each pair's people are counted once and split across its paths by how often each path flies.
-        var pairs: [String] = []
-        for path in paths where !pairs.contains(path.pairKey) { pairs.append(path.pairKey) }
-        for key in pairs.sorted() {
-            let options = paths.filter { $0.pairKey == key }
-            guard let first = options.first, let a = AirportCatalog.airport(first.from), let b = AirportCatalog.airport(first.to) else { continue }
-            let ab = a.distanceKm(to: b)
-            let people = Demand.passengersPerDay(from: a, to: b, distanceKm: ab) * Tuning.connectingShare
-            let fare = Fares.market(from: a, to: b, distanceKm: ab) * Tuning.connectingFareDiscount
-            let totalWeight = options.reduce(0.0) { $0 + $1.weight }
-            for path in options {
-                let part = people * path.weight / totalWeight
-                pax[path.r1][path.l1] += part
-                revenue[path.r1][path.l1] += part * fare * path.inboundShare
-                pax[path.r2][path.l2] += part
-                revenue[path.r2][path.l2] += part * fare * (1 - path.inboundShare)
-            }
-        }
-        for r in routes.indices {
-            for l in routes[r].legs.indices {
-                routes[r].legs[l].connectingPaxPerDay = pax[r][l]
-                routes[r].legs[l].connectingFare = pax[r][l] > 0 ? revenue[r][l] / pax[r][l] : 0
-            }
-        }
+        return paths
+    }
+
+    /// The paths grouped by A to B pair: pairs in key order, each pair's paths in the order given. One pass over the paths (a big
+    /// hub has thousands), and the keys are sorted, so the result never depends on the dictionary's order.
+    static func pathsByPair(_ paths: [ConnectionPath]) -> [(key: String, paths: [ConnectionPath])] {
+        var groups: [String: [Int]] = [:]
+        for (k, path) in paths.enumerated() { groups[path.pairKey, default: []].append(k) }
+        return groups.keys.sorted().map { key in (key: key, paths: (groups[key] ?? []).map { paths[$0] }) }
     }
 }

@@ -153,28 +153,83 @@ extension World {
         aircraft[i].status = .flying(until: clock.minute + blockMinutes)
     }
 
-    /// Flies the aircraft empty towards an airport (to reach a route or a job that starts elsewhere). False if it cannot get there.
+    // MARK: The take-off gate
+
+    // Every take-off waits here: route legs (depart above), job legs (departOnJob in JobFlights.swift) and empty positioning hops
+    // (startFerry below). Each part gives the minute to look again, or nil when the aircraft may go. A route leg goes for its
+    // check when worn and waits for its schedule slot between the two parts; a positioning hop takes both at once (takeOffHold).
+
+    /// First part, the airports: weather at either end, and the season (a frozen lake for floats, open water for wheel-skis).
+    func airportHold(from a: Airport, to b: Airport, cap: Capability) -> Int? {
+        if let until = closureEnd(of: a.code) ?? closureEnd(of: b.code) { return until }
+        let month = clock.date.month
+        if !canUse(cap, at: a, month: month) || !canUse(cap, at: b, month: month) { return firstOfNextMonth() }
+        return nil
+    }
+
+    /// Second part, the crew and the clock: the crew day (no more flying today, resume early tomorrow), daylight at unlit strips,
+    /// today's slots at a busy airport, and a rated pilot fit to fly (the news says the aircraft is waiting for one).
+    /// `positioning`: an empty hop, which needs a slot only where the airline holds some (see `usesSlot`).
+    mutating func crewHold(_ i: Int, type: AircraftType, from a: Airport, to b: Airport, blockMinutes: Int, positioning: Bool = false) -> Int? {
+        let dayLimit = Int(Tuning.maxBlockHoursPerDay(level: type.level) * 60)
+        let tomorrowMorning = (clock.dayIndex + 1) * GameClock.minutesPerDay + 6 * 60
+        if aircraft[i].blockMinutesToday > 0 && aircraft[i].blockMinutesToday + blockMinutes > dayLimit { return tomorrowMorning }
+        if let wait = darkHold(from: a, to: b, blockMinutes: blockMinutes) { return wait }
+        if usesSlot(at: a, positioning: positioning) && outOfSlots(at: a) { return tomorrowMorning }
+        if !crewReady(i) {
+            addNews(.noCrew, subject: aircraft[i].registration, amount: aircraft[i].id)
+            return crewBackMinute(i) ?? clock.minute + GameClock.minutesPerDay
+        }
+        return nil
+    }
+
+    /// Both parts at once, for a take-off with nothing to do in between (an empty positioning hop).
+    mutating func takeOffHold(_ i: Int, type: AircraftType, from a: Airport, to b: Airport, blockMinutes: Int, positioning: Bool) -> Int? {
+        if let wait = airportHold(from: a, to: b, cap: Capability(type: type, kits: aircraft[i].kits)) { return wait }
+        return crewHold(i, type: type, from: a, to: b, blockMinutes: blockMinutes, positioning: positioning)
+    }
+
+    /// Whether a take-off from `a` counts against the day's slots there. A route or job leg always does. An empty positioning hop
+    /// does only where the airline holds slots; where it holds none it goes on a one-off slot, so an aircraft is never stuck at a
+    /// busy airport it has no slots at (a job can end at one). Airports that hand out no slots are skipped by `outOfSlots`.
+    func usesSlot(at a: Airport, positioning: Bool) -> Bool { !positioning || slotsHeld(at: a.code) > 0 }
+
+    // MARK: Flying empty
+
+    /// Flies the aircraft empty towards an airport (to reach a route or a job that starts elsewhere). False if it can never get
+    /// there from here: it cannot take off where it is in any season (floats fitted at a runway), or no chain of stops reaches it.
     /// When it needs stops on the way (FerryPlan.swift) this flies the first hop only; on landing the route or job sends it on,
     /// and an aircraft with neither keeps the destination in `ferryTargetStore`.
+    /// Every hop goes through the take-off gate, like a route leg. While it waits the aircraft stays at the gate (`.boarding`) and
+    /// this still returns true; when the wait is over depart() comes back here and plans the hop again.
     @discardableResult
     mutating func startFerry(index i: Int, to code: String) -> Bool {
         startFerry(index: i, toAny: [code])
     }
 
-    /// The same, to whichever of `goals` the planner reaches first (a direct flight to the earliest listed goal wins).
+    /// The same, to the nearest of `goals` the aircraft can use this month (see `positioningPlan` in Positioning.swift).
     @discardableResult
     mutating func startFerry(index i: Int, toAny goals: [String]) -> Bool {
         guard let type = aircraft[i].type, let from = AirportCatalog.airport(aircraft[i].location),
-              let plan = ferryPlan(aircraftIndex: i, from: from.code, toAny: goals),
+              canUse(Capability(type: type, kits: aircraft[i].kits), at: from),
+              let plan = positioningPlan(aircraftIndex: i, from: from.code, toAny: goals),
               let next = plan.hops.first, let to = AirportCatalog.airport(next) else { return false }
         let km = from.distanceKm(to: to)
         guard type.canFly(km: km) else { return false }
-        let cost = legCost(type: type, aircraftIndex: i, from: from, to: to, km: km)
         let minutes = max(1, Int((type.blockHours(km: km) * 60).rounded()))
+        let free = aircraft[i].routeID == nil && aircraft[i].jobID == nil
+        if let wait = takeOffHold(i, type: type, from: from, to: to, blockMinutes: minutes, positioning: true) {
+            aircraft[i].status = .boarding(until: wait)
+            // An aircraft with no route and no job keeps where it is going, so depart() tries again.
+            aircraft[i].ferryTargetStore = free ? plan.destination : nil
+            return true
+        }
+        if usesSlot(at: from, positioning: true) { useSlot(at: from) }
+        let cost = legCost(type: type, aircraftIndex: i, from: from, to: to, km: km)
         aircraft[i].flight = Flight(from: from.code, to: to.code, departedMinute: clock.minute, distanceKm: km, passengers: 0, cargoKg: 0, revenue: 0,
                                     cost: Int(cost.rounded()), isFerry: true)
+        aircraft[i].blockMinutesToday += minutes
         aircraft[i].status = .flying(until: clock.minute + minutes)
-        let free = aircraft[i].routeID == nil && aircraft[i].jobID == nil
         aircraft[i].ferryTargetStore = free && plan.hops.count > 1 ? plan.destination : nil
         return true
     }

@@ -17,8 +17,6 @@ extension World {
         }
         guard let type = plane.type, let from = AirportCatalog.airport(job.from), let to = AirportCatalog.airport(job.to) else { return .unknownAirport(job.from) }
         if plane.seats < job.passengers || plane.cargoKg < job.cargoKg { return .notEnoughRoom }
-        // A slot airport where the airline holds no slots: nobody may leave from it, so the job is not on offer to this airline.
-        if !canDepartOnJob(from: from) { return .jobUnavailable }
         let cap = Capability(type: type, kits: plane.kits)
         let month = clock.date.month
         if !canUse(cap, at: from, month: month) { return .aircraftCannotUse(airport: from.code) }
@@ -27,6 +25,9 @@ extension World {
         if !type.canFly(km: km) { return .outOfRange(km: Int(km)) }
         // Getting to the pickup may take stops on the way (FerryPlan.swift); it fails only when no chain of stops reaches it.
         if let problem = positioningProblem(aircraftIndex: i, toAny: [from.code]) { return problem }
+        // A slot airport where the airline holds no slots: no aircraft could ever leave it, so the job is not on offer to this
+        // airline (makeJob no longer offers such jobs; this catches slots sold after the offer).
+        if !canDepartOnJob(from: from) { return .jobUnavailable }
         // Realism: fuel from the last stop before the pickup, through the job and back (JobFit.swift).
         if let dry = jobTripFuelProblem(aircraftIndex: i, type: type, from: from, to: to) { return dry }
         return nil

@@ -12,7 +12,8 @@ extension Tuning {
     static let realWeekGoalGameWeeks = 2.0
     /// Floors (passengers, kg).
     static let realWeekGoalFloor: [WeeklyGoalKind: Int] = [.passengers: 20, .freightKg: 600]
-    /// Average load assumed when working out what lands at a place (share of the biggest aircraft's seats or hold).
+    /// Before landings have been counted for a game week: the average load assumed for what lands at a place (share of the
+    /// biggest aircraft's seats or hold), never more than the place's market.
     static let realWeekGoalLoad = 0.5
 
     public static func realWeekGoalBonus(level: Int) -> Int {
@@ -46,17 +47,30 @@ extension World {
         guard !places.isEmpty else { return nil }
         // Offset from the game-week rotation so the two goals rarely name the same place.
         let place = places[(week / 2 + 2) % places.count]
-        let perFlight = kind == .passengers ? Double(biggestSeats()) : Double(biggestHold())
-        var landingsLastWeek = 0
-        for route in routes {
-            for leg in route.legs where leg.to == place { landingsLastWeek += leg.departuresLastWeek }
-        }
-        let expected = Double(landingsLastWeek) * perFlight * Tuning.realWeekGoalLoad * Tuning.realWeekGoalGameWeeks
+        // What lands there in a game week: last game week's landings counted one by one (WeeklyGoals.swift), else an estimate.
+        let measured = ops.weeklyGoal?.lastWeekArrivals(kind, at: place).map { Double($0) }
+        let perGameWeek = measured ?? estimatedWeeklyArrivals(kind, at: place)
+        let expected = perGameWeek * Tuning.realWeekGoalGameWeeks
         let step = max(1, Tuning.placeGoalStep[kind] ?? 1)
         let raw = max(Tuning.realWeekGoalFloor[kind] ?? 1, Int(expected.rounded()))
         let target = (raw + step - 1) / step * step
         return WeeklyGoal(week: week, kind: kind, target: target, baseline: 0, startTotals: [:],
                           reward: Tuning.realWeekGoalBonus(level: airline.level), done: false, place: place, placeCountStore: 0)
+    }
+
+    /// What lands at a place in a game week before landings have been counted: last week's landings there with a half load,
+    /// but never more than the place's market (a village takes in far less freight than an aircraft's hold).
+    func estimatedWeeklyArrivals(_ kind: WeeklyGoalKind, at place: String) -> Double {
+        let perFlight = kind == .passengers ? Double(biggestSeats()) : Double(biggestHold())
+        var landings = 0
+        var market = 0.0
+        for route in routes {
+            for leg in route.legs where leg.to == place {
+                landings += leg.departuresLastWeek
+                market += 7 * (kind == .passengers ? leg.marketPaxPerDay : leg.marketCargoKgPerDay)
+            }
+        }
+        return min(Double(landings) * perFlight * Tuning.realWeekGoalLoad, market)
     }
 
     /// Counts a landing towards the real-week goal and pays the bonus when it is met (news subject

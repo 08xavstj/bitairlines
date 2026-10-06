@@ -33,7 +33,19 @@ enum GameSpeed: Int, CaseIterable, Identifiable {
 @MainActor
 @Observable
 final class GameSession {
-    var world: World
+    /// The game as the views see it. Reading it always gives the latest state. The views are told it changed by `publish()`:
+    /// on every clock tick while the map is up, a few times a second while a list screen is open (`PageWatch`), and at once after
+    /// anything the player does (`perform` sets it) or when the clock stops for a problem.
+    var world: World {
+        get {
+            access(keyPath: \.world)
+            return live
+        }
+        set {
+            withMutation(keyPath: \.world) { live = newValue }
+            markPublished()
+        }
+    }
     var speed: GameSpeed = .paused
     /// A message about the last thing the player tried (for example why a purchase was refused).
     var notice: String?
@@ -47,14 +59,27 @@ final class GameSession {
     /// Set by the game screen, so changes the player makes can be heard.
     @ObservationIgnored var audio: AudioEngine?
 
+    /// The running game. The clock moves it on every tick without telling the views each time (see `world`).
+    @ObservationIgnored private var live: World
+    /// True when the clock has moved `live` since the views were last told.
+    @ObservationIgnored private var unpublished = false
+    @ObservationIgnored private var lastPublish = Date()
     @ObservationIgnored private let store: SaveStore
     @ObservationIgnored private var loop: Task<Void, Never>?
     @ObservationIgnored private var carry: Double = 0
     @ObservationIgnored private var lastSave = Date()
     @ObservationIgnored private var lastTick = Date()
 
+    /// Seconds between clock ticks.
+    static let tickSeconds = 0.066
+    /// While a list screen is open, the views hear about the clock this often at most (a long list costs far more to redraw than
+    /// the map).
+    static let calmPublishSeconds = 0.25
+    /// A clock with nothing to do (paused, or stopped by a problem) looks in this often; changing the speed wakes it at once.
+    static let idleTickSeconds = 0.5
+
     init(world: World, slot: Int, store: SaveStore) {
-        self.world = world
+        self.live = world
         self.slot = slot
         self.store = store
     }
@@ -69,7 +94,11 @@ final class GameSession {
         lastTick = Date()
         loop = Task { [weak self] in
             while !Task.isCancelled {
-                try? await Task.sleep(nanoseconds: 66_000_000)
+                guard let idle = self?.clockIdle else { break }
+                let seconds = idle ? GameSession.idleTickSeconds : GameSession.tickSeconds
+                try? await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
+                // stop() cancels the loop: no tick after the save it makes.
+                if Task.isCancelled { break }
                 self?.tick()
             }
         }
@@ -81,35 +110,76 @@ final class GameSession {
         save(toCloud: true)
     }
 
-    func setSpeed(_ newSpeed: GameSpeed) { speed = newSpeed }
+    func setSpeed(_ newSpeed: GameSpeed) {
+        let wasIdle = clockIdle
+        speed = newSpeed
+        // A paused screen shows exactly where the clock stopped.
+        if unpublished { publish() }
+        if wasIdle && !clockIdle { wakeClock() }
+    }
+
+    /// True when the clock has nothing to move: paused, stopped by a problem, or the game is over.
+    private var clockIdle: Bool { speed == .paused || live.isPausedByIssue || live.isBankrupt }
+
+    /// Starts the clock loop again at once, so pressing a speed or answering a problem does not wait out an idle look-in.
+    private func wakeClock() {
+        guard loop != nil else { return }
+        loop?.cancel()
+        loop = nil
+        start()
+    }
 
     private func tick() {
         let now = Date()
         let dt = min(0.25, now.timeIntervalSince(lastTick))
         lastTick = now
-        guard speed != .paused, !world.isBankrupt else { return }
-        if world.isPausedByIssue { return }
+        defer { publishIfDue(now) }
+        guard speed != .paused, !live.isBankrupt else { return }
+        if live.isPausedByIssue { return }
         carry += dt * speed.minutesPerSecond
         let minutes = Int(carry)
         guard minutes > 0 else { return }
         carry -= Double(minutes)
-        let revenueBefore = world.airline.stats.revenue
-        let result = world.advance(byMinutes: minutes)
-        notePayout(world.airline.stats.revenue - revenueBefore, at: now)
-        if result == .pausedForIssue || result == .gameOver { save() }
+        let revenueBefore = live.airline.stats.revenue
+        let result = live.advance(byMinutes: minutes)
+        unpublished = true
+        notePayout(live.airline.stats.revenue - revenueBefore, at: now)
+        if result == .pausedForIssue || result == .gameOver {
+            // Something waits for the player: show it now, not on the next look-in.
+            publish()
+            save()
+        }
         if now.timeIntervalSince(lastSave) > 45 { save() }
+    }
+
+    /// Tells the views what the clock changed: on every tick, or, while a list screen is open, a few times a second.
+    private func publishIfDue(_ now: Date) {
+        guard unpublished else { return }
+        if PageWatch.shown == 0 || now.timeIntervalSince(lastPublish) >= GameSession.calmPublishSeconds { publish() }
+    }
+
+    /// Tells every view that reads `world` to draw again.
+    private func publish() {
+        withMutation(keyPath: \.world) {}
+        markPublished()
+    }
+
+    private func markPublished() {
+        unpublished = false
+        lastPublish = Date()
     }
 
     /// Moves the game on for a break of this many real seconds and keeps a summary to show. A breakdown waits until the player is
     /// back (the rest of the fleet keeps flying); running out of money stops early.
     func catchUp(realSeconds: TimeInterval) {
         let minutes = AwayReport.gameMinutes(forRealSeconds: realSeconds)
-        guard minutes >= AwayReport.minGameMinutes, !world.isBankrupt, !world.isPausedByIssue else { return }
-        let before = world.airline.stats, cash = world.airline.cash, start = world.clock.minute
-        let result = world.advanceAway(byMinutes: minutes)
-        let after = world.airline.stats
-        away = AwayReport(gameMinutes: world.clock.minute - start, flights: after.flights - before.flights, passengers: after.passengers - before.passengers,
-                          revenue: after.revenue - before.revenue, cashChange: world.airline.cash - cash, stoppedForIssue: result == .pausedForIssue)
+        guard minutes >= AwayReport.minGameMinutes, !live.isBankrupt, !live.isPausedByIssue else { return }
+        let before = live.airline.stats, cash = live.airline.cash, start = live.clock.minute
+        let result = live.advanceAway(byMinutes: minutes)
+        let after = live.airline.stats
+        away = AwayReport(gameMinutes: live.clock.minute - start, flights: after.flights - before.flights, passengers: after.passengers - before.passengers,
+                          revenue: after.revenue - before.revenue, cashChange: live.airline.cash - cash, stoppedForIssue: result == .pausedForIssue)
+        publish()
         lastTick = Date()
         save()
     }
@@ -127,24 +197,28 @@ final class GameSession {
     /// `toCloud` also copies the save to iCloud now and sends Game Center scores (leaving, or the app going to the background).
     func save(toCloud: Bool = false) {
         // Written on the save queue: encoding a big airline never holds up the screen.
-        store.saveInBackground(world, slot: slot, toCloud: toCloud) { [weak self] in self?.notice = "Could not save the game." }
+        store.saveInBackground(live, slot: slot, toCloud: toCloud) { [weak self] in self?.notice = "Could not save the game." }
         lastSave = Date()
-        GameCenter.shared.report(world, now: toCloud)
-        if let state = world.ops.scenario, let medal = state.medal { ScenarioRecords.record(medal, for: state.id) }
+        GameCenter.shared.report(live, now: toCloud)
+        if let state = live.ops.scenario, let medal = state.medal { ScenarioRecords.record(medal, for: state.id) }
     }
 
     // MARK: Actions (each wraps a World call and reports a refusal as a notice)
 
     /// Runs a change to the world; if the core refuses, the reason becomes a notice (and a refusal sound). `sound` plays when it goes through.
+    /// Setting `world` tells the views at once, so the result of a tap shows on the next frame, whatever the clock is doing.
     @discardableResult
     func perform(sound: SoundEffect? = nil, _ change: (inout World) throws -> Void) -> Bool {
+        // Answering a problem lets an idle clock run again: wake it now rather than at its next look-in.
+        let wasIdle = clockIdle
+        defer { if wasIdle && !clockIdle { wakeClock() } }
         do {
             try change(&world)
             notice = nil
             if let sound { audio?.play(sound) }
             return true
         } catch let error as WorldError {
-            notice = Messages.describe(error, cash: world.airline.cash)
+            notice = Messages.describe(error, cash: live.airline.cash)
             audio?.play(.denied)
             return false
         } catch {

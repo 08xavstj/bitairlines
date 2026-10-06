@@ -47,7 +47,7 @@ struct RouteNotes: View {
         if need.noneHeld {
             return "No slots at \(place): no flight can leave there. Buy \(need.slots) daily slot\(need.slots == 1 ? "" : "s") in Bases for \(price)."
         }
-        return "Needs \(need.slots) more daily slot\(need.slots == 1 ? "" : "s") at \(place), \(price) in Bases. You hold \(held), so the other flights there wait a day."
+        return "Needs \(need.slots) more daily slot\(need.slots == 1 ? "" : "s") at \(place) (you hold \(held)), \(price) in Bases. Buy them there, or flights wait until one is free."
     }
 
     private var rivalLines: [String] {

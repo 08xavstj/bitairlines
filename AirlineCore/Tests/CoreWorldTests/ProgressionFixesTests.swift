@@ -75,7 +75,8 @@ import CoreCatalog
         #expect(w.homeProblem(floats) == .aircraftCannotUse(airport: "YEV"), "home still cannot take it")
         #expect(w.deliveryAirport(for: floats) == "YWS")
         #expect(w.deliveryProblem(floats) == nil)
-        #expect(w.deliveryAirport(for: try Fixtures.type("c208")) == "YEV", "what can land at home still goes home")
+        let caravan = try Fixtures.type("c208")
+        #expect(w.deliveryAirport(for: caravan) == "YEV", "what can land at home still goes home")
 
         w.market.listings.append(UsedListing(id: 9_998, typeID: "c208f", ageYears: 10, condition: 80, price: 1_000_000, deliveryDays: 3))
         let id = try w.buyUsed(listingID: 9_998)

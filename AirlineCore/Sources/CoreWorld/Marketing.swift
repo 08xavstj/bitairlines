@@ -64,7 +64,7 @@ extension Tuning {
     }
 
     /// Reputation earned at once. A boost on top of flying well (Reputation.swift), not a substitute: a national campaign is
-    /// worth about 1,800 punctual departures, and running both all year costs about an eighth of revenue.
+    /// worth about 1,800 departures of steady flying, and running radio and national all year costs about an eighth of revenue.
     public static func campaignReputation(_ c: Campaign) -> Double {
         switch c {
         case .posters: 0

@@ -10,25 +10,34 @@ struct WeeklyGoalCard: View {
     var body: some View {
         if let goal = world.ops.weeklyGoal {
             let progress = min(world.weeklyGoalProgress, goal.target)
+            // Met shows at once; the bonus itself is paid at the next landing or midnight.
+            let met = goal.done || world.weeklyGoalProgress >= goal.target
             Card {
                 VStack(alignment: .leading, spacing: 6) {
                     HStack {
                         Text("THIS WEEK").pixelFont(13.333).foregroundStyle(Theme.accent)
                         Spacer()
-                        if goal.done { Tag(text: "Done", color: Theme.good) } else { Tag(text: "Bonus \(Format.compactMoney(goal.reward))", color: Theme.gold) }
+                        if met { Tag(text: "Done", color: Theme.good) } else { Tag(text: "Bonus \(Format.compactMoney(goal.reward))", color: Theme.gold) }
                     }
                     Text(WeeklyGoalCard.describe(goal)).pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
                     GeometryReader { geo in
                         ZStack(alignment: .leading) {
                             Rectangle().fill(Theme.surfaceRaised)
-                            Rectangle().fill(goal.done ? Theme.good : Theme.accent)
+                            Rectangle().fill(met ? Theme.good : Theme.accent)
                                 .frame(width: geo.size.width * CGFloat(progress) / CGFloat(max(1, goal.target)))
                         }
                     }
                     .frame(height: 8)
                     Text("\(WeeklyGoalCard.amount(goal.kind, progress)) of \(WeeklyGoalCard.amount(goal.kind, goal.target))\(goal.place == nil ? "" : " landed there"). Goals met: \(world.ops.goalsCompleted).")
                         .pixelFont(10.667).foregroundStyle(Theme.textMuted)
-                    if goal.done, let session { RewardButton(session: session, kind: .doubleGoalBonus) }
+                    if let session, let paid = world.goalToDouble {
+                        // Last week's goal, met late, can still have its bonus paid again until this week's is met.
+                        if !goal.done && world.rewardOffer(.doubleGoalBonus, realDay: RealDay.today()) != nil {
+                            Text("Last week's goal was met: bonus of \(Format.compactMoney(paid.reward)) paid.")
+                                .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                        }
+                        RewardButton(session: session, kind: .doubleGoalBonus)
+                    }
                     if let real = world.ops.realWeekGoal { RealWeekGoalSection(world: world, goal: real) }
                 }
             }
