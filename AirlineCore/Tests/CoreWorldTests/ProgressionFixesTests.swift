@@ -90,7 +90,9 @@ import CoreCatalog
         w.airline.cash = 500_000_000
         let dreamliner = try Fixtures.type("b789")
         #expect(w.deliveryProblem(dreamliner) == .aircraftCannotUse(airport: "YEV"))
-        #expect(throws: WorldError.aircraftCannotUse(airport: "YEV")) { try w.orderNew(typeID: "b789") }
+        var refused: WorldError?
+        do { _ = try w.orderNew(typeID: "b789") } catch let error as WorldError { refused = error }
+        #expect(refused == .aircraftCannotUse(airport: "YEV"), "Inuvik's 6,000 ft is too short and nothing else is on the network")
 
         _ = try w.createRoute(stops: ["YEV", "YVR"])
         #expect(w.deliveryAirport(for: dreamliner) == "YVR")

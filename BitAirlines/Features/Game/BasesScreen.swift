@@ -7,6 +7,11 @@ struct BasesScreen: View {
     let session: GameSession
     @State private var building: String?
 
+    /// A home at a busy airport (some start homes are) shows its slots from the start.
+    private var homeNeedsSlots: Bool {
+        AirportCatalog.airport(session.world.airline.home).map { session.world.needsSlots($0) } ?? false
+    }
+
     var body: some View {
         let world = session.world
         Page {
@@ -42,7 +47,7 @@ struct BasesScreen: View {
             if !world.ops.bases.contains(where: { $0.airport == world.airline.home }) {
                 Button { building = world.airline.home } label: { HangarButtonText("Build at \(Place.name(world.airline.home))") }.buttonStyle(.smallProminent)
             }
-            if session.world.airline.level >= GameSection.lateLevel { SlotsCard(session: session) }
+            if session.world.airline.level >= GameSection.lateLevel || homeNeedsSlots { SlotsCard(session: session) }
         }
         .sheet(item: Binding(get: { building.map { CodeSheet(id: $0) } }, set: { building = $0?.id })) { sheet in
             BuildSheet(session: session, code: sheet.id)
@@ -134,7 +139,7 @@ struct SlotRow: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             Button { session.perform(sound: .coin) { try $0.buySlots(at: airport.code, count: 1) } } label: { HangarButtonText("Buy 1") }.buttonStyle(.smallProminent)
-            if held > 0 {
+            if world.slotsBought(at: airport.code) > 0 {
                 Button { session.perform(sound: .coin) { try $0.sellSlots(at: airport.code, count: 1) } } label: { HangarButtonText("Sell 1") }.buttonStyle(.small)
             }
         }

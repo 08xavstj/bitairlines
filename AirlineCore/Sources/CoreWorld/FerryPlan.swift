@@ -47,7 +47,8 @@ extension World {
     /// Otherwise a shortest-path search (A*, with the straight line to the nearest goal as the estimate) over the map airports the
     /// aircraft can use this month (in Realism only those that sell fuel), every hop within range. Each landing adds
     /// `Tuning.ferryStopPenaltyKm`; equal paths go to the lower airport code. A goal must be usable by the aircraft in some season.
-    func ferryPlan(aircraftIndex i: Int, from start: String, toAny goals: [String]) -> FerryPlan? {
+    /// `fast: false` runs the plain search over every airport; tests use it to check the quick one gives the same plans.
+    func ferryPlan(aircraftIndex i: Int, from start: String, toAny goals: [String], fast: Bool = true) -> FerryPlan? {
         guard aircraft.indices.contains(i), let type = aircraft[i].type, let here = AirportCatalog.airport(start) else { return nil }
         if goals.contains(start) { return FerryPlan(from: start, hops: [], km: 0, hours: 0) }
         let cap = Capability(type: type, kits: aircraft[i].kits)
@@ -56,7 +57,7 @@ extension World {
         for target in targets where type.canFly(km: here.distanceKm(to: target)) {
             return makeFerryPlan(type: type, from: here, hops: [target.code])
         }
-        guard let hops = searchFerry(type: type, cap: cap, from: here, targets: targets) else { return nil }
+        guard let hops = searchFerry(type: type, cap: cap, from: here, targets: targets, fast: fast) else { return nil }
         return makeFerryPlan(type: type, from: here, hops: hops)
     }
 
@@ -77,52 +78,72 @@ extension World {
         return FerryPlan(from: here.code, hops: hops, km: km, hours: hours)
     }
 
-    /// The search behind `ferryPlan`: the airport codes landed at, or nil. Neighbours are found on demand by scanning the grid
-    /// (a cheap chord test first), so nothing is built ahead and a search touches only the airports it needs.
-    private func searchFerry(type: AircraftType, cap: Capability, from here: Airport, targets: [Airport]) -> [String]? {
+    /// The search behind `ferryPlan`: the airport codes landed at, or nil.
+    /// Quick paths (with `fast`): an aircraft with a range up to `FerryGrid.tableKm` reads each airport's neighbour list instead of
+    /// scanning every airport, and a goal on an island the aircraft cannot reach is answered by `goalsCutOff` without searching
+    /// the map. Both give exactly the plan of the plain scan: the airport taken next is always the open one with the lowest
+    /// score (ties to the lower code), whatever order the neighbours were looked at in.
+    private func searchFerry(type: AircraftType, cap: Capability, from here: Airport, targets: [Airport], fast: Bool) -> [String]? {
         let grid = FerryGrid.airports
         let points = FerryGrid.points
         let n = grid.count
         let month = clock.date.month
         let fuelRule = ops.mode.fuelOnlyWhereSold
         var isGoal = [Bool](repeating: false, count: n)
+        var goals: [Int] = []
         var goalPoints: [FerryGrid.Point] = []
         for target in targets {
             guard let k = FerryGrid.index[target.code] else { continue }
             isGoal[k] = true
+            goals.append(k)
             goalPoints.append(points[k])
         }
         // A retired airport is not on the grid: it can only be reached directly (handled by the caller).
         guard !goalPoints.isEmpty else { return nil }
 
         // Stops on the way: usable this month and, in Realism, selling fuel. A goal needs neither (it was checked by the caller).
-        var usable = [Bool](repeating: false, count: n)
-        for k in 0..<n {
-            usable[k] = isGoal[k] || (canUse(cap, at: grid[k], month: month) && (!fuelRule || sellsFuel(grid[k])))
+        // Each airport is checked the first time the search meets it (0 not checked yet, 1 usable, 2 not), so a short search
+        // checks only a few.
+        var stopState = [UInt8](repeating: 0, count: n)
+        func isStop(_ k: Int) -> Bool {
+            if stopState[k] == 0 {
+                let usable = isGoal[k] || (canUse(cap, at: grid[k], month: month) && (!fuelRule || sellsFuel(grid[k])))
+                stopState[k] = usable ? 1 : 2
+            }
+            return stopState[k] == 1
         }
 
         // Hops are at most the range, less half a km so the flight's own distance check always agrees.
         let reach = Double(type.rangeKm) - 0.5
-        let halfAngle = min(1.5707963267948966, reach / (2.0 * GeoMath.earthRadiusKm))
-        let maxChord = 2.0 * GeoMath.sine(halfAngle) + 1e-9
-        let maxChord2 = maxChord * maxChord
+        let maxChord2 = FerryGrid.maxChord2(reachKm: reach)
         let radius = GeoMath.earthRadiusKm
+        let useTable = fast && maxChord2 <= FerryGrid.tableChord2
+        let startPoint = FerryGrid.point(here)
+        let startIndex = FerryGrid.index[here.code]
+        if useTable && goalsCutOff(goals: goals, startPoint: startPoint, maxChord2: maxChord2, isStop: isStop) { return nil }
 
         var cost = [Double](repeating: Double.infinity, count: n)
         var parent = [Int](repeating: -1, count: n)
         var closed = [Bool](repeating: false, count: n)
         var estimate = [Double](repeating: -1, count: n)
         var open: [Int] = []
-        if let s = FerryGrid.index[here.code] { closed[s] = true }
+        if let s = startIndex { closed[s] = true }
 
-        var point = FerryGrid.point(here)
+        var point = startPoint
         var base = 0.0
         var current = -1
         while true {
-            // Relax every usable airport within one hop of the current one.
-            for k in 0..<n where usable[k] && !closed[k] {
+            // Relax every usable airport within one hop of the current one. From a neighbour list (nearest first) the first one
+            // out of reach ends the list; the plain scan looks at every airport.
+            let listed: Int? = useTable ? (current >= 0 ? current : startIndex) : nil
+            let near = listed.map { FerryGrid.neighbours[$0] } ?? FerryGrid.everyIndex
+            for k in near {
                 let c2 = FerryGrid.chord2(point, points[k])
-                if c2 > maxChord2 { continue }
+                if c2 > maxChord2 {
+                    if listed != nil { break }
+                    continue
+                }
+                if closed[k] || !isStop(k) { continue }
                 let km = FerryGrid.km(chord2: c2)
                 if km > reach { continue }
                 let total = base + km + Tuning.ferryStopPenaltyKm
@@ -168,11 +189,48 @@ extension World {
         }
     }
 
+    /// True when no chain of stops can join the goals to the start, found without searching the map: spreading out from the goals
+    /// over the stops this aircraft can use runs out before it comes within one hop of the start. That is the usual answer for an
+    /// island strip across open water. It gives up (false, so the full search runs) after `FerryGrid.islandLimit` airports.
+    /// A hop is judged on the chord alone, which is a little generous, so a goal that can be reached is never called cut off.
+    /// Needs the neighbour lists, so only for a reach within `FerryGrid.tableKm`.
+    private func goalsCutOff(goals: [Int], startPoint: FerryGrid.Point, maxChord2: Double, isStop: (Int) -> Bool) -> Bool {
+        let points = FerryGrid.points
+        var seen = [Bool](repeating: false, count: points.count)
+        var stack: [Int] = []
+        for g in goals where !seen[g] {
+            seen[g] = true
+            stack.append(g)
+        }
+        var count = stack.count
+        while let u = stack.popLast() {
+            if FerryGrid.chord2(points[u], startPoint) <= maxChord2 { return false }
+            for k in FerryGrid.neighbours[u] {
+                if FerryGrid.chord2(points[u], points[k]) > maxChord2 { break }
+                if seen[k] || !isStop(k) { continue }
+                seen[k] = true
+                count += 1
+                if count > FerryGrid.islandLimit { return false }
+                stack.append(k)
+            }
+        }
+        return true
+    }
+
+    /// The empty flight that gets aircraft `i` from where it will next be on the ground to the first reachable of `goals`, and why
+    /// not when there is none. One search answers both: the problem is nil when it can get there (the plan has no hops when it is
+    /// there already).
+    func positioning(aircraftIndex i: Int, toAny goals: [String]) -> (plan: FerryPlan?, problem: WorldError?) {
+        let start = nextGround(of: aircraft[i])
+        let plan = ferryPlan(aircraftIndex: i, from: start, toAny: goals)
+        if goals.contains(start) || plan != nil { return (plan, nil) }
+        guard let a = AirportCatalog.airport(start), let first = goals.first, let b = AirportCatalog.airport(first) else { return (nil, .outOfRange(km: 0)) }
+        return (nil, .outOfRange(km: Int(a.distanceKm(to: b))))
+    }
+
     /// Why this aircraft cannot get (empty) to any of `goals` from where it will next be on the ground, or nil if it can.
     func positioningProblem(aircraftIndex i: Int, toAny goals: [String]) -> WorldError? {
-        let start = nextGround(of: aircraft[i])
-        if goals.contains(start) || ferryPlan(aircraftIndex: i, from: start, toAny: goals) != nil { return nil }
-        guard let a = AirportCatalog.airport(start), let first = goals.first, let b = AirportCatalog.airport(first) else { return .outOfRange(km: 0) }
-        return .outOfRange(km: Int(a.distanceKm(to: b)))
+        if goals.contains(nextGround(of: aircraft[i])) { return nil }
+        return positioning(aircraftIndex: i, toAny: goals).problem
     }
 }

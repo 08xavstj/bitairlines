@@ -51,13 +51,20 @@ struct MoneyScreen: View {
                             Text(Format.signedMoney(revenue - costs)).pixelFont(16).foregroundStyle(revenue >= costs ? Theme.good : Theme.bad).lineLimit(1).fixedSize()
                         }
                     }
+                    if let left = world.overdraftDaysLeft {
+                        Text("Past the \(Format.compactMoney(Tuning.overdraftLimit)) overdraft: \(left) day\(left == 1 ? "" : "s") left before the bank closes the airline.")
+                            .pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
+                    }
                     DailyBars(books: world.books)
                     KeyValueRow("Earned from flying", Format.compactMoney(revenue), color: Theme.good)
                     KeyValueRow("Running costs", Format.compactMoney(costs), color: Theme.bad)
                     KeyValueRow("Invested", Format.compactMoney(invested))
                     KeyValueRow("Pilot salaries", "\(Format.dollars(world.pilotPayroll)) a month")
                     KeyValueRow("Base upkeep", "\(Format.dollars(world.baseUpkeepPerDay)) a day")
-                    Text("All for the last 30 days. Invested is what the airline keeps: aircraft, bases, kits, slots, training, permits and certificates. The result and the bars leave it out.")
+                    if !world.airline.loans.isEmpty {
+                        KeyValueRow("Loan payments", "\(Format.dollars(Self.loanPaymentsThisMonth(world))) on the 1st")
+                    }
+                    Text("All for the last 30 days. Running costs include salaries (paid daily), heavy checks and fuel as it is burned. Invested is what the airline keeps: aircraft, bases, kits, slots, training, permits, certificates and fuel in the tanks; it can be below zero when more stock was burned than bought. The result and the bars leave it out, and so do loans taken or paid back and money from sales.")
                         .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                 }
             }
@@ -113,10 +120,21 @@ struct MoneyScreen: View {
                     StatBar(label: "Reputation", value: min(world.airline.reputation, next.reputation), maximum: next.reputation, color: Theme.gold,
                             valueText: "\(Int(world.airline.reputation)) of \(Int(next.reputation))")
                     Button("Buy level \(next.level) for \(Format.compactMoney(next.fee))") { session.perform { try $0.upgradeCertificate() } }.buttonStyle(.smallProminent).disabled(!world.canUpgradeCertificate)
+                    if Progression.meets(next, airline: world.airline) && world.airline.cash < next.fee {
+                        Text("You qualify. You need \(Format.dollars(next.fee - max(0, world.airline.cash))) more to buy it.")
+                            .pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
+                    }
                 } else {
                     Text("You hold the highest certificate.").pixelFont(10.667).foregroundStyle(Theme.good)
                 }
             }
+        }
+    }
+
+    /// What the loans take on the 1st: each loan's monthly share plus a month's interest on what is still owed.
+    static func loanPaymentsThisMonth(_ world: World) -> Int {
+        world.airline.loans.reduce(0) { total, loan in
+            total + min(loan.remaining, loan.monthlyPrincipal) + Int((Double(loan.remaining) * loan.annualRate / 12.0).rounded())
         }
     }
 

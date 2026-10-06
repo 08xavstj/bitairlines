@@ -27,7 +27,7 @@ struct FuelCard: View {
                     Text("Your tanks are too full to buy more right now.").pixelFont(10.667).foregroundStyle(Theme.gold)
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                Text("Fuel bought ahead is used first, at the price you paid. Buy when it is cheap. Fuel depots at your bases hold more.")
+                Text("Fuel bought ahead is used first, at the price you paid. It counts as invested until it is burned, then as a flight cost. Buy when it is cheap. Fuel depots at your bases hold more.")
                     .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
             }
         }

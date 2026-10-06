@@ -65,10 +65,12 @@ extension World {
             departOnJob(i, jobID: jobID)
             return
         }
-        // An aircraft with no route and no job on its way somewhere through stops flies the next hop.
+        // An aircraft with no route and no job on its way somewhere through stops flies the next hop (or waits at the gate for it).
+        // If it can never get there, it parks where it is and the news says so.
         if aircraft[i].routeID == nil, let target = aircraft[i].ferryTargetStore {
             aircraft[i].ferryTargetStore = nil
-            if target == aircraft[i].location || !startFerry(index: i, to: target) { aircraft[i].status = .idle }
+            aircraft[i].status = .idle
+            if target != aircraft[i].location && !startFerry(index: i, to: target) { noteFerryGivenUp(i) }
             return
         }
         // A shared aircraft takes whichever of its routes leaves from here first.
@@ -79,9 +81,11 @@ extension World {
         }
         let route = routes[r]
         guard let l = route.firstLeg(from: aircraft[i].location) else {
-            // Not at a stop of this route: fly empty towards it, one hop at a time (this runs again at every stop on the way).
+            // Not at a stop of this route: fly empty towards it, one hop at a time (this runs again at every stop on the way, and
+            // after every wait at the gate).
             if !startFerry(index: i, toAny: route.stops) {
-                // It cannot reach this route: drop it (another of its routes takes over, or it parks).
+                // It can never reach this route from here: drop it (another of its routes takes over, or it parks) and say so.
+                noteFerryGivenUp(i)
                 aircraft[i].status = .idle
                 detach(i, fromRoute: rid)
                 if aircraft[i].routeID != nil { aircraft[i].status = .boarding(until: clock.minute + 1) }

@@ -22,8 +22,10 @@ extension World {
                 if let t = plane.eventMinute, t < next { next = t }
             }
             if next > clock.minute { clock.minute = next }
-            processDueAircraft()
+            // Midnight first: an aircraft due at 00:00 sees the new day's crew hours, slots and weather. (The other way round, a
+            // crew hold at 00:00 ran to 06:00 the day after, 30 hours, and a 00:00 leg was charged to the day before.)
             if clock.minute == midnight { runDailyUpdate() }
+            processDueAircraft()
             if isBankrupt { return .gameOver }
         }
         return isPausedByIssue ? .pausedForIssue : .reachedTarget
