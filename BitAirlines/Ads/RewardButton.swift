@@ -17,7 +17,8 @@ struct RewardButton: View {
     var body: some View {
         let service = Ads.service
         let offer = session.world.rewardOffer(kind, realDay: RealDay.today(), target: target)
-        VStack(alignment: .leading, spacing: 4) {
+        // A Group, so a hidden button leaves no gap in the card around it.
+        Group {
             if let offer, !(once && taken), service.isReady || service.skipsAds {
                 Button { watch() } label: {
                     HStack(spacing: 6) {

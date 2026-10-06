@@ -192,8 +192,13 @@ extension World {
             offer.cash = option.costUSD
             offer.days = option.days
         case .doubleJobPay:
-            guard let job = ops.jobs.first(where: { (target == nil || $0.id == target) && !log.doubledJobIDs.contains($0.id) }) else { return nil }
-            offer.cash = job.pay
+            let doubled = log.doubledJobIDs
+            let found = ops.jobs.first { candidate in
+                guard !doubled.contains(candidate.id) else { return false }
+                return target == nil || candidate.id == target
+            }
+            guard let found else { return nil }
+            offer.cash = found.pay
         case .freePosters:
             guard !routes.isEmpty, activeCampaign(.posters) == nil else { return nil }
             if let last = log.postersDay, clock.dayIndex < last + Tuning.freePostersEveryDays { return nil }
@@ -203,8 +208,12 @@ extension World {
             guard ops.jobArea.count >= 2 else { return nil }
             offer.count = jobBoardSize
         case .holdRareFind:
-            guard market.listings.contains(where: { $0.rare != nil && $0.rareUntilDay != nil && (target == nil || $0.id == target)
-                && !log.heldListingIDs.contains($0.id) }) else { return nil }
+            let held = log.heldListingIDs
+            let canHold = market.listings.contains { listing in
+                guard listing.rare != nil, listing.rareUntilDay != nil, !held.contains(listing.id) else { return false }
+                return target == nil || listing.id == target
+            }
+            guard canHold else { return nil }
             offer.days = Tuning.rareFindHoldDays
         case .brokersTip:
             guard log.brokerWeek != rewardWeek, !AircraftCatalog.available(atLevel: airline.level).isEmpty else { return nil }
