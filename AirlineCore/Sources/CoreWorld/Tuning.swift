@@ -33,6 +33,10 @@ public enum Tuning {
     public static let fareScale = 0.85
     /// Fly-in communities pay up to this much more.
     public static let isolationFarePremium = 0.9
+    /// People won by a fare below the going fare, by ratio = going fare / fare multiplier (above 1). About ratio^0.6, so a cut wins
+    /// fewer people than it costs in fare and an unconstrained route earns most near the going fare. Must start at (1.0, 1.0).
+    /// A fare above the going fare loses people as ratio^1.5 (see FareDemand). Mirrors FARE_GAIN_TABLE in tools/sim/route_proto.py.
+    public static let fareGainByRatio = LinearTable([(1.0, 1.0), (1.25, 1.143), (1.5, 1.275), (2.0, 1.5)])
 
     // MARK: Cargo
     public static let cargoConstant = 0.18
