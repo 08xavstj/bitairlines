@@ -45,22 +45,20 @@ import CoreCatalog
     }
 
     @Test func realismNeedsFuelStopsAndADepotFixesIt() throws {
-        // Two small unscheduled gravel strips in Canada with no fuel, close enough for a Caravan.
-        let strips = AirportCatalog.all.filter { $0.country == "CA" && $0.kind == .small && !$0.scheduled && $0.surface == .gravel && $0.runwayFt >= 1500 }
-        var pair: (Airport, Airport)?
-        for a in strips.prefix(200) {
-            if let b = strips.first(where: { $0.code != a.code && a.distanceKm(to: $0) > 600 && a.distanceKm(to: $0) < 850 }) { pair = (a, b); break }
-        }
-        let (a, b) = try #require(pair)
         var real = try Fixtures.world(mode: .realism)
         real.airline.cash = 50_000_000
+        // Two strips in Canada that sell no fuel, a Caravan's round trip apart.
+        let dry = AirportCatalog.all.filter { $0.country == "CA" && $0.surface != .water && $0.runwayFt >= 1500 && !real.sellsFuel($0) }
+        var pair: (Airport, Airport)?
+        for a in dry.prefix(400) {
+            if let b = dry.first(where: { $0.code != a.code && a.distanceKm(to: $0) > 100 && a.distanceKm(to: $0) < 700 }) { pair = (a, b); break }
+        }
+        let (a, b) = try #require(pair)
         let id = try real.createRoute(stops: [a.code, b.code])
-        let route = try #require(real.routes.first { $0.id == id })
         let caravan = try Fixtures.type("c208")
-        #expect(real.fitProblem(type: caravan, route: route) == .noFuel(airport: a.code), "1,200 to 1,700 km without fuel is beyond a Caravan")
+        #expect(real.fitProblem(type: caravan, route: try #require(real.routes.first { $0.id == id })) == .noFuel(airport: a.code), "no fuel at either end")
         try real.build(.fuelDepot, at: a.code)
-        let after = try #require(real.routes.first { $0.id == id })
-        #expect(real.fitProblem(type: caravan, route: after) == nil)
+        #expect(real.fitProblem(type: caravan, route: try #require(real.routes.first { $0.id == id })) == nil, "a depot at one end covers the round trip")
 
         var normal = try Fixtures.world()
         normal.airline.cash = 50_000_000

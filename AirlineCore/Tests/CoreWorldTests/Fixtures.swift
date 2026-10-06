@@ -9,6 +9,11 @@ enum Fixtures {
                                         difficulty: difficulty, starterTypeID: type, seed: seed, mode: mode))
     }
 
+    /// Puts runway lights at an airport (so January daylight does not limit the schedule there).
+    static func light(_ w: inout World, _ code: String) {
+        w.ops.bases.append(Base(airport: code, facilities: [.lights], openedDay: 0))
+    }
+
     static func airport(_ code: String) throws -> Airport { try #require(AirportCatalog.airport(code)) }
     static func type(_ id: String) throws -> AircraftType { try #require(AircraftCatalog.type(id)) }
 

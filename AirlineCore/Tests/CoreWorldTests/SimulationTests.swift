@@ -16,6 +16,7 @@ import CoreCatalog
 
     @Test func anAircraftFliesTheRouteAndEarns() throws {
         var w = try Fixtures.flyingWorld()
+        Fixtures.light(&w, "YUB")
         #expect(w.advance(byMinutes: 30 * 1440) == .reachedTarget)
         #expect(w.clock.minute == 6 * 60 + 30 * 1440)
         #expect(w.airline.stats.flights > 60, "flights: \(w.airline.stats.flights)")
@@ -23,6 +24,16 @@ import CoreCatalog
         #expect(w.airline.stats.revenue > 0 && w.airline.stats.expenses > 0)
         #expect(w.routes[0].flights > 60 && w.routes[0].legs.allSatisfy { $0.maturity > 0.3 })
         #expect(!w.books.isEmpty)
+    }
+
+    @Test func januaryDarknessAtAnUnlitStripLimitsTheSchedule() throws {
+        var dark = try Fixtures.flyingWorld(frequency: 2)
+        var lit = try Fixtures.flyingWorld(frequency: 2)
+        Fixtures.light(&lit, "YUB")
+        dark.advance(byMinutes: 20 * 1440)
+        lit.advance(byMinutes: 20 * 1440)
+        #expect(lit.airline.stats.flights > dark.airline.stats.flights, "\(lit.airline.stats.flights) lit vs \(dark.airline.stats.flights) dark")
+        #expect(dark.airline.stats.flights >= 30, "still about a round trip a day in the polar twilight")
     }
 
     @Test func nobodyFliesWithoutARoute() throws {
@@ -36,6 +47,8 @@ import CoreCatalog
     @Test func lowerFrequencyFliesFewerLegs() throws {
         var busy = try Fixtures.flyingWorld(frequency: 2)
         var quiet = try Fixtures.flyingWorld(frequency: 0.5)
+        Fixtures.light(&busy, "YUB")
+        Fixtures.light(&quiet, "YUB")
         busy.advance(byMinutes: 20 * 1440)
         quiet.advance(byMinutes: 20 * 1440)
         #expect(busy.airline.stats.flights > quiet.airline.stats.flights * 2, "\(busy.airline.stats.flights) vs \(quiet.airline.stats.flights)")
