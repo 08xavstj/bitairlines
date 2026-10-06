@@ -43,9 +43,12 @@ struct MoneyScreen: View {
                     KeyValueRow("Last 30 days: money out", Format.compactMoney(costs), color: Theme.bad)
                     KeyValueRow("Result", Format.signedMoney(revenue - costs), color: revenue >= costs ? Theme.good : Theme.bad)
                     DailyBars(books: world.books)
+                    KeyValueRow("Pilot salaries", "\(Format.dollars(world.pilotPayroll)) a month")
+                    KeyValueRow("Base upkeep", "\(Format.dollars(world.baseUpkeepPerDay)) a day")
                 }
             }
             certificateCard(world)
+            FuelCard(session: session)
             SectionTitle("Loans")
             Card {
                 VStack(alignment: .leading, spacing: 8) {

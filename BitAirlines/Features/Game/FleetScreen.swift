@@ -22,6 +22,9 @@ enum FleetText {
     }
 
     static func routeName(_ plane: Aircraft, in world: World) -> String {
+        if let jobID = plane.jobID, let job = world.ops.jobs.first(where: { $0.id == jobID }) {
+            return "On a job: \(Words.name(job.kind).lowercased()) to \(Place.name(job.to))"
+        }
         guard let id = plane.routeID, let route = world.routes.first(where: { $0.id == id }) else { return "No route" }
         return route.name
     }
@@ -30,11 +33,34 @@ enum FleetText {
 struct FleetScreen: View {
     let session: GameSession
     @State private var openID: Int?
+    @State private var showPilots = FleetScreen.startOnPilots
 
     var body: some View {
         let world = session.world
         Page {
-            ScreenHeader(title: "Fleet") { Text("\(world.aircraft.count) aircraft").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
+            ScreenHeader(title: "Fleet") {
+                PixelChoice(options: [(label: "Aircraft", value: false), (label: "Pilots", value: true)], selection: $showPilots).frame(width: 220)
+            }
+            if showPilots {
+                PilotsView(session: session)
+            } else {
+                aircraftList(world)
+            }
+        }
+        .sheet(item: Binding(get: { openID.map { SheetID(id: $0) } }, set: { openID = $0?.id })) { sheet in
+            AircraftSheet(session: session, aircraftID: sheet.id)
+        }
+    }
+
+    private static var startOnPilots: Bool {
+        #if DEBUG
+        return Demo.screen == "pilots"
+        #else
+        return false
+        #endif
+    }
+
+    @ViewBuilder private func aircraftList(_ world: World) -> some View {
             if world.aircraft.isEmpty { EmptyNote("You have no aircraft. Visit the Hangar to buy one.") }
             ForEach(world.aircraft) { plane in
                 if let type = plane.type {
@@ -61,10 +87,6 @@ struct FleetScreen: View {
                     .buttonStyle(.tap)
                 }
             }
-        }
-        .sheet(item: Binding(get: { openID.map { SheetID(id: $0) } }, set: { openID = $0?.id })) { sheet in
-            AircraftSheet(session: session, aircraftID: sheet.id)
-        }
     }
 }
 
@@ -98,6 +120,8 @@ struct AircraftSheet: View {
                                 }
                             }
                         }
+                        SectionTitle("Crew and kit")
+                        KitsCard(session: session, aircraftID: aircraftID)
                         SectionTitle("Route")
                         routePicker(plane: plane, type: type, world: world)
                         SectionTitle("Paint")
@@ -134,7 +158,7 @@ struct AircraftSheet: View {
             VStack(alignment: .leading, spacing: 8) {
                 if world.routes.isEmpty { Text("No routes yet. Plan one on the Map.").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
                 ForEach(world.routes) { route in
-                    let problem = world.fitProblem(type: type, route: route)
+                    let problem = world.fitProblem(type: type, route: route, kits: plane.kits)
                     let current = plane.routeID == route.id
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {

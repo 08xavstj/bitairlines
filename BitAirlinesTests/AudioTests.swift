@@ -55,7 +55,8 @@ import CoreWorld
     func makeEngine() -> (AudioEngine, SilentAudioOutput, AppSettings) {
         let settings = AppSettings(defaults: UserDefaults(suiteName: "bitairlines-test-\(UUID().uuidString)")!)
         let output = SilentAudioOutput()
-        return (AudioEngine(output: output, settings: settings), output, settings)
+        // A short stand-in loop: the real synth is tested on its own, and is slow in a debug build.
+        return (AudioEngine(output: output, settings: settings, renderMusic: { _ in [Float](repeating: 0.1, count: 64) }), output, settings)
     }
 
     @Test func nothingChangingMeansNoSound() throws {

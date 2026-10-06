@@ -10,6 +10,8 @@ struct NewGameDraft {
     var branding = Branding.starter
     var difficulty: Difficulty = .standard
     var starterID = "c208"
+    var mode: GameMode = .normal
+    var scenario: ScenarioID?
 }
 
 /// The new-airline wizard: where you start, what you are called, how you look, what you fly.
@@ -22,24 +24,35 @@ struct NewGameFlow: View {
     @State private var draft = NewGameDraft()
     @State private var problem: String?
 
-    init(store: SaveStore, onCancel: @escaping () -> Void, onStart: @escaping (World, Int) -> Void, initialStep: Int = 0) {
+    init(store: SaveStore, onCancel: @escaping () -> Void, onStart: @escaping (World, Int) -> Void, initialStep: Int = 0, scenario: ScenarioID? = nil) {
         self.store = store
         self.onCancel = onCancel
         self.onStart = onStart
         _step = State(initialValue: min(max(initialStep, 0), Self.titles.count - 1))
+        var draft = NewGameDraft()
+        if let scenario, let def = ScenarioDefinition.definition(scenario) {
+            draft.scenario = scenario
+            draft.home = def.home
+            draft.starterID = def.starterTypeID
+            draft.difficulty = def.difficulty
+        }
+        _draft = State(initialValue: draft)
     }
 
-    private static let titles = ["Region", "Base", "Airline", "Look", "Aircraft"]
+    private static let titles = ["Game", "Region", "Base", "Airline", "Look", "Aircraft"]
+    /// The step where the airline is named; a scenario skips straight to it (the scenario chooses the region and base).
+    private static let identityStep = 3
 
     var body: some View {
         VStack(spacing: 0) {
             header
             Group {
                 switch step {
-                case 0: RegionStep(draft: $draft)
-                case 1: BaseStep(draft: $draft)
-                case 2: IdentityStep(draft: $draft)
-                case 3: BrandingEditor(branding: $draft.branding, airlineName: draft.name).padding(12)
+                case 0: GameStep(draft: $draft)
+                case 1: RegionStep(draft: $draft)
+                case 2: BaseStep(draft: $draft)
+                case 3: IdentityStep(draft: $draft)
+                case 4: BrandingEditor(branding: $draft.branding, airlineName: draft.name).padding(12)
                 default: AircraftStep(draft: $draft, problem: problem)
                 }
             }
@@ -64,10 +77,13 @@ struct NewGameFlow: View {
 
     private var footer: some View {
         HStack(spacing: 12) {
-            Button(step == 0 ? "Cancel" : "Back") { if step == 0 { onCancel() } else { step -= 1 } }.buttonStyle(SecondaryButtonStyle()).frame(width: 150)
+            Button(step == 0 ? "Cancel" : "Back") {
+                if step == 0 { onCancel() } else { step = step == Self.identityStep && draft.scenario != nil ? 0 : step - 1 }
+            }.buttonStyle(SecondaryButtonStyle()).frame(width: 150)
             Spacer()
             if step < Self.titles.count - 1 {
-                Button("Next") { step += 1 }.buttonStyle(PrimaryButtonStyle()).frame(width: 190).disabled(!canAdvance)
+                Button("Next") { step = step == 0 && draft.scenario != nil ? Self.identityStep : step + 1 }
+                    .buttonStyle(PrimaryButtonStyle()).frame(width: 190).disabled(!canAdvance)
             } else {
                 Button("Start airline") { start() }.buttonStyle(PrimaryButtonStyle()).frame(width: 220)
             }
@@ -76,13 +92,14 @@ struct NewGameFlow: View {
     }
 
     private var canAdvance: Bool {
-        if step == 2 { return draft.name.trimmingCharacters(in: .whitespaces).count >= 3 && (2...3).contains(draft.code.count) }
+        if step == Self.identityStep { return draft.name.trimmingCharacters(in: .whitespaces).count >= 3 && (2...3).contains(draft.code.count) }
         return true
     }
 
     private func start() {
         let config = NewGameConfig(airlineName: draft.name.trimmingCharacters(in: .whitespaces), airlineCode: draft.code.uppercased(), homeAirport: draft.home,
-                                   branding: draft.branding, difficulty: draft.difficulty, starterTypeID: draft.starterID, seed: UInt64.random(in: 1...UInt64.max))
+                                   branding: draft.branding, difficulty: draft.difficulty, starterTypeID: draft.starterID, seed: UInt64.random(in: 1...UInt64.max),
+                                   mode: draft.scenario == nil ? draft.mode : .normal, scenario: draft.scenario)
         do {
             let world = try World.newGame(config)
             onStart(world, store.freeSlot())
@@ -216,11 +233,13 @@ struct AircraftStep: View {
     let problem: String?
 
     var body: some View {
-        let offers = World.starterOffers(home: draft.home, difficulty: draft.difficulty)
+        let offers = World.starterOffers(home: draft.home, difficulty: draft.difficulty).filter { draft.scenario == nil || $0.typeID == draft.starterID }
         Page {
             Text("Your starting money and your first aircraft. A bigger aircraft carries more but costs more to run.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
-            PixelChoice(options: Difficulty.allCases.map { (label: Self.name($0), value: $0) }, selection: $draft.difficulty)
-                .onChange(of: draft.difficulty) { _, _ in fixSelection() }
+            if draft.scenario == nil {
+                PixelChoice(options: Difficulty.allCases.map { (label: Self.name($0), value: $0) }, selection: $draft.difficulty)
+                    .onChange(of: draft.difficulty) { _, _ in fixSelection() }
+            }
             Text("Starting money \(Format.dollars(draft.difficulty.startingBudget))").pixelFont(13.333).foregroundStyle(Theme.textPrimary)
             if let problem { Text(problem).pixelFont(10.667).foregroundStyle(Theme.bad) }
             ForEach(offers) { offer in
@@ -250,6 +269,7 @@ struct AircraftStep: View {
     }
 
     private func fixSelection() {
+        guard draft.scenario == nil else { return }
         let offers = World.starterOffers(home: draft.home, difficulty: draft.difficulty)
         if !offers.contains(where: { $0.typeID == draft.starterID }), let first = offers.first(where: { $0.typeID == "c208" }) ?? offers.first {
             draft.starterID = first.typeID

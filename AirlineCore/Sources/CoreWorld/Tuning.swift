@@ -111,13 +111,13 @@ public enum Tuning {
 
     // MARK: Rival airlines
     /// Chance each month that a rival moves into one of the player's busy routes.
-    public static let rivalEntryChance = 0.25
+    public static let rivalEntryChance = 0.15
     /// A leg must have at least this many people a day before a rival bothers.
-    public static let rivalEntryPaxPerDay = 40.0
+    public static let rivalEntryPaxPerDay = 60.0
     /// Share of a market a rival is assumed to carry (for the rankings).
     public static let rivalMarketShare = 0.3
     /// Where a rival flies the same pair, competition is at least this intense.
-    public static let rivalIntensity = 0.4
+    public static let rivalIntensity = 0.35
 
     // MARK: Pilots
     /// Monthly base salary for a pilot on small types (bigger types pay a multiple); flight pay is in the leg costs.

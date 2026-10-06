@@ -40,7 +40,8 @@ import CoreWorld
             .unknownAirport("X"), .unknownType("x"), .unknownAircraft(1), .unknownRoute(1), .unknownListing(1), .unknownIssue(1), .notEnoughCash(needed: 5),
             .levelTooLow(required: 3), .airportLevelTooHigh(airport: "YEG", required: 4), .permitRequired(country: "US", price: 1), .routeNeedsTwoStops, .tooManyStops,
             .duplicateStops, .aircraftCannotUse(airport: "YEV"), .outOfRange(km: 5), .notDelivered, .aircraftBusy, .aircraftHasRoute, .notInProduction, .invalidChoice,
-            .requirementsNotMet, .alreadyHasPermit, .invalidAmount,
+            .requirementsNotMet, .alreadyHasPermit, .invalidAmount, .fuelStorageFull(capacityKg: 20_000), .noFuel(airport: "YUB"), .alreadyBuilt,
+            .cannotBuildHere, .kitDoesNotFit, .jobUnavailable, .notEnoughRoom,
         ]
         for e in errors {
             let text = Messages.describe(e)

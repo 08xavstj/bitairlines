@@ -45,7 +45,14 @@ enum Demo {
             let long = try w.createRoute(stops: ["YEV", "YZF"])
             try? w.assign(aircraftID: id, toRoute: long)
         }
+        // Show off the added systems: a base with a depot and a hangar, premium service, fuel bought ahead, an event.
+        try? w.build(.fuelDepot, at: "YEV")
+        try? w.build(.hangar, at: "YEV")
+        try? w.setService(routeID: milkRun, level: .premium)
+        try? w.buyFuel(kg: 10_000)
+        w.startEvent(.earlyThaw, at: "YUB")
         w.advance(byMinutes: 30 * 1440)
+        if screen == "perks" { w.ops.perkChoices = [.quickTurns, .homeFuelDeal, .knownFace] }
         if issue {
             w.airline.cash = -250_000
             w.advance(byMinutes: 2 * 1440)

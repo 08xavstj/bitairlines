@@ -14,10 +14,13 @@ final class AudioEngine {
     private(set) var theme: MusicTheme?
     @ObservationIgnored private var playing: MusicTheme?
     @ObservationIgnored private var suspended = false
+    /// Builds a music loop. The real synth takes a moment; tests pass a quick stand-in.
+    @ObservationIgnored private let renderMusic: @Sendable (MusicTheme) -> [Float]
 
-    init(output: AudioOutput, settings: AppSettings) {
+    init(output: AudioOutput, settings: AppSettings, renderMusic: @escaping @Sendable (MusicTheme) -> [Float] = { ChipSynth.render($0) }) {
         self.output = output
         self.settings = settings
+        self.renderMusic = renderMusic
         settings.onChange = { [weak self] in self?.refreshMusic() }
     }
 
@@ -62,8 +65,9 @@ final class AudioEngine {
             playing = theme
         } else if !rendering.contains(theme) {
             rendering.insert(theme)
+            let render = renderMusic
             Task { [weak self] in
-                let samples = await Task.detached(priority: .utility) { ChipSynth.render(theme) }.value
+                let samples = await Task.detached(priority: .utility) { render(theme) }.value
                 guard let self else { return }
                 self.rendering.remove(theme)
                 self.musicSamples[theme] = samples

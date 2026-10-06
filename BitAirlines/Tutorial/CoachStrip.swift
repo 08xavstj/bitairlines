@@ -10,8 +10,9 @@ struct CoachStrip: View {
     var body: some View {
         if coach.active {
             // The guide follows the world: it looks at the step the world is on and tells the coach when that changes.
+            // The stack is always there (even before the first step is known), so the change handler is installed.
             let wanted = Tutorial.step(world: session.world, speed: session.speed, reviewed: false)
-            strip
+            VStack(spacing: 0) { strip }
                 .onChange(of: wanted, initial: true) { _, _ in coach.update(world: session.world, speed: session.speed) }
                 .task { suggestion = Tutorial.suggestion(world: session.world) }
         }
@@ -34,6 +35,9 @@ struct CoachStrip: View {
             .background(Theme.surfaceRaised)
             .overlay(alignment: .top) { Rectangle().fill(Theme.gold).frame(height: 2) }
             .accessibilityElement(children: .contain)
+        } else {
+            // A real (if empty) view, so the handlers above it run before the first step is known.
+            Color.clear.frame(height: 0)
         }
     }
 }

@@ -3,14 +3,16 @@ import CoreCatalog
 import CoreWorld
 
 enum GameSection: String, CaseIterable, Identifiable {
-    case map, fleet, routes, market, money, inbox, airline
+    case map, jobs, fleet, routes, bases, market, money, inbox, airline
     var id: String { rawValue }
 
     var icon: PixelIcon {
         switch self {
         case .map: .map
+        case .jobs: .jobs
         case .fleet: .fleet
         case .routes: .routes
+        case .bases: .base
         case .market: .hangar
         case .money: .money
         case .inbox: .inbox
@@ -21,8 +23,10 @@ enum GameSection: String, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .map: "Map"
+        case .jobs: "Jobs"
         case .fleet: "Fleet"
         case .routes: "Routes"
+        case .bases: "Bases"
         case .market: "Hangar"
         case .money: "Money"
         case .inbox: "Inbox"
@@ -57,6 +61,7 @@ struct GameShell: View {
         }
         .background(Theme.background.ignoresSafeArea())
         .background { SoundWatcher(session: session) }
+        .overlay { PerkChoiceOverlay(session: session) }
         .overlay { IssueOverlay(session: session, onExit: onExit) }
         .overlay(alignment: .bottom) { NoticeBanner(session: session) }
         .pixelConfirm("Leave the game?", message: "Your airline is saved. You can continue it from the title screen.", confirm: "Leave", isPresented: $confirmExit) { onExit() }
@@ -65,8 +70,10 @@ struct GameShell: View {
     @ViewBuilder private var content: some View {
         switch section {
         case .map: MapScreen(session: session)
+        case .jobs: JobsScreen(session: session)
         case .fleet: FleetScreen(session: session)
         case .routes: RoutesScreen(session: session)
+        case .bases: BasesScreen(session: session)
         case .market: MarketScreen(session: session)
         case .money: MoneyScreen(session: session)
         case .inbox: InboxScreen(session: session)
@@ -140,16 +147,16 @@ struct Rail: View {
     var body: some View {
         let waiting = session.world.issues.count
         ScrollView {
-            VStack(spacing: 3) {
+            VStack(spacing: 2) {
                 ForEach(GameSection.allCases) { s in
                     let on = s == section
                     Button { section = s } label: {
-                        VStack(spacing: 2) {
+                        VStack(spacing: 1) {
                             PixelIconView(icon: s.icon, pixel: 2)
                             Text(s.title.uppercased()).pixelFont(8).lineLimit(1).minimumScaleFactor(0.6)
                         }
                         .foregroundStyle(on ? Theme.onAccent : Theme.textMuted)
-                        .frame(width: 58, height: 41)
+                        .frame(width: 58, height: 34)
                         .background(PixelShape(step: 2).fill(on ? Theme.accent : Theme.surfaceRaised))
                         .overlay(alignment: .topTrailing) {
                             if s == .inbox && waiting > 0 {

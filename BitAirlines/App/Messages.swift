@@ -28,6 +28,13 @@ enum Messages {
         case .requirementsNotMet: return "You do not meet the requirements yet."
         case .alreadyHasPermit: return "You already have that permit."
         case .invalidAmount: return "That amount is not allowed."
+        case .fuelStorageFull(let kg): return "Your tanks hold \(Format.number(kg)) kg. Build a fuel depot for more room."
+        case .noFuel(let airport): return "No fuel for long enough after \(Place.name(airport)). Add a fuel stop or build a fuel depot."
+        case .alreadyBuilt: return "That is already done."
+        case .cannotBuildHere: return "That cannot be done here."
+        case .kitDoesNotFit: return "That kit is not made for this aircraft."
+        case .jobUnavailable: return "That job is no longer on offer."
+        case .notEnoughRoom: return "This aircraft has too few seats or too small a hold for the job."
         }
     }
 

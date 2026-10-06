@@ -36,9 +36,10 @@ enum SoundCues {
         switch kind {
         case .routeOpened: .routeOpened
         case .aircraftDelivered: .arrival
-        case .certificate, .milestone: .levelUp
-        case .weather: .notice
-        case .aircraftSold, .breakdown, .loan, .permit: nil
+        case .certificate, .milestone, .scenario: .levelUp
+        case .weather, .event, .rivalRoute, .pilotSick, .jobLate, .noCrew: .notice
+        case .jobDone: .coin
+        case .aircraftSold, .breakdown, .loan, .permit, .perk, .fuelBought, .baseBuilt, .kitFitted, .slotBought, .pilotHired: nil
         }
     }
 }

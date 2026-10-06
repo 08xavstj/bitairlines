@@ -11,6 +11,7 @@ struct MapScreen: View {
     @State private var selected: String?
     @State private var planning = false
     @State private var stops: [String] = []
+    @State private var building: String?
 
     init(session: GameSession) {
         self.session = session
@@ -56,7 +57,7 @@ struct MapScreen: View {
                         if planning {
                             RoutePlannerPanel(session: session, stops: $stops, onClose: { planning = false; stops = [] })
                         } else if let code = selected, let airport = AirportCatalog.airport(code) {
-                            AirportPanel(world: world, airport: airport, onPlan: { startPlan(from: code) }, onClose: { selected = nil })
+                            AirportPanel(world: world, airport: airport, onPlan: { startPlan(from: code) }, onBuild: { building = code }, onClose: { selected = nil })
                         }
                         Spacer(minLength: 0)
                     }
@@ -66,6 +67,9 @@ struct MapScreen: View {
         }
         .background(Theme.background)
         .clipped()
+        .sheet(item: Binding(get: { building.map { CodeSheet(id: $0) } }, set: { building = $0?.id })) { sheet in
+            BuildSheet(session: session, code: sheet.id)
+        }
     }
 
     // MARK: Toolbar
@@ -151,6 +155,7 @@ struct AirportPanel: View {
     let world: World
     let airport: Airport
     let onPlan: () -> Void
+    let onBuild: () -> Void
     let onClose: () -> Void
 
     var body: some View {
@@ -167,13 +172,23 @@ struct AirportPanel: View {
                 Text(airport.name).pixelFont(10.667).foregroundStyle(Theme.textMuted).lineLimit(2)
                 KeyValueRow("Country", CountryCatalog.country(airport.country)?.name ?? airport.country)
                 KeyValueRow("People nearby", Format.people(airport.population))
-                KeyValueRow("Runway", "\(Format.number(airport.runwayFt)) ft \(airport.surface == .gravel ? "gravel" : (airport.surface == .water ? "water" : "paved"))")
+                KeyValueRow("Runway", "\(Format.number(world.runwayFt(at: airport))) ft \(world.surface(at: airport) == .gravel ? "gravel" : (world.surface(at: airport) == .water ? "water" : "paved"))")
+                if airport.surface != .water && !world.isLit(airport) && world.ops.mode.daylightLimits { KeyValueRow("Lights", "None: daylight only", color: Theme.gold) }
+                if world.ops.mode.fuelOnlyWhereSold { KeyValueRow("Fuel", world.sellsFuel(airport) ? "Sold here" : "None", color: world.sellsFuel(airport) ? Theme.good : Theme.gold) }
+                if world.isFrozen(airport, month: world.clock.date.month) { KeyValueRow("Lake", "Frozen: skis only", color: Theme.info) }
+                if world.needsSlots(airport) { KeyValueRow("Slots", "\(world.slotsHeld(at: airport.code)) held, \(world.slotsScheduled(at: airport.code)) used") }
+                if let base = world.ops.bases.first(where: { $0.airport == airport.code }) {
+                    Text("Your base: " + base.facilities.map { Words.name($0) }.joined(separator: ", ")).pixelFont(10.667).foregroundStyle(Theme.good).fixedSize(horizontal: false, vertical: true)
+                }
                 if let home, home.code != airport.code { KeyValueRow("From home", Format.km(home.distanceKm(to: airport))) }
                 HStack(spacing: 6) {
                     Tag(text: "Level \(required)", color: locked ? Theme.bad : Theme.good)
                     if !world.airline.permits.contains(airport.country) { Tag(text: "Permit needed", color: Theme.gold) }
                 }
-                Button("Plan a route from here") { onPlan() }.buttonStyle(.smallProminent).disabled(locked)
+                HStack(spacing: 8) {
+                    Button("Plan a route from here") { onPlan() }.buttonStyle(.smallProminent).disabled(locked)
+                    Button("Build here") { onBuild() }.buttonStyle(.small).disabled(locked)
+                }
             }
         }
         .frame(width: 300)

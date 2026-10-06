@@ -17,7 +17,10 @@ struct AirlineScreen: View {
             .padding(.horizontal, 12).padding(.top, 8)
             if showStats {
                 Page {
+                    ScenarioCard(world: world)
                     totals(world)
+                    RulesCard(world: world)
+                    RankingsCard(world: world)
                     pauseCard(world)
                 }
             } else {

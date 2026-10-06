@@ -12,6 +12,7 @@ struct RootView: View {
     @State private var store = SaveStore()
     @State private var firstSection: GameSection = .map
     @State private var firstStep = 0
+    @State private var firstScenario: ScenarioID?
 
     var body: some View {
         ZStack {
@@ -19,7 +20,8 @@ struct RootView: View {
             case .title:
                 TitleView(store: store, onNew: { screen = .newGame }, onContinue: { slot in continueGame(slot: slot) })
             case .newGame:
-                NewGameFlow(store: store, onCancel: { screen = .title }, onStart: { world, slot in TutorialStore().setActive(true, slot: slot); begin(world: world, slot: slot) }, initialStep: firstStep)
+                NewGameFlow(store: store, onCancel: { screen = .title }, onStart: { world, slot in TutorialStore().setActive(true, slot: slot); begin(world: world, slot: slot) }, initialStep: firstStep,
+                            scenario: firstScenario)
             case .game:
                 if let session {
                     GameShell(session: session, onExit: { leaveGame() }, initialSection: firstSection)
@@ -35,11 +37,16 @@ struct RootView: View {
     }
 
     #if DEBUG
-    /// Screenshot shortcut: `-DemoScreen map|fleet|routes|market|money|inbox|airline|issue|planner|tutorial1...tutorial3|title|new0...new4`.
+    /// Screenshot shortcut: `-DemoScreen map|jobs|fleet|pilots|routes|bases|market|money|inbox|airline|issue|perks|planner|tutorial1...tutorial3|title|scenarios|new0...new5`.
     private func launchDemo() {
         guard let name = Demo.screen else { return }
         if name.hasPrefix("new"), let step = Int(name.dropFirst(3)) {
             firstStep = step
+            screen = .newGame
+            return
+        }
+        if name == "scenarios" {
+            firstScenario = .freezeUp
             screen = .newGame
             return
         }
@@ -50,7 +57,8 @@ struct RootView: View {
         let made: World?
         if let stage { made = try? Demo.freshWorld(stage: stage) } else { made = try? Demo.world(issue: name == "issue") }
         guard let world = made else { return }
-        firstSection = stage != nil ? (stage == 2 ? .fleet : .map) : (GameSection(rawValue: name == "issue" ? "map" : name) ?? .map)
+        let sectionName = ["issue": "map", "perks": "map", "pilots": "fleet"][name] ?? name
+        firstSection = stage != nil ? (stage == 2 ? .fleet : .map) : (GameSection(rawValue: sectionName) ?? .map)
         let demo = GameSession(world: world, slot: demoSlot, store: SaveStore(directory: FileManager.default.temporaryDirectory.appendingPathComponent("bitairlines-demo")))
         demo.start()
         demo.setSpeed(name == "issue" || stage != nil ? .paused : .x4)

@@ -95,6 +95,7 @@ final class GameSession {
     func save() {
         do { try store.save(world, slot: slot) } catch { notice = "Could not save the game." }
         lastSave = Date()
+        if let state = world.ops.scenario, let medal = state.medal { ScenarioRecords.record(medal, for: state.id) }
     }
 
     // MARK: Actions (each wraps a World call and reports a refusal as a notice)

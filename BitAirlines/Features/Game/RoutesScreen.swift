@@ -85,6 +85,8 @@ struct RouteCard: View {
                 Toggle(isOn: Binding(get: { route.carriesCargo }, set: { v in session.perform { try $0.setCargo(routeID: route.id, enabled: v) } })) {
                     Text("Carry freight").pixelFont(10.667).foregroundStyle(Theme.textMuted)
                 }.toggleStyle(PixelToggleStyle())
+                ServicePicker(session: session, route: route)
+                RouteNotes(world: world, route: route)
 
                 if planes.isEmpty {
                     Text("No aircraft yet. Assign one from Fleet.").pixelFont(10.667).foregroundStyle(Theme.bad)
