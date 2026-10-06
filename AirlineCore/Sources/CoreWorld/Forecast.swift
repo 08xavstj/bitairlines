@@ -29,14 +29,15 @@ public struct RouteForecast: Sendable, Hashable, Identifiable {
 extension World {
     /// What a mature route through `stops` flown by `type` earns per day. Leave `frequency` nil to take the schedule the market supports
     /// (and as many aircraft as it needs), or pass the frequency and the number of aircraft to forecast a route as it is set up.
-    public func forecast(stops: [String], type: AircraftType, frequency: Double? = nil, fareMultiplier: Double = 1.0, aircraftCount: Int? = nil) -> RouteForecast {
+    public func forecast(stops: [String], type: AircraftType, frequency: Double? = nil, fareMultiplier: Double = 1.0, carriesCargo: Bool = true,
+                         aircraftCount: Int? = nil) -> RouteForecast {
         var empty = RouteForecast(typeID: type.id, frequency: 0, aircraftNeeded: 0, passengersPerDay: 0, cargoKgPerDay: 0, loadFactor: 0, revenuePerDay: 0, costPerDay: 0,
                                   profitPerDay: 0, investment: 0, paybackYears: nil, problem: nil)
         guard stops.count >= 2, let legs = makeLegs(stops: stops) else {
             empty.problem = .routeNeedsTwoStops
             return empty
         }
-        let route = Route(id: 0, name: "", stops: stops, fareMultiplier: min(Route.maxFare, max(Route.minFare, fareMultiplier)), carriesCargo: true, frequency: 1,
+        let route = Route(id: 0, name: "", stops: stops, fareMultiplier: min(Route.maxFare, max(Route.minFare, fareMultiplier)), carriesCargo: carriesCargo, frequency: 1,
                           autoFrequency: false, legs: legs, aircraftIDs: [], openedDay: clock.dayIndex, flights: 0, revenueThisMonth: 0, costThisMonth: 0,
                           revenueLastMonth: 0, costLastMonth: 0)
         if let problem = fitProblem(type: type, route: route) {
@@ -68,8 +69,9 @@ extension World {
         }
         f = max(Route.minFrequency, f)
 
+        // Everyone who turns up between two departures boards unless the seats run out; only the people left behind lose patience, and the seat
+        // limit already caps them, so the forecast is the smaller of demand and seats.
         let wear = Valuation.wearFactor(ageYears: 12, condition: 80)
-        let retention = 1.0 / (1.0 + Tuning.waitingDecayPerDay / f)
         var passengers = 0.0, cargo = 0.0, revenue = 0.0, cost = 0.0, seats = 0.0
         for leg in route.legs {
             guard let a = AirportCatalog.airport(leg.from), let b = AirportCatalog.airport(leg.to) else { continue }
@@ -77,8 +79,8 @@ extension World {
             mature.maturity = 1.0
             mature.departuresLastWeek = max(1, Int((f * 7).rounded()))
             let share = capture(route: route, leg: mature, from: a, to: b)
-            let carriedPax = min(leg.marketPaxPerDay * share * retention, f * Double(type.seats) * Tuning.loadFactorCap)
-            let carriedCargo = route.carriesCargo ? min(leg.marketCargoKgPerDay * share * retention, f * Double(type.cargoKg) * Tuning.cargoLoadLimit) : 0
+            let carriedPax = min(leg.marketPaxPerDay * share, f * Double(type.seats) * Tuning.loadFactorCap)
+            let carriedCargo = route.carriesCargo ? min(leg.marketCargoKgPerDay * share, f * Double(type.cargoKg) * Tuning.cargoLoadLimit) : 0
             let fare = leg.marketFare * route.fareMultiplier
             revenue += carriedPax * fare * (1.0 - Tuning.salesShare) + carriedCargo * Fares.cargoRate(distanceKm: leg.distanceKm)
             let flight = LegEconomics.cost(type: type, from: a, to: b, distanceKm: leg.distanceKm, fuelIndex: market.fuelIndex, wearFactor: wear).total

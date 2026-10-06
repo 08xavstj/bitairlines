@@ -18,7 +18,7 @@ import CoreCatalog
         let simulated = Double(w.airline.cash - start) / 365.0 + Tuning.headOfficePerDay(level: 1)
         print("CALIBRATION forecast Caravan YEV-YUB: predicted \(Int(predicted.profitPerDay)) a day, simulated \(Int(simulated)) a day, load \(predicted.loadFactor)")
         #expect(predicted.problem == nil && predicted.aircraftNeeded == 1 && predicted.frequency == 1)
-        #expect(predicted.profitPerDay > simulated * 0.5 && predicted.profitPerDay < simulated * 1.6, "predicted \(predicted.profitPerDay) vs simulated \(simulated)")
+        #expect(predicted.profitPerDay > simulated * 0.75 && predicted.profitPerDay < simulated * 1.3, "predicted \(predicted.profitPerDay) vs simulated \(simulated)")
     }
 
     @Test func aircraftThatCannotFlyTheRouteSaySo() throws {
@@ -76,9 +76,12 @@ import CoreCatalog
         #expect(dear.passengersPerDay < cheap.passengersPerDay, "a higher fare carries fewer people")
     }
 
-    @Test func cargoCanBeSwitchedOffInTheForecast() throws {
+    @Test func cargoCanBeLeftOutOfTheForecast() throws {
         let w = try Fixtures.world()
-        let with = w.forecast(stops: ["YEV", "YUB"], type: try type("c208"), frequency: 1, aircraftCount: 1)
-        #expect(with.cargoKgPerDay > 0)
+        let caravan = try type("c208")
+        let with = w.forecast(stops: ["YEV", "YUB"], type: caravan, frequency: 1, aircraftCount: 1)
+        let without = w.forecast(stops: ["YEV", "YUB"], type: caravan, frequency: 1, carriesCargo: false, aircraftCount: 1)
+        #expect(with.cargoKgPerDay > 0 && without.cargoKgPerDay == 0)
+        #expect(with.revenuePerDay > without.revenuePerDay)
     }
 }
