@@ -41,4 +41,6 @@ public enum WorldError: Error, Sendable, Hashable {
     case routesDoNotMeet
     /// An aircraft already flies the most routes it can (`World.maxRoutesPerAircraft`).
     case tooManyRoutes
+    /// The headquarters cannot be left; move it first (see GrowthMoves.swift).
+    case isHeadquarters
 }

@@ -15,6 +15,15 @@ public enum RouteIdeaReason: String, Sendable, Hashable, Codable {
     case linksNetwork
 }
 
+/// What kind of routes to suggest.
+public enum RouteIdeaFocus: String, Sendable, Hashable, Codable, CaseIterable {
+    /// Routes around the network for the aircraft the airline has (the bush routes of the start).
+    case smallStrips
+    /// Routes to bigger towns and cities the airline may serve at its level, judged for its biggest aircraft and for bigger ones it could buy
+    /// (see RouteIdeasBigger.swift).
+    case biggerCities
+}
+
 /// One suggested route: two stops, the aircraft type it was judged for, and what one aircraft of that type should earn on it.
 public struct RouteIdea: Sendable, Hashable, Identifiable {
     /// The airport the airline already uses first, then the other end.
@@ -27,6 +36,8 @@ public struct RouteIdea: Sendable, Hashable, Identifiable {
     public var reason: RouteIdeaReason
     /// The airport the reason is about.
     public var place: String
+    /// False when the idea is judged for a type the airline does not have yet (one it could buy in the hangar).
+    public var typeOwned: Bool = true
 
     public var id: String { stops.joined(separator: "-") }
 }
@@ -54,7 +65,9 @@ public enum RouteIdeaSearch {
 extension World {
     /// Up to `limit` routes worth opening, best first: from an airport the airline uses to one nearby that one of its own aircraft
     /// types can fly, not already flown in either direction, open to the airline now, and forecast to make money with one aircraft.
-    public func routeIdeas(limit: Int = 5) -> [RouteIdea] {
+    /// With `focus` `.biggerCities` the ideas lead to bigger towns and cities instead (see `biggerCityIdeas`).
+    public func routeIdeas(limit: Int = 5, focus: RouteIdeaFocus = .smallStrips) -> [RouteIdea] {
+        if focus == .biggerCities { return biggerCityIdeas(limit: limit) }
         let types = ideaTypes()
         guard limit > 0, !types.isEmpty else { return [] }
         let network = networkAirports
@@ -131,8 +144,9 @@ extension World {
         }
         guard let best else { return nil }
         let (reason, place) = ideaReason(stops: stops, passengersPerDay: best.passengersPerDay, inNetwork: inNetwork)
+        let owned = aircraft.contains { $0.typeID == best.typeID }
         return RouteIdea(stops: stops, typeID: best.typeID, profitPerDay: best.profitPerDay, passengersPerDay: best.passengersPerDay,
-                         distanceKm: km, reason: reason, place: place)
+                         distanceKm: km, reason: reason, place: place, typeOwned: owned)
     }
 
     /// The main reason a pair is worth flying, and the airport it is about. The far end is looked at first.

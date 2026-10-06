@@ -57,6 +57,8 @@ public struct NewsItem: Sendable, Hashable, Codable {
     public enum Kind: String, Sendable, Hashable, Codable {
         case routeOpened, aircraftDelivered, aircraftSold, certificate, breakdown, weather, loan, permit, milestone
         case perk, fuelBought, jobDone, jobLate, event, baseBuilt, kitFitted, slotBought, rivalRoute, pilotHired, pilotSick, noCrew, scenario
+        /// Growing out of the bush (Growth.swift): subject "sold:<route name>", "left:<airport>" or "hq:<airport>"; amount in dollars.
+        case growth
     }
     public var minute: Int
     public var kind: Kind
