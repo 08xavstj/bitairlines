@@ -10,7 +10,9 @@ public enum Tuning {
     /// How much more a fly-in community (isolation 1) travels than a town with roads.
     public static let isolationBoost = 3.0
     /// Overall scale, fitted to real route traffic (Sydney-Melbourne, London-New York, Inuvik-Yellowknife and others).
-    public static let demandConstant = 2.25
+    public static let demandConstant = 2.0
+    /// People beyond this do not add demand to one airport: a megacity's far suburbs use its other airports, drive or take trains.
+    public static let populationCap = 9_000_000
     /// Population enters as pop^(7/8).
     public static let populationEighths = 7
     /// Share of the base flow still flown at a distance in km (cars and trains win short hops).

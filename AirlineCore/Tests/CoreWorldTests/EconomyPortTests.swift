@@ -28,11 +28,11 @@ import CoreSim
     @Test func demandMatchesThePrototype() throws {
         let yev = try airport("YEV"), yzf = try airport("YZF"), yub = try airport("YUB"), yeg = try airport("YEG")
         let lhr = try airport("LHR"), jfk = try airport("JFK"), syd = try airport("SYD"), mel = try airport("MEL")
-        #expect(close(Demand.passengersPerDay(from: yev, to: yzf), 46.051404))
-        #expect(close(Demand.passengersPerDay(from: yev, to: yub), 8.160205))
-        #expect(close(Demand.passengersPerDay(from: lhr, to: jfk), 4450.262454))
-        #expect(close(Demand.passengersPerDay(from: syd, to: mel), 9994.314221))
-        #expect(close(Demand.passengersPerDay(from: yzf, to: yeg), 511.312834))
+        #expect(close(Demand.passengersPerDay(from: yev, to: yzf), 40.457266))
+        #expect(close(Demand.passengersPerDay(from: yev, to: yub), 7.558832))
+        #expect(close(Demand.passengersPerDay(from: lhr, to: jfk), 4884.366686))
+        #expect(close(Demand.passengersPerDay(from: syd, to: mel), 11898.537329))
+        #expect(close(Demand.passengersPerDay(from: yzf, to: yeg), 448.173116))
     }
 
     @Test func demandIsSymmetricForTheSameWealthAndSize() throws {
@@ -42,17 +42,17 @@ import CoreSim
 
     @Test func isolationAndCargoMatchThePrototype() throws {
         let yev = try airport("YEV"), yub = try airport("YUB"), lhr = try airport("LHR"), jfk = try airport("JFK")
-        #expect(close(Demand.isolation(yev), 0.503340, tolerance: 1e-4))
-        #expect(close(Demand.isolation(yub), 0.954650, tolerance: 1e-4))
+        #expect(close(Demand.isolation(yev), 0.500850, tolerance: 1e-4))
+        #expect(close(Demand.isolation(yub), 0.951100, tolerance: 1e-4))
         #expect(Demand.isolation(lhr) == 0)
-        #expect(close(Demand.cargoKgPerDay(from: yev, to: yub), 206.561679))
-        #expect(close(Demand.cargoKgPerDay(from: lhr, to: jfk), 18372.218007))
+        #expect(close(Demand.cargoKgPerDay(from: yev, to: yub), 219.850050))
+        #expect(close(Demand.cargoKgPerDay(from: lhr, to: jfk), 21889.442508))
     }
 
     @Test func faresMatchThePrototype() throws {
         let yev = try airport("YEV"), yzf = try airport("YZF"), yub = try airport("YUB")
-        #expect(close(Fares.market(from: yev, to: yzf, distanceKm: yev.distanceKm(to: yzf)), 263.635202))
-        #expect(close(Fares.market(from: yev, to: yub, distanceKm: yev.distanceKm(to: yub)), 121.621362))
+        #expect(close(Fares.market(from: yev, to: yzf, distanceKm: yev.distanceKm(to: yzf)), 263.352434))
+        #expect(close(Fares.market(from: yev, to: yub, distanceKm: yev.distanceKm(to: yub)), 121.397139))
     }
 
     @Test func legCostsMatchThePrototype() throws {

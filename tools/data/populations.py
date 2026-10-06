@@ -6,6 +6,8 @@ airports shares its people between them instead of counting them five times, and
 import math
 
 REACH_KM = 150.0
+# How far people will travel to an airport of each kind (km): a bush strip serves its own community, a big hub a whole region.
+REACH_BY_KIND = {'L': 150.0, 'M': 90.0, 'S': 40.0, 'W': 40.0}
 SOFTEN_KM = 15.0
 SIZE = {'L': 8.0, 'M': 3.0, 'S': 1.0, 'W': 0.7}
 UNSCHEDULED_FACTOR = 0.4
@@ -45,7 +47,7 @@ def assign(airports, places_path):
                     for i in grid.get((gy + dy, gx + dx), ()):
                         a = airports[i]
                         d = _km(lat, lon, a['lat'], a['lon'])
-                        if d <= REACH_KM:
+                        if d <= REACH_BY_KIND[a['kind']]:
                             near.append((i, weight[i] / (d + SOFTEN_KM) ** 2))
             if not near:
                 continue

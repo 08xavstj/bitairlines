@@ -154,7 +154,7 @@ struct AirportPanel: View {
         Card {
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
-                    Text("\(airport.city.uppercased()) (\(airport.code))").pixelFont(13.333).foregroundStyle(Theme.accent).lineLimit(1)
+                    Text(airport.label.uppercased()).pixelFont(13.333).foregroundStyle(Theme.accent).lineLimit(1)
                     Spacer()
                     PixelSquareButton(icon: .close, label: "Close", action: onClose)
                 }
@@ -193,8 +193,8 @@ struct RoutePlannerPanel: View {
                 if stops.isEmpty {
                     Text("Tap airports on the map, in the order you want to fly them.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
                 } else {
-                    Text(stops.joined(separator: " > ")).pixelFont(13.333).foregroundStyle(Theme.textPrimary).lineLimit(2)
-                    Text("Cycle \(Format.km(cycleKm))" + (stops.count > 2 ? ", back to \(stops[0])" : ", and back")).pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                    Text(Place.list(stops, separator: " > ")).pixelFont(13.333).foregroundStyle(Theme.textPrimary).lineLimit(2)
+                    Text("Cycle \(Format.km(cycleKm))" + (stops.count > 2 ? ", back to \(Place.name(stops[0]))" : ", and back")).pixelFont(10.667).foregroundStyle(Theme.textMuted)
                 }
                 if stops.count >= 2, let problem {
                     Text(Messages.describe(problem)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)

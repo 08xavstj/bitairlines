@@ -25,7 +25,7 @@ public enum StartRegions {
                     headquarters: ["HGU", "GKA", "MAG"]),
         StartRegion(id: "himalaya", name: "Himalaya",
                     blurb: "Short, steep strips under the highest peaks. Brave pilots, thin air.",
-                    headquarters: ["PKR", "LUA"]),
+                    headquarters: ["LUA", "JMO", "PHH"]),
         StartRegion(id: "greenland", name: "Greenland",
                     blurb: "A few big settlements on a huge coast, joined only by air and sea.",
                     headquarters: ["JAV", "GOH"]),

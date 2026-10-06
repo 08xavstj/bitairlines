@@ -10,7 +10,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
-from data import airports, countries, emit_swift, landmask, populations  # noqa: E402
+from data import countries, emit_swift, landmask, pipeline  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 RAW = os.path.join(ROOT, 'data', 'raw')
@@ -19,11 +19,10 @@ OUT = os.path.join(ROOT, 'AirlineCore', 'Sources', 'CoreCatalog')
 
 def main():
     table = countries.load()
-    selected = airports.load(os.path.join(RAW, 'airports.csv'), os.path.join(RAW, 'runways.csv'))
+    selected = pipeline.build_airports(RAW)
     unknown = sorted({a['cc'] for a in selected} - set(table))
     if unknown:
         sys.exit(f'countries missing from tools/data/countries.py: {unknown}')
-    populations.assign(selected, os.path.join(RAW, 'cities500.txt'))
     mask_rows = landmask.encode(landmask.rasterise(os.path.join(RAW, 'ne_50m_land.shp')))
     counts = emit_swift.emit(OUT, selected, table, mask_rows, (landmask.WIDTH, landmask.HEIGHT))
     print(f'{len(selected)} airports in {len({a["cc"] for a in selected})} countries; per group: {counts}')

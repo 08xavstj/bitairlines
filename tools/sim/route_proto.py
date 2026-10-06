@@ -13,7 +13,7 @@ import demand_proto as dp  # noqa: E402
 from data import countries  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-SIZE_EIGHTHS, K_CONST = 7, 2.25
+SIZE_EIGHTHS, K_CONST = 7, 2.0
 
 FARE_TABLE = [(0, 25), (50, 45), (100, 70), (200, 105), (400, 150), (800, 210), (1500, 290), (3000, 420), (6000, 640), (10000, 860), (16000, 1150)]
 FUEL_JET, FUEL_AVGAS = 1.00, 1.90                 # USD per kg
@@ -51,7 +51,7 @@ def fare(a, b):
 
 def cargo_per_day(a, b):
     """Freight kg per day from a to b: what the people at b need, far more for a fly-in community that has no road."""
-    return CARGO_K * dp.power_eighths(b['pop'], 7) * (0.1 + 3.0 * dp.isolation(b))
+    return CARGO_K * dp.power_eighths(min(b['pop'], dp.POP_CAP), 7) * (0.1 + 3.0 * dp.isolation(b))
 
 
 def leg_cost(t, a, b, age_factor=1.0):

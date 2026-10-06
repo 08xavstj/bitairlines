@@ -3,7 +3,7 @@
 | Script | What |
 |---|---|
 | `build_data.py` | Rebuilds the generated Swift data files in `AirlineCore/Sources/CoreCatalog/Data/` (airports, countries, land mask) from `data/raw/`. |
-| `data/*.py` | The pieces `build_data.py` uses: `airports.py` (which airports are playable), `populations.py` (catchment people), `countries.py` (names, region groups, wealth), `landmask.py` (coastlines), `emit_swift.py` (writes the files). |
+| `data/*.py` | The pieces `build_data.py` uses: `airports.py` (which airports are candidates), `curate.py` (communities only, one airport per city or town, city-name labels), `populations.py` (catchment people), `pipeline.py` (all of that in order), `countries.py` (names, region groups, wealth), `landmask.py` (coastlines), `emit_swift.py` (writes the files). |
 | `make_icon.py` | Draws the app icon (needs Pillow). |
 | `generate_xcodeproj.rb` | Generates `BitAirlines.xcodeproj` (the project is not committed). |
 | `check-core-purity.sh` | Fails if `AirlineCore` uses UI frameworks, system randomness, wall-clock time, libm or similar. |

@@ -6,12 +6,12 @@ enum FleetText {
     static func status(_ plane: Aircraft, in world: World) -> (text: String, color: Color) {
         switch plane.status {
         case .idle:
-            return ("Parked at \(plane.location)", Theme.textMuted)
+            return ("Parked at \(Place.name(plane.location))", Theme.textMuted)
         case .boarding(let until):
-            return (until > world.clock.minute + 120 ? "Waiting at \(plane.location) until \(Format.time(GameClock(minute: until)))" : "Boarding at \(plane.location)", Theme.info)
+            return (until > world.clock.minute + 120 ? "Waiting at \(Place.name(plane.location)) until \(Format.time(GameClock(minute: until)))" : "Boarding at \(Place.name(plane.location))", Theme.info)
         case .flying(let until):
-            let to = plane.flight?.to ?? "?"
-            return ("\(plane.location) to \(to), lands \(Format.time(GameClock(minute: until)))", Theme.good)
+            let to = Place.name(plane.flight?.to ?? "?")
+            return ("\(Place.name(plane.location)) to \(to), lands \(Format.time(GameClock(minute: until)))", Theme.good)
         case .maintenance(let until):
             return ("In the hangar until \(Format.date(GameClock(minute: until).date))", Theme.gold)
         case .grounded:

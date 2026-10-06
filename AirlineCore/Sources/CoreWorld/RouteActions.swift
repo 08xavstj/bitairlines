@@ -37,7 +37,7 @@ extension World {
                                  departuresThisWeek: 0, departuresLastWeek: 0, nextSlot: clock.minute))
         }
         let id = takeRouteID()
-        routes.append(Route(id: id, name: name ?? stops.joined(separator: "-"), stops: stops, fareMultiplier: 1.0, carriesCargo: true, frequency: 2.0, autoFrequency: true, legs: legs, aircraftIDs: [],
+        routes.append(Route(id: id, name: name ?? stops.map { AirportCatalog.airport($0)?.label ?? $0 }.joined(separator: " - "), stops: stops, fareMultiplier: 1.0, carriesCargo: true, frequency: 2.0, autoFrequency: true, legs: legs, aircraftIDs: [],
                             openedDay: clock.dayIndex, flights: 0, revenueThisMonth: 0, costThisMonth: 0, revenueLastMonth: 0, costLastMonth: 0))
         addNews(.routeOpened, subject: routes[routes.count - 1].name, amount: id)
         return id

@@ -100,7 +100,7 @@ struct RouteCard: View {
                 KeyValueRow("Last month", Format.signedMoney(route.revenueLastMonth - route.costLastMonth), color: route.revenueLastMonth >= route.costLastMonth ? Theme.good : Theme.bad)
                 ForEach(Array(route.legs.enumerated()), id: \.offset) { _, leg in
                     VStack(alignment: .leading, spacing: 3) {
-                        Text("\(leg.from) to \(leg.to)  \(Format.km(leg.distanceKm))").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
+                        Text("\(Place.name(leg.from)) to \(Place.name(leg.to))  \(Format.km(leg.distanceKm))").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
                         Text("Market \(Format.oneDecimal(leg.marketPaxPerDay)) people and \(Format.number(Int(leg.marketCargoKgPerDay))) kg a day. Carried \(Format.number(leg.passengersCarried)) so far.")
                             .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                         StatBar(label: "Awareness", value: leg.maturity * 100, color: Theme.info, valueText: Format.percent(leg.maturity))

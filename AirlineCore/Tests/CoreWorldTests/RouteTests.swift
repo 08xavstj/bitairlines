@@ -10,7 +10,7 @@ import CoreCatalog
         #expect(route.legs.count == 3)
         #expect(route.legs[0].from == "YEV" && route.legs[0].to == "YUB")
         #expect(route.legs[2].from == "YSY" && route.legs[2].to == "YEV")
-        #expect(route.name == "YEV-YUB-YSY")
+        #expect(route.name == "Inuvik - Tuktoyaktuk - Sachs Harbour")
         #expect(route.frequency == 2 && route.fareMultiplier == 1)
         #expect(route.legs.allSatisfy { $0.marketPaxPerDay > 0 && $0.marketFare > 0 && $0.maturity == Tuning.minimumMaturity })
         #expect(w.news.last?.kind == .routeOpened)
@@ -131,7 +131,8 @@ import CoreCatalog
         #expect(Progression.requiredLevel(for: try #require(AirportCatalog.airport("YUB"))) == 1)
         #expect(Progression.requiredLevel(for: try #require(AirportCatalog.airport("YZF"))) == 1)
         #expect(Progression.requiredLevel(for: try #require(AirportCatalog.airport("YEG"))) == 4)
-        #expect(Progression.requiredLevel(for: try #require(AirportCatalog.airport("LHR"))) == 5)
+        #expect(Progression.requiredLevel(for: try #require(AirportCatalog.airport("LHR"))) == 6, "London is a 19 million catchment now that its airports are merged")
+        #expect(Progression.requiredLevel(for: try #require(AirportCatalog.airport("YYZ"))) == 5)
         #expect(Progression.requiredLevel(for: try #require(AirportCatalog.airport("HND"))) == 6)
     }
 }

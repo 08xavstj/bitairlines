@@ -13,12 +13,12 @@ enum Messages {
         case .unknownIssue: return "That problem has already been dealt with."
         case .notEnoughCash(let needed): return "You need \(Format.dollars(needed)) more."
         case .levelTooLow(let level): return "Needs certificate level \(level)."
-        case .airportLevelTooHigh(let airport, let required): return "\(airport) is too busy for you yet. It needs certificate level \(required)."
+        case .airportLevelTooHigh(let airport, let required): return "\(Place.name(airport)) is too busy for you yet. It needs certificate level \(required)."
         case .permitRequired(let country, let price): return "You need a permit for \(CountryCatalog.country(country)?.name ?? country): \(Format.dollars(price))."
         case .routeNeedsTwoStops: return "A route needs at least two airports."
         case .tooManyStops: return "A route can have at most \(World.maxStops) stops."
         case .duplicateStops: return "Each airport can appear once in a route."
-        case .aircraftCannotUse(let airport): return "This aircraft cannot use \(airport): the runway is too short or the wrong surface."
+        case .aircraftCannotUse(let airport): return "This aircraft cannot use \(Place.name(airport)): the runway is too short or the wrong surface."
         case .outOfRange(let km): return "Too far for this aircraft (\(Format.number(km)) km)."
         case .notDelivered: return "That aircraft has not arrived yet."
         case .aircraftBusy: return "That aircraft is busy right now."
@@ -48,7 +48,7 @@ enum Messages {
         case .overdraft: return "You are out of money"
         case .certificateReady(let level): return "You qualify for level \(level)"
         case .delivery(let id): return "\(world.aircraft.first { $0.id == id }?.registration ?? "An aircraft") has arrived"
-        case .weather(let airport, _): return "Weather closes \(airport)"
+        case .weather(let airport, _): return "Weather closes \(Place.name(airport))"
         case .bankruptcy: return "The airline has gone bankrupt"
         }
     }

@@ -7,11 +7,11 @@ extension Messages {
     static func news(_ item: NewsItem, in world: World) -> String {
         switch item.kind {
         case .routeOpened: return "New route opened: \(item.subject)."
-        case .aircraftDelivered: return "\(item.subject) has arrived at \(world.airline.home)."
+        case .aircraftDelivered: return "\(item.subject) has arrived at \(Place.name(world.airline.home))."
         case .aircraftSold: return "\(item.subject) was sold for \(Format.dollars(item.amount))."
         case .certificate: return "You now hold certificate level \(item.amount)."
         case .breakdown: return "\(item.subject) broke down on the ground."
-        case .weather: return "Weather closed \(item.subject) for a few days."
+        case .weather: return "Weather closed \(Place.name(item.subject)) for a few days."
         case .loan: return item.subject == "taken" ? "You took a loan of \(Format.dollars(item.amount))." : "You repaid a loan of \(Format.dollars(item.amount))."
         case .permit: return "You bought a permit for \(CountryCatalog.country(item.subject)?.name ?? item.subject) (\(Format.dollars(item.amount)))."
         case .milestone: return item.subject

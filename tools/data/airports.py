@@ -31,6 +31,7 @@ def ascii_text(text):
 def load_runways(path):
     """Longest open runway per airport: {ident: (length_ft, surface_class)} with surface P (paved), G (gravel or grass) or W (water)."""
     best = {}
+    major = {}
     with open(path, encoding='utf-8') as f:
         for r in csv.DictReader(f):
             if r['closed'] == '1':
@@ -50,7 +51,9 @@ def load_runways(path):
                 cls = '?'
             if length > best.get(r['airport_ident'], (0, '?'))[0]:
                 best[r['airport_ident']] = (length, cls)
-    return best
+            if length >= 6000:
+                major[r['airport_ident']] = major.get(r['airport_ident'], 0) + 1
+    return best, major
 
 
 def wanted(r):
@@ -67,7 +70,7 @@ def wanted(r):
 
 
 def load(airports_csv, runways_csv):
-    runways = load_runways(runways_csv)
+    runways, major_runways = load_runways(runways_csv)
     out, seen = [], set()
     with open(airports_csv, encoding='utf-8') as f:
         for r in csv.DictReader(f):
@@ -90,11 +93,11 @@ def load(airports_csv, runways_csv):
             name = ascii_text(r['name']) or code
             city = ascii_text(r['municipality']) or name
             out.append({
-                'code': code, 'icao': r['icao_code'] or r['ident'], 'name': name, 'city': city,
+                'code': code, 'icao': r['icao_code'] or r['ident'], 'name': name, 'city': city, 'muni': ascii_text(r['municipality']),
                 'cc': r['iso_country'], 'region': r['iso_region'].split('-')[-1],
                 'lat': float(r['latitude_deg']), 'lon': float(r['longitude_deg']),
                 'elev': int(float(r['elevation_ft'])) if r['elevation_ft'] else 0,
                 'rwy': length, 'surf': surface, 'kind': kind,
-                'sched': 1 if r['scheduled_service'] == 'yes' else 0, 'pop': 0,
+                'sched': 1 if r['scheduled_service'] == 'yes' else 0, 'pop': 0, 'nrw': major_runways.get(r['ident'], 0),
             })
     return out

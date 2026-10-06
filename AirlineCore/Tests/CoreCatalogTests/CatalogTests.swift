@@ -3,7 +3,7 @@ import Testing
 
 @Suite struct AirportCatalogTests {
     @Test func loadsEveryRow() {
-        #expect(AirportCatalog.all.count > 6000)
+        #expect(AirportCatalog.all.count > 4500 && AirportCatalog.all.count < 5500)
         #expect(AirportCatalog.byCode.count == AirportCatalog.all.count, "airport codes must be unique")
     }
 
@@ -14,16 +14,38 @@ import Testing
         #expect(yev.runwayFt == 6000 && yev.surface == .paved)
         #expect(yev.population > 2000 && yev.population < 5000)
         #expect(yev.shortName == "Inuvik Mike Zubko")
+        #expect(yev.label == "Inuvik")
     }
 
     @Test func everyAirportHasValidData() {
         for a in AirportCatalog.all {
             #expect(a.latitude >= -90 && a.latitude <= 90 && a.longitude >= -180 && a.longitude <= 180, "\(a.code) position")
             #expect(a.population > 0, "\(a.code) population")
+            #expect(!a.label.isEmpty && a.label.allSatisfy { $0.isASCII }, "\(a.code) label")
             #expect(a.name.allSatisfy { $0.isASCII }, "\(a.code) name must be ASCII for the pixel font")
             #expect(a.city.allSatisfy { $0.isASCII }, "\(a.code) city must be ASCII for the pixel font")
             #expect(CountryCatalog.country(a.country) != nil, "\(a.code) country \(a.country)")
             #expect(a.kind == .seaplane ? a.surface == .water : a.runwayFt > 0, "\(a.code) runway")
+        }
+    }
+
+    @Test func labelsAreUniqueSoAListNeverShowsTwoOfTheSameName() {
+        #expect(Set(AirportCatalog.all.map(\.label)).count == AirportCatalog.all.count)
+    }
+
+    @Test func oneAirportPerCityAndTownsKeepTheirOwnName() throws {
+        let london = AirportCatalog.all.filter { $0.country == "GB" && $0.city == "London" }
+        #expect(london.count == 1 && london.first?.code == "LHR", "London keeps one airport: Heathrow")
+        for code in ["LGW", "STN", "LCY", "LTN", "LGA"] { #expect(AirportCatalog.airport(code) == nil, "\(code) is a second airport of a city that already has one") }
+        let sachs = try #require(AirportCatalog.airport("YSY"))
+        #expect(sachs.label == "Sachs Harbour", "a remote hamlet with scheduled service stays")
+        let tuk = try #require(AirportCatalog.airport("YUB"))
+        #expect(tuk.label == "Tuktoyaktuk")
+        // No two airports of the same city name within 100 km of each other.
+        var seen: [String: [Airport]] = [:]
+        for a in AirportCatalog.all { seen["\(a.country)|\(a.city.lowercased())", default: []].append(a) }
+        for (key, list) in seen where list.count > 1 {
+            for i in 0..<list.count { for j in (i + 1)..<list.count { #expect(list[i].distanceKm(to: list[j]) >= 100, "\(key): \(list[i].code) and \(list[j].code)") } }
         }
     }
 

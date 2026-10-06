@@ -15,7 +15,7 @@ public enum Demand {
     public static func passengersPerDay(from a: Airport, to b: Airport, distanceKm: Double) -> Double {
         let pa = Tuning.propensity[wealth(of: a) - 1] * (1.0 + Tuning.isolationBoost * isolation(a))
         let pb = Tuning.propensity[wealth(of: b) - 1] * (1.0 + Tuning.isolationBoost * isolation(b))
-        let size = (Powers.eighths(Double(a.population), Tuning.populationEighths) * Powers.eighths(Double(b.population), Tuning.populationEighths)).squareRoot()
+        let size = (Powers.eighths(Double(min(a.population, Tuning.populationCap)), Tuning.populationEighths) * Powers.eighths(Double(min(b.population, Tuning.populationCap)), Tuning.populationEighths)).squareRoot()
         return Tuning.demandConstant * (pa * pb).squareRoot() * size * Tuning.distanceShare.value(at: distanceKm) / 365.0
     }
 
@@ -25,7 +25,7 @@ public enum Demand {
 
     /// Freight in kilograms per day from `a` to `b`: what the people at `b` need, far more for a fly-in community with no road.
     public static func cargoKgPerDay(from a: Airport, to b: Airport) -> Double {
-        Tuning.cargoConstant * Powers.eighths(Double(b.population), 7) * (Tuning.cargoBaseShare + Tuning.cargoIsolationShare * isolation(b))
+        Tuning.cargoConstant * Powers.eighths(Double(min(b.population, Tuning.populationCap)), 7) * (Tuning.cargoBaseShare + Tuning.cargoIsolationShare * isolation(b))
     }
 }
 

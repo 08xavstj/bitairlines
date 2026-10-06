@@ -3,111 +3,97 @@
 
 enum AirportRows_NAF {
     static let rows = #"""
-AAE|DABB|Annaba Rabah Bitat Airport|Annaba|DZ|23|36.8268|7.8133|16|9843|P|L|1|1170316
-ALG|DAAG|Houari Boumediene Airport|Algiers|DZ|16|36.6939|3.2145|82|11483|P|L|1|5727047
-AZR|DAUA|Touat-Cheikh Sidi Mohamed Belkebir Airport|Adrar|DZ|01|27.8376|-0.1864|919|9843|P|M|1|137599
-BJA|DAAE|SoummamAbane Ramdane Airport|Bejaia|DZ|06|36.7125|5.0699|20|7874|P|L|1|1098041
-BLJ|DABT|Batna Mostefa Ben Boulaid Airport|Batna|DZ|05|35.7521|6.3086|2697|9843|P|L|1|905398
-BMW|DATM|Bordj Badji Mokhtar Airport|Bordj Badji Mokhtar|DZ|52|21.3778|0.9270|1303|9843|P|M|1|4493
-BSK|DAUB|Biskra - Mohamed Khider Airport|Biskra|DZ|07|34.7932|5.7389|289|9469|P|L|1|668522
-BUJ|DAAD|Bou Saada Airport|Ouled Sidi Brahim|DZ|28|35.3325|4.2064|1506|7218|P|M|0|365178
-CBH|DAOR|Bechar Boudghene Ben Ali Lotfi Airport|Bechar|DZ|08|31.6457|-2.2699|2661|12245|P|M|1|189370
-CFK|DAOI|Chlef Aboubakr Belkaid International Airport|Chlef|DZ|02|36.2166|1.3411|463|8793|P|L|1|1352012
-CZL|DABC|Mohamed Boudiaf International Airport|Constantine|DZ|25|36.2760|6.6204|2265|9843|P|L|1|1369796
-DJG|DAAJ|Tiska Djanet Airport|Djanet|DZ|56|24.2854|9.4637|3176|9843|P|L|1|10278
-EBH|DAOY|El Bayadh Airport|El Bayadh|DZ|32|33.7217|1.0925|4493|9843|P|S|1|123646
-ELG|DAUE|El Golea Airport|El Menia|DZ|50|30.5807|2.8616|1306|9843|P|M|1|57344
-ELU|DAUO|Guemar Airport -|Guemar|DZ|39|33.5114|6.7768|203|9843|P|M|1|335651
-GHA|DAUG|Noumerat - Moufdi Zakaria Airport|El Atteuf|DZ|47|32.3841|3.7941|1512|10171|P|M|1|224379
-GJL|DAAV|Jijel Ferhat Abbas Airport|Tahir|DZ|18|36.7941|5.8737|36|7874|P|L|1|665882
-HME|DAUH|Hassi Messaoud-Oued Irara Krim Belkacem Airport|Hassi Messaoud|DZ|30|31.6730|6.1404|463|9843|P|M|1|62143
-HRM|DAFH|Hassi R'Mel Airport|Hassi R'Mel|DZ|03|32.9304|3.3115|2540|9835|P|M|0|39333
-IAM|DAUZ|Zarzaitine - In Amenas Airport|In Amenas|DZ|33|28.0515|9.6429|1847|9843|P|M|1|150
-INZ|DAUI|In Salah Airport|In Salah|DZ|57|27.2510|2.5120|896|9843|P|M|1|74102
-LOO|DAUL|Laghouat - Molay Ahmed Medeghri Airport|Laghouat|DZ|03|33.7644|2.9283|2510|12486|P|M|1|625006
-MUW|DAOV|Ghriss Airport|Ghriss|DZ|29|35.2077|0.1471|1686|5577|P|M|0|208415
-MZW|DAAY|Mecheria Airport|Mecheria|DZ|45|33.5359|-0.2424|3855|11780|P|M|1|167935
-OGX|DAUU|Ain Beida Airport|Ouargla|DZ|30|31.9172|5.4128|492|10171|P|M|1|268928
-ORN|DAOO|Oran Es-Senia (Ahmed Ben Bella) International Airport|Es-Senia|DZ|31|35.6206|-0.6225|295|11811|P|L|1|1707658
-QSF|DAAS|Ain Arnat Airport|Setif|DZ|19|36.1785|5.3299|3360|9498|P|M|1|587962
-TAF|DAOL|Oran Tafraoui Airport|Tafraoui|DZ|31|35.5424|-0.5323|367|9037|P|M|0|199287
-TEE|DABS|Cheikh Larbi Tebessi Airport|Tebessi|DZ|12|35.4316|8.1207|2661|9843|P|M|1|699324
-TGR|DAUK|Touggourt Sidi Madhi Airport|Touggourt|DZ|55|33.0678|6.0887|279|9843|P|M|1|312757
-TID|DAOB|Abdelhafid Boussouf Bou Chekif Airport|Tiaret|DZ|14|35.3411|1.4631|3245|9843|P|M|0|368989
-TIN|DAOF|Tindouf Airport|Tindouf|DZ|37|27.7004|-8.1671|1453|9840|P|M|1|59546
-TLM|DAON|Zenata Messali El Hadj Airport|Zenata|DZ|13|35.0127|-1.4571|814|8530|P|L|1|778767
-TMR|DAAT|Aguenar Hadj Bey Akhamok Airport|Tamanrasset|DZ|11|22.8110|5.4508|4518|11811|P|L|1|81752
-TMX|DAUT|Timimoun Airport|Timimoun|DZ|54|29.2371|0.2760|1027|9843|P|M|1|52737
-VVZ|DAAP|Illizi Takhamalt Airport|Illizi|DZ|33|26.7235|8.6227|1778|9843|P|M|1|13029
-AAC|HEAR|El Arish International Airport|El Arish|EG|SIN|31.0553|33.8280|118|9905|P|L|1|1132639
-ABS|HEBL|Abu Simbel Airport|Abu Simbel|EG|ASN|22.3759|31.6117|614|9843|P|M|1|20725
-ASW|HESN|Aswan International Airport|Aswan|EG|ASN|23.9611|32.8204|650|11161|P|L|1|806475
-ATZ|HEAT|Asyut International Airport|Asyut|EG|AST|27.0460|31.0128|748|9905|P|L|1|2274006
-CAI|HECA|Cairo International Airport|Cairo|EG|C|30.1115|31.3967|322|13124|P|L|1|16786582
-CCE|HECP|Capital International Airport|New Cairo|EG|C|30.0647|31.8400|761|11980|P|M|1|2237251
-DBB|HEAL|El Alamein International Airport|El Alamein|EG|MT|30.9243|28.4616|154|11479|P|L|1|552252
-EGH|HEGR|El Jora Airport|El Jora|EG|SIN|31.0781|34.1531|331|7874|P|M|0|301958
-HBE|HEAX|Alexandria International Airport|Alexandria|EG|ALX|30.9325|29.6964|171|11156|P|L|1|6580176
-HMB|HESG|Suhaj International Airport|Suhaj|EG|SHG|26.3425|31.7430|322|9843|P|L|1|1286743
-HRG|HEGN|Hurghada International Airport|Hurghada|EG|BA|27.1768|33.7967|32|13171|P|L|1|292834
-LXR|HELX|Luxor International Airport|Luxor|EG|LX|25.6710|32.7064|276|9843|P|L|1|1687353
-MUH|HEMM|Mersa Matruh International Airport|Marsa Matruh|EG|MT|31.3243|27.2223|75|9843|P|L|1|235053
-PSD|HEPS|Port Said International Airport|Port Said|EG|PTS|31.2793|32.2406|10|7707|P|L|1|4321746
-RDL|HE36|Bardawil International Airport|El Hassana|EG|SIN|30.4107|33.1553|1060|8241|P|M|0|126737
-RMF|HEMA|Marsa Alam International Airport|Marsa Alam|EG|BA|25.5555|34.5924|213|11253|P|L|1|34740
-SKV|HESC|Saint Catherine International Airport|Saint Catherine|EG|JS|28.6843|34.0644|4402|6939|P|M|0|26221
-SPX|HESX|Sphinx International Airport|Al Jiza|EG|GZ|30.1082|30.8957|510|11975|P|L|1|9048577
-SSH|HESH|Sharm El Sheikh International Airport|Sharm El Sheikh|EG|JS|27.9773|34.3947|191|10108|P|L|1|106698
-TCP|HETB|Taba International Airport|Taba|EG|JS|29.5945|34.7758|2425|13123|P|M|1|31356
-EUN|GMML|Laayoune Hassan I International Airport|El Aaiun|EH|A|27.1425|-13.2249|207|8861|P|L|1|237935
-SMW|GMMA|Smara Airport|Smara|EH|A|26.7320|-11.6837|350|9843|P|M|1|64431
-VIL|GMMH|Dakhla Airport|Dakhla|EH|A|23.7183|-15.9320|36|9842|P|L|1|114839
-AKF|HLKF|Kufra Airport|Kufra|LY|KF|24.1787|23.3140|1367|12007|P|M|1|88129
-BCQ|LY-BCQ|Brak Airport|Brak|LY|SH|27.6530|14.2720|1056|6000|G|M|0|40859
-BEN|HLLB|Benina International Airport|Benina|LY|BA|32.0968|20.2695|433|11732|P|L|1|1009260
-GHT|HLGT|Ghat Airport|Ghat|LY|GT|25.1456|10.1426|2296|11811|P|M|0|18141
-LAQ|HLLQ|Al Abraq International Airport|Al Albraq|LY|JA|32.7890|21.9549|2157|11824|P|L|1|399963
-LMQ|HLMB|Marsa al Brega Airport|Marsa al Brega|LY|WA|30.3781|19.5764|50|7220|P|M|0|83315
-LTD|HLTD|Ghadames Airport|Ghadames|LY|NL|30.1455|9.7021|1122|11811|P|M|1|21230
-MJI|HLLM|Mitiga International Airport|Tripoli|LY|TB|32.8918|13.2879|36|11155|P|L|1|3521803
-MRA|HLMS|Misrata International Airport|Misrata|LY|MI|32.3250|15.0610|60|11155|P|S|1|479000
-SEB|HLLS|Sabha Airport|Sabha|LY|SB|26.9925|14.4662|1427|11778|P|M|1|355716
-SRX|HLGD|Sirt International Airport / Ghardabiya Airbase|Sirt|LY|SR|31.0586|16.5971|267|11807|P|L|0|127104
-AGA|GMAD|Al Massira Airport|Agadir (Temsia)|MA|09|30.3225|-9.4120|250|10499|P|L|1|1897220
-AHU|GMTA|Cherif Al Idrissi Airport|Al Hoceima|MA|01|35.1771|-3.8395|95|10511|P|M|1|501940
-BEM|GMMD|Beni Mellal Airport|Oulad Yaich|MA|05|32.4019|-6.3159|1694|8169|P|L|1|1110558
-CMN|GMMN|Mohammed V International Airport|Casablanca|MA|06|33.3675|-7.5900|656|12205|P|L|1|5214630
-ERH|GMFK|Moulay Ali Cherif Airport|Errachidia|MA|08|31.9475|-4.3983|3428|10499|P|M|1|328018
-ESU|GMMI|Essaouira-Mogador Airport|Essaouira|MA|07|31.3975|-9.6817|384|8553|P|M|1|307155
-FEZ|GMFF|Fes Saiss International Airport|Saiss|MA|03|33.9273|-4.9780|1900|10499|P|L|1|2629252
-MEK|GMFM|Bassatine Airport|Meknes|MA|03|33.8791|-5.5151|1890|9252|P|M|0|664566
-NDR|GMMW|Nador Al Aaroui International Airport|Al Aaroui|MA|02|34.9888|-3.0282|574|9842|P|L|1|648326
-OUD|GMFO|Oujda Angads Airport|Ahl Angad|MA|02|34.7896|-1.9260|1535|9843|P|L|1|910204
-OZG|GMAZ|Zagora Airport|Zagora|MA|08|30.2658|-5.8608|2414|9000|G|L|1|91102
-OZZ|GMMZ|Ouarzazate International Airport|Ouarzazate|MA|08|30.9391|-6.9094|3782|9842|P|L|1|279585
-RAK|GMMX|Marrakesh Menara Airport|Marrakesh|MA|07|31.6048|-8.0358|1545|10170|P|L|1|1825585
-RBA|GMME|Rabat-Sale Airport|Rabat|MA|04|34.0515|-6.7515|276|11483|P|L|1|4971342
-TNG|GMTT|Tangier Ibn Battuta Airport|Tangier|MA|01|35.7317|-5.9215|62|11483|P|L|1|1300758
-TTA|GMAT|Tan Tan Airport|Tan Tan|MA|10|28.4476|-11.1617|653|6562|P|M|1|228005
-TTU|GMTN|Sania Ramel Airport|Tetouan|MA|01|35.5943|-5.3200|10|10784|P|L|1|1124193
-UAR|GMFB|Bouarfa Airport|Bouarfa|MA|02|32.5143|-1.9831|3630|10499|P|M|1|75628
-DOG|HSDN|Dongola Airport|Dongola|SD|01|19.1537|30.4301|772|9843|P|M|1|74941
-EBD|HSOB|El-Obeid Airport|El-Obeid|SD|09|13.1532|30.2327|1927|9843|P|M|1|586037
-ELF|HSFS|El Fasher Airport|El Fasher|SD|02|13.6149|25.3246|2393|9744|P|M|1|405079
-KRT|HSSK|Khartoum International Airport|Khartoum|SD|03|15.5895|32.5532|1265|9751|P|L|1|5015887
-KSL|HSKA|Kassala Airport|Kassala|SD|05|15.3875|36.3288|1671|8202|P|M|1|601873
-MWE|HSMN|Merowe Airport|Merowe|SD|01|18.4433|31.8433|897|13186|P|M|0|34323
-PZU|HSPN|Port Sudan New International Airport|Port Sudan|SD|26|19.4346|37.2341|135|8202|P|L|1|635705
-UYL|HSNN|Nyala Airport|Nyala|SD|11|12.0535|24.9562|2106|9880|P|M|1|1172481
-DJE|DTTJ|Djerba Zarzis International Airport|Mellita|TN|82|33.8737|10.7773|19|10171|P|L|1|778605
-EBM|DTTR|El Borma Airport|El Borma|TN|83|31.7043|9.2546|827|8858|P|M|0|19525
-GAE|DTTG|Gabes Matmata International Airport|Gabes|TN|81|33.7337|9.9194|407|3702|P|M|0|177910
-GAF|DTTF|Gafsa Ksar International Airport|Gafsa|TN|71|34.4220|8.8225|1060|9514|P|M|0|280396
-MIR|DTMB|Monastir Habib Bourguiba International Airport|Monastir|TN|52|35.7581|10.7547|9|9678|P|M|1|1246235
-NBE|DTNH|Enfidha - Hammamet International Airport|Enfidha|TN|51|36.0758|10.4386|21|10827|P|M|1|698698
-SFA|DTTX|Sfax Thyna International Airport|Sfax|TN|61|34.7180|10.6910|85|9843|P|M|1|786449
-TBJ|DTKA|Tabarka-Ain Draham International Airport|Tabarka|TN|32|36.9800|8.8769|230|9416|P|M|1|305102
-TOE|DTTZ|Tozeur Nefta International Airport|Tozeur|TN|72|33.9397|8.1106|287|10581|P|M|1|253302
-TUN|DTTA|Tunis Carthage International Airport|Tunis|TN|11|36.8510|10.2272|22|10499|P|L|1|3510291
+AAE|DABB|Annaba Rabah Bitat Airport|Annaba|Annaba|DZ|23|36.8268|7.8133|16|9843|P|L|1|1325357
+ALG|DAAG|Houari Boumediene Airport|Algiers|Algiers|DZ|16|36.6939|3.2145|82|11483|P|L|1|5825201
+AZR|DAUA|Touat-Cheikh Sidi Mohamed Belkebir Airport|Adrar|Adrar|DZ|01|27.8376|-0.1864|919|9843|P|M|1|97022
+BJA|DAAE|SoummamAbane Ramdane Airport|Bejaia|Bejaia|DZ|06|36.7125|5.0699|20|7874|P|L|1|1193940
+BMW|DATM|Bordj Badji Mokhtar Airport|Bordj Badji Mokhtar|Bordj Badji Mokhtar|DZ|52|21.3778|0.9270|1303|9843|P|M|1|150
+BSK|DAUB|Biskra - Mohamed Khider Airport|Biskra|Biskra|DZ|07|34.7932|5.7389|289|9469|P|L|1|913595
+BUJ|DAAD|Bou Saada Airport|Ouled Sidi Brahim|Ouled Sidi Brahim|DZ|28|35.3325|4.2064|1506|7218|P|M|0|199621
+CBH|DAOR|Bechar Boudghene Ben Ali Lotfi Airport|Bechar|Bechar|DZ|08|31.6457|-2.2699|2661|12245|P|M|1|182420
+CFK|DAOI|Chlef Aboubakr Belkaid International Airport|Chlef|Chlef|DZ|02|36.2166|1.3411|463|8793|P|L|1|1433755
+CZL|DABC|Mohamed Boudiaf International Airport|Constantine|Constantine|DZ|25|36.2760|6.6204|2265|9843|P|L|1|1783729
+DJG|DAAJ|Tiska Djanet Airport|Djanet|Djanet|DZ|56|24.2854|9.4637|3176|9843|P|L|1|24538
+EBH|DAOY|El Bayadh Airport|El Bayadh|El Bayadh|DZ|32|33.7217|1.0925|4493|9843|P|S|1|85577
+ELG|DAUE|El Golea Airport|El Menia|El Menia|DZ|50|30.5807|2.8616|1306|9843|P|M|1|57344
+ELU|DAUO|Guemar Airport -|Guemar|Guemar|DZ|39|33.5114|6.7768|203|9843|P|M|1|336867
+GHA|DAUG|Noumerat - Moufdi Zakaria Airport|El Atteuf|El Atteuf|DZ|47|32.3841|3.7941|1512|10171|P|M|1|271243
+GJL|DAAV|Jijel Ferhat Abbas Airport|Tahir|Tahir|DZ|18|36.7941|5.8737|36|7874|P|L|1|794613
+HME|DAUH|Hassi Messaoud-Oued Irara Krim Belkacem Airport|Hassi Messaoud|Hassi Messaoud|DZ|30|31.6730|6.1404|463|9843|P|M|1|55084
+IAM|DAUZ|Zarzaitine - In Amenas Airport|In Amenas|In Amenas|DZ|33|28.0515|9.6429|1847|9843|P|M|1|150
+INZ|DAUI|In Salah Airport|In Salah|In Salah|DZ|57|27.2510|2.5120|896|9843|P|M|1|32518
+LOO|DAUL|Laghouat - Molay Ahmed Medeghri Airport|Laghouat|Laghouat|DZ|03|33.7644|2.9283|2510|12486|P|M|1|386820
+MZW|DAAY|Mecheria Airport|Mecheria|Mecheria|DZ|45|33.5359|-0.2424|3855|11780|P|M|1|79667
+OGX|DAUU|Ain Beida Airport|Ouargla|Ouargla|DZ|30|31.9172|5.4128|492|10171|P|M|1|259071
+ORN|DAOO|Oran Es-Senia (Ahmed Ben Bella) International Airport|Es-Senia|Es-Senia|DZ|31|35.6206|-0.6225|295|11811|P|L|1|2353927
+QSF|DAAS|Ain Arnat Airport|Setif|Setif|DZ|19|36.1785|5.3299|3360|9498|P|M|1|538450
+TEE|DABS|Cheikh Larbi Tebessi Airport|Tebessi|Tebessi|DZ|12|35.4316|8.1207|2661|9843|P|M|1|639957
+TGR|DAUK|Touggourt Sidi Madhi Airport|Touggourt|Touggourt|DZ|55|33.0678|6.0887|279|9843|P|M|1|305326
+TID|DAOB|Abdelhafid Boussouf Bou Chekif Airport|Tiaret|Tiaret|DZ|14|35.3411|1.4631|3245|9843|P|M|0|305802
+TIN|DAOF|Tindouf Airport|Tindouf|Tindouf|DZ|37|27.7004|-8.1671|1453|9840|P|M|1|45610
+TMR|DAAT|Aguenar Hadj Bey Akhamok Airport|Tamanrasset|Tamanrasset|DZ|11|22.8110|5.4508|4518|11811|P|L|1|81752
+TMX|DAUT|Timimoun Airport|Timimoun|Timimoun|DZ|54|29.2371|0.2760|1027|9843|P|M|1|55137
+VVZ|DAAP|Illizi Takhamalt Airport|Illizi|Illizi|DZ|33|26.7235|8.6227|1778|9843|P|M|1|13029
+AAC|HEAR|El Arish International Airport|El Arish|El Arish|EG|SIN|31.0553|33.8280|118|9905|P|L|1|1383998
+ABS|HEBL|Abu Simbel Airport|Abu Simbel|Abu Simbel|EG|ASN|22.3759|31.6117|614|9843|P|M|1|20725
+ASW|HESN|Aswan International Airport|Aswan|Aswan|EG|ASN|23.9611|32.8204|650|11161|P|L|1|806475
+ATZ|HEAT|Asyut International Airport|Asyut|Asyut|EG|AST|27.0460|31.0128|748|9905|P|L|1|2274006
+CAI|HECA|Cairo International Airport|Cairo|Cairo|EG|C|30.1115|31.3967|322|13124|P|L|1|26335621
+DBB|HEAL|El Alamein International Airport|El Alamein|El Alamein|EG|MT|30.9243|28.4616|154|11479|P|L|1|552252
+HBE|HEAX|Alexandria International Airport|Alexandria|Alexandria|EG|ALX|30.9325|29.6964|171|11156|P|L|1|7211629
+HMB|HESG|Suhaj International Airport|Suhaj|Suhaj|EG|SHG|26.3425|31.7430|322|9843|P|L|1|1286743
+HRG|HEGN|Hurghada International Airport|Hurghada|Hurghada|EG|BA|27.1768|33.7967|32|13171|P|L|1|296978
+LXR|HELX|Luxor International Airport|Luxor|Luxor|EG|LX|25.6710|32.7064|276|9843|P|L|1|1687353
+MUH|HEMM|Mersa Matruh International Airport|Marsa Matruh|Marsa Matruh|EG|MT|31.3243|27.2223|75|9843|P|L|1|235053
+PSD|HEPS|Port Said International Airport|Port Said|Port Said|EG|PTS|31.2793|32.2406|10|7707|P|L|1|5400460
+RMF|HEMA|Marsa Alam International Airport|Marsa Alam|Marsa Alam|EG|BA|25.5555|34.5924|213|11253|P|L|1|34740
+SSH|HESH|Sharm El Sheikh International Airport|Sharm El Sheikh|Sharm El Sheikh|EG|JS|27.9773|34.3947|191|10108|P|L|1|115521
+EUN|GMML|Laayoune Hassan I International Airport|El Aaiun|El Aaiun|EH|A|27.1425|-13.2249|207|8861|P|L|1|238512
+SMW|GMMA|Smara Airport|Smara|Smara|EH|A|26.7320|-11.6837|350|9843|P|M|1|60854
+VIL|GMMH|Dakhla Airport|Dakhla|Dakhla|EH|A|23.7183|-15.9320|36|9842|P|L|1|114839
+AKF|HLKF|Kufra Airport|Kufra|Kufra|LY|KF|24.1787|23.3140|1367|12007|P|M|1|88129
+BCQ|LY-BCQ|Brak Airport|Brak|Brak|LY|SH|27.6530|14.2720|1056|6000|G|M|0|42287
+BEN|HLLB|Benina International Airport|Benina|Benina|LY|BA|32.0968|20.2695|433|11732|P|L|1|1010047
+LAQ|HLLQ|Al Abraq International Airport|Al Albraq|Al Albraq|LY|JA|32.7890|21.9549|2157|11824|P|L|1|399963
+LMQ|HLMB|Marsa al Brega Airport|Marsa al Brega|Marsa al Brega|LY|WA|30.3781|19.5764|50|7220|P|M|0|80299
+LTD|HLTD|Ghadames Airport|Ghadames|Ghadames|LY|NL|30.1455|9.7021|1122|11811|P|M|1|18147
+MJI|HLLM|Mitiga International Airport|Tripoli|Tripoli|LY|TB|32.8918|13.2879|36|11155|P|L|1|3645146
+MRA|HLMS|Misrata International Airport|Misrata|Misrata|LY|MI|32.3250|15.0610|60|11155|P|S|1|355657
+SEB|HLLS|Sabha Airport|Sabha|Sabha|LY|SB|26.9925|14.4662|1427|11778|P|M|1|279261
+SRX|HLGD|Sirt International Airport / Ghardabiya Airbase|Sirt|Sirt|LY|SR|31.0586|16.5971|267|11807|P|L|0|127104
+AGA|GMAD|Al Massira Airport|Agadir|Agadir|MA|09|30.3225|-9.4120|250|10499|P|L|1|1948493
+AHU|GMTA|Cherif Al Idrissi Airport|Al Hoceima|Al Hoceima|MA|01|35.1771|-3.8395|95|10511|P|M|1|434440
+BEM|GMMD|Beni Mellal Airport|Oulad Yaich|Oulad Yaich|MA|05|32.4019|-6.3159|1694|8169|P|L|1|1131398
+CMN|GMMN|Mohammed V International Airport|Casablanca|Casablanca|MA|06|33.3675|-7.5900|656|12205|P|L|1|5217109
+ERH|GMFK|Moulay Ali Cherif Airport|Errachidia|Errachidia|MA|08|31.9475|-4.3983|3428|10499|P|M|1|294529
+ESU|GMMI|Essaouira-Mogador Airport|Essaouira|Essaouira|MA|07|31.3975|-9.6817|384|8553|P|M|1|110362
+FEZ|GMFF|Fes Saiss International Airport|Saiss|Saiss|MA|03|33.9273|-4.9780|1900|10499|P|L|1|2684037
+MEK|GMFM|Bassatine Airport|Meknes|Meknes|MA|03|33.8791|-5.5151|1890|9252|P|M|0|595885
+NDR|GMMW|Nador Al Aaroui International Airport|Al Aaroui|Al Aaroui|MA|02|34.9888|-3.0282|574|9842|P|L|1|741364
+OUD|GMFO|Oujda Angads Airport|Ahl Angad|Ahl Angad|MA|02|34.7896|-1.9260|1535|9843|P|L|1|1376185
+OZG|GMAZ|Zagora Airport|Zagora|Zagora|MA|08|30.2658|-5.8608|2414|9000|G|L|1|94717
+OZZ|GMMZ|Ouarzazate International Airport|Ouarzazate|Ouarzazate|MA|08|30.9391|-6.9094|3782|9842|P|L|1|281711
+RAK|GMMX|Marrakesh Menara Airport|Marrakesh|Marrakesh|MA|07|31.6048|-8.0358|1545|10170|P|L|1|1976498
+RBA|GMME|Rabat-Sale Airport|Rabat|Rabat|MA|04|34.0515|-6.7515|276|11483|P|L|1|4998535
+TNG|GMTT|Tangier Ibn Battuta Airport|Tangier|Tangier|MA|01|35.7317|-5.9215|62|11483|P|L|1|1318988
+TTA|GMAT|Tan Tan Airport|Tan Tan|Tan Tan|MA|10|28.4476|-11.1617|653|6562|P|M|1|91592
+TTU|GMTN|Sania Ramel Airport|Tetouan|Tetouan|MA|01|35.5943|-5.3200|10|10784|P|L|1|1144646
+UAR|GMFB|Bouarfa Airport|Bouarfa|Bouarfa|MA|02|32.5143|-1.9831|3630|10499|P|M|1|53304
+DOG|HSDN|Dongola Airport|Dongola|Dongola|SD|01|19.1537|30.4301|772|9843|P|M|1|67811
+EBD|HSOB|El-Obeid Airport|El-Obeid|El-Obeid|SD|09|13.1532|30.2327|1927|9843|P|M|1|446798
+ELF|HSFS|El Fasher Airport|El Fasher|El Fasher|SD|02|13.6149|25.3246|2393|9744|P|M|1|302774
+KRT|HSSK|Khartoum International Airport|Khartoum|Khartoum|SD|03|15.5895|32.5532|1265|9751|P|L|1|5015887
+KSL|HSKA|Kassala Airport|Kassala|Kassala|SD|05|15.3875|36.3288|1671|8202|P|M|1|536377
+MWE|HSMN|Merowe Airport|Merowe|Merowe|SD|01|18.4433|31.8433|897|13186|P|M|0|29827
+PZU|HSPN|Port Sudan New International Airport|Port Sudan|Port Sudan|SD|26|19.4346|37.2341|135|8202|P|L|1|635705
+UYL|HSNN|Nyala Airport|Nyala|Nyala|SD|11|12.0535|24.9562|2106|9880|P|M|1|789955
+DJE|DTTJ|Djerba Zarzis International Airport|Mellita|Mellita|TN|82|33.8737|10.7773|19|10171|P|L|1|979092
+EBM|DTTR|El Borma Airport|El Borma|El Borma|TN|83|31.7043|9.2546|827|8858|P|M|0|3250
+GAF|DTTF|Gafsa Ksar International Airport|Gafsa|Gafsa|TN|71|34.4220|8.8225|1060|9514|P|M|0|273551
+MIR|DTMB|Monastir Habib Bourguiba International Airport|Monastir|Monastir|TN|52|35.7581|10.7547|9|9678|P|M|1|1524201
+SFA|DTTX|Sfax Thyna International Airport|Sfax|Sfax|TN|61|34.7180|10.6910|85|9843|P|M|1|696079
+TBJ|DTKA|Tabarka-Ain Draham International Airport|Tabarka|Tabarka|TN|32|36.9800|8.8769|230|9416|P|M|1|167801
+TOE|DTTZ|Tozeur Nefta International Airport|Tozeur|Tozeur|TN|72|33.9397|8.1106|287|10581|P|M|1|207810
+TUN|DTTA|Tunis Carthage International Airport|Tunis|Tunis|TN|11|36.8510|10.2272|22|10499|P|L|1|4045151
 """#
 }

@@ -153,7 +153,7 @@ struct BaseStep: View {
                     Button { draft.home = code } label: {
                         VStack(alignment: .leading, spacing: 5) {
                             HStack {
-                                Text("\(airport.city.uppercased()) (\(airport.code))").pixelFont(13.333).foregroundStyle(selected ? Theme.accent : Theme.textPrimary)
+                                Text(airport.label.uppercased()).pixelFont(13.333).foregroundStyle(selected ? Theme.accent : Theme.textPrimary)
                                 Spacer()
                                 if selected { Tag(text: "Selected", color: Theme.good) }
                             }

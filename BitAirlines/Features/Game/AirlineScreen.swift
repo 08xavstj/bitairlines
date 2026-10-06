@@ -32,7 +32,7 @@ struct AirlineScreen: View {
         Card {
             VStack(alignment: .leading, spacing: 6) {
                 Text("TOTALS").pixelFont(13.333).foregroundStyle(Theme.accent)
-                KeyValueRow("Home", AirportCatalog.airport(world.airline.home).map { "\($0.city) (\($0.code))" } ?? world.airline.home)
+                KeyValueRow("Home", AirportCatalog.airport(world.airline.home).map { $0.label } ?? world.airline.home)
                 KeyValueRow("Flights flown", Format.number(world.airline.stats.flights))
                 KeyValueRow("Passengers carried", Format.number(world.airline.stats.passengers))
                 KeyValueRow("Freight carried", Format.number(world.airline.stats.cargoKg) + " kg")

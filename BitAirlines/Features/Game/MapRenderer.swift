@@ -207,10 +207,10 @@ enum MapRenderer {
                 let a = item.airport, pt = item.point
                 let mine = important.contains(a.code) || selected.contains(a.code)
                 guard wantsLabel(a, ppd: p.camera.ppd, mine: mine) else { continue }
-                let box = CGRect(x: pt.x + 6, y: pt.y - 6, width: CGFloat(a.code.count) * 7 + 4, height: 12)
+                let box = CGRect(x: pt.x + 6, y: pt.y - 6, width: CGFloat(a.label.count) * 7 + 4, height: 12)
                 if !mine && placed.contains(where: { $0.intersects(box.insetBy(dx: -2, dy: -1)) }) { continue }
                 placed.append(box)
-                let text = Text(a.code).font(Theme.pixel(8)).foregroundColor(mine ? Theme.gold : Theme.textPrimary)
+                let text = Text(a.label).font(Theme.pixel(8)).foregroundColor(mine ? Theme.gold : Theme.textPrimary)
                 context.draw(context.resolve(text), at: CGPoint(x: box.minX, y: pt.y), anchor: .leading)
             }
         }

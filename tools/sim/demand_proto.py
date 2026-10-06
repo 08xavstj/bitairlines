@@ -11,7 +11,7 @@ import pickle
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-from data import airports as airports_mod, populations  # noqa: E402
+from data import pipeline  # noqa: E402
 
 # trips per person per year by wealth tier 1..5
 PROPENSITY = [0.02, 0.08, 0.30, 1.00, 2.00]
@@ -58,11 +58,14 @@ def km(a, b):
     return 6371.0088 * 2 * math.asin(min(1.0, math.sqrt(h)))
 
 
+POP_CAP = 9_000_000          # people beyond this do not add demand: a megacity's far suburbs fly from its other airports, drive or take trains
+
+
 def demand_per_day(a, b, wealth, k_const, size_eighths, isolation_boost=3.0):
     """Passengers per day in one direction, all airlines together."""
     pa = PROPENSITY[wealth[a['cc']] - 1] * (1 + isolation_boost * isolation(a))
     pb = PROPENSITY[wealth[b['cc']] - 1] * (1 + isolation_boost * isolation(b))
-    size = math.sqrt(power_eighths(a['pop'], size_eighths) * power_eighths(b['pop'], size_eighths))
+    size = math.sqrt(power_eighths(min(a['pop'], POP_CAP), size_eighths) * power_eighths(min(b['pop'], POP_CAP), size_eighths))
     return k_const * math.sqrt(pa * pb) * size * interpolate(DISTANCE_TABLE, km(a, b)) / 365.0
 
 
@@ -79,8 +82,8 @@ def load_airports():
     if os.path.exists(cache):
         return pickle.load(open(cache, 'rb'))
     root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-    data = airports_mod.load(os.path.join(root, 'data/raw/airports.csv'), os.path.join(root, 'data/raw/runways.csv'))
-    populations.assign(data, os.path.join(root, 'data/raw/cities500.txt'))
+    data = pipeline.build_airports(os.path.join(root, 'data', 'raw'))
+    pickle.dump(data, open(cache, 'wb'))
     return data
 
 

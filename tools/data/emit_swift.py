@@ -19,7 +19,7 @@ def _literal(name, lines, extra=''):
 
 def airport_row(a):
     return '|'.join([
-        a['code'], a['icao'], a['name'], a['city'], a['cc'], a['region'],
+        a['code'], a['icao'], a['name'], a['city'], a['label'], a['cc'], a['region'],
         f"{a['lat']:.4f}", f"{a['lon']:.4f}", str(a['elev']), str(a['rwy']), a['surf'], a['kind'], str(a['sched']), str(a['pop']),
     ])
 
