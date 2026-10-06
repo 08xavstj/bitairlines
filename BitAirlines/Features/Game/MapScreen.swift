@@ -20,6 +20,10 @@ struct MapScreen: View {
     @State private var cache = MapCache()
     /// Frames of the buttons and panels over the map (no airport name goes under them).
     @State private var covered: [CGRect] = []
+    /// Size of the map on screen, for framing airports in the part no panel covers.
+    @State private var mapSize: CGSize = .zero
+    /// Airports another screen asked to see (a job's two ends), marked and named until the player moves on.
+    @State private var focus: [String] = []
 
     init(session: GameSession, guideRunning: Bool = false) {
         self.session = session
@@ -37,7 +41,7 @@ struct MapScreen: View {
     var body: some View {
         let world = session.world
         let important = network(world)
-        let marked = Set(stops + (selected.map { [$0] } ?? []))
+        let marked = Set(stops + focus + (selected.map { [$0] } ?? []))
         let legs = world.routes.flatMap { route in route.legs.map { MapLeg(from: $0.from, to: $0.to) } }
         GeometryReader { geo in
             ZStack(alignment: .topLeading) {
@@ -82,6 +86,7 @@ struct MapScreen: View {
             }
             .coordinateSpace(.named(MapOverlayFramesKey.space))
             .onPreferenceChange(MapOverlayFramesKey.self) { covered = $0 }
+            .onChange(of: geo.size, initial: true) { _, size in mapSize = size }
         }
         .background(Theme.background)
         .clipped()
@@ -91,6 +96,14 @@ struct MapScreen: View {
         // A stopping issue is drawn over the game, under any sheet: close the sheet so the player sees it.
         .onChange(of: session.world.isPausedByIssue) { _, now in if now { building = nil } }
         .onChange(of: planKey, initial: true) { _, _ in planCheck = stops.count >= 2 ? session.world.plannerCheck(stops: stops) : nil }
+        // A job's "Map" button: show both ends beside the panel, not under it.
+        .onChange(of: session.mapFocus, initial: true) { _, _ in showAskedFocus() }
+        .onChange(of: mapSize) { _, _ in
+            showAskedFocus()
+            if planning && stops.count >= 2 { keepInView(stops) }
+        }
+        // While planning, keep every stop in view as stops are added.
+        .onChange(of: stops) { _, now in if planning && now.count >= 2 { keepInView(now) } }
     }
 
     // MARK: Toolbar
@@ -120,6 +133,7 @@ struct MapScreen: View {
 
     private func goHome() {
         guard let home = AirportCatalog.airport(session.world.airline.home) else { return }
+        focus = []
         camera = MapCamera(lat: home.latitude, lon: home.longitude, ppd: 30)
     }
 
@@ -127,6 +141,30 @@ struct MapScreen: View {
         planning = true
         stops = code.map { [$0] } ?? []
         selected = nil
+        focus = []
+    }
+
+    /// Frames the airports another screen asked for, with the first one's panel open, then clears the request.
+    private func showAskedFocus() {
+        guard let codes = session.mapFocus, mapSize != .zero else { return }
+        session.mapFocus = nil
+        let airports = codes.compactMap { AirportCatalog.airport($0) }
+        guard !airports.isEmpty else { return }
+        planning = false
+        stops = []
+        focus = codes
+        selected = codes.first
+        let free = MapFraming.freeRect(size: mapSize, panelShown: true)
+        if let framed = MapFraming.camera(showing: airports, size: mapSize, free: free) { camera = framed }
+    }
+
+    /// Moves the map only when a stop is off screen or under the planner panel.
+    private func keepInView(_ codes: [String]) {
+        guard mapSize != .zero else { return }
+        let airports = codes.compactMap { AirportCatalog.airport($0) }
+        let free = MapFraming.freeRect(size: mapSize, panelShown: true)
+        if MapFraming.allVisible(airports, camera: camera, size: mapSize, free: free) { return }
+        if let framed = MapFraming.camera(showing: airports, size: mapSize, free: free, maxPPD: camera.ppd) { camera = framed }
     }
 
     // MARK: Gestures
@@ -154,7 +192,7 @@ struct MapScreen: View {
 
     private func tap(at point: CGPoint, size: CGSize, world: World) {
         let projection = MapProjection(camera: camera, size: size)
-        let marked = Set(stops + (selected.map { [$0] } ?? []))
+        let marked = Set(stops + focus + (selected.map { [$0] } ?? []))
         let layout = cache.airports(projection: projection, important: network(world), selected: marked, blocked: covered)
         var best: (code: String, distance: CGFloat)?
         for dot in layout.dots {
@@ -162,7 +200,7 @@ struct MapScreen: View {
             if d < 24, best == nil || d < best!.distance { best = (dot.airport.code, d) }
         }
         guard let code = best?.code else {
-            if !planning { selected = nil }
+            if !planning { selected = nil; focus = [] }
             return
         }
         if planning {

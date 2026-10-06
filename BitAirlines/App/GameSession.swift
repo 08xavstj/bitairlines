@@ -41,6 +41,8 @@ final class GameSession {
     var payout: Payout?
     /// What happened while the player was away, until they close the summary.
     var away: AwayReport?
+    /// Airports another screen asked the map to show (a job's pickup and drop-off). The shell opens the map, the map frames them.
+    var mapFocus: [String]?
     let slot: Int
     /// Set by the game screen, so changes the player makes can be heard.
     @ObservationIgnored var audio: AudioEngine?

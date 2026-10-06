@@ -85,6 +85,7 @@ struct GameShell: View {
         .overlay { PerkChoiceOverlay(session: session) }
         .overlay { IssueOverlay(session: session, onExit: onExit) }
         .overlay { AwaySummary(session: session) }
+        .onChange(of: session.mapFocus) { _, focus in openMapIfAsked(focus) }
         .overlay(alignment: .bottom) { NoticeBanner(session: session) }
         .pixelConfirm("Leave the game?", message: "Your airline is saved. You can continue it from the title screen.", confirm: "Leave", isPresented: $confirmExit) { onExit() }
         .sheet(isPresented: $showMenu, onDismiss: { afterMenu?(); afterMenu = nil }) {
@@ -107,6 +108,11 @@ struct GameShell: View {
     private var needsDecision: Bool {
         let world = session.world
         return world.isBankrupt || world.isPausedByIssue || !world.ops.perkChoices.isEmpty
+    }
+
+    /// Opens the map when another screen asks it to show some airports.
+    private func openMapIfAsked(_ focus: [String]?) {
+        if focus != nil && section != .map { section = .map }
     }
 
     @ViewBuilder private var content: some View {

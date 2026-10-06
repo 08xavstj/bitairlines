@@ -17,15 +17,17 @@ struct JobsScreen: View {
         let shown = onlyFlyable ? open.filter { job in choices[job.id]?.contains(where: \.canDo) ?? false } : open
         Page {
             ScreenHeader(title: "Jobs") { Text("\(open.count) on offer").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
-            if !world.ops.events.isEmpty || !world.ops.offers.isEmpty { EventsCard(session: session) }
             if !taken.isEmpty {
                 SectionTitle("Being flown")
                 ForEach(taken) { job in
                     JobCard(world: world, job: job) {
-                        if !job.loaded {
-                            Button("Drop job") { session.perform { try $0.dropJob(jobID: job.id) } }
-                                .buttonStyle(.smallDanger)
-                                .accessibilityHint("The aircraft goes back to its route. Costs a little reputation.")
+                        VStack(alignment: .trailing, spacing: 6) {
+                            if !job.loaded {
+                                Button("Drop job") { session.perform { try $0.dropJob(jobID: job.id) } }
+                                    .buttonStyle(.smallDanger)
+                                    .accessibilityHint("The aircraft goes back to its route. Costs a little reputation.")
+                            }
+                            JobMapButton(session: session, job: job)
                         }
                     }
                 }
@@ -44,14 +46,17 @@ struct JobsScreen: View {
             ForEach(shown) { job in
                 let flyers = PlaneChoiceWords.jobFlyers(choices[job.id] ?? [], job: job, in: world)
                 JobCard(world: world, job: job) {
-                    if flyers.good {
-                        Button("Fly it") { picking = job.id }
-                            .buttonStyle(.smallProminent)
-                            .accessibilityHint("Choose the aircraft that flies this job.")
-                    } else {
-                        Button("Why not") { picking = job.id }
-                            .buttonStyle(.small)
-                            .accessibilityHint("Shows each aircraft and why it cannot fly this job.")
+                    VStack(alignment: .trailing, spacing: 6) {
+                        if flyers.good {
+                            Button("Fly it") { picking = job.id }
+                                .buttonStyle(.smallProminent)
+                                .accessibilityHint("Choose the aircraft that flies this job.")
+                        } else {
+                            Button("Why not") { picking = job.id }
+                                .buttonStyle(.small)
+                                .accessibilityHint("Shows each aircraft and why it cannot fly this job.")
+                        }
+                        JobMapButton(session: session, job: job)
                     }
                 } footer: {
                     Text(flyers.text).pixelFont(10.667).foregroundStyle(flyers.good ? Theme.good : Theme.bad)
@@ -61,12 +66,26 @@ struct JobsScreen: View {
             }
             Text("A job takes an aircraft off its route until it is done; then it goes back by itself. Late jobs pay half.")
                 .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+            // The news sits under the jobs, so the jobs are the first thing on the screen.
+            if !world.ops.events.isEmpty || !world.ops.offers.isEmpty { EventsCard(session: session) }
         }
         .sheet(item: Binding(get: { picking.map { SheetID(id: $0) } }, set: { picking = $0?.id })) { sheet in
             JobAssignSheet(session: session, jobID: sheet.id)
         }
         // A stopping issue is drawn under any sheet: close the sheet so the player sees it.
         .onChange(of: session.world.isPausedByIssue) { _, now in if now { picking = nil } }
+    }
+}
+
+/// Opens the map framed on a job's pickup and drop-off.
+struct JobMapButton: View {
+    let session: GameSession
+    let job: Job
+
+    var body: some View {
+        Button("Map") { session.mapFocus = [job.from, job.to] }
+            .buttonStyle(.small)
+            .accessibilityLabel("Show \(Place.name(job.from)) and \(Place.name(job.to)) on the map")
     }
 }
 
