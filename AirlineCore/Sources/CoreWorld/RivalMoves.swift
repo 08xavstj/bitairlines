@@ -79,7 +79,10 @@ extension World {
             $0.marketPaxPerDay >= Tuning.rivalEntryPaxPerDay && rivalRoutes($0.from, $0.to).isEmpty && !isRemoteMarket($0.from, $0.to)
         }
         return legs.sorted { lhs, rhs in
-            lhs.marketPaxPerDay != rhs.marketPaxPerDay ? lhs.marketPaxPerDay > rhs.marketPaxPerDay : lhs.from + lhs.to < rhs.from + rhs.to
+            if lhs.marketPaxPerDay != rhs.marketPaxPerDay { return lhs.marketPaxPerDay > rhs.marketPaxPerDay }
+            let left: String = lhs.from + lhs.to
+            let right: String = rhs.from + rhs.to
+            return left < right
         }
     }
 
@@ -164,7 +167,10 @@ extension World {
             guard candidate.kind == .large || candidate.kind == .medium, candidate.population >= 15_000 else { return false }
             guard candidate.code != base.code, candidate.code != home else { return false }
             return candidate.distanceKm(to: base) <= reach && !flown.contains { $0.serves(base.code, candidate.code) }
-        }.sorted { $0.population != $1.population ? $0.population > $1.population : $0.code < $1.code }
+        }.sorted { lhs, rhs in
+            if lhs.population != rhs.population { return lhs.population > rhs.population }
+            return lhs.code < rhs.code
+        }
         for partner in partners.prefix(12) where !isRemoteMarket(base.code, partner.code) {
             let km = base.distanceKm(to: partner)
             if Demand.passengersPerDay(from: base, to: partner, distanceKm: km) >= Tuning.rivalGrowthPaxPerDay {

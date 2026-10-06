@@ -32,10 +32,7 @@ extension Messages {
             let kit = Kit.allCases.indices.contains(item.amount) ? Kit.allCases[item.amount] : .floats
             return "\(item.subject) is being fitted with \(Words.name(kit).lowercased())."
         case .slotBought: return "You bought \(item.amount) daily slot\(item.amount == 1 ? "" : "s") at \(Place.name(item.subject))."
-        case .rivalRoute:
-            let parts = item.subject.split(separator: ":").map(String.init)
-            let rival = world.ops.rivals.first { $0.id == item.amount }?.name ?? "A rival airline"
-            return parts.count == 3 ? "\(rival) now flies \(Place.name(parts[1])) to \(Place.name(parts[2])), against you." : "\(rival) opened a new route."
+        case .rivalRoute: return RivalWords.news(item, world: world)
         case .pilotHired: return "\(item.subject) joined as a pilot."
         case .pilotSick: return "\(item.subject) is off sick for a few days."
         case .noCrew: return "\(item.subject) is waiting for a pilot."

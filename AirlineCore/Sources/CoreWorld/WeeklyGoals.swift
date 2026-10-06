@@ -1,6 +1,7 @@
 // CoreWorld/WeeklyGoals.swift: one goal each game week (carry more people, move more freight, fly more, earn more), set a little
-// above what the airline did the week before. Meeting it pays a bonus and counts towards the Game Center goals leaderboard.
-// The kind follows the week number (no random draw), so the other systems' random streams stay the same.
+// above what the airline did the week before. Some weeks the goal is tied to a place on the network: carry people to it, or
+// deliver freight to it. Meeting a goal pays a fixed bonus by certificate level and counts towards the Game Center leaderboard.
+// The kind and the place follow the week number (no random draw), so the other systems' random streams stay the same.
 import CoreCatalog
 
 public enum WeeklyGoalKind: String, Sendable, Hashable, Codable, CaseIterable {
@@ -18,6 +19,21 @@ public struct WeeklyGoal: Sendable, Hashable, Codable {
     public var startTotals: [String: Int]
     public var reward: Int
     public var done: Bool
+    /// For a place goal, the airport (IATA code) the passengers or freight must land at. Missing from older saves.
+    public var place: String? = nil
+    /// For a place goal, what has landed there this week. Missing from older saves; use `placeCount`.
+    var placeCountStore: Int? = nil
+
+    public var placeCount: Int {
+        get { placeCountStore ?? 0 }
+        set { placeCountStore = newValue }
+    }
+}
+
+/// One step of the weekly rotation: a kind of goal, tied to a place or not.
+struct GoalSlot: Sendable, Hashable {
+    var kind: WeeklyGoalKind
+    var atPlace: Bool
 }
 
 // MARK: Weekly goals
@@ -25,9 +41,26 @@ extension Tuning {
     /// The goal is last week's result times this, at least the floor below.
     public static let weeklyGoalStretch = 1.1
     public static let weeklyGoalFloor: [WeeklyGoalKind: Int] = [.passengers: 30, .freightKg: 800, .flights: 10, .revenue: 10_000]
-    /// The bonus is this share of last week's revenue, at least the minimum.
-    public static let weeklyGoalRewardShare = 0.08
+    /// Floors for a goal tied to one place (only passengers and freight have place goals).
+    public static let placeGoalFloor: [WeeklyGoalKind: Int] = [.passengers: 10, .freightKg: 300]
+    /// A place goal is rounded up to a multiple of this (150 passengers, 2,000 kg).
+    public static let placeGoalStep: [WeeklyGoalKind: Int] = [.passengers: 5, .freightKg: 100]
+    /// The bonus for meeting any goal, by certificate level 1...7.
+    public static let weeklyGoalBonusByLevel = [8_000, 15_000, 30_000, 60_000, 120_000, 250_000, 500_000]
+    /// No bonus is ever below this.
     public static let weeklyGoalMinimumReward = 5_000
+
+    public static func weeklyGoalBonus(level: Int) -> Int {
+        let table = weeklyGoalBonusByLevel
+        return max(weeklyGoalMinimumReward, table[min(max(level, 1), table.count) - 1])
+    }
+
+    /// The rotation, one step a week. Place steps fall back to the plain kind while the network has no place to pick.
+    static let weeklyGoalRotation: [GoalSlot] = [
+        GoalSlot(kind: .passengers, atPlace: false), GoalSlot(kind: .freightKg, atPlace: false),
+        GoalSlot(kind: .flights, atPlace: false), GoalSlot(kind: .revenue, atPlace: false),
+        GoalSlot(kind: .passengers, atPlace: true), GoalSlot(kind: .freightKg, atPlace: true),
+    ]
 }
 
 extension World {
@@ -44,24 +77,76 @@ extension World {
     /// How far this week's goal has come (0 when there is none).
     public var weeklyGoalProgress: Int {
         guard let goal = ops.weeklyGoal else { return 0 }
+        if goal.place != nil { return goal.placeCount }
         return max(0, goalTotal(goal.kind) - goal.baseline)
+    }
+
+    /// Airports a place goal may name: every stop the airline flies to except home, sorted. Freight needs a route that carries it.
+    func goalPlaces(freight: Bool) -> [String] {
+        let home = airline.home
+        let stops = routes.filter { !freight || $0.carriesCargo }.flatMap(\.stops)
+        return Array(Set(stops)).filter { $0 != home }.sorted()
+    }
+
+    /// Share of last week's departures that landed at a place (to scale the airline-wide result down to one airport).
+    func shareOfArrivals(at place: String) -> Double {
+        var all = 0
+        var there = 0
+        for route in routes {
+            for leg in route.legs {
+                all += leg.departuresLastWeek
+                if leg.to == place { there += leg.departuresLastWeek }
+            }
+        }
+        return all > 0 ? Double(there) / Double(all) : 0
     }
 
     /// Sets the goal for the week that starts now. Called when a game starts and every Monday.
     mutating func startWeeklyGoal() {
         // Weeks are counted from Mondays (weekday 0), the day a new goal starts.
-        let week = (clock.dayIndex - clock.weekday + 7) / 7
-        let kinds = WeeklyGoalKind.allCases
-        let kind = kinds[week % kinds.count]
-        // What the airline did last week in this kind of goal, and what it earned.
+        startWeeklyGoal(week: (clock.dayIndex - clock.weekday + 7) / 7)
+    }
+
+    mutating func startWeeklyGoal(week: Int) {
+        let rotation = Tuning.weeklyGoalRotation
+        let slot = rotation[week % rotation.count]
+        let kind = slot.kind
+        // What the airline did last week in this kind of goal.
         let lastWeek = ops.weeklyGoal.flatMap { $0.startTotals[kind.rawValue] }.map { goalTotal(kind) - $0 } ?? 0
-        let lastRevenue = books.suffix(7).reduce(0) { $0 + $1.revenue }
-        let floor = Tuning.weeklyGoalFloor[kind] ?? 1
-        let target = max(floor, Int((Double(lastWeek) * Tuning.weeklyGoalStretch).rounded()))
-        let reward = max(Tuning.weeklyGoalMinimumReward, Int(Double(lastRevenue) * Tuning.weeklyGoalRewardShare))
+        var target = max(Tuning.weeklyGoalFloor[kind] ?? 1, Int((Double(lastWeek) * Tuning.weeklyGoalStretch).rounded()))
+
+        // A place goal: the airport follows the week number through the sorted list of places.
+        var place: String?
+        if slot.atPlace {
+            let places = goalPlaces(freight: kind == .freightKg)
+            if !places.isEmpty {
+                let offset = kind == .freightKg ? 1 : 0
+                let code = places[(week / rotation.count + offset) % places.count]
+                let expected = Double(lastWeek) * shareOfArrivals(at: code) * Tuning.weeklyGoalStretch
+                let step = max(1, Tuning.placeGoalStep[kind] ?? 1)
+                let raw = max(Tuning.placeGoalFloor[kind] ?? 1, Int(expected.rounded()))
+                target = (raw + step - 1) / step * step
+                place = code
+            }
+        }
+
         var totals: [String: Int] = [:]
-        for k in kinds { totals[k.rawValue] = goalTotal(k) }
-        ops.weeklyGoal = WeeklyGoal(week: week, kind: kind, target: target, baseline: goalTotal(kind), startTotals: totals, reward: reward, done: false)
+        for k in WeeklyGoalKind.allCases { totals[k.rawValue] = goalTotal(k) }
+        ops.weeklyGoal = WeeklyGoal(week: week, kind: kind, target: target, baseline: goalTotal(kind), startTotals: totals,
+                                    reward: Tuning.weeklyGoalBonus(level: airline.level), done: false,
+                                    place: place, placeCountStore: place == nil ? nil : 0)
+    }
+
+    /// Counts a landing towards a place goal: the passengers or freight it brought, if it landed at the goal's airport.
+    /// Called from `arrive` for every loaded landing (route flights and job deliveries).
+    mutating func countGoalArrival(_ flight: Flight) {
+        guard !flight.isFerry, var goal = ops.weeklyGoal, !goal.done, let place = goal.place, place == flight.to else { return }
+        switch goal.kind {
+        case .passengers: goal.placeCount += flight.passengers
+        case .freightKg: goal.placeCount += flight.cargoKg
+        case .flights, .revenue: return
+        }
+        ops.weeklyGoal = goal
     }
 
     /// Pays the bonus once the goal is met. Checked every day.
@@ -70,6 +155,7 @@ extension World {
         ops.weeklyGoal?.done = true
         ops.goalsCompleted += 1
         airline.cash += goal.reward
-        addNews(.milestone, subject: "goal:\(goal.kind.rawValue)", amount: goal.reward)
+        let subject = goal.place.map { "goal:\(goal.kind.rawValue):\($0)" } ?? "goal:\(goal.kind.rawValue)"
+        addNews(.milestone, subject: subject, amount: goal.reward)
     }
 }

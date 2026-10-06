@@ -49,8 +49,7 @@ struct RouteNotes: View {
             seen.append(key)
             for rival in world.ops.rivals {
                 for r in rival.routes where (r.a == leg.from && r.b == leg.to) || (r.a == leg.to && r.b == leg.from) {
-                    let fare = Int((r.fareLevel * 100).rounded())
-                    lines.append("\(rival.name) also flies \(Place.name(leg.from)) to \(Place.name(leg.to)), \(Format.oneDecimal(r.frequency)) a day at \(fare)% of the going fare.")
+                    lines += RivalWords.routeLines(rival: rival, route: r, from: leg.from, to: leg.to)
                 }
             }
         }

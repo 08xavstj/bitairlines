@@ -196,9 +196,14 @@ extension World {
         aircraft[i].totalBlockMinutes += minutes
         logHours(i, minutes: minutes)
         countScenarioFreight(kg: flight.cargoKg, at: flight.to)
+        countGoalArrival(flight)
+        settleLateDepartures()
 
         // A job that ends here is paid now, and the aircraft goes back to its route by itself.
-        if landOnJob(i, flight: flight) { return }
+        if landOnJob(i, flight: flight) {
+            noteReputationFlight(gain: 0, passengers: flight.passengers, seats: nil, service: .standard)
+            return
+        }
 
         if !flight.isFerry {
             airline.stats.passengers += flight.passengers
@@ -215,7 +220,9 @@ extension World {
                 routes[r].legs[l].maturity = min(1.0, routes[r].legs[l].maturity + Tuning.maturityPerFlight)
                 routes[r].book.add(RouteDay(revenue: flight.revenue, flightCost: flight.cost, passengers: flight.passengers, seats: aircraft[i].seats, flights: 1))
             }
-            airline.reputation = min(100, airline.reputation + reputationGain(passengers: flight.passengers, seats: aircraft[i].seats, service: service))
+            let gain = reputationGain(passengers: flight.passengers, seats: aircraft[i].seats, service: service)
+            airline.reputation = min(100, airline.reputation + gain)
+            noteReputationFlight(gain: gain, passengers: flight.passengers, seats: aircraft[i].seats, service: service)
         } else if aircraft[i].jobID == nil, let rid = aircraft[i].routeID, let r = routeIndex(rid) {
             // Flying empty to reach the route is a cost of the route.
             routes[r].book.add(RouteDay(flightCost: flight.cost))

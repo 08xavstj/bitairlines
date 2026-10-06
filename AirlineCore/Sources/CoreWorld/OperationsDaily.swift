@@ -9,13 +9,17 @@ extension World {
         dailyJobs()
         checkScenario()
         checkWeeklyGoal()
+        checkMissedDepartures()
         endCampaigns()
         if ops.mode.unlimitedMoney && airline.cash < Tuning.sandboxCashFloor { airline.cash += Tuning.sandboxTopUp }
     }
 
     mutating func weeklyOperations() {
+        // Reputation's week closes on the on-time record before it is aged, and the next one starts after (Reputation.swift).
+        closeReputationWeek()
         ops.onTime.onTime *= OnTimeRecord.weeklyKeep
         ops.onTime.late *= OnTimeRecord.weeklyKeep
+        openReputationWeek()
         weeklyEvents()
         weeklyPilots()
         refreshConnections()

@@ -67,6 +67,12 @@ public struct Aircraft: Sendable, Hashable, Codable, Identifiable {
     var otherRoutesStore: [Int]?
     /// The other routes it goes back to after a job; missing from older saves.
     var returnOtherRoutesStore: [Int]?
+    /// The minute its last heavy check ended (see HeavyChecks.swift); missing from older saves.
+    var heavyCheckMinuteStore: Int?
+    /// `totalBlockMinutes` when its last heavy check began; missing from older saves.
+    var heavyCheckBlockMinutesStore: Int?
+    /// A barn find still to be restored, or its restoration (see Restoration.swift); missing from older saves.
+    public internal(set) var restoration: Restoration?
 
     public var eventMinute: Int? {
         switch status {

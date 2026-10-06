@@ -251,8 +251,11 @@ extension World {
         if week.flights == 0 && counts.departures == 0 { sized.append((.quietWeek, 1.0)) }
         let order = ReputationReason.allCases
         let reasons = sized.filter { $0.1 > 0.0001 }
-            .sorted { $0.1 != $1.1 ? $0.1 > $1.1 : (order.firstIndex(of: $0.0) ?? 0) < (order.firstIndex(of: $1.0) ?? 0) }
-            .map(\.0)
+            .sorted { a, b in
+                if a.1 != b.1 { return a.1 > b.1 }
+                return (order.firstIndex(of: a.0) ?? 0) < (order.firstIndex(of: b.0) ?? 0)
+            }
+            .map { $0.0 }
 
         let band = Tuning.reputationSteadyBand
         let direction: ReputationDirection = change > band ? .rising : (change < -band ? .falling : .steady)
