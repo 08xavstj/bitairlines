@@ -98,13 +98,13 @@ final class GameSession {
         if now.timeIntervalSince(lastSave) > 45 { save() }
     }
 
-    /// Moves the game on for a break of this many real seconds and keeps a summary to show. Stops early at anything that needs the
-    /// player, as the clock always does.
+    /// Moves the game on for a break of this many real seconds and keeps a summary to show. A breakdown waits until the player is
+    /// back (the rest of the fleet keeps flying); running out of money stops early.
     func catchUp(realSeconds: TimeInterval) {
         let minutes = AwayReport.gameMinutes(forRealSeconds: realSeconds)
         guard minutes >= AwayReport.minGameMinutes, !world.isBankrupt, !world.isPausedByIssue else { return }
         let before = world.airline.stats, cash = world.airline.cash, start = world.clock.minute
-        let result = world.advance(byMinutes: minutes)
+        let result = world.advanceAway(byMinutes: minutes)
         let after = world.airline.stats
         away = AwayReport(gameMinutes: world.clock.minute - start, flights: after.flights - before.flights, passengers: after.passengers - before.passengers,
                           revenue: after.revenue - before.revenue, cashChange: world.airline.cash - cash, stoppedForIssue: result == .pausedForIssue)

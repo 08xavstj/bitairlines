@@ -11,10 +11,12 @@ struct AwayReport: Equatable {
     /// The catch-up stopped early because something needs the player.
     let stoppedForIssue: Bool
 
-    /// Each real minute away moves the game on this many minutes (slower than 1x, so a long break is not a shock).
-    static let gameMinutesPerRealMinute = 15.0
-    /// The most a break can move the game on: two game days.
-    static let maxGameMinutes = 2 * 1440
+    /// Each real minute away moves the game on this many minutes: one game hour, a 24th of 1x. Ten minutes away flies most
+    /// of a game day, so the fleet has landed and been paid by the time the player is back.
+    static let gameMinutesPerRealMinute = 60.0
+    /// The most a break can move the game on: three game days (reached after three real hours), so a night away pays well
+    /// without being worth more than playing.
+    static let maxGameMinutes = 3 * 1440
     /// Breaks that move the game less than this show nothing.
     static let minGameMinutes = 60
 

@@ -28,9 +28,9 @@ import CoreWorld
     }
 
     @Test func awayTimeBecomesRealTimeAtTheAwayRate() {
-        // 15 game minutes for each real minute: two game days is 192 real minutes.
-        #expect(AwayNotes.realSeconds(gameMinutes: AwayReport.maxGameMinutes) == 192 * 60)
-        #expect(AwayNotes.realSeconds(gameMinutes: 15) == 60)
+        // One game hour for each real minute: three game days is 72 real minutes.
+        #expect(AwayNotes.realSeconds(gameMinutes: AwayReport.maxGameMinutes) == 72 * 60)
+        #expect(AwayNotes.realSeconds(gameMinutes: 60) == 60)
     }
 
     @Test func awayNotesHaveNoExclamationMarks() throws {

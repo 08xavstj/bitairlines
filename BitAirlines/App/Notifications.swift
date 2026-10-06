@@ -14,7 +14,7 @@ struct AwayNote: Equatable {
 /// What to tell the player while they are away. The world is deterministic, so a copy run forward with the "while you were away"
 /// rules (AwayReport) shows the first thing that will need them; its game time becomes real time at the same rate.
 enum AwayNotes {
-    /// Real seconds for a stretch of game minutes at the away rate (15 game minutes for each real minute).
+    /// Real seconds for a stretch of game minutes at the away rate (one game hour for each real minute).
     static func realSeconds(gameMinutes: Int) -> TimeInterval {
         Double(gameMinutes) / AwayReport.gameMinutesPerRealMinute * 60
     }

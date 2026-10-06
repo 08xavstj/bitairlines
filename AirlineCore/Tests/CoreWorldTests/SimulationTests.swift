@@ -109,6 +109,19 @@ import CoreCatalog
         #expect(w.advance(byMinutes: 1440) == .pausedForIssue)
     }
 
+    @Test func timeAwayKeepsFlyingPastABreakdown() throws {
+        var w = try Fixtures.flyingWorld()
+        Fixtures.advanceUntilBoarding(&w)
+        w.raiseBreakdown(aircraftIndex: 0, type: try #require(AircraftCatalog.type("c208")))
+        let start = w.clock.minute
+        let result = w.advanceAway(byMinutes: 1440)
+        #expect(result == .reachedTarget)
+        #expect(w.clock.minute == start + 1440)
+        // Once the break is over the breakdown stops the game again, waiting for a decision.
+        #expect(w.isPausedByIssue)
+        if case .grounded = w.aircraft[0].status {} else { Issue.record("the aircraft should still be grounded") }
+    }
+
     @Test func unaffordableRepairsAreRefused() throws {
         var w = try Fixtures.flyingWorld()
         Fixtures.advanceUntilBoarding(&w)
