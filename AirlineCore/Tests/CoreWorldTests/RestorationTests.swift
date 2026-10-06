@@ -18,7 +18,7 @@ import CoreCatalog
         #expect(w.aircraft[i].livery == nil)
         #expect(w.restorationProblem(aircraftID: planeID) == .notDelivered)
 
-        // Delivered, it is still a project: no job, and a route does not get it into the air.
+        // Delivered, it is still a project: no job, and it cannot be put on a route.
         w.advance(byMinutes: GameClock.minutesPerDay)
         #expect(w.aircraft[i].isDelivered && w.aircraft[i].awaitingRestoration)
         w.ops.jobs.append(Job(id: 900, kind: .crewChange, from: "YEV", to: "YUB", passengers: 1, cargoKg: 0, pay: 5_000,
@@ -30,9 +30,9 @@ import CoreCatalog
         let typeFound = w.aircraft[i].type
         let type = try #require(typeFound)
         if w.fitProblem(type: type, route: w.routes[r]) == nil {
-            try w.assign(aircraftID: planeID, toRoute: routeID)
+            #expect(throws: WorldError.aircraftBusy) { try w.assign(aircraftID: planeID, toRoute: routeID) }
             w.advance(byMinutes: 600)
-            #expect(w.aircraft[i].routeID == nil, "it leaves the route instead of flying it")
+            #expect(w.aircraft[i].routeID == nil, "it cannot be put on a route")
             #expect(w.aircraft[i].totalFlights == 0 && w.aircraft[i].flight == nil)
         }
         #expect(w.saleValue(of: w.aircraft[i]) <= w.aircraft[i].purchasePrice, "no profit from selling it on")
