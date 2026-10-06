@@ -73,6 +73,9 @@ public struct Aircraft: Sendable, Hashable, Codable, Identifiable {
     var heavyCheckBlockMinutesStore: Int?
     /// A barn find still to be restored, or its restoration (see Restoration.swift); missing from older saves.
     public internal(set) var restoration: Restoration?
+    /// Where an aircraft with no route and no job is flying empty, when it needs stops on the way (see FerryPlan.swift);
+    /// missing from older saves.
+    var ferryTargetStore: String?
 
     public var eventMinute: Int? {
         switch status {
