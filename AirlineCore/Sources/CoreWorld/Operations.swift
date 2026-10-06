@@ -49,6 +49,9 @@ public struct Operations: Sendable, Codable {
     public var campaigns: [ActiveCampaign] = []
     public var staff: [StaffRole] = []
 
+    /// This week's and last week's reputation bookkeeping (Reputation.swift); started on first use.
+    public var reputationBook: ReputationBook?
+
     public init() {}
 
     public init(mode: GameMode, seed: UInt64) {
@@ -87,6 +90,7 @@ public struct Operations: Sendable, Codable {
         goalsCompleted = try c.decodeIfPresent(Int.self, forKey: .goalsCompleted) ?? 0
         campaigns = try c.decodeIfPresent([ActiveCampaign].self, forKey: .campaigns) ?? []
         staff = try c.decodeIfPresent([StaffRole].self, forKey: .staff) ?? []
+        reputationBook = try c.decodeIfPresent(ReputationBook.self, forKey: .reputationBook)
     }
 }
 

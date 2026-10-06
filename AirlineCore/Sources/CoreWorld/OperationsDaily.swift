@@ -19,6 +19,7 @@ extension World {
         weeklyEvents()
         weeklyPilots()
         refreshConnections()
+        weeklyRivals()
         checkWeeklyGoal()
         startWeeklyGoal()
         weeklyStaff()

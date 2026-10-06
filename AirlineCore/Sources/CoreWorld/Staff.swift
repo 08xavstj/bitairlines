@@ -22,9 +22,9 @@ extension Tuning {
         }
     }
 
-    /// Seats-full share above which the revenue manager raises the fare, and below which it lowers it.
+    /// Seats-full share above which the revenue manager raises the fare, and below which it brings a fare above the going fare back down.
     public static let fareRaiseLoad = 0.87
-    public static let fareCutLoad = 0.5
+    public static let fareCutLoad = 0.75
     public static let fareStep = 0.05
     /// The revenue manager keeps fares inside these multipliers.
     public static let managedFareRange: ClosedRange<Double> = 0.7...1.6
@@ -57,12 +57,29 @@ extension World {
         if hasStaff(.fleetPlanner) { planFleet() }
     }
 
-    /// Raises the fare on routes that fly full and lowers it on routes that fly half empty.
+    /// The fare people compare with on this route: 1.0, or the cheapest rival fare on any of its legs.
+    public func goingFare(for route: Route) -> Double {
+        var going = 1.0
+        for leg in route.legs {
+            for rival in rivalRoutes(leg.from, leg.to) { going = min(going, rival.fareLevel) }
+        }
+        return going
+    }
+
+    /// Moves each fare towards the one that earns most (see FareDemand): up while the route flies full; otherwise towards the going fare,
+    /// because a cut below it wins fewer people than it costs, and a fare above it on a route with spare seats loses more people than it gains.
     mutating func manageFares() {
         for r in routes.indices {
             guard let load = routes[r].seatLoadLast7Days else { continue }
+            let going = (goingFare(for: routes[r]) * 100).rounded() / 100
             var fare = routes[r].fareMultiplier
-            if load > Tuning.fareRaiseLoad { fare += Tuning.fareStep } else if load < Tuning.fareCutLoad { fare -= Tuning.fareStep }
+            if load > Tuning.fareRaiseLoad {
+                fare += Tuning.fareStep
+            } else if fare < going {
+                fare = min(going, fare + Tuning.fareStep)
+            } else if fare > going && load < Tuning.fareCutLoad {
+                fare = max(going, fare - Tuning.fareStep)
+            }
             routes[r].fareMultiplier = min(Tuning.managedFareRange.upperBound, max(Tuning.managedFareRange.lowerBound, (fare * 100).rounded() / 100))
         }
     }

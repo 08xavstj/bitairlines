@@ -1,6 +1,7 @@
 // CoreWorld/Rivals.swift: named computer airlines. They fly between the bigger airports, grow a little each month, move into a
 // busy route the player has made pay, and answer a fare cut with one of their own. Where one flies the same pair as the player it
 // takes a real share of the market, and its fare sets what the player's fare is compared with. There is no sabotage.
+// The weekly answers (fare wars, more flights, pulling out of a lost pair) and the growth by level are in RivalMoves.swift.
 import CoreCatalog
 import CoreSim
 
@@ -11,8 +12,28 @@ public struct RivalRoute: Sendable, Hashable, Codable {
     /// Their fare relative to the going fare (1.0 is the going fare).
     public var fareLevel: Double
     public var startedDay: Int
+    // Added later; older saves lack them (see the facades below and RivalMoves.swift).
+    var addedFlightsStore: Double?
+    var weeksLosingStore: Int?
+    /// Game day of this rival's last answer on this pair (a fare cut or more flights).
+    public var lastMoveDay: Int?
 
     func serves(_ x: String, _ y: String) -> Bool { (a == x && b == y) || (a == y && b == x) }
+
+    /// Flights a day this rival added on the pair to fight the player (already counted in `frequency`).
+    public var addedFlights: Double {
+        get { addedFlightsStore ?? 0 }
+        set { addedFlightsStore = newValue == 0 ? nil : newValue }
+    }
+
+    /// Weeks in a row the player has flown the pair more often and no dearer than this rival.
+    public var weeksLosing: Int {
+        get { weeksLosingStore ?? 0 }
+        set { weeksLosingStore = newValue == 0 ? nil : newValue }
+    }
+
+    /// True while this rival sells below the going fare on the pair.
+    public var isCuttingFares: Bool { fareLevel < 0.995 }
 }
 
 public struct Rival: Sendable, Hashable, Codable, Identifiable {
@@ -78,7 +99,7 @@ extension World {
                 let pair = ops.rivals[v].routes[r]
                 let ours = routes.filter { route in route.legs.contains { ($0.from == pair.a && $0.to == pair.b) || ($0.from == pair.b && $0.to == pair.a) } }
                 if let cheapest = ours.map(\.fareMultiplier).min(), cheapest < pair.fareLevel - 0.1 {
-                    ops.rivals[v].routes[r].fareLevel = max(0.75, pair.fareLevel - 0.05)
+                    ops.rivals[v].routes[r].fareLevel = max(min(0.75, pair.fareLevel), pair.fareLevel - 0.05)
                 } else {
                     ops.rivals[v].routes[r].fareLevel = min(1.0, pair.fareLevel + 0.02)
                 }
@@ -86,29 +107,14 @@ extension World {
         }
         guard !ops.rivals.isEmpty else { return }
         let v = ops.rng.int(0...(ops.rivals.count - 1))
-        // Move in on a busy, mature route of the player's.
-        if ops.rng.chance(Tuning.rivalEntryChance) {
-            let busy = routes.filter { clock.dayIndex - $0.openedDay >= 180 && $0.revenueLastMonth > $0.costLastMonth }
-                .flatMap { $0.legs }.filter { $0.marketPaxPerDay >= Tuning.rivalEntryPaxPerDay && rivalRoutes($0.from, $0.to).isEmpty }
-            if let leg = busy.first {
-                ops.rivals[v].routes.append(RivalRoute(a: leg.from, b: leg.to, frequency: 2, fareLevel: 0.95, startedDay: clock.dayIndex))
-                addNews(.rivalRoute, subject: ops.rivals[v].code + ":" + leg.from + ":" + leg.to, amount: ops.rivals[v].id)
-                return
-            }
+        // Move in on a busy, mature route of the player's (never a remote fly-in market).
+        if ops.rng.chance(Tuning.rivalMoveInChance), let leg = rivalEntryLegs().first {
+            ops.rivals[v].routes.append(RivalRoute(a: leg.from, b: leg.to, frequency: 2, fareLevel: 0.95, startedDay: clock.dayIndex))
+            addNews(.rivalRoute, subject: ops.rivals[v].code + ":" + leg.from + ":" + leg.to, amount: ops.rivals[v].id)
+            return
         }
-        // Or grow in its own region.
-        if ops.rng.chance(0.3), let base = AirportCatalog.airport(ops.rivals[v].home) {
-            let flown = ops.rivals[v].routes
-            let home = airline.home
-            let partners = AirportCatalog.all.filter { candidate in
-                guard candidate.kind == .large || candidate.kind == .medium, candidate.population >= 15_000 else { return false }
-                guard candidate.code != base.code, candidate.code != home else { return false }
-                return candidate.distanceKm(to: base) <= 1500 && !flown.contains { $0.serves(base.code, candidate.code) }
-            }.sorted { $0.population > $1.population }
-            if let partner = partners.first {
-                ops.rivals[v].routes.append(RivalRoute(a: base.code, b: partner.code, frequency: 1, fareLevel: 1.0, startedDay: clock.dayIndex))
-            }
-        }
+        // Or grow in their own regions: more often, further and bigger as the player's certificate level rises.
+        growRivals(first: v)
     }
 
     /// The rankings: every airline by passengers a year (rivals estimated from their routes).

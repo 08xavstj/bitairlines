@@ -59,6 +59,24 @@ struct RouteOutlook: View {
     }
 }
 
+/// Under the fare stepper: how full the route should fly and what it should earn at the fare set now, so the player sees the trade-off
+/// while stepping the fare. Uses the same cached forecast as RouteOutlook. Shows nothing until an aircraft is on the route.
+struct FareOutlook: View {
+    let world: World
+    let route: Route
+
+    var body: some View {
+        let planes = route.aircraftIDs.compactMap { id in world.aircraft.first { $0.id == id } }
+        if let type = planes.first?.type {
+            let forecast = OutlookCache.shared.forecast(world: world, route: route, planes: planes, type: type)
+            if forecast.problem == nil {
+                Text("At this fare: about \(Format.percent(forecast.loadFactor)) full, \(Format.perDay(forecast.profitPerDay))")
+                    .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+}
+
 /// In the aircraft sheet, under a route it could be assigned to: what this aircraft would earn there on its own.
 struct AssignOutlook: View {
     let world: World

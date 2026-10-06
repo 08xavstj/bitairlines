@@ -10,13 +10,13 @@ extension World {
         let smaller = Double(min(a.population, b.population))
         var intensity = min(1.0, (smaller / Tuning.competitiveCatchment).squareRoot())
         let rivals = rivalRoutes(leg.from, leg.to)
-        if !rivals.isEmpty { intensity = max(intensity, Tuning.rivalIntensity) }
+        if !rivals.isEmpty { intensity = max(intensity, rivalPressure(rivals)) }
         let perDay = leg.departuresLastWeek > 0 ? Double(leg.departuresLastWeek) / 7.0 : Double(leg.departuresThisWeek) / 3.0
         let ownShare = min(0.5, max(0.05, 0.05 + 0.004 * airline.reputation + 0.03 * perDay))
         let competitive = (1.0 - intensity) + intensity * ownShare
         // Fares are compared with the going fare, or with a rival's fare where one flies the same pair.
         let reference = rivals.map(\.fareLevel).min() ?? 1.0
-        let fareEffect = min(1.5, Powers.oneAndAHalf(reference / route.fareMultiplier))
+        let fareEffect = FareDemand.factor(ratio: reference / route.fareMultiplier)
         let quality = 0.9 + 0.001 * airline.reputation
         return competitive * fareEffect * quality * route.service.captureFactor * captureFactor
     }

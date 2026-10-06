@@ -36,10 +36,13 @@ import CoreCatalog
         w.advance(byMinutes: 8 * 1440)
         let load = w.routes[0].seatLoadLast7Days ?? 0
         let fare = w.routes[0].fareMultiplier
+        let going = (w.goingFare(for: w.routes[0]) * 100).rounded() / 100
         try w.hire(.revenueManager)
         w.manageFares()
+        // Up while full; otherwise towards the going fare (a cut below it never pays on a route with spare seats).
         if load > Tuning.fareRaiseLoad { #expect(w.routes[0].fareMultiplier > fare) }
-        else if load < Tuning.fareCutLoad { #expect(w.routes[0].fareMultiplier < fare) }
+        else if fare < going { #expect(w.routes[0].fareMultiplier > fare) }
+        else if fare > going && load < Tuning.fareCutLoad { #expect(w.routes[0].fareMultiplier < fare) }
         else { #expect(w.routes[0].fareMultiplier == fare) }
         #expect(Tuning.managedFareRange.contains(w.routes[0].fareMultiplier))
     }

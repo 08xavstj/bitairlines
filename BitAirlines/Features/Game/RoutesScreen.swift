@@ -84,6 +84,7 @@ struct RouteCard: View {
                 ListStepper(label: "Fare", values: RouteSteps.fares, current: route.fareMultiplier, display: { fareText($0, first: first) }) { v in
                     session.perform { try $0.setFare(routeID: route.id, multiplier: v) }
                 }
+                FareOutlook(world: world, route: route)
                 Toggle(isOn: Binding(get: { route.carriesCargo }, set: { v in session.perform { try $0.setCargo(routeID: route.id, enabled: v) } })) {
                     Text("Carry freight").pixelFont(10.667).foregroundStyle(Theme.textMuted)
                 }.toggleStyle(PixelToggleStyle())
