@@ -3,6 +3,7 @@
 // Every later route starts at Tuning.minimumMaturity and grows with flying, as before.
 // The head start goes to the first route the airline's own aircraft can fly: a first route opened by mistake (a water strip for
 // a wheeled Caravan, a leg out of range) does not use it up.
+import CoreCatalog
 
 extension Tuning {
     /// Awareness of every leg of the airline's very first route (1.0 is fully known).

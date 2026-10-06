@@ -74,7 +74,8 @@ final class NextStepCache {
     }
 }
 
-/// One short line on the map toolbar: the next thing worth doing.
+/// One short line on the map toolbar: the next thing worth doing. It is a hint, not a control: it has no button look (no outline),
+/// and taps go through it to the map below.
 struct NextStepLine: View {
     let session: GameSession
     @State private var cache = NextStepCache()
@@ -82,13 +83,14 @@ struct NextStepLine: View {
     var body: some View {
         let world = session.world
         let text = NextStepWords.line(cache.step(for: world), world: world)
-        HStack(spacing: 6) {
-            Text("NEXT").pixelFont(8).foregroundStyle(Theme.onAccent).padding(.horizontal, 4).padding(.vertical, 2).background(Theme.accent)
-            Text(text).pixelFont(10.667).foregroundStyle(Theme.textPrimary).lineLimit(1).minimumScaleFactor(0.7)
+        HStack(alignment: .firstTextBaseline, spacing: 6) {
+            Text("NEXT").pixelFont(8).foregroundStyle(Theme.gold)
+            // Whole pixel sizes only (no shrinking): a long line wraps onto a second one instead.
+            Text(text).pixelFont(10.667).foregroundStyle(Theme.textPrimary).lineLimit(2).fixedSize(horizontal: false, vertical: true)
         }
-        .padding(.horizontal, 8).frame(minHeight: 36)
-        .background(PixelShape(step: 2).fill(Theme.surface.opacity(0.92)))
-        .overlay(PixelShape(step: 2).inset(by: 1).stroke(Theme.panelBorder, lineWidth: 2))
+        .padding(.horizontal, 6).padding(.vertical, 3)
+        .background(Theme.background.opacity(0.7))
+        .allowsHitTesting(false)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Next: \(text)")
     }

@@ -6,6 +6,10 @@ extension World {
         dailyFuelMarket()
         let upkeep = baseUpkeepPerDay
         if upkeep > 0 { spendOnOverhead(upkeep) }
+        // Salaries are paid a day at a time, so hiring after payday or letting someone go just before it saves nothing.
+        let salaries = salariesPerDay
+        if salaries > 0 { spendOnOverhead(salaries) }
+        dailyPilots()
         // The real calendar (RealDay.swift) before the board is cleared, so dispatch and event jobs stay on it.
         dailyRealCalendar()
         dailyJobs()
@@ -34,9 +38,11 @@ extension World {
     }
 
     mutating func monthlyOperations() {
-        let payroll = pilotPayroll
-        if payroll > 0 { spendOnOverhead(payroll) }
-        if staffPayroll > 0 { spendOnOverhead(staffPayroll) }
         monthlyRivals()
+    }
+
+    /// Pilot and staff salaries for one day (`pilotPayroll` and `staffPayroll` are a month's worth).
+    public var salariesPerDay: Int {
+        Int((Double(pilotPayroll + staffPayroll) * 12.0 / 365.0).rounded())
     }
 }

@@ -21,7 +21,14 @@ struct ReputationCard: View {
                 }
                 if let load = trend.load { KeyValueRow("Seats filled", Format.percent(load)) }
                 if trend.missed > 0 { KeyValueRow("Departures missed", Format.number(trend.missed), color: Theme.bad) }
-                Text("Late and missed departures cost reputation. If the service falls short, it also slips a little each week.")
+                if let blocked = ReputationWords.blockedLine(world) {
+                    Text(blocked).pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
+                }
+                Text("HOW TO RAISE IT").pixelFont(10.667).foregroundStyle(Theme.textPrimary).padding(.top, 2)
+                ForEach(ReputationWords.levers, id: \.self) { line in
+                    Text(line).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                }
+                Text("If the service falls short, reputation also slips a little each week.")
                     .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
             }
         }
@@ -75,4 +82,30 @@ struct ReputationCard: View {
         let cents = n % 100
         return "\(sign)\(n / 100).\(cents < 10 ? "0" : "")\(cents)"
     }
+}
+
+/// The words for raising reputation: the reputation card lists every lever, and the places that say a level needs more
+/// reputation (the next-step line, the certificate card) can add the short hint.
+enum ReputationWords {
+    /// Every lever, the biggest first. Campaign numbers come from Tuning, so they follow any rebalance.
+    static var levers: [String] {
+        [
+            "Fly on time. Every late departure costs reputation: give busy routes enough aircraft for their schedule.",
+            "Fill the seats and pick better service. Full flights with premium service earn the most.",
+            "Keep aircraft flying. A breakdown costs reputation, and so does every departure a route misses while its aircraft are in the hangar. Repair quickly; a hangar at the base makes checks quicker.",
+            "Fly jobs on time. A late job costs more than an on-time one earns.",
+            "Run a campaign from the Money screen: radio +\(campaign(.radio)), national +\(campaign(.national)).",
+        ]
+    }
+
+    /// One short hint for lines that only have room for a few words.
+    static let shortHint = "Fly on time, fill the seats, take jobs and run campaigns."
+
+    /// "Level 3 needs reputation 22 (now 18)." when reputation holds the next level back; nil otherwise.
+    static func blockedLine(_ world: World) -> String? {
+        guard let next = world.nextLevelRequirement, world.airline.reputation < next.reputation else { return nil }
+        return "Level \(next.level) needs reputation \(Int(next.reputation.rounded(.up))) (now \(Int(world.airline.reputation)))."
+    }
+
+    static func campaign(_ c: Campaign) -> Int { Int(Tuning.campaignReputation(c).rounded()) }
 }

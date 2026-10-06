@@ -38,8 +38,22 @@ public struct RouteIdea: Sendable, Hashable, Identifiable {
     public var place: String
     /// False when the idea is judged for a type the airline does not have yet (one it could buy in the hangar).
     public var typeOwned: Bool = true
+    /// Daily slots still to buy at busy airports before the schedule can fly (empty for most routes). Where none are held yet,
+    /// no flight leaves that airport until they are bought (SlotNeeds.swift).
+    public var slotNeeds: [SlotNeed] = []
 
     public var id: String { stops.joined(separator: "-") }
+
+    /// Daily slots still to buy, at all the route's airports together.
+    public var slotsNeeded: Int { slotNeeds.reduce(0) { $0 + $1.slots } }
+    /// What those slots cost in all.
+    public var slotCost: Int { slotNeeds.reduce(0) { $0 + $1.cost } }
+    /// What ideas are ranked by: the profit a day less the slot bill spread over `RouteIdeaSearch.slotCostSpreadDays`.
+    public var rankValue: Double { RouteIdea.rankValue(profitPerDay: profitPerDay, slots: slotNeeds) }
+
+    static func rankValue(profitPerDay: Double, slots: [SlotNeed]) -> Double {
+        profitPerDay - Double(slots.reduce(0) { $0 + $1.cost }) / RouteIdeaSearch.slotCostSpreadDays
+    }
 }
 
 /// How wide the search for route ideas looks. These shape the search only, not the game's balance.
@@ -57,6 +71,8 @@ public enum RouteIdeaSearch {
     public static let noRoadIsolation = 0.5
     /// Forecast passengers a day at or above which a route counts as a big market.
     public static let bigMarketPassengers = 30.0
+    /// Ideas that need slots rank as if the slot bill were paid out of this many days of the route's profit.
+    public static let slotCostSpreadDays = 365.0
 
     /// The same key for a pair in either direction.
     static func pairKey(_ a: String, _ b: String) -> String { a < b ? a + "|" + b : b + "|" + a }
@@ -95,8 +111,14 @@ extension World {
                 if let idea = bestIdea(stops: stops, km: km, types: types, inNetwork: inNetwork) { ideas.append(idea) }
             }
         }
-        ideas.sort { a, b in a.profitPerDay != b.profitPerDay ? a.profitPerDay > b.profitPerDay : a.id < b.id }
+        ideas.sort(by: World.ideaOrder)
         return Array(ideas.prefix(limit))
+    }
+
+    /// Best first: the profit a day less the spread slot bill, then by id so the order never depends on the search.
+    static func ideaOrder(_ a: RouteIdea, _ b: RouteIdea) -> Bool {
+        let va = a.rankValue, vb = b.rankValue
+        return va != vb ? va > vb : a.id < b.id
     }
 
     /// A parked aircraft of the idea's type that could fly it right away (nil if there is none): one already at a stop first, then the lowest id.
@@ -134,19 +156,29 @@ extension World {
         return aircraft.contains { $0.typeID == type.id && !$0.kits.isEmpty && fitProblem(type: type, route: route, kits: $0.kits) == nil }
     }
 
-    /// The best paying of the types on one pair, as an idea (nil if none of them makes money there).
+    /// The best paying of the types on one pair, as an idea (nil if none of them makes money there). Where the route needs slots,
+    /// the type is judged with their bill spread over a year (a smaller type flies more often and needs more of them).
     func bestIdea(stops: [String], km: Double, types: [AircraftType], inNetwork: Set<String>) -> RouteIdea? {
         guard types.contains(where: { $0.canFly(km: km) }), let route = ideaRoute(stops: stops) else { return nil }
         var best: RouteForecast?
+        var bestSlots: [SlotNeed] = []
+        var bestValue = 0.0
         for type in types where type.canFly(km: km) && canFlyIdea(type: type, route: route) {
             let f = forecast(on: route, type: type, frequency: nil, aircraftCount: 1)
-            if f.isViable && f.profitPerDay > (best?.profitPerDay ?? 0) { best = f }
+            guard f.isViable else { continue }
+            let slots = slotNeeds(stops: stops, frequency: f.frequency)
+            let value = RouteIdea.rankValue(profitPerDay: f.profitPerDay, slots: slots)
+            if best == nil || value > bestValue {
+                best = f
+                bestSlots = slots
+                bestValue = value
+            }
         }
         guard let best else { return nil }
         let (reason, place) = ideaReason(stops: stops, passengersPerDay: best.passengersPerDay, inNetwork: inNetwork)
         let owned = aircraft.contains { $0.typeID == best.typeID }
         return RouteIdea(stops: stops, typeID: best.typeID, profitPerDay: best.profitPerDay, passengersPerDay: best.passengersPerDay,
-                         distanceKm: km, reason: reason, place: place, typeOwned: owned)
+                         distanceKm: km, reason: reason, place: place, typeOwned: owned, slotNeeds: bestSlots)
     }
 
     /// The main reason a pair is worth flying, and the airport it is about. The far end is looked at first.

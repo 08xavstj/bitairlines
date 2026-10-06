@@ -138,19 +138,47 @@ import CoreCatalog
         w.airline.cash = -500_000
         #expect(w.advance(byMinutes: 2 * 1440) == .pausedForIssue)
         let issue = try #require(w.issues.first { if case .overdraft = $0.kind { return true } else { return false } })
-        #expect(issue.options.map(\.choice) == [.emergencyLoan, .declareBankruptcy])
+        // There is always a way on besides bankruptcy: putting the notice aside keeps the clock running while the days count.
+        #expect(issue.options.map(\.choice) == [.emergencyLoan, .acknowledge, .declareBankruptcy])
         let before = w.airline.cash
+        // The emergency loan is sized to bring cash back inside the overdraft (it used to be a fixed $250k, too little here).
+        let offer = w.emergencyLoanOffer
+        #expect(offer >= Tuning.emergencyLoanAmount)
         try w.resolve(issueID: issue.id, choice: .emergencyLoan)
-        #expect(w.airline.loans.count == 1 && w.airline.cash == before + Tuning.emergencyLoanAmount)
+        #expect(w.airline.loans.count == 1 && w.airline.cash == before + offer)
+        #expect(w.airline.cash >= -Tuning.overdraftLimit && !w.isPausedByIssue)
     }
 
     @Test func stayingOverdrawnEndsTheGame() throws {
         var w = try Fixtures.world()
         w.airline.cash = -5_000_000
         w.setPausePolicy(.never)
-        #expect(w.advance(byMinutes: 30 * 1440) == .gameOver)
+        // Money trouble stops the game whatever the policy: on the first day, then on each of the last few. Put it aside each time.
+        var result = w.advance(byMinutes: 30 * 1440)
+        var stops = 0
+        while result == .pausedForIssue && stops < 10 {
+            let notice = w.issues.first { if case .overdraft = $0.kind { return true } else { return false } }
+            guard let id = notice?.id else { break }
+            try w.resolve(issueID: id, choice: .acknowledge)
+            stops += 1
+            result = w.advance(byMinutes: 30 * 1440)
+        }
+        #expect(stops == 1 + Tuning.overdraftWarningDays)
+        #expect(result == .gameOver)
         #expect(w.isBankrupt)
         #expect(w.advance(byMinutes: 1440) == .gameOver)
+    }
+
+    @Test func theNeverPolicyStillStopsForAnOverdraft() throws {
+        var w = try Fixtures.world()
+        w.setPausePolicy(.never)
+        w.airline.cash = -Tuning.overdraftLimit - 50_000
+        #expect(w.advance(byMinutes: 2 * 1440) == .pausedForIssue)
+        #expect(w.overdraftDaysLeft == Tuning.daysOverdrawnBeforeBankruptcy - 1)
+        // Back inside the limit, the notice goes at once and the count starts again.
+        w.airline.cash = 0
+        w.settleOverdraft()
+        #expect(!w.isPausedByIssue && w.overdraftDaysLeft == nil)
     }
 
     @Test func qualifyingForALevelRaisesANoticeAndTheUpgradeIsPaidFor() throws {

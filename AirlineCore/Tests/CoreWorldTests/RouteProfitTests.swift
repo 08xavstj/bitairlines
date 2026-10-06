@@ -26,9 +26,13 @@ import CoreCatalog
         #expect(book.flightCost == flightCosts)
         #expect(book.revenue - book.flightCost == revenue - flightCosts)
 
-        // One aircraft's fixed cost for each of the 7 midnights; head office is left out.
+        // One aircraft's daily cost for each of the 7 midnights; head office is left out. Besides the fixed cost it now holds the
+        // aircraft's pilot salary and its heavy checks spread over the days, as the forecast does (the check bill grows a few cents
+        // a day with age, hence the small tolerance).
         let type = try Fixtures.type("c208")
-        #expect(book.aircraftCost == 7 * Int(LegEconomics.fixedPerDay(type: type).rounded()))
+        let perDay = Int(w.aircraftDayCost(w.aircraft[0]).rounded())
+        #expect(perDay > Int(LegEconomics.fixedPerDay(type: type).rounded()))
+        #expect(abs(book.aircraftCost - 7 * perDay) <= 7, "\(book.aircraftCost) vs \(7 * perDay)")
         #expect(book.profit == book.revenue - book.flightCost - book.aircraftCost)
 
         let load = try #require(book.seatLoad)

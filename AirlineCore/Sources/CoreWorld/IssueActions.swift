@@ -1,13 +1,38 @@
 // CoreWorld/IssueActions.swift: raising issues and resolving them.
 import CoreCatalog
 
+extension Tuning {
+    /// The overdraft notice comes back (and stops the game) on each of the last this many days before the bank closes the airline.
+    public static let overdraftWarningDays = 3
+    /// The emergency loan lends enough to bring cash back this far inside the overdraft limit (at least `emergencyLoanAmount`),
+    /// rounded up to whole steps.
+    public static let emergencyLoanMargin = 50_000
+    public static let emergencyLoanStep = 50_000
+}
+
 extension World {
+    /// Running out of money stops the game whatever the policy, so the airline cannot go bankrupt unseen at high speed.
     func pauses(_ issue: Issue) -> Bool {
-        switch pausePolicy {
-        case .never: false
-        case .critical: issue.isCritical
-        case .all: true
+        switch issue.kind {
+        case .overdraft, .bankruptcy: return true
+        default: break
         }
+        switch pausePolicy {
+        case .never: return false
+        case .critical: return issue.isCritical
+        case .all: return true
+        }
+    }
+
+    /// What the emergency loan on the overdraft notice lends now: enough to bring cash back inside the overdraft limit with a
+    /// margin, at least `Tuning.emergencyLoanAmount`, never more than the airline may still borrow. 0 when it cannot borrow that much.
+    public var emergencyLoanOffer: Int {
+        let gap = max(0, -airline.cash - Tuning.overdraftLimit) + Tuning.emergencyLoanMargin
+        let step = Tuning.emergencyLoanStep
+        let wanted = max(Tuning.emergencyLoanAmount, (gap + step - 1) / step * step)
+        let room = borrowingLimit - totalDebt
+        if room >= wanted { return wanted }
+        return room >= Tuning.emergencyLoanAmount ? room / step * step : 0
     }
 
     mutating func raise(_ kind: IssueKind, options: [IssueOption]) {
@@ -53,8 +78,12 @@ extension World {
             today.flightCosts += option.costUSD
             if let i = aircraftIndex(planeID) { aircraft[i].status = .maintenance(until: clock.minute + option.days * GameClock.minutesPerDay) }
         case .overdraft:
+            // Put aside (.acknowledge), the notice goes and the clock runs; the days keep counting and it comes back near the end.
             if choice == .emergencyLoan {
-                try takeLoan(amount: Tuning.emergencyLoanAmount, annualRate: Tuning.emergencyLoanRate, months: 24)
+                let amount = emergencyLoanOffer
+                guard amount > 0 else { throw WorldError.notEnoughCash(needed: Tuning.emergencyLoanAmount) }
+                try takeLoan(amount: amount, annualRate: Tuning.emergencyLoanRate, months: 24)
+                settleOverdraft()
             } else if choice == .declareBankruptcy {
                 isBankrupt = true
             }

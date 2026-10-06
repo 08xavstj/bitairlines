@@ -81,11 +81,24 @@ public struct ReputationTrend: Sendable, Hashable {
 }
 
 // MARK: Reputation
+// Pacing (rules 11, tools/sim/reputation_proto.py): flying is the main source. A punctual airline with three-quarters full
+// aircraft nets about 0.001 a departure after late departures and breakdowns, so a growing airline goes from level 2 (11) to
+// level 3 (22) in a little over a year and reaches 35 for level 4 in about two. Jobs and campaigns are a boost on top.
 extension Tuning {
-    /// Lost for each departure that leaves late (a flight earns about 0.0007).
-    public static let reputationPerLateDeparture = 0.001
+    /// Earned by one route flight or job delivery, times (1 + seat load), the service factor, the Good name perk and
+    /// (0.6 + 0.4 x on-time share): about 0.0017 for a punctual flight three-quarters full (it was 0.0004 before rules 11).
+    public static let reputationPerFlight = 0.001
+    /// Lost for each departure that leaves late (more than a whole flight earns at standard service).
+    public static let reputationPerLateDeparture = 0.0025
     /// Lost for each departure missed because the route had no aircraft able to fly.
-    public static let reputationPerMissedDeparture = 0.004
+    public static let reputationPerMissedDeparture = 0.01
+    /// Lost at each breakdown, about 500 punctual flights (IssueActions.swift).
+    public static let reputationPerBreakdown = 0.8
+    /// A job delivered on time earns this (times the Good name perk); a late one and one given back cost these (JobFlights.swift).
+    /// An on-time job is worth about 130 route departures: still the quickest lever for a one-aircraft bush airline.
+    public static let reputationPerJobOnTime = 0.15
+    public static let reputationPerLateJob = 0.5
+    public static let reputationPerDroppedJob = 0.3
     /// Each week reputation above the target loses this share of the gap.
     public static let reputationDriftShare = 0.02
     /// The target for an airline that flies nothing, or is never on time. Below this there is no drift.

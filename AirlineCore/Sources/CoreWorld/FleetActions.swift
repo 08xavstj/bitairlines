@@ -5,19 +5,21 @@ import CoreSim
 extension World {
     // MARK: Aircraft
 
-    /// Buys a used aircraft from the market. It arrives at the home airport after the listing's delivery time. Returns the aircraft id.
+    /// Buys a used aircraft from the market. It arrives at `deliveryAirport(for:)` (the home airport when it can land there) after
+    /// the listing's delivery time. Returns the aircraft id.
     @discardableResult
     public mutating func buyUsed(listingID: Int) throws -> Int {
         guard let listing = market.listings.first(where: { $0.id == listingID }) else { throw WorldError.unknownListing(listingID) }
         guard let type = AircraftCatalog.type(listing.typeID) else { throw WorldError.unknownType(listing.typeID) }
         guard type.level <= airline.level else { throw WorldError.levelTooLow(required: type.level) }
-        if let problem = homeProblem(type) { throw problem }
+        if let problem = deliveryProblem(type) { throw problem }
         guard airline.cash >= listing.price else { throw WorldError.notEnoughCash(needed: listing.price) }
+        let arrival = deliveryAirport(for: type) ?? airline.home
         spendOnInvestment(listing.price)
         let id = takeAircraftID()
         let delivery = clock.minute + Valuation.usedDeliveryMinutes(listing)
         aircraft.append(Aircraft(id: id, typeID: type.id, registration: nextRegistration(), builtDay: clock.dayIndex - Int(listing.ageYears * 365.25),
-                                 condition: listing.condition, price: listing.price, location: airline.home, status: .onOrder(until: delivery)))
+                                 condition: listing.condition, price: listing.price, location: arrival, status: .onOrder(until: delivery)))
         let last = aircraft.count - 1
         if let rare = listing.rare { logRareFind(rare, typeID: type.id) }
         if listing.rare == .heritage {
@@ -36,27 +38,54 @@ extension World {
         return id
     }
 
-    /// Orders a new aircraft (types in production only). Delivery takes longer for bigger types.
+    /// Orders a new aircraft (types in production only). Delivery takes longer for bigger types; it arrives at `deliveryAirport(for:)`.
     @discardableResult
     public mutating func orderNew(typeID: String) throws -> Int {
         guard let type = AircraftCatalog.type(typeID) else { throw WorldError.unknownType(typeID) }
         guard type.inProduction else { throw WorldError.notInProduction }
         guard type.level <= airline.level else { throw WorldError.levelTooLow(required: type.level) }
-        if let problem = homeProblem(type) { throw problem }
+        if let problem = deliveryProblem(type) { throw problem }
         guard airline.cash >= type.priceUSD else { throw WorldError.notEnoughCash(needed: type.priceUSD) }
+        let arrival = deliveryAirport(for: type) ?? airline.home
         spendOnInvestment(type.priceUSD)
         let id = takeAircraftID()
         let delivery = clock.minute + Valuation.newDeliveryMinutes(level: type.level)
         aircraft.append(Aircraft(id: id, typeID: type.id, registration: nextRegistration(), builtDay: clock.dayIndex, condition: 100,
-                                 price: type.priceUSD, location: airline.home, status: .onOrder(until: delivery)))
+                                 price: type.priceUSD, location: arrival, status: .onOrder(until: delivery)))
         return id
     }
 
-    /// New aircraft are delivered to the home airport, so a type that cannot land there (a floatplane at a paved airport, a jet on
-    /// a short strip) would be stranded. Nil when it can.
+    /// Whether this type can use the home airport (where aircraft are delivered first). Nil when it can; otherwise the refusal a
+    /// home-only check gives. Buying asks `deliveryProblem`, which also looks at the rest of the network.
     public func homeProblem(_ type: AircraftType) -> WorldError? {
         guard let home = AirportCatalog.airport(airline.home) else { return nil }
         return canUse(type: type, at: home) ? nil : .aircraftCannotUse(airport: home.code)
+    }
+
+    /// Where an aircraft of this type is delivered: the home airport when it can use it; otherwise the airport of the network
+    /// (route stops and bases) nearest home that it can use, the lower code on a tie (a floatplane goes to the nearest water
+    /// base, a widebody to the nearest long runway). Nil when no airport of the network will do.
+    public func deliveryAirport(for type: AircraftType) -> String? {
+        guard let home = AirportCatalog.airport(airline.home) else { return airline.home }
+        if canUse(type: type, at: home) { return home.code }
+        var best: String?
+        var bestKm = 0.0
+        for code in networkAirports where code != home.code {
+            guard let airport = AirportCatalog.airport(code), canUse(type: type, at: airport) else { continue }
+            let km = home.distanceKm(to: airport)
+            if best == nil || km < bestKm {
+                best = code
+                bestKm = km
+            }
+        }
+        return best
+    }
+
+    /// Why an aircraft of this type cannot be delivered (nil if it can): neither the home airport nor any other airport of the
+    /// network can take it. The refusal names the home airport.
+    public func deliveryProblem(_ type: AircraftType) -> WorldError? {
+        if deliveryAirport(for: type) != nil { return nil }
+        return homeProblem(type) ?? .aircraftCannotUse(airport: airline.home)
     }
 
     /// What a dealer pays for the aircraft today.

@@ -62,12 +62,17 @@ struct GameShell: View {
     /// What the menu asked for, done once its sheet has closed (two sheets cannot swap in one step).
     @State private var afterMenu: (() -> Void)?
     @State private var coach: TutorialCoach
+    /// The map's camera, open airport and route being planned, kept here so they are still there after a look at another screen.
+    @State private var mapState: MapState
+    /// The speed to go back to once the away summary or the perk choice closes (they cover the speed buttons, so the clock waits).
+    @State private var heldSpeed: GameSpeed?
 
     init(session: GameSession, onExit: @escaping () -> Void, initialSection: GameSection = .map) {
         self.session = session
         self.onExit = onExit
         _section = State(initialValue: initialSection)
         _coach = State(initialValue: TutorialCoach(slot: session.slot))
+        _mapState = State(initialValue: MapState(home: session.world.airline.home))
     }
 
     var body: some View {
@@ -102,6 +107,26 @@ struct GameShell: View {
                 showSettings = false
             }
         }
+        // The away summary and the perk choice cover the speed buttons, so the clock waits while they are up.
+        .onChange(of: coversClock, initial: true) { _, now in holdClock(now) }
+    }
+
+    /// True while a card that covers the speed buttons is up: the away summary or the perk choice.
+    /// (A stopping issue already stops the clock in GameSession.)
+    private var coversClock: Bool {
+        session.away != nil || !session.world.ops.perkChoices.isEmpty
+    }
+
+    /// Pauses the clock when a card covers the speed buttons, and goes back to the old speed when it closes.
+    private func holdClock(_ covered: Bool) {
+        if covered {
+            guard session.speed != .paused else { return }
+            heldSpeed = session.speed
+            session.setSpeed(.paused)
+        } else if let speed = heldSpeed {
+            heldSpeed = nil
+            session.setSpeed(speed)
+        }
     }
 
     /// True while something on top of the game waits for the player: a stopping issue, a perk to pick, or the end of the game.
@@ -117,7 +142,7 @@ struct GameShell: View {
 
     @ViewBuilder private var content: some View {
         switch section {
-        case .map: MapScreen(session: session, guideRunning: coach.step != nil)
+        case .map: MapScreen(session: session, map: mapState, guideRunning: coach.step != nil)
         case .jobs: SubTabs(first: .routes, second: .jobs, section: $section) { JobsScreen(session: session) }
         case .fleet: SubTabs(first: .fleet, second: .bases, section: $section) { FleetScreen(session: session) }
         case .routes: SubTabs(first: .routes, second: .jobs, section: $section) { RoutesScreen(session: session) }
@@ -134,6 +159,11 @@ struct TopBar: View {
     let session: GameSession
     let coach: TutorialCoach
     let onMenu: () -> Void
+    @Environment(\.pixelStep) private var step
+
+    /// The bar is one row of fixed controls, so its text grows one size at most. At the larger text sizes the row is wider
+    /// than a 667 point phone, and MENU (the only way back to Settings) would be pushed off the screen.
+    static let maxStep = 1
 
     var body: some View {
         let world = session.world
@@ -148,12 +178,12 @@ struct TopBar: View {
                 .coachOutline(coach.step?.section == .airline)
             }
             .buttonStyle(.tap).accessibilityLabel("Menu")
-            VStack(alignment: .leading, spacing: 1) {
-                Text(Format.date(world.clock.date)).pixelFont(10.667).foregroundStyle(Theme.textPrimary).lineLimit(1)
-                Text("\(Format.weekdays[world.clock.weekday]) \(Format.time(world.clock))").pixelFont(10.667).foregroundStyle(Theme.textMuted).lineLimit(1)
-            }
+            // MENU is never squeezed.
             .fixedSize()
-            .frame(minWidth: 118, alignment: .leading)
+            .layoutPriority(2)
+            // When the row is tight the gap beside the speed buttons shrinks first, then the date (never MENU or the money).
+            ClockLabel(clock: world.clock)
+                .layoutPriority(0.5)
             SpeedControls(session: session, coach: coach)
             Spacer(minLength: 4)
             VStack(alignment: .trailing, spacing: 1) {
@@ -168,8 +198,31 @@ struct TopBar: View {
             .layoutPriority(1)
         }
         .padding(.horizontal, 10).padding(.vertical, 4)
+        // If the row is still too wide, it runs off the right edge, never the left, so MENU stays on the screen.
+        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
         .background(Theme.surface)
         .overlay(alignment: .bottom) { Rectangle().fill(Theme.panelBorder).frame(height: 2) }
+        .environment(\.pixelStep, min(step, TopBar.maxStep))
+    }
+}
+
+/// The date and time in the top bar. When there is room it keeps a steady width, so the speed buttons do not move as the
+/// days go by; on a narrow screen it gives that room back first.
+struct ClockLabel: View {
+    let clock: GameClock
+
+    var body: some View {
+        ViewThatFits(in: .horizontal) {
+            lines.frame(minWidth: 118, alignment: .leading)
+            lines
+        }
+    }
+
+    private var lines: some View {
+        VStack(alignment: .leading, spacing: 1) {
+            Text(Format.date(clock.date)).pixelFont(10.667).foregroundStyle(Theme.textPrimary).lineLimit(1)
+            Text("\(Format.weekdays[clock.weekday]) \(Format.time(clock))").pixelFont(10.667).foregroundStyle(Theme.textMuted).lineLimit(1)
+        }
     }
 }
 

@@ -94,7 +94,9 @@ struct MoveHeadquartersSheet: View {
             HangarNotice(session: session)
             ScrollView {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Now at \(Place.name(world.airline.home)). Routes, bases and aircraft stay as they are; aircraft parked at the old home can be put on any route. New aircraft are delivered to the new home.")
+                    Text("Now at \(Place.name(world.airline.home))\(MoveHeadquartersSheet.runwayNote(world, code: world.airline.home)). Routes, bases and aircraft stay as they are; aircraft parked at the old home can be put on any route.")
+                        .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                    Text("New aircraft are delivered to the headquarters, or to the nearest airport you fly to that can take them. A long runway at home means the biggest aircraft arrive there.")
                         .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                     if options.isEmpty {
                         EmptyNote("None of the airports you fly to can be your headquarters yet. Open a route to a bigger town first.")
@@ -106,6 +108,13 @@ struct MoveHeadquartersSheet: View {
         .padding(16)
         .screenBackground()
         .onAppear { session.notice = nil }
+    }
+
+    /// " (runway 6,000 ft)" for an airport with a runway, " (water)" for a water aerodrome.
+    static func runwayNote(_ world: World, code: String) -> String {
+        guard let airport = AirportCatalog.airport(code) else { return "" }
+        if world.surface(at: airport) == .water { return " (water)" }
+        return " (runway \(Format.number(world.runwayFt(at: airport))) ft)"
     }
 }
 
@@ -124,6 +133,8 @@ struct HeadquartersRow: View {
                 Text(Place.name(option.code).uppercased()).pixelFont(13.333).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
                 Text("About \(Format.people(people)) people nearby. The move costs \(Format.dollars(option.fee)).")
                     .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                let runway = HeadquartersRow.runwayLine(world, code: option.code)
+                Text(runway.text).pixelFont(10.667).foregroundStyle(runway.fitsAll ? Theme.good : Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                 if let problem {
                     Text(Messages.describe(problem, cash: session.world.airline.cash)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
                 }
@@ -136,5 +147,18 @@ struct HeadquartersRow: View {
                 .disabled(problem != nil)
         }
         .padding(12).background(PixelPanel())
+    }
+
+    /// The runway, and whether every aircraft of the airline's level (floatplanes aside) can be delivered there.
+    static func runwayLine(_ world: World, code: String) -> (text: String, fitsAll: Bool) {
+        guard let airport = AirportCatalog.airport(code) else { return (text: "", fitsAll: false) }
+        if world.surface(at: airport) == .water { return (text: "A water aerodrome: only floatplanes can be delivered here.", fitsAll: false) }
+        let have = world.runwayFt(at: airport)
+        let need = DeliveryWords.longestRunwayNeeded(level: world.airline.level)
+        let paved = world.surface(at: airport) == .paved
+        if !world.ops.mode.checksRunways || (paved && have >= need) {
+            return (text: "Runway \(Format.number(have)) ft: every aircraft of your level can be delivered here.", fitsAll: true)
+        }
+        return (text: "Runway \(Format.number(have)) ft\(paved ? "" : " gravel"): the biggest aircraft of your level need \(Format.number(need)) ft paved.", fitsAll: false)
     }
 }

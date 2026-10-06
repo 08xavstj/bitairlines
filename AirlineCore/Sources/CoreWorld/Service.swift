@@ -71,6 +71,6 @@ extension World {
     /// Reputation earned by one flight: more for a full aircraft, good service and a punctual airline.
     func reputationGain(passengers: Int, seats: Int, service: ServiceLevel) -> Double {
         let load = Double(passengers) / Double(max(1, seats))
-        return 0.0004 * (1.0 + load) * service.reputationFactor * reputationFactor * (0.6 + 0.4 * ops.onTime.share)
+        return Tuning.reputationPerFlight * (1.0 + load) * service.reputationFactor * reputationFactor * (0.6 + 0.4 * ops.onTime.share)
     }
 }

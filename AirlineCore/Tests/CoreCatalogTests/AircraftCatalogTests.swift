@@ -5,7 +5,7 @@ import Testing
     @Test func everyRowParses() {
         let lines = AircraftRows.rows.split(separator: "\n").count
         #expect(AircraftCatalog.all.count == lines, "a row failed to parse")
-        #expect(AircraftCatalog.all.count == 52)
+        #expect(AircraftCatalog.all.count == 53)
         #expect(AircraftCatalog.byID.count == AircraftCatalog.all.count, "aircraft ids must be unique")
     }
 

@@ -94,9 +94,13 @@ struct ApronPainter {
         block(&context, termX, termY, 120, 42, wall)
         for wx in stride(from: termX + 6, to: termX + 114, by: 12) { block(&context, wx, termY + 15, 6, 9, window) }
         context.draw(Text(code).font(Theme.pixel(10.667)).foregroundStyle(Theme.gold), at: CGPoint(x: termX + 60, y: termY + 7))
-        block(&context, termX + 128, termY - 30, 12, 72, wall)
-        block(&context, termX + 122, termY - 42, 24, 12, window)
-        if Int(t * 1.5) % 2 == 0 { block(&context, termX + 132, termY - 48, 3, 3, Theme.bad) }
+        // The tower is laid out from its top (beacon, then the cab, then the body down to the apron), kept inside the canvas on a short
+        // panel such as the 170 pt one on Bases.
+        let towerTop = max(0, termY - 48)
+        let apronY = h * 0.42
+        block(&context, termX + 128, towerTop + 18, 12, max(12, apronY - towerTop - 18), wall)
+        block(&context, termX + 122, towerTop + 6, 24, 12, window)
+        if Int(t * 1.5) % 2 == 0 { block(&context, termX + 132, towerTop, 3, 3, Theme.bad) }
 
         // Hangar and fuel tank, when built.
         var rightX = w - 12

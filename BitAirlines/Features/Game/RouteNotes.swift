@@ -18,7 +18,7 @@ struct ServicePicker: View {
     }
 }
 
-/// Things worth knowing about a route: rivals on it, slots it is short of, people changing planes at a hub.
+/// Things worth knowing about a route: rivals on it, slots it is short of (and what they cost), people changing planes at a hub.
 struct RouteNotes: View {
     let world: World
     let route: Route
@@ -28,8 +28,8 @@ struct RouteNotes: View {
             ForEach(Array(rivalLines.enumerated()), id: \.offset) { _, line in
                 Text(line).pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
             }
-            ForEach(world.slotShortfall(route: route), id: \.airport) { item in
-                Text("Needs \(item.needed) more daily slot\(item.needed == 1 ? "" : "s") at \(Place.name(item.airport)). Buy them in Bases, or flights wait a day.")
+            ForEach(world.slotNeeds(route: route), id: \.airport) { need in
+                Text(RouteNotes.slotLine(need, held: world.slotsHeld(at: need.airport)))
                     .pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
             }
             let through = route.legs.reduce(0.0) { $0 + $1.connectingPaxPerDay }
@@ -38,6 +38,16 @@ struct RouteNotes: View {
                     .pixelFont(10.667).foregroundStyle(Theme.info).fixedSize(horizontal: false, vertical: true)
             }
         }
+    }
+
+    /// "No slots at Vancouver: no flight can leave there. Buy 4 daily slots in Bases for $2.4M." With some held, how many more.
+    static func slotLine(_ need: SlotNeed, held: Int) -> String {
+        let place = Place.name(need.airport)
+        let price = Format.compactMoney(need.cost)
+        if need.noneHeld {
+            return "No slots at \(place): no flight can leave there. Buy \(need.slots) daily slot\(need.slots == 1 ? "" : "s") in Bases for \(price)."
+        }
+        return "Needs \(need.slots) more daily slot\(need.slots == 1 ? "" : "s") at \(place), \(price) in Bases. You hold \(held), so the other flights there wait a day."
     }
 
     private var rivalLines: [String] {

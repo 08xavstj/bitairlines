@@ -24,13 +24,15 @@ extension World {
     }
 
     /// The legs of a cycle through the stops, with the market numbers for each; nil if an airport is unknown.
+    /// A leg the airline already flies on another route gets its share of the market, not a second market (see `shareMarkets`).
     func makeLegs(stops: [String]) -> [LegState]? {
         var legs: [LegState] = []
         for (i, code) in stops.enumerated() {
             guard let a = AirportCatalog.airport(code), let b = AirportCatalog.airport(stops[(i + 1) % stops.count]) else { return nil }
             let km = a.distanceKm(to: b)
-            legs.append(LegState(from: a.code, to: b.code, distanceKm: km, marketPaxPerDay: Demand.passengersPerDay(from: a, to: b, distanceKm: km),
-                                 marketCargoKgPerDay: Demand.cargoKgPerDay(from: a, to: b), marketFare: Fares.market(from: a, to: b, distanceKm: km),
+            let sharing = Double(legsFlown(from: a.code, to: b.code) + 1)
+            legs.append(LegState(from: a.code, to: b.code, distanceKm: km, marketPaxPerDay: Demand.passengersPerDay(from: a, to: b, distanceKm: km) / sharing,
+                                 marketCargoKgPerDay: Demand.cargoKgPerDay(from: a, to: b) / sharing, marketFare: Fares.market(from: a, to: b, distanceKm: km),
                                  waitingPax: 0, waitingCargoKg: 0, lastUpdate: clock.minute, maturity: Tuning.minimumMaturity, passengersCarried: 0, revenue: 0,
                                  departuresThisWeek: 0, departuresLastWeek: 0, nextSlot: clock.minute))
         }
@@ -49,17 +51,51 @@ extension World {
         let id = takeRouteID()
         routes.append(Route(id: id, name: name ?? stops.map { AirportCatalog.airport($0)?.label ?? $0 }.joined(separator: " - "), stops: stops, fareMultiplier: 1.0, carriesCargo: true, frequency: 2.0, autoFrequency: true, legs: legs, aircraftIDs: [],
                             openedDay: clock.dayIndex, flights: 0, revenueThisMonth: 0, costThisMonth: 0, revenueLastMonth: 0, costLastMonth: 0))
+        shareMarkets(pairs: routePairs(routes[routes.count - 1]))
         addNews(.routeOpened, subject: routes[routes.count - 1].name, amount: id)
         return id
     }
 
+    // MARK: One market per pair
+
+    /// The airport pairs a route flies, in the direction flown.
+    func routePairs(_ route: Route) -> [(from: String, to: String)] { route.legs.map { (from: $0.from, to: $0.to) } }
+
+    /// How many of the airline's legs fly from `from` to `to`.
+    func legsFlown(from: String, to: String) -> Int {
+        routes.reduce(0) { n, route in n + route.legs.filter { $0.from == from && $0.to == to }.count }
+    }
+
+    /// Splits each pair's market evenly between the airline's legs that fly it, so a second route on the same pair shares the
+    /// people and freight instead of finding a market of its own. Called when a route opens or closes.
+    mutating func shareMarkets(pairs: [(from: String, to: String)]) {
+        for pair in pairs {
+            let n = legsFlown(from: pair.from, to: pair.to)
+            guard n > 0, let a = AirportCatalog.airport(pair.from), let b = AirportCatalog.airport(pair.to) else { continue }
+            let pax = Demand.passengersPerDay(from: a, to: b, distanceKm: a.distanceKm(to: b)) / Double(n)
+            let cargo = Demand.cargoKgPerDay(from: a, to: b) / Double(n)
+            for r in routes.indices {
+                for l in routes[r].legs.indices where routes[r].legs[l].from == pair.from && routes[r].legs[l].to == pair.to {
+                    routes[r].legs[l].marketPaxPerDay = pax
+                    routes[r].legs[l].marketCargoKgPerDay = cargo
+                }
+            }
+        }
+    }
+
     public mutating func deleteRoute(id: Int) throws {
         guard let r = routeIndex(id) else { throw WorldError.unknownRoute(id) }
-        // A shared aircraft keeps its other routes; one with no route left parks.
+        // A shared aircraft keeps its other routes (which now have more of it); one with no route left parks.
+        var others: [Int] = []
         for planeID in routes[r].aircraftIDs {
-            if let i = aircraftIndex(planeID) { detach(i, fromRoute: id) }
+            guard let i = aircraftIndex(planeID) else { continue }
+            others += aircraft[i].allRouteIDs.filter { $0 != id }
+            detach(i, fromRoute: id)
         }
+        let pairs = routePairs(routes[r])
         routes.removeAll { $0.id == id }
+        refreshAutoFrequency(routeIDs: others)
+        shareMarkets(pairs: pairs)
     }
 
     public mutating func setFare(routeID: Int, multiplier: Double) throws {
@@ -80,10 +116,29 @@ extension World {
         return Route.snapFrequency(target)
     }
 
-    /// Departures per day the market would fill at a healthy load with this type (the thinnest leg limits it).
+    /// Departures per day the market would fill at a healthy load with this type (the thinnest leg limits it). Only the airline's
+    /// own part of a contested market counts, and that part grows with the schedule, so the schedule is worked out twice.
     public func demandFrequency(route: Route, type: AircraftType) -> Double {
-        let demand = (route.legs.map { $0.marketPaxPerDay * 0.75 }.min() ?? 0)
-        return demand / max(1.0, Double(type.seats) * 0.8)
+        let seats = max(1.0, Double(type.seats) * 0.8)
+        let whole = (route.legs.map { ($0.marketPaxPerDay + $0.connectingPaxPerDay) * 0.75 }.min() ?? 0) / seats
+        var f = whole
+        for _ in 0..<2 {
+            let perDay = f
+            f = (route.legs.map { ($0.marketPaxPerDay + $0.connectingPaxPerDay) * 0.75 * contestedShare(leg: $0, perDay: perDay) }.min() ?? 0) / seats
+        }
+        return f
+    }
+
+    /// The part of a leg's market the airline can win against other airlines when it flies `perDay` departures: all of a remote
+    /// market, at most half of a big contested one. The competition part of `capture` (Flights.swift); keep the two the same.
+    func contestedShare(leg: LegState, perDay: Double) -> Double {
+        guard let a = AirportCatalog.airport(leg.from), let b = AirportCatalog.airport(leg.to) else { return 1.0 }
+        let smaller = Double(min(a.population, b.population))
+        var intensity = min(1.0, (smaller / Tuning.competitiveCatchment).squareRoot())
+        let rivals = rivalRoutes(leg.from, leg.to)
+        if !rivals.isEmpty { intensity = max(intensity, rivalPressure(rivals)) }
+        let ownShare = min(0.5, max(0.05, 0.05 + 0.004 * airline.reputation + 0.03 * perDay))
+        return (1.0 - intensity) + intensity * ownShare
     }
 
     /// Most departures per day `aircraftCount` aircraft of this type can fly on the route, within crew hours.
@@ -160,8 +215,8 @@ extension World {
             let share = aircraftShare(onRoute: routeID)
             routes[r].frequency = suggestedFrequency(route: routes[r], type: type, aircraftShare: share)
         }
-        // Routes it shared before now have less of it.
-        if before.count > 1 { refreshAutoFrequency(routeIDs: before.filter { $0 != routeID }) }
+        // The routes it flew before now have less of it (or none).
+        refreshAutoFrequency(routeIDs: before.filter { $0 != routeID })
         // An aircraft held at the gate for its old route (weather, crew hours, a frozen lake) looks again at once.
         if case .boarding = aircraft[i].status { aircraft[i].status = .boarding(until: clock.minute) }
         if case .idle = aircraft[i].status {
@@ -178,9 +233,12 @@ extension World {
     }
 
     /// Takes an aircraft off all its routes. If it is in the air it finishes the flight and then parks.
+    /// Routes left on automatic scheduling pick a schedule for the aircraft they still have.
     public mutating func unassign(aircraftID: Int) throws {
         guard let i = aircraftIndex(aircraftID) else { throw WorldError.unknownAircraft(aircraftID) }
+        let before = aircraft[i].allRouteIDs
         detachFromAllRoutes(i)
         if case .boarding = aircraft[i].status { aircraft[i].status = .idle }
+        refreshAutoFrequency(routeIDs: before)
     }
 }

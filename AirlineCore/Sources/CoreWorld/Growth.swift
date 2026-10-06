@@ -4,8 +4,13 @@
 import CoreCatalog
 
 extension Tuning {
-    /// A local operator pays this many days of a route's average daily profit (over the last week) to take it over.
+    /// A local operator pays this many days of a route's proven daily profit (its average since it opened) to take it over...
     public static let routeSaleDays = 60
+    /// ...nothing for a route flown fewer days than this...
+    public static let routeSaleMinimumDays = 28
+    /// ...and the full price only for a route flown this long; a younger one fetches its share of a year, so selling a route and
+    /// opening it again does not pay.
+    public static let routeSaleFullPriceDays = 365
     /// Share of the build price paid back for the facilities at an airport the airline leaves.
     public static let leaveAirportRefundShare = 0.4
     /// The lowest certificate level that may move its headquarters.
@@ -43,16 +48,26 @@ public struct LeaveAirportPlan: Sendable, Hashable {
 extension World {
     // MARK: Selling a route
 
-    /// What a local operator pays for the route today: `Tuning.routeSaleDays` days of its average daily profit over the last week, 0 if it loses money.
+    /// Days the route has been open.
+    public func routeAgeDays(routeID: Int) -> Int {
+        guard let r = routeIndex(routeID) else { return 0 }
+        return max(0, clock.dayIndex - routes[r].openedDay)
+    }
+
+    /// What a local operator pays for the route today: `Tuning.routeSaleDays` days of its proven profit (the average per day since
+    /// it opened, aircraft costs included), scaled down for a route younger than `Tuning.routeSaleFullPriceDays`. 0 for a route
+    /// younger than `Tuning.routeSaleMinimumDays` or one that loses money.
     public func routeSalePrice(routeID: Int) -> Int {
         guard let r = routeIndex(routeID) else { return 0 }
-        let book = routes[r].book
-        let perDay = Double(book.recent.profit) / Double(max(1, book.recentDays))
-        return max(0, Int((perDay * Double(Tuning.routeSaleDays)).rounded()))
+        let days = routeAgeDays(routeID: routeID)
+        guard days >= Tuning.routeSaleMinimumDays else { return 0 }
+        let perDay = Double(routes[r].sinceOpened.profit) / Double(days)
+        let established = min(1.0, Double(days) / Double(Tuning.routeSaleFullPriceDays))
+        return max(0, Int((perDay * Double(Tuning.routeSaleDays) * established).rounded()))
     }
 
     /// Hands a route over to a local operator: it closes, its aircraft are free (a shared aircraft keeps its other routes), and the
-    /// operator pays `routeSalePrice`. Returns the price.
+    /// operator pays `routeSalePrice`. The operator keeps flying the route's airports (see `handOver`). Returns the price.
     @discardableResult
     public mutating func sellRoute(routeID: Int) throws -> Int {
         guard let r = routeIndex(routeID) else { throw WorldError.unknownRoute(routeID) }
@@ -64,11 +79,41 @@ extension World {
             others += aircraft[i].allRouteIDs.filter { $0 != routeID }
             detach(i, fromRoute: routeID)
         }
+        let sold = routes[r]
         routes.removeAll { $0.id == routeID }
         refreshAutoFrequency(routeIDs: others)
+        shareMarkets(pairs: routePairs(sold))
+        handOver(sold)
         airline.cash += price
         addNews(.growth, subject: "sold:" + name, amount: price)
+        settleOverdraft()
         return price
+    }
+
+    /// The operator who bought a route keeps flying it: each of its airport pairs that no rival flies yet goes to the rival airline
+    /// based nearest the route, at the route's schedule and the going fare. Opening the same pair again means sharing it with them,
+    /// until they are beaten on it for a while (RivalMoves.swift).
+    mutating func handOver(_ route: Route) {
+        let rivals = ops.rivals
+        guard !rivals.isEmpty, let first = route.stops.first, let start = AirportCatalog.airport(first) else { return }
+        var nearest = 0
+        var nearestKm = Double.greatestFiniteMagnitude
+        for (v, rival) in rivals.enumerated() {
+            guard let home = AirportCatalog.airport(rival.home) else { continue }
+            let km = home.distanceKm(to: start)
+            if km < nearestKm {
+                nearest = v
+                nearestKm = km
+            }
+        }
+        var added: [RivalRoute] = []
+        for leg in route.legs {
+            let taken = !rivalRoutes(leg.from, leg.to).isEmpty || added.contains { $0.serves(leg.from, leg.to) }
+            if taken { continue }
+            added.append(RivalRoute(a: leg.from, b: leg.to, frequency: route.frequency, fareLevel: 1.0, startedDay: clock.dayIndex))
+        }
+        guard !added.isEmpty else { return }
+        ops.rivals[nearest].routes.append(contentsOf: added)
     }
 
     // MARK: Leaving an airport
@@ -118,6 +163,7 @@ extension World {
         }
         refreshJobArea()
         addNews(.growth, subject: "left:" + code, amount: plan.total)
+        settleOverdraft()
         return plan
     }
 }

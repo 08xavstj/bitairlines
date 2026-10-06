@@ -49,11 +49,26 @@ struct MapOverlayFramesKey: PreferenceKey {
     static func reduce(value: inout [CGRect], nextValue: () -> [CGRect]) { value.append(contentsOf: nextValue()) }
 }
 
+/// Collects the frames of the see-through hints over the map (the NEXT line). No airport name goes under them,
+/// but unlike buttons and panels they let taps through to the map.
+struct MapHintFramesKey: PreferenceKey {
+    static let defaultValue: [CGRect] = []
+    static func reduce(value: inout [CGRect], nextValue: () -> [CGRect]) { value.append(contentsOf: nextValue()) }
+}
+
 extension View {
-    /// Marks this view as covering part of the map.
+    /// Marks this view as covering part of the map: names stay out from under it and taps on it are not for the map.
     func coversMap() -> some View {
         background(GeometryReader { geo in
             Color.clear.preference(key: MapOverlayFramesKey.self, value: [geo.frame(in: .named(MapOverlayFramesKey.space))])
         })
+    }
+
+    /// Marks this view as a hint over the map: names stay out from under it, but taps, drags and pinches go through to the map.
+    func hintsOverMap() -> some View {
+        background(GeometryReader { geo in
+            Color.clear.preference(key: MapHintFramesKey.self, value: [geo.frame(in: .named(MapOverlayFramesKey.space))])
+        })
+        .allowsHitTesting(false)
     }
 }

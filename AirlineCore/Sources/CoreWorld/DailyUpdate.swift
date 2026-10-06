@@ -26,18 +26,28 @@ extension World {
         checkCertificate()
     }
 
-    /// Starts a new day in every route's book and charges each route the fixed daily cost of the aircraft assigned to it
-    /// (the same amount just paid above). Head office stays with the airline.
+    /// Starts a new day in every route's book and charges each route the daily cost of the aircraft assigned to it: its fixed cost
+    /// (the same amount just paid above), its pilots' salaries and its heavy checks spread over the days, the same costs the
+    /// forecast counts. Head office stays with the airline.
     mutating func rollRouteBooks() {
         for r in routes.indices { routes[r].book.closeDay() }
         for plane in aircraft where plane.isDelivered {
-            guard let type = plane.type else { continue }
+            guard plane.routeID != nil else { continue }
             // A shared aircraft's day is split between the routes it flies.
-            let share = LegEconomics.fixedPerDay(type: type) * plane.routeShare
+            let share = aircraftDayCost(plane) * plane.routeShare
             for rid in plane.allRouteIDs {
                 if let r = routeIndex(rid) { routes[r].book.add(RouteDay(aircraftCost: Int(share.rounded()))) }
             }
         }
+    }
+
+    /// What one aircraft costs a route for a day besides its flights: the fixed cost, the salaries of its own pilots, and its
+    /// heavy checks spread over the days (at the hours it flew today). Read before `blockMinutesToday` is cleared at midnight.
+    func aircraftDayCost(_ plane: Aircraft) -> Double {
+        guard let type = plane.type else { return 0 }
+        let salaries = ops.pilots.filter { $0.aircraftID == plane.id }.reduce(0) { $0 + $1.salaryPerMonth }
+        let checks = heavyCheckPerDay(checkCost: Double(heavyCheckCost(plane)), blockHoursPerDay: Double(plane.blockMinutesToday) / 60.0)
+        return LegEconomics.fixedPerDay(type: type) + Double(salaries) * 12.0 / 365.0 + checks
     }
 
     mutating func weeklyUpdate() {
@@ -103,28 +113,53 @@ extension World {
         }
     }
 
+    /// At midnight: another day past the overdraft limit, and the bank closes the airline after `Tuning.daysOverdrawnBeforeBankruptcy`
+    /// of them. The overdraft notice comes on the first day and again on each of the last `Tuning.overdraftWarningDays`; the player
+    /// can always put it aside and keep flying while they sell, borrow or cut (see `overdraftOptions`).
     mutating func checkMoney() {
-        if airline.cash < -Tuning.overdraftLimit && !ops.mode.unlimitedMoney {
-            daysOverdrawn += 1
-            let alreadyRaised = issues.contains { if case .overdraft = $0.kind { return true } else { return false } }
-            if !alreadyRaised {
-                var options = [IssueOption(choice: .declareBankruptcy, costUSD: 0, days: 0)]
-                if totalDebt + Tuning.emergencyLoanAmount <= borrowingLimit { options.insert(IssueOption(choice: .emergencyLoan, costUSD: 0, days: 0), at: 0) }
-                raise(.overdraft, options: options)
-            }
-            if daysOverdrawn >= Tuning.daysOverdrawnBeforeBankruptcy {
-                isBankrupt = true
-                raise(.bankruptcy, options: [IssueOption(choice: .acknowledge, costUSD: 0, days: 0)])
-            }
-        } else {
-            daysOverdrawn = 0
-            issues.removeAll { if case .overdraft = $0.kind { return true } else { return false } }
+        guard airline.cash < -Tuning.overdraftLimit && !ops.mode.unlimitedMoney else {
+            settleOverdraft()
+            return
         }
+        daysOverdrawn += 1
+        if daysOverdrawn >= Tuning.daysOverdrawnBeforeBankruptcy {
+            isBankrupt = true
+            raise(.bankruptcy, options: [IssueOption(choice: .acknowledge, costUSD: 0, days: 0)])
+            return
+        }
+        let alreadyRaised = issues.contains { if case .overdraft = $0.kind { return true } else { return false } }
+        let warn = daysOverdrawn == 1 || Tuning.daysOverdrawnBeforeBankruptcy - daysOverdrawn <= Tuning.overdraftWarningDays
+        if !alreadyRaised && warn { raise(.overdraft, options: overdraftOptions()) }
     }
 
+    /// The choices on the overdraft notice: an emergency loan when the airline may still borrow enough, putting the notice aside
+    /// (the days keep counting), or closing the airline.
+    func overdraftOptions() -> [IssueOption] {
+        var options = [IssueOption(choice: .acknowledge, costUSD: 0, days: 0), IssueOption(choice: .declareBankruptcy, costUSD: 0, days: 0)]
+        if emergencyLoanOffer > 0 { options.insert(IssueOption(choice: .emergencyLoan, costUSD: 0, days: 0), at: 0) }
+        return options
+    }
+
+    /// Days left before the bank closes the airline while it stays past the overdraft limit; nil when it is not overdrawn.
+    public var overdraftDaysLeft: Int? {
+        guard daysOverdrawn > 0 else { return nil }
+        return max(0, Tuning.daysOverdrawnBeforeBankruptcy - daysOverdrawn)
+    }
+
+    /// Once cash is back within the overdraft limit, the overdraft is over: the count of days starts again and the notice goes.
+    /// Runs at midnight and after the actions that bring cash in (selling a route, leaving an airport, an emergency loan);
+    /// the app may call it after any other.
+    public mutating func settleOverdraft() {
+        guard airline.cash >= -Tuning.overdraftLimit || ops.mode.unlimitedMoney else { return }
+        daysOverdrawn = 0
+        issues.removeAll { if case .overdraft = $0.kind { return true } else { return false } }
+    }
+
+    /// The certificate is announced once; buying it is a separate step (Money screen, or the button on the notice), so the notice's
+    /// own choice costs nothing.
     mutating func checkCertificate() {
         guard let r = nextLevelRequirement, Progression.meets(r, airline: airline), announcedLevel < r.level else { return }
         announcedLevel = r.level
-        raise(.certificateReady(level: r.level), options: [IssueOption(choice: .acknowledge, costUSD: r.fee, days: 0)])
+        raise(.certificateReady(level: r.level), options: [IssueOption(choice: .acknowledge, costUSD: 0, days: 0)])
     }
 }

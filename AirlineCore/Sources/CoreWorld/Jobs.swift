@@ -22,6 +22,14 @@ public enum JobKind: String, Sendable, Hashable, Codable, CaseIterable {
         case .filmCrew: 3.5
         }
     }
+
+    /// Work that carries people (sized by seats); the rest carries freight (sized by the hold).
+    var carriesPeople: Bool {
+        switch self {
+        case .medevac, .crewChange, .lodgeCharter, .survey, .evacuation, .filmCrew: true
+        case .mail, .fuelDrums, .freight: false
+        }
+    }
 }
 
 public struct Job: Sendable, Hashable, Codable, Identifiable {
@@ -51,6 +59,16 @@ public struct Job: Sendable, Hashable, Codable, Identifiable {
     public var isSpecial: Bool { dispatchDay != nil || season != nil }
 }
 
+// MARK: Job board
+extension Tuning {
+    /// A job area with fewer airports than this in the countries the airline holds permits for also takes the airports within
+    /// reach across the border, so a home near a border (Punta Arenas) still gets jobs and a daily dispatch.
+    static let jobAreaMinimumAirports = 3
+    /// A medevac stays on offer this many game hours, and must land within the flight time plus this many more hours.
+    static let medevacOfferHours = 12
+    static let medevacSlackHours = 2
+}
+
 extension World {
     /// How many offers the board holds at once.
     var jobBoardSize: Int { 6 + 2 * airline.level }
@@ -61,13 +79,25 @@ extension World {
     }
 
     /// Recomputes the airports within reach of the network (where jobs and events happen) when the network has changed.
+    /// Near a border the permitted countries may hold almost nothing within reach (every strip near Punta Arenas is in
+    /// Argentina); one-off jobs need no route permit, so the area then reaches across the border.
     mutating func refreshJobArea() {
-        let key = servedAirports.joined(separator: ",") + "|\(airline.level)|\(airline.permits.sorted().joined())"
+        // "v2" makes saves from before the border rule work their area out again once.
+        let key = "v2|" + servedAirports.joined(separator: ",") + "|\(airline.level)|\(airline.permits.sorted().joined())"
         guard key != ops.jobAreaKey else { return }
         let served = servedAirports.compactMap { AirportCatalog.airport($0) }
+        var area = airportsInReach(of: served, anyCountry: false)
+        if area.count < Tuning.jobAreaMinimumAirports { area = airportsInReach(of: served, anyCountry: true) }
+        ops.jobArea = area
+        ops.jobAreaKey = key
+    }
+
+    /// The airports within `Tuning.jobAreaKm` of any of `served` that the airline's level allows (and the home), sorted; only in
+    /// countries it holds permits for unless `anyCountry`.
+    func airportsInReach(of served: [Airport], anyCountry: Bool) -> [String] {
         let reachDegrees = Tuning.jobAreaKm / 111.0
         var area: [String] = []
-        for airport in AirportCatalog.all where airline.permits.contains(airport.country) {
+        for airport in AirportCatalog.all where anyCountry || airline.permits.contains(airport.country) {
             // Cheap latitude test first; the great-circle distance only for airports that pass it.
             let near = served.contains { s in
                 let dLat = s.latitude - airport.latitude
@@ -76,8 +106,7 @@ extension World {
             guard near else { continue }
             if Progression.requiredLevel(for: airport) <= airline.level || airport.code == airline.home { area.append(airport.code) }
         }
-        ops.jobArea = area.sorted()
-        ops.jobAreaKey = key
+        return area.sorted()
     }
 
     /// Once a day: old offers go, new ones come.
@@ -93,8 +122,9 @@ extension World {
         }
     }
 
-    func biggestSeats() -> Int { max(4, aircraft.map(\.seats).max() ?? 4) }
-    func biggestHold() -> Int { max(400, aircraft.map(\.cargoKg).max() ?? 400) }
+    /// The most seats and the biggest hold in the delivered fleet (an aircraft on order does not count yet).
+    func biggestSeats() -> Int { max(4, aircraft.filter(\.isDelivered).map(\.seats).max() ?? 4) }
+    func biggestHold() -> Int { max(400, aircraft.filter(\.isDelivered).map(\.cargoKg).max() ?? 400) }
 
     mutating func pickJobKind() -> JobKind {
         let month = clock.date.month
@@ -104,23 +134,26 @@ extension World {
         return kinds[ops.rng.weightedIndex(weights)]
     }
 
-    /// Makes one job of a kind somewhere in the area, sized to what the fleet can carry. Nil if no sensible pair turned up.
+    /// Makes one job of a kind somewhere in the area, sized to an aircraft in the fleet that can fly it (to the fleet's biggest
+    /// when none can). Nil if no sensible pair turned up. A job only leaves from an airport the airline may depart from (slots).
     mutating func makeJob(kind: JobKind, near centre: String? = nil) -> Job? {
         let area = ops.jobArea.compactMap { AirportCatalog.airport($0) }
         guard area.count >= 2 else { return nil }
+        let pickups = area.filter { canDepartOnJob(from: $0) }
+        guard !pickups.isEmpty else { return nil }
         let centreAirport = centre.flatMap { AirportCatalog.airport($0) }
-        var from = centreAirport ?? area[ops.rng.int(0...(area.count - 1))]
+        var from = centreAirport ?? pickups[ops.rng.int(0...(pickups.count - 1))]
         var to = area[ops.rng.int(0...(area.count - 1))]
         switch kind {
         case .medevac, .evacuation:
             // From a small place to the biggest town within reach.
-            let smallPlaces = area.filter { $0.population < 20_000 }
+            let smallPlaces = pickups.filter { $0.population < 20_000 }
             let source = centreAirport ?? (smallPlaces.isEmpty ? from : smallPlaces[ops.rng.int(0...(smallPlaces.count - 1))])
             from = source
             to = area.filter { $0.code != source.code && $0.distanceKm(to: source) <= 700 }.max { $0.population < $1.population } ?? to
         case .mail, .fuelDrums, .crewChange, .lodgeCharter, .filmCrew:
             // From a supply town to a small place.
-            let towns = area.filter { $0.kind == .large || $0.kind == .medium || $0.code == airline.home }
+            let towns = pickups.filter { $0.kind == .large || $0.kind == .medium || $0.code == airline.home }
             if !towns.isEmpty { from = towns[ops.rng.int(0...(towns.count - 1))] }
             let small = area.filter { $0.code != from.code && $0.population < 20_000 && $0.distanceKm(to: from) <= 700 }
             if !small.isEmpty { to = small[ops.rng.int(0...(small.count - 1))] }
@@ -128,10 +161,12 @@ extension World {
             break
         }
         let km = from.distanceKm(to: to)
-        guard from.code != to.code, km >= 30, km <= 1500 else { return nil }
+        guard from.code != to.code, km >= 30, km <= 1500, canDepartOnJob(from: from) else { return nil }
 
-        let seats = biggestSeats()
-        let hold = biggestHold()
+        // The load fits one aircraft that can fly this pair, so the job is never too big for every aircraft that could do it.
+        let sizer = jobSizingPlane(kind: kind, from: from, to: to)
+        let seats = sizer?.seats ?? biggestSeats()
+        let hold = sizer?.cargoKg ?? biggestHold()
         var passengers = 0
         var cargo = 0
         switch kind {
@@ -151,12 +186,14 @@ extension World {
         let hoursToFly = km / 300.0 + 1.0
         let deadlineHours: Double
         switch kind {
-        case .medevac, .evacuation: deadlineHours = hoursToFly + 8
+        case .medevac: deadlineHours = hoursToFly + Double(Tuning.medevacOfferHours + Tuning.medevacSlackHours)
+        case .evacuation: deadlineHours = hoursToFly + 8
         case .mail: deadlineHours = 48
         default: deadlineHours = Double(ops.rng.int(48...120))
         }
         let deadline = clock.minute + Int(deadlineHours * 60)
-        let expires = min(deadline - Int(hoursToFly * 60), clock.minute + (kind == .medevac ? 6 * 60 : 3 * GameClock.minutesPerDay))
+        let offerMinutes = kind == .medevac ? Tuning.medevacOfferHours * 60 : 3 * GameClock.minutesPerDay
+        let expires = min(deadline - Int(hoursToFly * 60), clock.minute + offerMinutes)
         guard expires > clock.minute else { return nil }
         let id = ops.nextJobID
         ops.nextJobID += 1

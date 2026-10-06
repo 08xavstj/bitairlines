@@ -1,7 +1,8 @@
 // CoreWorld/RouteIdeasBigger.swift: suggested routes for an airline growing out of the bush. Instead of the strips around the network,
 // it looks at bigger towns and cities the airline may serve at its level: from its own bigger airports and from big ones near its network.
 // Each pair is judged for the aircraft the airline has and for a few bigger types it could buy (new, or used in the hangar this week),
-// so an idea can say "with a Twin Otter you could buy". Codes and numbers only; the app writes the words.
+// so an idea can say "with a Twin Otter you could buy". From level 3 most of these cities hand out slots: each idea carries the
+// slots it still needs and their price (SlotNeeds.swift), and ranks with that bill counted. Codes and numbers only; the app writes the words.
 import CoreCatalog
 
 extension RouteIdeaSearch {
@@ -47,7 +48,7 @@ extension World {
                 if let idea = bestIdea(stops: stops, km: km, types: types, inNetwork: inNetwork) { ideas.append(idea) }
             }
         }
-        ideas.sort { a, b in a.profitPerDay != b.profitPerDay ? a.profitPerDay > b.profitPerDay : a.id < b.id }
+        ideas.sort(by: World.ideaOrder)
         return Array(ideas.prefix(limit))
     }
 
@@ -79,14 +80,15 @@ extension World {
     }
 
     /// The types bigger-city ideas are judged for: the fleet's types first, then a spread of types the airline could buy now
-    /// (new, or used in the hangar this week) that are at least as big as its biggest and can be delivered to its home.
+    /// (new, or used in the hangar this week) that are at least as big as its biggest and can be delivered (to the headquarters,
+    /// or the nearest airport of the network they can use; FleetActions.swift).
     func biggerIdeaTypes() -> [AircraftType] {
         let ownedIDs = Set(aircraft.map(\.typeID))
         let owned = ownedIDs.sorted().compactMap { AircraftCatalog.type($0) }
         let biggest = owned.map(\.seats).max() ?? 0
         let listed = Set(market.listings.map(\.typeID))
         let buyable = AircraftCatalog.available(atLevel: airline.level).filter { type in
-            !ownedIDs.contains(type.id) && (type.inProduction || listed.contains(type.id)) && type.seats >= biggest && homeProblem(type) == nil
+            !ownedIDs.contains(type.id) && (type.inProduction || listed.contains(type.id)) && type.seats >= biggest && deliveryProblem(type) == nil
         }
         let ordered = buyable.sorted { a, b in
             if a.seats != b.seats { return a.seats < b.seats }

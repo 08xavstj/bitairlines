@@ -17,6 +17,8 @@ extension World {
         }
         guard let type = plane.type, let from = AirportCatalog.airport(job.from), let to = AirportCatalog.airport(job.to) else { return .unknownAirport(job.from) }
         if plane.seats < job.passengers || plane.cargoKg < job.cargoKg { return .notEnoughRoom }
+        // A slot airport where the airline holds no slots: nobody may leave from it, so the job is not on offer to this airline.
+        if !canDepartOnJob(from: from) { return .jobUnavailable }
         let cap = Capability(type: type, kits: plane.kits)
         let month = clock.date.month
         if !canUse(cap, at: from, month: month) { return .aircraftCannotUse(airport: from.code) }
@@ -25,6 +27,8 @@ extension World {
         if !type.canFly(km: km) { return .outOfRange(km: Int(km)) }
         // Getting to the pickup may take stops on the way (FerryPlan.swift); it fails only when no chain of stops reaches it.
         if let problem = positioningProblem(aircraftIndex: i, toAny: [from.code]) { return problem }
+        // Realism: fuel from the last stop before the pickup, through the job and back (JobFit.swift).
+        if let dry = jobTripFuelProblem(aircraftIndex: i, type: type, from: from, to: to) { return dry }
         return nil
     }
 
@@ -50,10 +54,16 @@ extension World {
         }
     }
 
-    /// Gives a job back before the load is on board. It costs a little reputation.
+    /// Gives a job back before the load is on board. It costs a little reputation. A dispatch or event job goes back on the board
+    /// instead, at no cost, so another aircraft can take it (it follows the real calendar, and there is no other way to change
+    /// the aircraft on it).
     public mutating func dropJob(jobID: Int) throws {
         guard let j = ops.jobs.firstIndex(where: { $0.id == jobID }), !ops.jobs[j].loaded else { throw WorldError.jobUnavailable }
         if let planeID = ops.jobs[j].aircraftID, let i = aircraftIndex(planeID) { endJob(aircraftIndex: i) }
+        if ops.jobs[j].isSpecial {
+            ops.jobs[j].aircraftID = nil
+            return
+        }
         ops.jobs.remove(at: j)
         airline.reputation = max(0, airline.reputation - 0.3)
     }
@@ -69,6 +79,12 @@ extension World {
             return
         }
         let job = ops.jobs[j]
+        // Something changed for good since it was taken (a kit came off, a runway extension, paving, the slots or a fuel depot
+        // went): give the job back with a news line instead of waiting for ever.
+        if let reason = jobGiveUpReason(aircraftIndex: i, from: from, to: to) {
+            giveUpJob(aircraftIndex: i, jobIndex: j, reason: reason)
+            return
+        }
         if aircraft[i].location != job.from {
             // Fly empty towards the pickup, one hop at a time: on landing at a stop on the way this runs again.
             if !startFerry(index: i, to: job.from) {
@@ -81,7 +97,8 @@ extension World {
             aircraft[i].status = .boarding(until: until)
             return
         }
-        // Frozen lake this month: a floatplane waits for the thaw (checked again on the first of next month).
+        // Frozen lake this month: a floatplane waits for the thaw (checked again on the first of next month). Airports it can
+        // never use were handled above.
         let cap = Capability(type: type, kits: aircraft[i].kits)
         let month = clock.date.month
         if !canUse(cap, at: from, month: month) || !canUse(cap, at: to, month: month) {
@@ -150,21 +167,42 @@ extension World {
         return true
     }
 
-    /// The aircraft is free again: back to its old route if it had one.
+    /// The aircraft is free again: back to the routes it flew before the job (those that still exist and still fit).
+    /// Only an aircraft waiting at the gate changes state here: one in the air rejoins its routes when it lands, and one in the
+    /// hangar or grounded by a breakdown stays there until that is over (finishMaintenance then sends it back to its routes).
     mutating func endJob(aircraftIndex i: Int) {
         aircraft[i].jobID = nil
         aircraft[i].ferryTargetStore = nil
-        let back = aircraft[i].returnRouteID
-        aircraft[i].returnRouteID = nil
-        // An aircraft still in the air rejoins its route when it lands (assign leaves a flying aircraft to finish its flight).
-        if case .flying = aircraft[i].status {} else { aircraft[i].status = .idle }
+        let back = aircraft[i].returnRouteID.map { [$0] } ?? []
         let others = aircraft[i].returnOtherRoutesStore ?? []
+        aircraft[i].returnRouteID = nil
         aircraft[i].returnOtherRoutesStore = nil
-        if let back, routeIndex(back) != nil {
-            try? assign(aircraftID: aircraft[i].id, toRoute: back)
-            // A shared aircraft takes up its other routes again (those that still exist and still fit).
-            for rid in others { try? addRoute(aircraftID: aircraft[i].id, routeID: rid) }
+        if case .boarding = aircraft[i].status { aircraft[i].status = .idle }
+        rejoinRoutes(aircraftIndex: i, routeIDs: back + others)
+    }
+
+    /// Puts an aircraft that is on no route back on these routes, in order: the first that still exists and fits becomes its
+    /// current route, the others it flies too while they share an airport with those already kept (the shared-aircraft rules).
+    /// A shared aircraft whose main route was closed while it was away keeps the rest. An idle aircraft looks for its next
+    /// departure at once (depart() flies it to the route if it is somewhere else, or parks it if it cannot get there).
+    mutating func rejoinRoutes(aircraftIndex i: Int, routeIDs: [Int]) {
+        guard aircraft[i].routeID == nil, let type = aircraft[i].type else { return }
+        let kits = aircraft[i].kits
+        var kept: [Int] = []
+        for rid in routeIDs where !kept.contains(rid) && kept.count < World.maxRoutesPerAircraft {
+            guard let r = routeIndex(rid), fitProblem(type: type, route: routes[r], kits: kits) == nil else { continue }
+            if !kept.isEmpty && !meets(routes[r], kept) { continue }
+            kept.append(rid)
         }
+        guard let first = kept.first else { return }
+        let id = aircraft[i].id
+        aircraft[i].routeID = first
+        aircraft[i].otherRouteIDs = Array(kept.dropFirst())
+        for rid in kept {
+            if let r = routeIndex(rid), !routes[r].aircraftIDs.contains(id) { routes[r].aircraftIDs.append(id) }
+        }
+        refreshAutoFrequency(routeIDs: kept)
+        if case .idle = aircraft[i].status { aircraft[i].status = .boarding(until: clock.minute) }
     }
 }
 

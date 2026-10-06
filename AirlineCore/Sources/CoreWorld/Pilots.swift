@@ -103,9 +103,56 @@ extension World {
         addNews(.pilotHired, subject: pilot.name, amount: pilot.id)
     }
 
+    /// True when the pilot is not part of any aircraft's crew: never placed, or their aircraft has gone (sold or traded in).
+    public func isSpare(_ pilot: Pilot) -> Bool {
+        guard let id = pilot.aircraftID else { return true }
+        return !aircraft.contains { $0.id == id }
+    }
+
+    /// True when letting this pilot go would leave their aircraft without enough rated pilots to fly (counting spares who could
+    /// step in). The app shows why the pilot cannot go.
+    public func isNeededCrew(pilotID: Int) -> Bool {
+        guard let pilot = ops.pilots.first(where: { $0.id == pilotID }), !isSpare(pilot), let planeID = pilot.aircraftID,
+              let type = aircraft.first(where: { $0.id == planeID })?.type else { return false }
+        let group = RatingGroup.of(type.family)
+        let others = ops.pilots.filter { $0.id != pilotID && $0.isRated(group) && ($0.aircraftID == planeID || isSpare($0)) }
+        return others.count < type.pilots
+    }
+
+    /// Lets a pilot go: off the payroll from today. Refused while they are needed to fly their aircraft (`isNeededCrew`).
     public mutating func dismissPilot(id: Int) throws {
         guard let p = ops.pilots.firstIndex(where: { $0.id == id }) else { throw WorldError.invalidChoice }
+        if isNeededCrew(pilotID: id) { throw WorldError.invalidChoice }
         ops.pilots.remove(at: p)
+    }
+
+    /// About what the pilots a new aircraft of this type comes with would cost to hire (spare pilots rated on it go first), and
+    /// how many would be hired. For the Hangar, next to the price; nothing is hired with automatic hiring off.
+    public func crewHireEstimate(for type: AircraftType) -> (pilots: Int, fee: Int) {
+        guard ops.autoHirePilots else { return (pilots: 0, fee: 0) }
+        let group = RatingGroup.of(type.family)
+        let spares = ops.pilots.filter { isSpare($0) && $0.isRated(group) && $0.trainingFor == nil }.count
+        let hired = max(0, World.pilotsNeeded(type) - spares)
+        // A candidate has 300 to 6,000 hours: about 3,150 on average, so about 1.1 times the base fee.
+        let each = Double(Tuning.pilotHireFee * group.tier) * (0.8 + 3_150.0 / 10_000.0) * pilotCostFactor
+        return (pilots: hired, fee: Int((Double(hired) * each).rounded()))
+    }
+
+    /// Courses that have ended count from the minute they end: the pilot is rated and paid for the new type.
+    mutating func finishCourses() {
+        let now = clock.minute
+        for p in ops.pilots.indices {
+            guard let group = ops.pilots[p].trainingFor, ops.pilots[p].trainingUntilMinute <= now else { continue }
+            if !ops.pilots[p].ratings.contains(group) { ops.pilots[p].ratings.append(group) }
+            ops.pilots[p].trainingFor = nil
+            ops.pilots[p].salaryPerMonth = max(ops.pilots[p].salaryPerMonth, salary(for: group))
+        }
+    }
+
+    /// Pilots of an aircraft that has gone (sold or traded in) are spares.
+    mutating func freeCrewsOfGoneAircraft() {
+        let ids = Set(aircraft.map(\.id))
+        for p in ops.pilots.indices where ops.pilots[p].aircraftID.map({ !ids.contains($0) }) == true { ops.pilots[p].aircraftID = nil }
     }
 
     public func trainingPrice(_ group: RatingGroup) -> Int { Int(Double(Tuning.pilotTrainingPrice * group.tier) * pilotCostFactor) }
@@ -125,24 +172,26 @@ extension World {
 
     public mutating func setAutoHire(_ on: Bool) { ops.autoHirePilots = on }
 
-    /// Rated pilots the aircraft can call on right now: its own crew first, then spares rated on the type.
+    /// Rated pilots the aircraft can call on right now: its own crew first, then spares rated on the type (the crew of an aircraft
+    /// that has gone counts as spare at once).
     func availableCrew(for i: Int) -> [Int] {
         guard let type = aircraft[i].type else { return [] }
         let group = RatingGroup.of(type.family)
         let id = aircraft[i].id
         let own = ops.pilots.filter { $0.aircraftID == id && $0.isRated(group) && $0.isAvailable(at: clock.minute) }.map(\.id)
-        let spare = ops.pilots.filter { $0.aircraftID == nil && $0.isRated(group) && $0.isAvailable(at: clock.minute) }.map(\.id)
+        let spare = ops.pilots.filter { isSpare($0) && $0.isRated(group) && $0.isAvailable(at: clock.minute) }.map(\.id)
         return own + spare
     }
 
-    /// Whether the aircraft has the pilots to fly now. Spares who step in join its crew.
+    /// Whether the aircraft has the pilots to fly now. Spares who step in join its crew. A course that has just ended counts.
     mutating func crewReady(_ i: Int) -> Bool {
         guard let type = aircraft[i].type else { return false }
+        finishCourses()
         let needed = type.pilots
         let crew = availableCrew(for: i)
         guard crew.count >= needed else { return false }
         for pid in crew.prefix(needed) {
-            if let p = ops.pilots.firstIndex(where: { $0.id == pid }), ops.pilots[p].aircraftID == nil { ops.pilots[p].aircraftID = aircraft[i].id }
+            if let p = ops.pilots.firstIndex(where: { $0.id == pid }), isSpare(ops.pilots[p]) { ops.pilots[p].aircraftID = aircraft[i].id }
         }
         return true
     }
@@ -185,22 +234,23 @@ extension World {
         }
     }
 
+    /// Once a day: finished courses and the crews of aircraft that have gone are settled (they are also settled the moment an
+    /// aircraft looks for a crew).
+    mutating func dailyPilots() {
+        finishCourses()
+        freeCrewsOfGoneAircraft()
+    }
+
     /// Once a week: sickness, finished courses, a new pilot market.
     mutating func weeklyPilots() {
+        finishCourses()
         for p in ops.pilots.indices {
-            if let group = ops.pilots[p].trainingFor, ops.pilots[p].trainingUntilMinute <= clock.minute {
-                ops.pilots[p].ratings.append(group)
-                ops.pilots[p].trainingFor = nil
-                ops.pilots[p].salaryPerMonth = max(ops.pilots[p].salaryPerMonth, salary(for: group))
-            }
             if ops.rng.chance(Tuning.pilotSickChancePerWeek) {
                 ops.pilots[p].sickUntilMinute = clock.minute + ops.rng.int(2...6) * GameClock.minutesPerDay
                 addNews(.pilotSick, subject: ops.pilots[p].name, amount: ops.pilots[p].id)
             }
         }
-        // Pilots of an aircraft that has gone are spares now.
-        let ids = Set(aircraft.map(\.id))
-        for p in ops.pilots.indices where ops.pilots[p].aircraftID.map({ !ids.contains($0) }) == true { ops.pilots[p].aircraftID = nil }
+        freeCrewsOfGoneAircraft()
         refreshPilotMarket()
     }
 

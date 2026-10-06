@@ -13,13 +13,24 @@ import CoreCatalog
         return book
     }
 
+    /// A route open for a year that made `profitPerDay` every day: the sale price is worked out from its proven profit since it
+    /// opened, and only a route flown a year fetches the full `Tuning.routeSaleDays` (the last week alone no longer sets it).
+    func establish(_ w: inout World, routeIndex r: Int, profitPerDay: Int) {
+        let days = Tuning.routeSaleFullPriceDays
+        w.routes[r].openedDay = w.clock.dayIndex - days
+        var book = week(profitPerDay: profitPerDay)
+        book.sinceOpened = RouteDay(revenue: days * (3_000 + profitPerDay), flightCost: days * 2_500, aircraftCost: days * 500,
+                                    passengers: days * 20, seats: days * 36, flights: days * 4)
+        w.routes[r].book = book
+    }
+
     // MARK: Selling a route
 
     @Test func sellingAProfitableRoutePaysAndALosingOnePaysNothing() throws {
         var w = try Fixtures.flyingWorld()
         let routeID = w.routes[0].id
         let name = w.routes[0].name
-        w.routes[0].book = week(profitPerDay: 1_000)
+        establish(&w, routeIndex: 0, profitPerDay: 1_000)
         let quoted = w.routeSalePrice(routeID: routeID)
         #expect(quoted == 1_000 * Tuning.routeSaleDays)
 
@@ -37,7 +48,7 @@ import CoreCatalog
 
         let losing = try w.createRoute(stops: ["YEV", "YUB"])
         let r = try #require(w.routeIndex(losing))
-        w.routes[r].book = week(profitPerDay: -400)
+        establish(&w, routeIndex: r, profitPerDay: -400)
         let losingQuote = w.routeSalePrice(routeID: losing)
         #expect(losingQuote == 0)
         let cash = w.airline.cash
@@ -69,7 +80,7 @@ import CoreCatalog
         var w = try Fixtures.flyingWorld()
         w.airline.cash = 5_000_000
         let routeID = w.routes[0].id
-        w.routes[0].book = week(profitPerDay: 800)
+        establish(&w, routeIndex: 0, profitPerDay: 800)
         try w.build(.fuelDepot, at: "YUB")
         let yub = try Fixtures.airport("YUB")
         let depotPrice = w.facilityPrice(.fuelDepot, at: yub)
