@@ -18,9 +18,18 @@ extension World {
         let delivery = clock.minute + Valuation.usedDeliveryMinutes(listing)
         aircraft.append(Aircraft(id: id, typeID: type.id, registration: nextRegistration(), builtDay: clock.dayIndex - Int(listing.ageYears * 365.25),
                                  condition: listing.condition, price: listing.price, location: airline.home, status: .onOrder(until: delivery)))
+        let last = aircraft.count - 1
         if listing.rare == .heritage {
             let livery = RareFinds.heritageLivery(logo: airline.branding.logo)
-            aircraft[aircraft.count - 1].livery = livery
+            aircraft[last].livery = livery
+        }
+        if listing.rare == .barnFind {
+            // A project: it cannot fly until restored (Restoration.swift). The restoration includes its heavy check.
+            aircraft[last].restoration = Restoration()
+        } else {
+            // Its heavy check is first due a spread number of days after purchase, never in the first year (HeavyChecks.swift).
+            let lastCheckDay = clock.dayIndex + World.heavyCheckSpreadDays(id: id) - Tuning.heavyCheckIntervalDays
+            markHeavyCheck(last, until: lastCheckDay * GameClock.minutesPerDay)
         }
         market.listings.removeAll { $0.id == listingID }
         return id

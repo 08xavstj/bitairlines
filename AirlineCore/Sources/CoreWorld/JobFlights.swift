@@ -10,7 +10,7 @@ extension World {
         guard let i = aircraftIndex(aircraftID) else { return .unknownAircraft(aircraftID) }
         let plane = aircraft[i]
         guard plane.isDelivered else { return .notDelivered }
-        if plane.jobID != nil { return .aircraftBusy }
+        if plane.jobID != nil || plane.awaitingRestoration { return .aircraftBusy }
         switch plane.status {
         case .grounded, .maintenance, .onOrder: return .aircraftBusy
         case .idle, .boarding, .flying: break
@@ -58,6 +58,9 @@ extension World {
     }
 
     /// The departure step for an aircraft on a job: fly to the pickup, or load and go.
+    /// Before loading, the same checks as a route departure (depart() in Flights.swift): weather, frozen lakes this month, the
+    /// check when worn, the crew day, daylight, slots, pilots and the breakdown roll. A heavy check waits until the job is done.
+    /// Waiting can make the job late; it then pays half (landOnJob).
     mutating func departOnJob(_ i: Int, jobID: Int) {
         guard let j = ops.jobs.firstIndex(where: { $0.id == jobID }), let type = aircraft[i].type,
               let from = AirportCatalog.airport(ops.jobs[j].from), let to = AirportCatalog.airport(ops.jobs[j].to) else {
@@ -76,10 +79,31 @@ extension World {
             aircraft[i].status = .boarding(until: until)
             return
         }
+        // Frozen lake this month: a floatplane waits for the thaw (checked again on the first of next month).
+        let cap = Capability(type: type, kits: aircraft[i].kits)
+        let month = clock.date.month
+        if !canUse(cap, at: from, month: month) || !canUse(cap, at: to, month: month) {
+            aircraft[i].status = .boarding(until: firstOfNextMonth())
+            return
+        }
+        // Scheduled check when worn (HeavyChecks.swift).
+        if startCheckIfWorn(i) { return }
+        // Crew day: no more flying today, resume early tomorrow.
         let km = from.distanceKm(to: to)
         let blockMinutes = max(1, Int((type.blockHours(km: km) * 60).rounded()))
+        let dayLimit = Int(Tuning.maxBlockHoursPerDay(level: type.level) * 60)
+        let tomorrowMorning = (clock.dayIndex + 1) * GameClock.minutesPerDay + 6 * 60
+        if aircraft[i].blockMinutesToday > 0 && aircraft[i].blockMinutesToday + blockMinutes > dayLimit {
+            aircraft[i].status = .boarding(until: tomorrowMorning)
+            return
+        }
+        // Daylight at unlit strips, and the day's slots at busy airports.
         if let wait = darkHold(from: from, to: to, blockMinutes: blockMinutes) {
             aircraft[i].status = .boarding(until: wait)
+            return
+        }
+        if outOfSlots(at: from) {
+            aircraft[i].status = .boarding(until: tomorrowMorning)
             return
         }
         if !crewReady(i) {
@@ -87,6 +111,13 @@ extension World {
             addNews(.noCrew, subject: aircraft[i].registration, amount: aircraft[i].id)
             return
         }
+        // Failure on the ground, drawn from the added systems' stream (ops.rng) and always drawn, like depart().
+        let wear = (1.0 + (100.0 - aircraft[i].condition) / 25.0) * heavyCheckWear(aircraft[i])
+        if ops.rng.unit() < Tuning.breakdownPerDeparture * wear {
+            raiseBreakdown(aircraftIndex: i, type: type)
+            return
+        }
+        useSlot(at: from)
         let costs = legCost(type: type, aircraftIndex: i, from: from, to: to, km: km)
         aircraft[i].flight = Flight(from: job.from, to: job.to, departedMinute: clock.minute, distanceKm: km, passengers: job.passengers, cargoKg: job.cargoKg,
                                     revenue: 0, cost: Int(costs.rounded()), isFerry: false)

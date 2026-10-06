@@ -54,6 +54,8 @@ extension World {
 
     /// Handles an aircraft whose turnaround ended: checks, then boards and takes off (or holds, repositions or breaks down).
     mutating func depart(_ i: Int) {
+        // A barn find waiting for restoration does not fly: it leaves any route and parks (Restoration.swift).
+        if holdUnrestored(i) { return }
         if let jobID = aircraft[i].jobID {
             departOnJob(i, jobID: jobID)
             return
@@ -91,13 +93,10 @@ extension World {
             return
         }
 
-        // Scheduled check when worn (quicker at a base with a hangar).
-        if aircraft[i].condition < Tuning.maintenanceThreshold {
-            var days = max(1, Int((Tuning.conditionAfterCheck - aircraft[i].condition) / 10.0))
-            if hasHangar(at: aircraft[i].location) || has(.mechanicsGuild) { days = max(1, days / 2) }
-            aircraft[i].status = .maintenance(until: clock.minute + days * GameClock.minutesPerDay)
-            return
-        }
+        // Heavy check every few years or so many hours (weeks and a real bill), else the scheduled check when worn
+        // (quicker at a base with a hangar). See HeavyChecks.swift.
+        if startHeavyCheckIfDue(i) { return }
+        if startCheckIfWorn(i) { return }
 
         // Schedule: wait for the next departure slot on this leg.
         if clock.minute < leg.nextSlot {
@@ -132,7 +131,8 @@ extension World {
         }
 
         // Failure on the ground. The roll is always drawn so the random stream does not depend on condition.
-        let wear = 1.0 + (100.0 - aircraft[i].condition) / 25.0
+        // The odds rise with wear and with the years since the last heavy check.
+        let wear = (1.0 + (100.0 - aircraft[i].condition) / 25.0) * heavyCheckWear(aircraft[i])
         if rng.unit() < Tuning.breakdownPerDeparture * wear {
             raiseBreakdown(aircraftIndex: i, type: type)
             return
