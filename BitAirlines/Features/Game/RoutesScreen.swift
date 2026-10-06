@@ -36,6 +36,8 @@ struct RoutesScreen: View {
     let session: GameSession
     /// The route whose details are open.
     @State private var open: Int?
+    /// A route just opened from the suggestions: its sheet opens at once and says so.
+    @State private var justOpened: Int?
     @State private var sort: RouteSort = .attention
 
     var body: some View {
@@ -44,7 +46,7 @@ struct RoutesScreen: View {
         let ideasFirst = world.routes.count < 3
         Page {
             ScreenHeader(title: "Routes") { Text("\(world.routes.count) routes").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
-            if ideasFirst { RouteIdeasCard(session: session) }
+            if ideasFirst { RouteIdeasCard(session: session, onOpened: showOpened) }
             if world.routes.isEmpty {
                 Card { Text("No routes yet. Open one of the suggested routes above, or go to the Map, tap New route and tap the airports in the order you want to fly them. Then assign an aircraft from Fleet.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true) }
             } else {
@@ -59,13 +61,19 @@ struct RoutesScreen: View {
                 Text("Tap a route to change its schedule, fare and aircraft.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            if !ideasFirst { RouteIdeasCard(session: session) }
+            if !ideasFirst { RouteIdeasCard(session: session, onOpened: showOpened) }
         }
-        .sheet(item: Binding(get: { open.map { SheetID(id: $0) } }, set: { open = $0?.id })) { sheet in
-            RouteDetailSheet(session: session, routeID: sheet.id)
+        .sheet(item: Binding(get: { open.map { SheetID(id: $0) } }, set: { open = $0?.id; if $0 == nil { justOpened = nil } })) { sheet in
+            RouteDetailSheet(session: session, routeID: sheet.id, justOpened: sheet.id == justOpened)
         }
         // A stopping issue is drawn under any sheet: close the sheet so the player sees it.
         .onChange(of: session.world.isPausedByIssue) { _, now in if now { open = nil } }
+    }
+
+    /// A route opened from the suggestions without an aircraft: open its sheet, where Add an aircraft is the next thing to press.
+    private func showOpened(_ routeID: Int) {
+        justOpened = routeID
+        open = routeID
     }
 }
 
@@ -80,16 +88,20 @@ struct RouteCard: View {
     var body: some View {
         let world = session.world
         let planes = route.aircraftIDs.compactMap { id in world.aircraft.first { $0.id == id } }
-        let types = planes.compactMap { $0.type }
-        let cycleHours = cycle(route: route, type: types.first)
-        let needed = world.aircraftNeeded(routeID: route.id) ?? max(1, Int((route.frequency * cycleHours / 24).rounded(.up)))
+        // Aircraft away on a job come back to the route by themselves afterwards (JobFlights.swift).
+        let away = world.aircraftAwayOnJobs(routeID: route.id).compactMap { id in world.aircraft.first { $0.id == id } }
+        let needed = world.aircraftNeeded(routeID: route.id) ?? 1
         let first = route.legs.first
         Card {
             VStack(alignment: .leading, spacing: 8) {
                 HStack(alignment: .top, spacing: 12) {
                     VStack(alignment: .leading, spacing: 6) {
                         Text(route.name).pixelFont(16).foregroundStyle(Theme.accent).fixedSize(horizontal: false, vertical: true)
-                        Tag(text: "\(planes.count) aircraft", color: planes.isEmpty ? Theme.bad : Theme.good)
+                        if planes.isEmpty && !away.isEmpty {
+                            Tag(text: "Aircraft on a job", color: Theme.info)
+                        } else {
+                            Tag(text: "\(planes.count) aircraft", color: planes.isEmpty ? Theme.bad : Theme.good)
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     VStack(alignment: .trailing, spacing: 6) {
@@ -114,18 +126,26 @@ struct RouteCard: View {
                 ServicePicker(session: session, route: route)
                 RouteNotes(world: world, route: route)
 
+                ForEach(away) { plane in
+                    Text(awayText(plane, world: world)).pixelFont(10.667).foregroundStyle(Theme.info).fixedSize(horizontal: false, vertical: true)
+                }
                 if planes.isEmpty {
-                    Text("No aircraft yet.").pixelFont(10.667).foregroundStyle(Theme.bad)
+                    if away.isEmpty { Text("No aircraft yet.").pixelFont(10.667).foregroundStyle(Theme.bad) }
                 } else {
                     Text("Aircraft: " + planes.map { $0.registration }.joined(separator: ", ")).pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
-                    if planes.count < needed {
-                        Text("This schedule needs about \(needed) aircraft. With \(planes.count) some departures will be missed.").pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
-                    } else if planes.count > needed {
+                    if world.isShortOfAircraft(routeID: route.id) {
+                        Text("This schedule needs more flying than its aircraft can do, so some departures will be missed. Add an aircraft or fly less often.")
+                            .pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
+                    } else if !world.spareAircraft(routeID: route.id).isEmpty {
                         Text("About \(needed) aircraft are enough for this schedule. The rest sit idle.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                         SpareAircraftButton(session: session, route: route)
+                    } else if let growth = roomToGrow(world: world, planes: planes) {
+                        Text(growth).pixelFont(10.667).foregroundStyle(Theme.info).fixedSize(horizontal: false, vertical: true)
                     }
                 }
-                if let onAddAircraft { Button("Add an aircraft") { onAddAircraft() }.buttonStyle(SmallButtonStyle(kind: planes.isEmpty ? .prominent : .plain)) }
+                if let onAddAircraft {
+                    Button("Add an aircraft") { onAddAircraft() }.buttonStyle(SmallButtonStyle(kind: planes.isEmpty && away.isEmpty ? .prominent : .plain))
+                }
                 RouteOutlook(world: world, route: route)
                 KeyValueRow("This month", Format.signedMoney(route.revenueThisMonth - route.costThisMonth), color: route.revenueThisMonth >= route.costThisMonth ? Theme.good : Theme.bad)
                 KeyValueRow("Last month", Format.signedMoney(route.revenueLastMonth - route.costLastMonth), color: route.revenueLastMonth >= route.costLastMonth ? Theme.good : Theme.bad)
@@ -147,9 +167,19 @@ struct RouteCard: View {
         return "\(Int((multiplier * 100).rounded()))% ($\(fare))"
     }
 
-    /// Hours for one aircraft to fly the whole cycle, with turnarounds.
-    private func cycle(route: Route, type: AircraftType?) -> Double {
-        guard let type else { return 0 }
-        return route.legs.reduce(0.0) { $0 + type.blockHours(km: $1.distanceKm) + Tuning.turnaroundHours(type.engine) }
+    /// "C-FTEH is flying a job to Kugluktuk and comes back to this route after it."
+    private func awayText(_ plane: Aircraft, world: World) -> String {
+        let to = plane.jobID.flatMap { id in world.ops.jobs.first { $0.id == id } }.map { " to \(Place.name($0.to))" } ?? ""
+        return "\(plane.registration) is flying a job\(to) and comes back to this route after it."
+    }
+
+    /// When people here would fill more aircraft than fly the route and one more would add profit: a hint, not a warning.
+    private func roomToGrow(world: World, planes: [Aircraft]) -> String? {
+        guard let type = planes.first?.type, let fill = world.aircraftForDemand(routeID: route.id), fill > planes.count else { return nil }
+        let now = world.forecast(route: route, type: type, aircraftCount: planes.count, suggestedSchedule: true)
+        let more = world.forecast(route: route, type: type, aircraftCount: planes.count + 1, suggestedSchedule: true)
+        let gain = more.profitPerDay - now.profitPerDay
+        guard now.problem == nil, more.isViable, gain > Tuning.spareMoveMinGainPerDay else { return nil }
+        return "People here would fill about \(fill) aircraft. One more \(type.name) would add about \(Format.perDay(gain))."
     }
 }

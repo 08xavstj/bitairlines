@@ -21,9 +21,26 @@ public struct RouteForecast: Sendable, Hashable, Identifiable {
     public var paybackYears: Double?
     /// Why this aircraft cannot fly the route (nil if it can).
     public var problem: WorldError?
+    /// The heavy checks spread over the days (already in `costPerDay`).
+    public var heavyCheckPerDay: Double = 0
 
     public var id: String { typeID }
     public var isViable: Bool { problem == nil && profitPerDay > 0 }
+}
+
+extension Tuning {
+    /// The used aircraft a forecast assumes when the airline has none of the type: about the age and condition the hangar sells
+    /// (types still built are a few years old; the others are old timers).
+    public static let forecastAgeInProduction = 12.0
+    public static let forecastConditionInProduction = 80.0
+    public static let forecastAgeOutOfProduction = 50.0
+    public static let forecastConditionOutOfProduction = 50.0
+}
+
+/// How worn the aircraft a forecast stands for are: the maintenance multiplier and the heavy-check bill, on average.
+struct ForecastWear: Sendable {
+    var maintenance: Double
+    var checkCost: Double
 }
 
 extension World {
@@ -72,8 +89,9 @@ extension World {
 
         // Everyone who turns up between two departures boards unless the seats run out; only the people left behind lose patience, and the seat
         // limit already caps them, so the forecast is the smaller of demand and seats.
-        let wear = Valuation.wearFactor(ageYears: 12, condition: 80)
-        var passengers = 0.0, cargo = 0.0, revenue = 0.0, cost = 0.0, seats = 0.0
+        let worn = forecastWear(type: type, route: route)
+        let wear = worn.maintenance
+        var passengers = 0.0, cargo = 0.0, revenue = 0.0, cost = 0.0, seats = 0.0, blockHours = 0.0
         for leg in route.legs {
             guard let a = AirportCatalog.airport(leg.from), let b = AirportCatalog.airport(leg.to) else { continue }
             var mature = leg
@@ -88,21 +106,52 @@ extension World {
             let fare = leg.blendedFare * route.fareMultiplier
             revenue += carriedPax * fare * (1.0 - Tuning.salesShare) + carriedCargo * Fares.cargoRate(distanceKm: leg.distanceKm) * cargoRateFactor
             let flight = LegEconomics.cost(type: type, from: a, to: b, distanceKm: leg.distanceKm, fuelIndex: fuelIndex(leaving: a.code),
-                                           wearFactor: wear * maintenanceFactor, adjust: costAdjust).total
-            cost += f * flight + carriedPax * passengerCost(from: a, to: b, service: route.service) + carriedCargo * Tuning.cargoHandlingPerKg
+                                           wearFactor: wear * maintenanceFactor, adjust: costAdjust)
+            cost += f * flight.total + carriedPax * passengerCost(from: a, to: b, service: route.service) + carriedCargo * Tuning.cargoHandlingPerKg
+            blockHours += f * flight.blockHours
             passengers += carriedPax
             cargo += carriedCargo
             seats += f * Double(type.seats)
         }
         let pilotPay = Double(World.pilotsNeeded(type) * salary(for: RatingGroup.of(type.family))) * 12.0 / 365.0
         cost += Double(count) * (LegEconomics.fixedPerDay(type: type) + pilotPay)
+        // Heavy checks, spread over the days: each aircraft's bill over the calendar interval or the hours it flies, whichever comes first.
+        let checks = Double(count) * heavyCheckPerDay(checkCost: worn.checkCost, blockHoursPerDay: blockHours / Double(count))
+        cost += checks
         let profit = revenue - cost
 
-        let age = type.inProduction ? 12.0 : 35.0
-        let investment = count * Valuation.value(type: type, ageYears: age, condition: 80)
+        let used = World.forecastAgeAndCondition(type)
+        let investment = count * Valuation.value(type: type, ageYears: used.age, condition: used.condition)
         return RouteForecast(typeID: type.id, frequency: f, aircraftNeeded: count, passengersPerDay: passengers, cargoKgPerDay: cargo,
                              loadFactor: seats > 0 ? passengers / seats : 0, revenuePerDay: revenue, costPerDay: cost, profitPerDay: profit, investment: investment,
-                             paybackYears: profit > 0 ? Double(investment) / (profit * 365.0) : nil, problem: nil)
+                             paybackYears: profit > 0 ? Double(investment) / (profit * 365.0) : nil, problem: nil, heavyCheckPerDay: checks)
+    }
+
+    /// The age and condition of the used aircraft a forecast assumes for a type the airline does not have (and prices its purchase at).
+    static func forecastAgeAndCondition(_ type: AircraftType) -> (age: Double, condition: Double) {
+        type.inProduction ? (Tuning.forecastAgeInProduction, Tuning.forecastConditionInProduction)
+            : (Tuning.forecastAgeOutOfProduction, Tuning.forecastConditionOutOfProduction)
+    }
+
+    /// The wear a forecast uses: the airline's own aircraft of the type on the route, else in the fleet, else a typical used one,
+    /// so an old starter or an old timer from the hangar is not promised the maintenance bill of a young aircraft.
+    func forecastWear(type: AircraftType, route: Route) -> ForecastWear {
+        let ofType = aircraft.filter { $0.typeID == type.id }
+        let onRoute = ofType.filter { route.aircraftIDs.contains($0.id) }
+        let planes = onRoute.isEmpty ? ofType : onRoute
+        guard !planes.isEmpty else {
+            let used = World.forecastAgeAndCondition(type)
+            return ForecastWear(maintenance: Valuation.wearFactor(ageYears: used.age, condition: used.condition),
+                                checkCost: Double(heavyCheckCost(type: type, ageYears: used.age)))
+        }
+        var maintenance = 0.0, checkCost = 0.0
+        for plane in planes {
+            let age = plane.ageYears(atDay: clock.dayIndex)
+            maintenance += Valuation.wearFactor(ageYears: age, condition: plane.condition)
+            checkCost += Double(heavyCheckCost(type: type, ageYears: age))
+        }
+        let n = Double(planes.count)
+        return ForecastWear(maintenance: maintenance / n, checkCost: checkCost / n)
     }
 
     /// The aircraft the airline may operate that could fly this route, best first (quickest payback), only those that make money.

@@ -86,9 +86,22 @@ extension World {
     /// What a heavy check costs today: a share of the type's new price that grows with the aircraft's age.
     public func heavyCheckCost(_ plane: Aircraft) -> Int {
         guard let type = plane.type else { return 0 }
-        let age = max(0, plane.ageYears(atDay: clock.dayIndex))
+        return heavyCheckCost(type: type, ageYears: plane.ageYears(atDay: clock.dayIndex))
+    }
+
+    /// What a heavy check costs today for an aircraft of this type and age.
+    public func heavyCheckCost(type: AircraftType, ageYears: Double) -> Int {
+        let age = max(0, ageYears)
         let ageFactor = min(Tuning.heavyCheckAgeCostCap, 1.0 + Tuning.heavyCheckAgeCostPerYear * age)
         return Int((Double(type.priceUSD) * Tuning.heavyCheckPriceShare * ageFactor * maintenanceFactor).rounded())
+    }
+
+    /// The heavy checks of one aircraft spread over its days, as a running cost: the bill over the four-year interval, or over the
+    /// days it takes to fly the interval's hours at `blockHoursPerDay` if that is sooner. Forecasts and route books use it.
+    public func heavyCheckPerDay(checkCost: Double, blockHoursPerDay: Double) -> Double {
+        let byCalendar = checkCost / Double(Tuning.heavyCheckIntervalDays)
+        let byHours = checkCost * max(0, blockHoursPerDay) / Tuning.heavyCheckIntervalHours
+        return max(byCalendar, byHours)
     }
 
     /// Days in the hangar for a heavy check, halved where the airline has a hangar or the mechanics' perk.
@@ -125,13 +138,14 @@ extension World {
     }
 
     /// Sends the aircraft in for its heavy check if one is due. The bill is paid even into the overdraft: the check is not
-    /// optional, and the overdraft rules take it from there. True if it went in.
+    /// optional, and the overdraft rules take it from there. It is maintenance, so it counts as a running cost (the forecasts and
+    /// the route books spread it over the days, see `heavyCheckPerDay`). True if it went in.
     mutating func startHeavyCheckIfDue(_ i: Int) -> Bool {
         recordHeavyCheckBaseline(i)
         guard isHeavyCheckDue(aircraft[i]) else { return false }
         let cost = heavyCheckCost(aircraft[i])
         let until = clock.minute + heavyCheckDays(aircraft[i]) * GameClock.minutesPerDay
-        spendOnInvestment(cost)
+        spendOnOverhead(cost)
         let condition = max(aircraft[i].condition, Tuning.conditionAfterHeavyCheck)
         aircraft[i].condition = condition
         markHeavyCheck(i, until: until)

@@ -43,14 +43,32 @@ struct GameStep: View {
         }
     }
 
-    /// Picks a scenario (or free play): a scenario decides the home, the first aircraft and the money.
+    /// Picks a scenario (or free play): a scenario decides the home, the first aircraft and the money. The free-play choices are
+    /// kept aside meanwhile, and going back to Free play restores them, so the Region and Base steps show where the airline starts.
     private func choose(_ id: ScenarioID?) {
+        let wasFree = draft.scenario == nil
+        if wasFree && id != nil {
+            draft.freePlay = FreePlayChoice(home: draft.home, starterID: draft.starterID, mode: draft.mode, difficulty: draft.difficulty)
+        }
         draft.scenario = id
-        guard let id, let def = ScenarioDefinition.definition(id) else { return }
+        guard let id, let def = ScenarioDefinition.definition(id) else {
+            if !wasFree { restoreFreePlay() }
+            return
+        }
         draft.home = def.home
         draft.starterID = def.starterTypeID
         draft.difficulty = def.difficulty
         draft.mode = .normal
+    }
+
+    private func restoreFreePlay() {
+        let kept = draft.freePlay
+        let headquarters = StartRegions.region(draft.regionID)?.headquarters ?? []
+        // The home always belongs to the region the Region step shows as selected.
+        draft.home = headquarters.contains(kept.home) ? kept.home : (headquarters.first ?? kept.home)
+        draft.starterID = kept.starterID
+        draft.mode = kept.mode
+        draft.difficulty = kept.difficulty
     }
 }
 

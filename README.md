@@ -2,11 +2,22 @@
 
 The game's name (it was "Bit Airlines" while in development; the code, folders and project still use BitAirlines inside).
 
-An iPhone airline management game in 8-bit pixel art, played in landscape. Start with one Twin Otter at a remote strip, design your own airline (name, logo,
-colours, liveries), and grow it into a world network that flies jets into major hubs. The aircraft fly your routes on their own; the game pauses when something
-needs you. Working title.
+An iPhone airline management game in 8-bit pixel art, played in landscape. Start a small airline at a remote strip with one
+used bush plane (whichever level 1 type can land at your home airport and fits the budget: a Cessna Caravan, Twin Otter, DC-3
+and others), design your own airline (name, code, logo, colours, liveries), and grow it into a world network that flies jets
+into major hubs. The aircraft fly your routes on their own; the game pauses when something needs you.
 
-Status: foundation. The pipeline builds and tests on every push (see CI below); the game itself is being built stage by stage, see `docs/roadmap.md` once it exists.
+What is in the game (the store copy is in `docs/store-listing.md`, the full list in `docs/roadmap.md`):
+
+- 1,295 real airports on a clean world map, from island and jungle strips to the biggest hubs.
+- Routes that fly themselves on a schedule, with forecasts, fares, freight and competition.
+- More than 50 aircraft types, with floats, skis and other kits; rare finds and restorations.
+- Jobs between routes (medevac, mail, charters), a daily dispatch, seasonal events and weekly goals.
+- Certificate levels 1 to 7, perks, staff, marketing, bases, hubs, slots, pilots and rival airlines.
+- Optional rewarded ads only (never forced), chiptune sound made on the device, and scenarios with medals.
+
+Status: playable, being polished for the App Store (`docs/app-store.md` lists what is left). Logic is tested in CI on every
+push; the app builds and tests on macOS when asked (see CI below).
 
 ## Layout
 
@@ -16,7 +27,8 @@ Status: foundation. The pipeline builds and tests on every push (see CI below); 
 | `BitAirlines/` | The iPhone app (SwiftUI), landscape. Swift 5 language mode on purpose (see `CLAUDE.md`). |
 | `BitAirlinesTests/` | App tests. |
 | `tools/` | `generate_xcodeproj.rb` (the Xcode project is generated), `check-core-purity.sh`, `ci_publish_logs.sh`, data pipeline scripts. |
-| `.github/workflows/ci.yml` | macOS build and test on every push. |
+| `.github/workflows/core.yml` | Linux: purity check and `swift test` for `AirlineCore` on every push. |
+| `.github/workflows/app.yml` | macOS: generate the project, build and test the app, only on `[app]` commits or by hand. |
 | `CLAUDE.md` | How the local agent and Claude share this project. |
 
 Sibling project: [Ring Legacy / BoxingManager](https://github.com/08xavstj/BoxingManager), whose stack and pixel look this game follows.
@@ -28,6 +40,9 @@ swift test --package-path AirlineCore
 tools/check-core-purity.sh AirlineCore/Sources
 ruby tools/generate_xcodeproj.rb          # then: open BitAirlines.xcodeproj
 ```
+
+A store build needs more than the defaults (`BIT_CLOUD=1`, real AdMob ids with `BIT_ADS=1`, the privacy policy address, the
+version): the steps are in `docs/app-store.md`, section 0.
 
 ## CI without a Mac
 

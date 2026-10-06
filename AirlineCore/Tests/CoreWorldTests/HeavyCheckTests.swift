@@ -30,7 +30,7 @@ import CoreCatalog
         #expect(cost > 50_000, "a real bill, not a free check")
         #expect(days >= 5 && days <= Tuning.heavyCheckMaxDays)
         let cash = w.airline.cash
-        let invested = w.today.investments
+        let overhead = w.today.overhead
         let start = w.clock.minute
 
         w.depart(0)
@@ -38,7 +38,8 @@ import CoreCatalog
         let after = w.aircraft[0]
         let until = start + days * GameClock.minutesPerDay
         #expect(w.airline.cash == cash - cost)
-        #expect(w.today.investments == invested + cost)
+        // A heavy check is maintenance: it is booked as a running cost now (it used to be an investment, left out of the result).
+        #expect(w.today.overhead == overhead + cost)
         #expect(after.status == .maintenance(until: until))
         #expect(after.lastHeavyCheckMinute == until)
         #expect(after.condition >= Tuning.conditionAfterHeavyCheck)

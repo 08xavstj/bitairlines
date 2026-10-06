@@ -18,7 +18,7 @@ protocol AdService: AnyObject {
 
 /// Every id the ad network needs, in one place. The defaults are Google's public TEST ids: they always show a test ad and
 /// never pay. tools/generate_xcodeproj.rb reads `appID` from this file for Info.plist, so keep it on one line.
-/// Before an App Store build with AdMob (BIT_ADS=1), both ids must be the real ones: see docs/app-store.md, section 4.
+/// Before an App Store build with AdMob (BIT_ADS=1), both ids must be the real ones: see docs/app-store.md, section 0.
 enum AdConfig {
     // TODO: replace with the real AdMob app id (AdMob, Apps, App settings) before the App Store build.
     static let appID = "ca-app-pub-3940256099942544~1458002511"

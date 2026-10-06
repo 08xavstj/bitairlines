@@ -12,9 +12,9 @@ Pixel Airline Tycoon
 No forced ads. Never pay-to-win. Start with one small propeller plane anywhere in the world and grow it into a global airline.
 
 ## Keywords [100, comma separated, no spaces, no words already in the name or subtitle]
-airline,manager,pilot,aviation,idle,simulator,airport,cargo,retro,sim,plane,floatplane,8bit,travel
+seaplane,manager,pilot,aviation,idle,simulator,airport,cargo,retro,sim,plane,floatplane,8bit,travel
 
-(The name and subtitle are searched too, so words already in them are left out here.)
+(The name and subtitle are searched too, so words already in them are left out here: "airline" is in the subtitle.)
 
 ## Description [4000]
 Start a small airline anywhere in the world with one used propeller plane. Fly people, mail and freight between islands,
@@ -28,13 +28,20 @@ No forced ads. Never pay-to-win. Everything in the game is earned by flying.
 - Your airline, your look: draw your own pixel logo, pick your colours and paint scheme, and see them on every aircraft.
 - The right plane for the job: more than 50 aircraft, from bush planes on floats and skis to widebody jets.
 - Jobs between routes: medevac flights, mail runs, charters with a deadline.
-- A goal every week, with a bonus for meeting it and a Game Center leaderboard.
+- A goal every week, with a bonus for meeting it and a Game Center leaderboard. [only with BIT_CLOUD=1, see below]
 - Rare finds: now and then a low-hours aircraft, a classic in a historic paint scheme, or a project plane turns up for sale.
 - See what each route earns: profit, costs and how full the seats are, for the last seven days.
-- Your saves follow you: iCloud keeps your airlines on all your devices.
-- Real weather, short winter days at far-north strips, lakes that freeze, and fuel that changes price.
+- Your saves follow you: iCloud keeps your airlines on all your devices. [only with BIT_CLOUD=1, see below]
+- Weather that closes remote strips, short winter days at far-north strips, lakes that freeze, and fuel that changes price.
 
 Pixel Props works offline. No account needed.
+
+Aircraft maker and model names belong to their owners. Pixel Props is not made with or endorsed by them. [keep while the
+real names are in the game, docs/app-store.md section 4]
+
+**Before pasting**: the two lines marked [only with BIT_CLOUD=1] promise iCloud saves and Game Center, which exist only in a
+build generated with `BIT_CLOUD=1` (paid developer team, docs/app-store.md section 1). For a build without it, drop the
+iCloud line and end the goal line after "meeting it". Remove the [bracketed] notes either way.
 
 ## What's new (first release)
 First release.
@@ -50,7 +57,9 @@ First release.
 Captions: 3 to 5 words, white pixel font on the game's dark background, no gradients. Screenshots must show the app in use.
 
 ## App Privacy
-Data Not Collected (while there are no ads or analytics).
+Data Not Collected, only while AdMob is off (no `BIT_ADS`). The release that switches AdMob on must change it in the same
+upload: see docs/app-store.md, section 5.
 
 ## Age rating
-Answer the questionnaire honestly: no violence, no user-generated content, no web browsing. Expect 4+.
+Answer the questionnaire honestly: no violence, no user-generated content, no web browsing. Expect 4+. With AdMob on, answer
+yes to advertising and set AdMob's maximum ad content rating to G (docs/app-store.md, section 5).

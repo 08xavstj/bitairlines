@@ -59,7 +59,7 @@ they matter at level 1 and level 7 alike. Caps count real days.
 
 | # | Where | Reward | Cap |
 |---|---|---|---|
-| 1 | While-you-were-away summary | The away profit paid again (up to 2 profit days) | 3 a day |
+| 1 | While-you-were-away summary | The away profit paid again (up to 3 profit days since breaks pay up to 3 game days; 2 in this plan) | 3 a day |
 | 2 | Money screen | Sponsor boost: +25% ticket revenue as a sponsor bonus for 1 game day, stacking to 4 | 4 a day |
 | 3 | Aircraft in a check, or a barn find | Finish the check or restoration step now | 3 a day |
 | 4 | Weekly goal met | Double the bonus | once a week |

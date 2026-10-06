@@ -82,7 +82,7 @@ struct RoutesSummary: View {
 
     var body: some View {
         let total = world.routes.reduce(0) { $0 + RouteList.profitPerDay($1) }
-        let attention = world.routes.filter { RouteAttention.of($0, in: world) != .fine }.count
+        let attention = world.routes.filter { RouteAttention.of($0, in: world).wantsALook }.count
         Card {
             HStack(alignment: .firstTextBaseline, spacing: 12) {
                 VStack(alignment: .leading, spacing: 4) {
@@ -114,8 +114,9 @@ struct RouteRow: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(route.name).pixelFont(13.333).foregroundStyle(Theme.textPrimary)
                         .multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
-                    Text("\(route.aircraftIDs.count) aircraft, \(RouteSteps.frequencyText(route.frequency))")
-                        .pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                    Text(attention == .onJob ? "Aircraft away on a job, \(RouteSteps.frequencyText(route.frequency))"
+                         : "\(route.aircraftIDs.count) aircraft, \(RouteSteps.frequencyText(route.frequency))")
+                        .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 VStack(alignment: .trailing, spacing: 4) {

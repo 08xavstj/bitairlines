@@ -27,8 +27,10 @@ struct RootView: View {
             case .title:
                 TitleView(store: store, onNew: { screen = .newGame }, onContinue: { slot in continueGame(slot: slot) })
             case .newGame:
-                NewGameFlow(store: store, onCancel: { screen = .title }, onStart: { world, slot in TutorialStore().setActive(true, slot: slot); begin(world: world, slot: slot) }, initialStep: firstStep,
-                            scenario: firstScenario)
+                // A scenario or step asked for once (the demo shortcuts) is not asked for again by the next New airline.
+                NewGameFlow(store: store, onCancel: { firstScenario = nil; firstStep = 0; screen = .title },
+                            onStart: { world, slot in firstScenario = nil; firstStep = 0; TutorialStore().setActive(true, slot: slot); begin(world: world, slot: slot) },
+                            initialStep: firstStep, scenario: firstScenario)
             case .game:
                 if let session {
                     GameShell(session: session, onExit: { leaveGame() }, initialSection: firstSection)

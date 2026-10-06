@@ -20,10 +20,17 @@ public enum Tuning {
         (0, 0.0), (50, 0.10), (150, 0.38), (300, 0.62), (600, 1.0), (1200, 0.85), (2500, 0.55),
         (5000, 0.38), (9000, 0.28), (15000, 0.2), (20100, 0.15),
     ])
-    /// Catchment population above which an airport counts as having road and rail alternatives (isolation falls to 0).
+    /// Catchment population above which an airport in a rich country counts as having road and rail alternatives (isolation falls to 0).
     public static let isolationPopulation = 20000.0
+    /// The same by the country's wealth tier 1...5. Poorer countries have fewer roads, so bigger towns there still depend on the air
+    /// (Port Vila, Mount Hagen, Lukla, the Amazon river towns). Tiers 4 and 5 use `isolationPopulation`.
+    public static let isolationPopulationByWealth: [Double] = [80_000, 80_000, 35_000, isolationPopulation, isolationPopulation]
     /// Isolation of a paved airport relative to a gravel strip or lake of the same size.
     public static let pavedIsolationFactor = 0.6
+    /// Lifeline travel: trips per person per year a fly-in community makes at isolation 1, however poor the country (the plane is
+    /// the only way to a doctor, a school or a market). Below the rich tiers' habit, so it only lifts poorer places.
+    /// Checked with tools/sim/start_homes_proto.py.
+    public static let lifelinePropensity = 0.5
 
     // MARK: Fares (US dollars, economy, one way)
     public static let fareByDistance = LinearTable([

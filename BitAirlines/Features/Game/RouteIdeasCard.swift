@@ -72,12 +72,17 @@ enum RouteIdeaWords {
 /// At the top of Routes: the best routes the airline could open now with the aircraft it has.
 struct RouteIdeasCard: View {
     let session: GameSession
-    @State private var open = true
+    /// Called with the id of a route opened without an aircraft, so the screen can show it (Routes opens its sheet).
+    let onOpened: ((Int) -> Void)?
+    /// Hide is kept per game slot, so the card does not open again on every visit.
+    @AppStorage private var hidden: Bool
     /// The focus picked for this game slot ("" until the player picks one: then it follows the level).
     @AppStorage private var focusChoice: String
 
-    init(session: GameSession) {
+    init(session: GameSession, onOpened: ((Int) -> Void)? = nil) {
         self.session = session
+        self.onOpened = onOpened
+        _hidden = AppStorage(wrappedValue: false, "routeIdeasHidden.\(session.slot)")
         _focusChoice = AppStorage(wrappedValue: "", "routeIdeasFocus.\(session.slot)")
     }
 
@@ -94,9 +99,9 @@ struct RouteIdeasCard: View {
                 HStack {
                     Text("Suggested routes").pixelFont(16).foregroundStyle(Theme.accent).lineLimit(1)
                     Spacer()
-                    Button(open ? "Hide" : "Show") { open.toggle() }.buttonStyle(.small)
+                    Button(hidden ? "Show" : "Hide") { hidden.toggle() }.buttonStyle(.small)
                 }
-                if open {
+                if !hidden {
                     PixelChoice(options: [(label: "Small strips", value: RouteIdeaFocus.smallStrips), (label: "Bigger cities", value: RouteIdeaFocus.biggerCities)],
                                 selection: Binding(get: { focus }, set: { focusChoice = $0.rawValue }))
                     if ideas.isEmpty {
@@ -108,7 +113,7 @@ struct RouteIdeasCard: View {
                         Text("Profit is for one aircraft, once people know the route.")
                             .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                     }
-                    ForEach(ideas) { idea in RouteIdeaRow(session: session, idea: idea) }
+                    ForEach(ideas) { idea in RouteIdeaRow(session: session, idea: idea, onOpened: onOpened) }
                 }
             }
         }
@@ -119,6 +124,7 @@ struct RouteIdeasCard: View {
 struct RouteIdeaRow: View {
     let session: GameSession
     let idea: RouteIdea
+    var onOpened: ((Int) -> Void)? = nil
 
     var body: some View {
         let planeID = session.world.idleAircraftID(for: idea)
@@ -143,17 +149,27 @@ struct RouteIdeaRow: View {
         .padding(.top, 6)
     }
 
+    /// Opens the route without an aircraft. The opened pair leaves the list at once, so say where it went.
     private func open() {
-        session.perform(sound: .coin) { _ = try $0.createRoute(stops: idea.stops) }
+        var opened: Int?
+        guard session.perform(sound: .coin, { opened = try $0.createRoute(stops: idea.stops) }), let routeID = opened else { return }
+        if let onOpened {
+            onOpened(routeID)
+        } else {
+            session.notice = "Opened \(RouteIdeaWords.route(idea)). It has no aircraft yet: give it one under Routes."
+        }
     }
 
     /// Opens the route and assigns the aircraft together: if the aircraft is refused, the route is not opened either.
     private func openAndAssign(_ planeID: Int) {
-        session.perform(sound: .coin) { (world: inout World) in
+        let opened = session.perform(sound: .coin) { (world: inout World) in
             var copy = world
             let routeID = try copy.createRoute(stops: idea.stops)
             try copy.assign(aircraftID: planeID, toRoute: routeID)
             world = copy
         }
+        guard opened else { return }
+        let registration = session.world.aircraft.first { $0.id == planeID }?.registration ?? "Your aircraft"
+        session.notice = "Opened \(RouteIdeaWords.route(idea)). \(registration) flies it on its own from now on."
     }
 }

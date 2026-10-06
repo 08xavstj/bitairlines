@@ -34,6 +34,11 @@ struct PlannerFleetNote: View {
                 Text("No one aircraft of yours can fly the whole route: " + PlaneChoiceWords.reason(problem) + ".")
                     .pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
             }
+            // A new airline has one aircraft and little cash: its first route should be one that aircraft can fly today.
+            if world.routes.isEmpty && check.hasAircraft && !check.fits {
+                Text("For your first route, pick one your own aircraft can fly, so it starts earning at once.")
+                    .pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
+            }
         }
     }
 

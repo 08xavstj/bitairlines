@@ -6,7 +6,7 @@ Status in October 2026. "Tested" means a test runs in CI; "written" means the co
 
 | Area | State |
 |---|---|
-| Airport data | 1,288 real airports on the map, one per area: 250 km apart (cities of 5 million or more 180 km; small places within 300 km of a start region 130 km, so a new airline has places to fly), remote towns kept because nothing is near them (tools/data/declutter.py); the rest are retired but still load for old saves, named by place, 193 countries, catchment populations, runway and surface. Tested. |
+| Airport data | 1,295 real airports on the map in 196 countries and territories, one per area: 250 km apart (cities of 5 million or more 180 km; small places within 300 km of a start region 130 km, so a new airline has places to fly), remote towns kept because nothing is near them (tools/data/declutter.py); the rest are retired but still load for old saves. Seven small Caribbean island strips (St Barths, Saba, Statia, Nevis, Barbuda, Montserrat, Virgin Gorda) were brought back so island starts have somewhere to fly. Named by place, catchment populations, runway and surface. Tested. |
 | World map data | 2880 x 1440 land mask from Natural Earth, decoded in Core. Tested. |
 | Aircraft | 52 real models from the Cessna 172 and DC-3 to the A380, with floatplane variants. Tested. |
 | Economy | Demand fitted to real traffic, fares, freight, leg costs, schedules, competition. Python prototypes and Swift port agree. Tested. |
@@ -16,7 +16,7 @@ Status in October 2026. "Tested" means a test runs in CI; "written" means the co
 | App | Title, new airline wizard with logo editor, map with route planning, fleet, routes, hangar, money, inbox, airline screens. Written. |
 | Route forecast | Steady-state profit per day, aircraft needed and payback for any route and aircraft, within 10 percent of a simulated year. The planner ranks the aircraft that pay; route cards and the aircraft sheet show the outlook. Tested. |
 | Sound | Chiptune effects and two music loops synthesised on the device, with a settings toggle for effects and music and three volume levels. Synth and cue logic tested; not yet heard on a phone. |
-| Guided first route | Five steps derived from the world (open a route, assign the aircraft, start the clock, watch it fly, review), a coach strip and a highlight on the next control. Tested. |
+| Guided first route | Eleven steps derived from the world: the first route (open a route, assign the aircraft, start the clock, watch it fly, review), then a short tour (Money, Inbox, Hangar, a second route, Jobs, the certificate level). A coach strip and a highlight on the next control. Tested. |
 | Aircraft art | Windscreens, swept wings with a dark leading edge, engine pods with intakes, propeller discs, wheels. Regenerated from `tools/art/aircraft.py`. |
 | Game modes | Easy, Normal, Realism (fuel only at real fuel stops) and Sandbox, chosen when the airline is founded. Tested. |
 | Perks | Pick one of three at each certificate level (fuel deal, quick turns, good name and six more). Tested. |
@@ -33,6 +33,23 @@ Status in October 2026. "Tested" means a test runs in CI; "written" means the co
 | Rival airlines | Named computer airlines with routes and fares; they answer fare cuts and move into busy routes; a rankings table. Tested. |
 | Pilots | Pilots with ratings, hours, salaries, sickness and type courses; spares step in; automatic hiring for new aircraft. Tested. |
 | Scenarios | Six short games with a goal, a deadline and medals; best medals kept on the phone. Tested. |
+| Island starts | A home on a small island nation (Sint Maarten, Antigua, St Kitts) starts with permits for the countries within 250 km, so the first route has somewhere to go. Tested. |
+| Weekly goals | A game-week goal (people, freight, flights or revenue, sometimes tied to a place) and a real-week goal (Monday to Sunday on the real calendar), each with a bonus. Tested. |
+| Daily dispatch and stamps | One special charter per real day; flying it earns a stamp, and every 7 stamps unlock a classic livery and a rare find. Tested. |
+| Seasonal events | Six events on the real calendar (Lunar New Year to holiday parcels) that lift demand, add event jobs and give an event livery. Tested. |
+| Rare finds and restoration | Low-hours aircraft, heritage classics and barn-find projects on the used market; a project is restored in the hangar. Heavy checks every few years. Tested. |
+| Logbook | Every type flown, airport landed at and rare find bought, with Game Center achievements for the milestones. Tested; screen written. |
+| Staff | Revenue manager (fares each Monday), operations manager (settles breakdowns), fleet planner (moves spare aircraft to routes that earn more, puts parked aircraft to work, sets schedules). Tested. |
+| Marketing | Posters, radio and national campaigns: a bigger share of passengers while they run and better-known routes at once. Tested. |
+| Growth | Sell a route to a local operator, leave an airport, move the headquarters, trade in an aircraft, suggested routes to bigger cities. Tested. |
+| Shared aircraft and spare aircraft | One aircraft can fly up to three routes; spare aircraft move to a route that earns more. Tested. |
+| Routes screen | A compact routes list with a detail sheet for each route, planner buttons always in view. Written. |
+| Rewarded ads | Eleven optional "Watch an ad" rewards with caps per real day; the stand-in ad in Debug builds, AdMob behind `BIT_ADS=1`, consent and tracking questions at the first tap, "Ad privacy choices" in Settings. Core tested; AdMob code not yet compiled (docs/rewarded-ads.md). |
+| Time away | The game catches up one game hour per real minute away, up to three game days (72 real minutes), and shows a "While you were away" summary. Tested. |
+| Notifications | One local note for the first thing that will need the player while away, and an optional daily dispatch reminder. Words tested; not yet seen on a phone. |
+| Rating prompt | Apple's rating box at most once per version, after a win (first weekly goal, level 2, a scenario medal), never over a decision or right after a loss. Tested. |
+| iCloud saves and Game Center | Saves copied to the player's iCloud; four leaderboards (revenue, fleet, goals, stamps) and achievements. Only with `BIT_CLOUD=1` and a paid team (docs/app-store.md). Written, not yet signed. |
+| Privacy | Privacy policy link in Settings and Credits (placeholder address until the page exists). Written. |
 
 ## Next
 
@@ -40,7 +57,7 @@ Status in October 2026. "Tested" means a test runs in CI; "written" means the co
 2. **Balance pass** with the added systems together (pilot pay, rivals, daylight and events change what a route earns).
 3. **Holiday peaks and the economy**: demand that moves with events beyond the current ones.
 4. **Leasing** aircraft instead of buying.
-5. **App Store work.** Name check, privacy page, icon polish, TestFlight.
+5. **App Store work.** Privacy policy page (and its address in `AppLinks`), icon polish, version 1.0.0, a `BIT_CLOUD=1` build, TestFlight. The steps are in docs/app-store.md, section 0.
 
 The reasoning and the other ideas considered are in [feature-research.md](feature-research.md). Eras were considered and left out.
 

@@ -5,6 +5,8 @@ import CoreWorld
 struct RouteDetailSheet: View {
     let session: GameSession
     let routeID: Int
+    /// True when the route was opened a moment ago from the suggestions: the sheet says so and points at Add an aircraft.
+    var justOpened = false
     @Environment(\.dismiss) private var dismiss
     @State private var deleting = false
     @State private var selling = false
@@ -18,6 +20,11 @@ struct RouteDetailSheet: View {
                 Text(notice).pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
             }
             if let route = world.routes.first(where: { $0.id == routeID }) {
+                if justOpened {
+                    Text(route.aircraftIDs.isEmpty ? "Route opened. It has no aircraft yet: press Add an aircraft below so it starts flying."
+                                                   : "Route opened. Its aircraft flies it on its own from now on.")
+                        .pixelFont(10.667).foregroundStyle(Theme.good).fixedSize(horizontal: false, vertical: true)
+                }
                 ScrollView {
                     RouteCard(session: session, route: route, onDelete: { deleting = true }, onSell: { selling = true }, onAddAircraft: { assigning = true })
                 }

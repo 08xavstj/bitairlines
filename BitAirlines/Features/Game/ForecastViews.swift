@@ -2,22 +2,80 @@ import SwiftUI
 import CoreCatalog
 import CoreWorld
 
-/// The aircraft that would pay on a route being planned, best first, with what it costs and how long it takes to earn that back.
+/// On a route being planned: first what the player's own aircraft would earn on it, then the aircraft they could buy that would
+/// pay, best first, with what each costs and how long it takes to earn that back.
 struct ForecastList: View {
     let session: GameSession
     let stops: [String]
+    @State private var own: [OwnForecast] = []
     @State private var ranked: [RouteForecast] = []
 
     var body: some View {
         let cash = session.world.airline.cash
         VStack(alignment: .leading, spacing: 4) {
-            Text("BEST AIRCRAFT FOR IT").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+            if !own.isEmpty {
+                Text("YOUR AIRCRAFT").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                ForEach(own) { item in OwnForecastRow(item: item) }
+            }
+            Text(own.isEmpty ? "BEST AIRCRAFT FOR IT" : "OTHERS YOU COULD BUY").pixelFont(10.667).foregroundStyle(Theme.textMuted)
             if ranked.isEmpty {
-                Text("No aircraft you can fly would make money on this route.").pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
+                Text(own.isEmpty ? "No aircraft you can fly would make money on this route." : "No other aircraft you can fly would make money on this route.")
+                    .pixelFont(10.667).foregroundStyle(own.isEmpty ? Theme.gold : Theme.textMuted).fixedSize(horizontal: false, vertical: true)
             }
             ForEach(ranked) { forecast in ForecastRow(forecast: forecast, canAfford: forecast.investment <= cash) }
         }
-        .onChange(of: stops, initial: true) { _, now in ranked = now.count >= 2 ? session.world.rankedForecasts(stops: now, limit: 3) : [] }
+        .onChange(of: stops, initial: true) { _, now in refresh(now) }
+    }
+
+    private func refresh(_ now: [String]) {
+        guard now.count >= 2 else { own = []; ranked = []; return }
+        let world = session.world
+        own = OwnForecast.list(world: world, stops: now)
+        let owned = Set(own.map(\.forecast.typeID))
+        ranked = Array(world.rankedForecasts(stops: now, limit: 3 + owned.count).filter { !owned.contains($0.typeID) }.prefix(3))
+    }
+}
+
+/// What one of the player's own aircraft types would earn on a planned route, flown by one aircraft on its own.
+struct OwnForecast: Identifiable {
+    let registration: String
+    let count: Int
+    let forecast: RouteForecast
+    var id: String { forecast.typeID }
+
+    /// One line per type the airline owns (delivered) that can fly the stops, in fleet order.
+    static func list(world: World, stops: [String]) -> [OwnForecast] {
+        var seen: [String] = []
+        var items: [OwnForecast] = []
+        for plane in world.aircraft where plane.isDelivered && !seen.contains(plane.typeID) {
+            seen.append(plane.typeID)
+            guard let type = plane.type else { continue }
+            let forecast = world.forecast(stops: stops, type: type, aircraftCount: 1)
+            guard forecast.problem == nil else { continue }
+            let count = world.aircraft.filter { $0.isDelivered && $0.typeID == plane.typeID }.count
+            items.append(OwnForecast(registration: plane.registration, count: count, forecast: forecast))
+        }
+        return items
+    }
+}
+
+struct OwnForecastRow: View {
+    let item: OwnForecast
+
+    var body: some View {
+        let name = AircraftCatalog.type(item.forecast.typeID)?.name ?? item.forecast.typeID
+        let who = item.count > 1 ? "Your \(name), like \(item.registration)" : "Your \(item.registration) (\(name))"
+        VStack(alignment: .leading, spacing: 1) {
+            HStack(alignment: .top, spacing: 6) {
+                Text(who).pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
+                Spacer(minLength: 8)
+                Text(Format.perDay(item.forecast.profitPerDay)).pixelFont(10.667)
+                    .foregroundStyle(item.forecast.profitPerDay >= 0 ? Theme.good : Theme.bad).lineLimit(1).fixedSize()
+            }
+            Text("One aircraft, \(RouteSteps.frequencyText(item.forecast.frequency)) each way, about \(Int(item.forecast.passengersPerDay.rounded())) people a day, once people know it.")
+                .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+        }
+        .accessibilityElement(children: .combine)
     }
 }
 

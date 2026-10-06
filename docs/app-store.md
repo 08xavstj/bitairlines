@@ -1,6 +1,25 @@
 # App Store: setup and compliance
 
-What has to be true before Bit Airlines goes to the App Store, and how to switch on iCloud and Game Center.
+What has to be true before Pixel Props goes to the App Store, and how to switch on iCloud and Game Center.
+
+## 0. Before every App Store or TestFlight build
+
+The project generator's defaults are for testing on your own phone. A store build needs these, in this order:
+
+1. **Paid team and iCloud, Game Center.** `BIT_CLOUD=1` (section 1). Without it the build has no iCloud saves and no
+   Game Center, so the store listing must not mention them (docs/store-listing.md says which lines to drop).
+2. **Ads, one of two ways.**
+   - Without AdMob (no `BIT_ADS`): nothing to do. The stand-in "AD PLACEHOLDER" shows only in Debug builds (Xcode Run);
+     an Archive is a Release build, so every Watch an ad button is hidden (`AdConfig.placeholderWithoutSDK`).
+   - With AdMob (`BIT_ADS=1`): replace Google's test ids in `BitAirlines/Ads/AdService.swift`, `AdConfig.appID` and
+     `AdConfig.rewardedUnitID` (both marked TODO), with the real ones from AdMob. The test ids contain `3940256099942544`:
+     a build with them shows test ads and earns nothing. Xcode shows a warning on every Release build with AdMob as a
+     reminder; delete it (it sits under `AdConfig`) once the real ids are in. Then do section 5.
+3. **Privacy policy.** Put the real address in `BitAirlines/App/AppLinks.swift` (`AppLinks.privacyPolicy`, marked TODO,
+   now a placeholder) and the same address in App Store Connect. The page must be live before review.
+4. **Version.** `MARKETING_VERSION` in `tools/generate_xcodeproj.rb` is still `0.1.0`: set it to `1.0.0` for the first
+   upload, and raise `CURRENT_PROJECT_VERSION` (the build number) for every upload.
+5. Archive with the generated project: `BIT_CLOUD=1 ruby tools/generate_xcodeproj.rb` (add `BIT_ADS=1` when ads go live).
 
 ## 1. Paid developer account first
 
@@ -22,7 +41,8 @@ After joining the Apple Developer Program ($99 a year):
 - A save is copied to iCloud at most every 3 minutes while playing, and always when the player leaves the game or the app goes
   to the background. The title screen pulls newer copies from other devices.
 - Players can turn it off: Settings, "Keep saves in iCloud".
-- Without the entitlement or with iCloud signed out, nothing happens and saves stay on the phone.
+- Without the entitlement (a build made without `BIT_CLOUD=1`) or with iCloud signed out, nothing happens and saves stay
+  on the phone. The Settings toggle still shows, with a line saying what it does and that it needs iCloud Drive.
 
 ## 3. Game Center
 
@@ -44,7 +64,8 @@ Create these in App Store Connect (your app, Services, Game Center). The IDs mus
 | Achievement | `ca.amaruq.bitairlines.types10` | Ten types | Flown 10 aircraft types |
 
 Each achievement needs a 512 x 512 or 1024 x 1024 image and a short description. Scores go up every 5 minutes of play and
-when the player leaves the game. The title screen shows a Leaderboards button once the player is signed in.
+when the player leaves the game. The title screen shows a Leaderboards button once the player is signed in. Without
+`BIT_CLOUD=1` there is no Game Center entitlement, the button never shows and nothing is reported.
 
 ## 3b. In-App Events (seasonal events)
 
@@ -72,18 +93,20 @@ event's paint scheme on an aircraft. Keep the text plain: what the event is and 
 | Privacy manifest (`BitAirlines/Resources/PrivacyInfo.xcprivacy`) | Done: no tracking, no data collected, UserDefaults reason CA92.1 |
 | `ITSAppUsesNonExemptEncryption` = NO | Done (in the project generator) |
 | Save when the app goes to the background | Done (`RootView`, scene phase) |
-| Privacy policy URL | To do: App Store Connect needs one even when nothing is collected. One page on any site is enough |
-| App Privacy label | "Data Not Collected" while AdMob is off (the default build). When ads go live it changes: see section 5 |
+| Privacy policy URL in App Store Connect | To do: App Store Connect needs one even when nothing is collected. One page on any site is enough |
+| Privacy policy link inside the app (guideline 5.1.1(i)) | Done: Settings, Privacy card, and Credits. To do: the real address in `AppLinks.privacyPolicy` (now the placeholder `https://lontraindustries.com/privacy`) |
+| App Privacy label | "Data Not Collected" while AdMob is off. It must change in the same release that switches AdMob on: section 5 |
 | Age rating questionnaire | To do: likely 4+ without ads. With ads, answer yes to advertising and set AdMob's content filter to G (section 5) |
-| Real aircraft and maker names (Boeing, Airbus, Cessna, De Havilland and others) | Risk under guideline 5.2.1 (third-party trademarks). Either rename to invented makers and models before release, or get permission |
-| Real airline codes used as examples ("AA") | Change the placeholder in the new-airline flow to an unused code |
+| Real aircraft and maker names (Boeing, Airbus, Cessna, De Havilland and others) | Open decision under guideline 5.2.1 (third-party trademarks). The Credits now say the names belong to their owners and the game is not endorsed by them, and no maker logos are used. Either keep that (and add the same sentence to the description), or rename to invented makers before release. Record the choice here |
+| Real airline codes used as examples ("AA") | Done: the new-airline flow uses "ZZ" |
 | Launch screen | Set a background colour matching `Theme.background` to avoid a white flash |
-| "Declare bankruptcy" | Needs a confirm step (one tap ends the game) |
+| "Declare bankruptcy" | Done: asks to confirm first |
 | iPad | iPhone only. App Review may run it in the iPad compatibility window: test that |
 | Build with the current Xcode and iOS SDK | Required for upload |
-| Version | Set 1.0 and raise the build number for each upload |
+| Version | To do: `MARKETING_VERSION` is `0.1.0` in `tools/generate_xcodeproj.rb`. Set `1.0.0` and raise the build number for each upload |
 | In-app purchases (if added) | StoreKit 2, a Restore Purchases button, prices shown before buying |
-| Ads | Built in, off by default (docs/rewarded-ads.md). `BIT_ADS=1` adds the SDK, the tracking question text, `GADApplicationIdentifier` and SKAdNetwork ids. The SDK brings its own privacy manifest. Every ad is optional and asked for by a tap. Before an App Store build without the SDK, set `AdConfig.placeholderWithoutSDK = false` so no stand-in ads show |
+| iCloud and Game Center | Only with `BIT_CLOUD=1` (section 1). A build without it must not advertise them |
+| Ads | Built in; AdMob itself only with `BIT_ADS=1` (docs/rewarded-ads.md). Without the SDK, the stand-in ad shows only in Debug builds; Release builds hide every ad button. With the SDK, the real ids must replace Google's test ids before the store build (section 0). Every ad is optional and asked for by a tap |
 
 ## 5. When ads go live
 
@@ -115,8 +138,16 @@ rating) so ads suit the 4+ or 9+ rating, and leave "tag for child-directed treat
 (it does not; if the owner wants under-13 players, Google's Families policy and an age question apply first).
 
 **Tracking question (ATT)**: the words are set in `tools/generate_xcodeproj.rb` (`TRACKING_TEXT`). The game asks it at the
-first "Watch an ad" tap, after its own short explanation, never at launch. App Review checks that the app works the same
-after "Ask App Not to Track".
+first "Watch an ad" tap, after its own short explanation, never at launch. The explanation has a single Continue button that
+always leads on to Google's form and then Apple's question, where the player can say no: App Review rejects a message before
+the tracking question that lets the player skip it ("Not now"). The ad stays optional because the player only reaches the
+explanation by tapping Watch an ad. App Review checks that the app works the same after "Ask App Not to Track".
 
 **Consent in the EU, UK and Switzerland**: create a GDPR message in AdMob (Privacy and messaging) and publish it. The game
-shows it at the first "Watch an ad" tap through Google's UMP form.
+shows it at the first "Watch an ad" tap through Google's UMP form. Players change or withdraw that consent with "Ad privacy
+choices" in Settings (the Privacy card), which opens Google's privacy options form. The button shows only when Google says
+it is needed (`privacyOptionsRequirementStatus == .required`).
+
+**Before submitting with ads, also check**: the App Privacy table above against Google's "App Store data disclosure" page
+and Xcode's privacy report (the SDK may also read the vendor id without permission), and Google's current SKAdNetwork list
+(only Google's own id is in `SKADNETWORK_IDS` now).
