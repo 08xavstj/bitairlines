@@ -52,7 +52,8 @@ import CoreWorld
         try World.newGame(NewGameConfig(airlineName: "Sound Air", airlineCode: "SA", homeAirport: "YEV", branding: .starter, difficulty: .easy, starterTypeID: "c208", seed: 8))
     }
 
-    func makeEngine(_ settings: AppSettings = AppSettings(defaults: UserDefaults(suiteName: "bitairlines-test-\(UUID().uuidString)")!)) -> (AudioEngine, SilentAudioOutput, AppSettings) {
+    func makeEngine() -> (AudioEngine, SilentAudioOutput, AppSettings) {
+        let settings = AppSettings(defaults: UserDefaults(suiteName: "bitairlines-test-\(UUID().uuidString)")!)
         let output = SilentAudioOutput()
         return (AudioEngine(output: output, settings: settings), output, settings)
     }
