@@ -47,13 +47,14 @@ import CoreCatalog
     @Test func realismNeedsFuelStopsAndADepotFixesIt() throws {
         var real = try Fixtures.world(mode: .realism)
         real.airline.cash = 50_000_000
-        // Two strips in Canada that sell no fuel, a Caravan's round trip apart.
-        let dry = AirportCatalog.all.filter { $0.country == "CA" && $0.surface != .water && $0.runwayFt >= 1500 && !real.sellsFuel($0) }
+        // Two strips in the same country that sell no fuel, a Caravan's round trip apart (the map keeps few such strips, so look worldwide).
+        let dry = AirportCatalog.all.filter { $0.surface != .water && $0.runwayFt >= 1500 && !real.sellsFuel($0) }
         var pair: (Airport, Airport)?
-        for a in dry.prefix(400) {
-            if let b = dry.first(where: { $0.code != a.code && a.distanceKm(to: $0) > 100 && a.distanceKm(to: $0) < 700 }) { pair = (a, b); break }
+        for a in dry {
+            if let b = dry.first(where: { $0.code != a.code && $0.country == a.country && a.distanceKm(to: $0) > 100 && a.distanceKm(to: $0) < 700 }) { pair = (a, b); break }
         }
         let (a, b) = try #require(pair)
+        real.airline.permits.append(a.country)
         let id = try real.createRoute(stops: [a.code, b.code])
         let caravan = try Fixtures.type("c208")
         #expect(real.fitProblem(type: caravan, route: try #require(real.routes.first { $0.id == id })) == .noFuel(airport: a.code), "no fuel at either end")
@@ -62,6 +63,7 @@ import CoreCatalog
 
         var normal = try Fixtures.world()
         normal.airline.cash = 50_000_000
+        normal.airline.permits.append(a.country)
         let id2 = try normal.createRoute(stops: [a.code, b.code])
         #expect(normal.fitProblem(type: caravan, route: try #require(normal.routes.first { $0.id == id2 })) == nil, "Normal mode sells fuel everywhere")
     }
