@@ -29,9 +29,15 @@ ruby tools/generate_xcodeproj.rb          # then: open BitAirlines.xcodeproj
 
 ## CI without a Mac
 
-Development happens on Windows, so GitHub Actions is the compiler. After a push, trimmed logs are on the `ci-logs` branch:
+Development happens on Windows, so GitHub Actions is the compiler.
+
+- **Core** workflow (Linux, every push): purity check and `swift test` for `AirlineCore`. Logs: branch `ci-logs-core`.
+- **App** workflow (macOS, only when the commit message contains `[app]`, or run by hand): generates the project, builds and tests the app on a simulator. Logs: branch `ci-logs-app`.
+  macOS minutes are ten times as expensive as Linux minutes on a private repo, so batch app changes before building.
+
+Read a result without a GitHub login:
 
 ```bash
-git fetch origin ci-logs && git show origin/ci-logs:status.txt
-git show origin/ci-logs:core-test.log      # also: app-build.log, app-test.log, generate.log, purity.log
+git fetch origin ci-logs-core && git show origin/ci-logs-core:status.txt
+git show origin/ci-logs-core:core-test.log       # app: ci-logs-app, app-test.log, generate.log
 ```

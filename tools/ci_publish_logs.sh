@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# Publishes trimmed CI logs to the `ci-logs` branch (force-pushed each run) so compiler and test output can be read
-# with a plain `git fetch origin ci-logs` and no GitHub login. Arguments are "name=outcome" pairs written to status.txt.
+# Publishes trimmed CI logs to a branch (CI_LOG_BRANCH, default ci-logs; force-pushed each run) so compiler and test output can be read
+# with a plain `git fetch origin <branch>` and no GitHub login. Arguments are "name=outcome" pairs written to status.txt.
 set -u
 
 SHA="${GITHUB_SHA:-local}"
+BRANCH="${CI_LOG_BRANCH:-ci-logs}"
 TMP="$(mktemp -d)"
 
 {
@@ -32,4 +33,4 @@ git clean -fdxq
 cp "$TMP"/* .
 git add -A
 git commit --quiet -m "CI logs for $SHA"
-git push --force origin HEAD:ci-logs
+git push --force origin "HEAD:$BRANCH"

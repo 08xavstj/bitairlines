@@ -1,4 +1,5 @@
 // CoreSim/GeoMath.swift: great-circle distance with arithmetic only (no libm), so every device and build agrees to the last bit.
+// The functions are named sine/cosine/arcSine (not sin/cos/asin) so the purity check can keep flagging any accidental libm call.
 public enum GeoMath {
     public static let earthRadiusKm = 6371.0088
     static let pi = 3.141592653589793
@@ -6,7 +7,7 @@ public enum GeoMath {
     static let twoPi = 6.283185307179586
 
     /// Sine of an angle in radians. Range-reduced to [-pi/2, pi/2], then a Taylor series through x^13 (error below 1e-9).
-    public static func sin(_ x: Double) -> Double {
+    public static func sine(_ x: Double) -> Double {
         var r = x - twoPi * (x / twoPi).rounded()
         if r > halfPi { r = pi - r } else if r < -halfPi { r = -pi - r }
         let r2 = r * r
@@ -20,18 +21,19 @@ public enum GeoMath {
         return r * s
     }
 
-    public static func cos(_ x: Double) -> Double { sin(x + halfPi) }
+    public static func cosine(_ x: Double) -> Double { sine(x + halfPi) }
 
-    /// Arc sine on [-1, 1]: a polynomial first guess, then Newton steps on `sin`, so it is exact enough and still libm-free.
-    public static func asin(_ x: Double) -> Double {
+    /// Arc sine on [-1, 1]: a polynomial first guess, then Newton steps on `sine`, so it is exact enough and still libm-free.
+    public static func arcSine(_ x: Double) -> Double {
         let c = max(-1.0, min(1.0, x))
+        if c == 0 { return 0 }
         let a = c < 0 ? -c : c
         let guess = halfPi - (1.0 - a).squareRoot() * (1.5707288 - 0.2121144 * a + 0.0742610 * a * a - 0.0187293 * a * a * a)
         var y = c < 0 ? -guess : guess
         for _ in 0..<3 {
-            let slope = cos(y)
+            let slope = cosine(y)
             if slope < 1e-6 { break }
-            y -= (sin(y) - c) / slope
+            y -= (sine(y) - c) / slope
         }
         return y
     }
@@ -40,9 +42,9 @@ public enum GeoMath {
     public static func distanceKm(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
         let rad = pi / 180.0
         let p1 = lat1 * rad, p2 = lat2 * rad
-        let sLat = sin((lat2 - lat1) * rad / 2.0)
-        let sLon = sin((lon2 - lon1) * rad / 2.0)
-        let a = sLat * sLat + cos(p1) * cos(p2) * sLon * sLon
-        return earthRadiusKm * 2.0 * asin(a.squareRoot())
+        let sLat = sine((lat2 - lat1) * rad / 2.0)
+        let sLon = sine((lon2 - lon1) * rad / 2.0)
+        let a = sLat * sLat + cosine(p1) * cosine(p2) * sLon * sLon
+        return earthRadiusKm * 2.0 * arcSine(a.squareRoot())
     }
 }

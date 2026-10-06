@@ -1,0 +1,60 @@
+name: Core
+
+# AirlineCore is pure Swift, so it builds and tests on Linux: cheap minutes, and a free check that the simulation is
+# bit-identical off Apple platforms. Trimmed logs go to the `ci-logs-core` branch (tools/ci_publish_logs.sh).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: core
+  cancel-in-progress: true
+
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    container: swift:6.1
+    timeout-minutes: 25
+    env:
+      CI_LOG_BRANCH: ci-logs-core
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Allow git in the container
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Toolchain
+        run: |
+          mkdir -p ci-out
+          swift --version 2>&1 | tee ci-out/toolchain.log
+
+      - name: Core purity
+        id: purity
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          bash tools/check-core-purity.sh AirlineCore/Sources 2>&1 | tee ci-out/purity.log
+
+      - name: Core tests
+        id: core
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          swift test --package-path AirlineCore 2>&1 | tee ci-out/core-test.log
+
+      - name: Publish logs
+        if: always()
+        run: |
+          bash tools/ci_publish_logs.sh "purity=${{ steps.purity.outcome }}" "core_tests=${{ steps.core.outcome }}"
+
+      - name: Fail if any step failed
+        if: always()
+        run: |
+          for o in "${{ steps.purity.outcome }}" "${{ steps.core.outcome }}"; do
+            [ "$o" = "success" ] || { echo "a step did not succeed: $o"; exit 1; }
+          done
