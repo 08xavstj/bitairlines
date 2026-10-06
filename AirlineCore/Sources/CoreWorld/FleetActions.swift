@@ -54,7 +54,7 @@ extension World {
         guard let type = plane.type else { return 0 }
         let offer = Int(Double(Valuation.value(type: type, ageYears: plane.ageYears(atDay: clock.dayIndex), condition: plane.condition)) * 0.85)
         // A dealer never pays more than the airline paid, so buying a bargain to sell it on at once (or after a free check) earns nothing.
-        return plane.price > 0 ? min(offer, plane.price) : offer
+        return plane.purchasePrice > 0 ? min(offer, plane.purchasePrice) : offer
     }
 
     /// Sells an aircraft that has no route. Returns the price.
