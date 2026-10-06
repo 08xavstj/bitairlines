@@ -4,20 +4,25 @@ import CoreWorld
 
 /// What a route needs from the player, worst first. The routes list sorts and labels by it.
 enum RouteAttention: Int, Comparable {
-    case noAircraft, losingMoney, needsAircraft, spareAircraft, fine
+    case noAircraft, losingMoney, needsAircraft, spareAircraft, onJob, fine
 
     static func < (a: RouteAttention, b: RouteAttention) -> Bool { a.rawValue < b.rawValue }
 
     static func of(_ route: Route, in world: World) -> RouteAttention {
-        if route.aircraftIDs.isEmpty { return .noAircraft }
+        if route.aircraftIDs.isEmpty {
+            // Its aircraft is away on a job and comes back by itself afterwards (JobFlights.swift): nothing to do.
+            return world.aircraftAwayOnJobs(routeID: route.id).isEmpty ? .noAircraft : .onJob
+        }
         let week = route.last7Days
         if week.flights > 0 && week.profit < 0 { return .losingMoney }
-        if let needed = world.aircraftNeeded(routeID: route.id) {
-            if route.aircraftIDs.count < needed { return .needsAircraft }
-            if !world.spareAircraft(routeID: route.id).isEmpty { return .spareAircraft }
-        }
+        // Short only when the schedule asks for more flying than its aircraft can do (shared ones count as their share).
+        if world.isShortOfAircraft(routeID: route.id) { return .needsAircraft }
+        if !world.spareAircraft(routeID: route.id).isEmpty { return .spareAircraft }
         return .fine
     }
+
+    /// Whether the routes summary counts it as one to look at. An aircraft away on a job is not.
+    var wantsALook: Bool { self != .fine && self != .onJob }
 
     var label: String? {
         switch self {
@@ -25,6 +30,7 @@ enum RouteAttention: Int, Comparable {
         case .losingMoney: "Losing money"
         case .needsAircraft: "Needs an aircraft"
         case .spareAircraft: "Spare aircraft"
+        case .onJob: "Aircraft on a job"
         case .fine: nil
         }
     }
@@ -33,6 +39,7 @@ enum RouteAttention: Int, Comparable {
         switch self {
         case .noAircraft, .losingMoney: Theme.bad
         case .needsAircraft, .spareAircraft: Theme.gold
+        case .onJob: Theme.info
         case .fine: Theme.good
         }
     }

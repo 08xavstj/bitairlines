@@ -94,9 +94,18 @@ struct StaffCard: View {
 
     static func explain(_ role: StaffRole) -> String {
         switch role {
-        case .revenueManager: "Every Monday raises fares on routes that fly full and lowers them where seats fly empty."
+        case .revenueManager: revenueManagerWords
         case .operationsManager: "Settles breakdowns at once with the quickest repair you can pay for, so the game does not stop."
         case .fleetPlanner: "Every Monday moves aircraft a route does not need to routes where they earn more, keeping enough on each route, puts parked aircraft to work and sets each schedule to the suggested one."
         }
+    }
+
+    /// What World.manageFares does, from the same Tuning numbers: up while seats fly full, otherwise back toward the going fare
+    /// (never below it), always inside the managed range.
+    static var revenueManagerWords: String {
+        let full = Int((Tuning.fareRaiseLoad * 100).rounded())
+        let low = Int((Tuning.managedFareRange.lowerBound * 100).rounded())
+        let high = Int((Tuning.managedFareRange.upperBound * 100).rounded())
+        return "Every Monday raises the fare on routes more than \(full)% full and brings other fares back toward the going fare, never below it. Keeps fares between \(low)% and \(high)%."
     }
 }

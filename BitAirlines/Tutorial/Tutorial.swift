@@ -97,20 +97,31 @@ enum Tutorial {
         case .watch:
             return "Watch it fly. You earn money when an aircraft lands. Flights so far: \(min(flights, Tutorial.flightsToWatch)) of \(Tutorial.flightsToWatch)."
         case .review:
-            return "Routes shows what each route earns a day. Tap a route to see how full the seats are. Planes flying full: raise the fare. Flying empty: lower it or fly less often."
+            return firstFlights(world.airline.stats)
+                + " Routes shows what each route earns a day. Tap a route to see how full the seats are. Planes flying full: raise the fare. Flying empty: lower it or fly less often."
         case .money:
-            return "Money shows each day: income from landings, then fuel, crew, upkeep and fees. A parked aircraft still costs money every day, so keep them flying."
+            // The Money screen adds up finished days, so on the first day it still shows nothing.
+            let first = world.books.isEmpty ? " Today's flights show there from tomorrow." : ""
+            return "Money adds up each day at midnight: what flying earned, then running costs, pilot salaries and base upkeep." + first
+                + " A parked aircraft still costs money every day, so keep them flying."
         case .inbox:
-            return "When something needs you, the clock stops and Inbox says why: a breakdown, bad weather, a low bank balance. Pick an answer and the clock goes on."
+            return "When something needs a decision, the clock stops and Inbox says why: a breakdown or a low bank balance. Pick an answer and the clock goes on. Bad weather and deliveries show in Inbox as notices, and the clock keeps going."
         case .hangar:
             return "When you have the cash, buy a second aircraft in Hangar. Pick Fits my airports to see only ones that can land where you fly. Used ones arrive within a day."
         case .secondRoute:
             return "Give the new aircraft its own route. Towns with no road to them pay best. Check the forecast before you open it: a green number means profit."
         case .jobs:
-            return "Jobs are one-off flights: medevac, mail and charters. They pay well and have a deadline. Open Routes, then Jobs, and send a free aircraft."
+            return "Jobs are one-off flights: medevac, mail and charters. They pay well and have a deadline. Open Routes, then Jobs, and send an aircraft. It leaves its route for the job and goes back by itself afterwards."
         case .level:
             return "Your certificate level is on the Money screen. Earn enough and keep a good reputation to buy the next one: it opens bigger aircraft and bigger airports."
         }
+    }
+
+    /// The first payoff: "Your first 3 landings carried 21 people and 1,050 kg of freight and took in $8,100."
+    static func firstFlights(_ stats: AirlineStats) -> String {
+        let landings = stats.flights == 1 ? "landing" : "landings"
+        let people = stats.passengers == 1 ? "1 person" : "\(Format.number(stats.passengers)) people"
+        return "Your first \(stats.flights) \(landings) carried \(people) and \(Format.number(stats.cargoKg)) kg of freight and took in \(Format.dollars(stats.revenue))."
     }
 }
 
@@ -141,6 +152,8 @@ final class TutorialCoach {
     private(set) var active: Bool
     private(set) var step: TutorialStep?
     private(set) var seen: Set<TutorialStep>
+    /// Where the first routes pay little, the jobs tip comes right after the routes tip (CoachStrip sets it from the suggestion).
+    var jobsEarly = false
     private let slot: Int
     @ObservationIgnored private let store: TutorialStore
 
@@ -154,7 +167,7 @@ final class TutorialCoach {
     /// Follows the world. Ends the guide after the last step.
     func update(world: World, speed: GameSpeed) {
         guard active else { step = nil; return }
-        step = Tutorial.step(world: world, speed: speed, seen: seen)
+        step = Tutorial.step(world: world, speed: speed, seen: seen, jobsEarly: jobsEarly)
         if step == nil { finish() }
     }
 

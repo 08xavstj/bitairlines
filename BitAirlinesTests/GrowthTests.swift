@@ -31,6 +31,8 @@ import CoreWorld
         // One game hour for each real minute: three game days is 72 real minutes.
         #expect(AwayNotes.realSeconds(gameMinutes: AwayReport.maxGameMinutes) == 72 * 60)
         #expect(AwayNotes.realSeconds(gameMinutes: 60) == 60)
+        // The away reward pays a full break again: its cap in profit days matches the game days a break can run.
+        #expect(AwayReport.maxGameMinutes == Tuning.awayRewardProfitDays * 1440)
     }
 
     @Test func awayNotesHaveNoExclamationMarks() throws {
@@ -56,8 +58,14 @@ import CoreWorld
     @Test func theRatingPromptWaitsAfterABreakdownOrDebt() throws {
         var w = try world()
         #expect(ReviewMoment.isCalm(w))
+        let cash = w.airline.cash
         w.airline.cash = -1
         #expect(!ReviewMoment.isCalm(w))
+        w.airline.cash = cash
+        w.ops.perkChoices = [.quickTurns, .goodName, .knownFace]
+        #expect(!ReviewMoment.isCalm(w), "never over a perk choice")
+        w.ops.perkChoices = []
+        #expect(ReviewMoment.isCalm(w))
     }
 
     @Test func theRatingPromptComesOncePerVersion() throws {

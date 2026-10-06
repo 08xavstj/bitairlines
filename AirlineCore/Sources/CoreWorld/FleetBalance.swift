@@ -44,11 +44,28 @@ extension World {
         }.map(\.id)
     }
 
-    /// Aircraft flying only this route, beyond what it needs, that could go elsewhere.
+    /// True when the route's schedule asks for more flying than its aircraft can do between them (a shared aircraft counts as its
+    /// share of the route), so some departures are missed. False for a route with no aircraft (that has its own warning).
+    public func isShortOfAircraft(routeID: Int) -> Bool {
+        guard let r = routeIndex(routeID), let type = routeType(routes[r]) else { return false }
+        let cycles = cyclesPerAircraftPerDay(route: routes[r], type: type)
+        guard cycles > 0 else { return false }
+        return routes[r].frequency / cycles - 0.01 > aircraftShare(onRoute: routeID)
+    }
+
+    /// Aircraft flying only this route, beyond what it needs, that could go elsewhere. Only aircraft that keep flying the route
+    /// count as covering it: one in the hangar, grounded or waiting for restoration does not, and a shared one counts as its share.
+    /// So the last aircraft that can fly the route never leaves it.
     public func spareAircraft(routeID: Int) -> [Int] {
         guard let r = routeIndex(routeID), let needed = aircraftNeeded(routeID: routeID) else { return [] }
-        let movable = routes[r].aircraftIDs.filter { id in aircraftIndex(id).map { isMovable($0) } ?? false }
-        let extra = routes[r].aircraftIDs.count - needed
+        let ids = routes[r].aircraftIDs
+        let movable = ids.filter { id in aircraftIndex(id).map { isMovable($0) } ?? false }
+        let staying = ids.filter { !movable.contains($0) }.reduce(0.0) { sum, id in
+            guard let i = aircraftIndex(id), canFlyNow(i) else { return sum }
+            return sum + aircraft[i].routeShare
+        }
+        let mustStay = max(0, needed - Int((staying + 0.001).rounded(.down)))
+        let extra = movable.count - mustStay
         guard extra > 0 else { return [] }
         // The newest go first, so the aircraft the route was built around stay on it.
         return Array(movable.sorted(by: >).prefix(extra))
@@ -96,8 +113,9 @@ extension World {
         return moves
     }
 
-    /// The route where one more of these aircraft adds the most profit a day, if any adds some.
-    func bestRouteForSpare(_ i: Int, type: AircraftType, leaving routeID: Int) -> (id: Int, gain: Double)? {
+    /// The route where one more of these aircraft adds the most profit a day, if any adds some. `leaving` is the route it comes
+    /// from (nil for a parked aircraft, see Staff.planFleet).
+    func bestRouteForSpare(_ i: Int, type: AircraftType, leaving routeID: Int?) -> (id: Int, gain: Double)? {
         var best: (id: Int, gain: Double)?
         for route in routes where route.id != routeID && assignProblem(aircraftID: aircraft[i].id, routeID: route.id) == nil {
             // Only routes flown by the same kind of aircraft, or by none, so a schedule is never worked out for a mix.
@@ -119,8 +137,13 @@ extension World {
 
     /// An aircraft that flies one route and nothing else is going on: no job, no repair, no restoration.
     func isMovable(_ i: Int) -> Bool {
+        canFlyNow(i) && aircraft[i].otherRouteIDs.isEmpty
+    }
+
+    /// An aircraft able to fly its routes now: delivered, not on a job, not in the hangar or grounded, not waiting for restoration.
+    func canFlyNow(_ i: Int) -> Bool {
         let plane = aircraft[i]
-        guard plane.isDelivered, plane.jobID == nil, !plane.awaitingRestoration, plane.otherRouteIDs.isEmpty else { return false }
+        guard plane.isDelivered, plane.jobID == nil, !plane.awaitingRestoration else { return false }
         switch plane.status {
         case .grounded, .maintenance, .onOrder: return false
         case .idle, .boarding, .flying: return true

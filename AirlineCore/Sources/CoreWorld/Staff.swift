@@ -88,17 +88,13 @@ extension World {
         }
     }
 
-    /// Puts each parked aircraft on the route where it would earn the most, then resets every schedule to the suggested one.
+    /// Puts each parked aircraft on the route where one more of it adds the most profit a day (the same rule as moving a spare
+    /// aircraft, FleetBalance.swift: only routes flown by the same type or by none), then resets every schedule to the suggested one.
     mutating func planFleet() {
         for i in aircraft.indices {
             guard aircraft[i].isDelivered, aircraft[i].routeID == nil, aircraft[i].jobID == nil, case .idle = aircraft[i].status,
                   let type = aircraft[i].type else { continue }
-            var best: (id: Int, perDay: Double)?
-            for route in routes where fitProblem(type: type, route: route, kits: aircraft[i].kits) == nil {
-                let f = forecast(route: route, type: type, aircraftCount: route.aircraftIDs.count + 1, suggestedSchedule: true)
-                if f.isViable, f.profitPerDay > (best?.perDay ?? 0) { best = (route.id, f.profitPerDay) }
-            }
-            if let best { try? assign(aircraftID: aircraft[i].id, toRoute: best.id) }
+            if let best = bestRouteForSpare(i, type: type, leaving: nil) { try? assign(aircraftID: aircraft[i].id, toRoute: best.id) }
         }
         for route in routes where !route.aircraftIDs.isEmpty { try? applySuggestedFrequency(routeID: route.id) }
     }

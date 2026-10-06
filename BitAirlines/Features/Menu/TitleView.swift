@@ -131,7 +131,7 @@ struct ContinueSheet: View {
         }
         .padding(16)
         .screenBackground()
-        .pixelConfirm("Delete \(deleting?.airlineName ?? "this airline")?", message: "The save is gone for good, on this device and in iCloud.", confirm: "Delete",
+        .pixelConfirm("Delete \(deleting?.airlineName ?? "this airline")?", message: "The save is gone for good from this device, and from iCloud if saves are kept there.", confirm: "Delete",
                       destructive: true, isPresented: Binding(get: { deleting != nil }, set: { if !$0 { deleting = nil } })) {
             if let save = deleting { store.delete(slot: save.slot) }
             deleting = nil
@@ -153,6 +153,9 @@ struct CreditsView: View {
                         Text("Places and populations: GeoNames (geonames.org), CC BY 4.0.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                         Text("Coastlines: Natural Earth, public domain.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                         Text("All airlines are made up. Aircraft figures are rounded for play, not for flying.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                        Text("Aircraft maker and model names belong to their owners. Pixel Props is not made with or endorsed by them.")
+                            .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                        PrivacyPolicyButton()
                     }
                 }
             }
@@ -171,22 +174,27 @@ struct SettingsSheet: View {
         VStack(alignment: .leading, spacing: 10) {
             ScreenHeader(title: "Settings") { Button("Close") { dismiss() }.buttonStyle(.small) }
             ScrollView {
-                Card {
-                    VStack(alignment: .leading, spacing: 12) {
-                        Toggle(isOn: $settings.scanlines) { Text("CRT scanlines").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
-                        Toggle(isOn: $settings.haptics) { Text("Vibration").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
-                        Toggle(isOn: $settings.soundEffects) { Text("Sound effects").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
-                        Toggle(isOn: $settings.music) { Text("Music").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
-                        Toggle(isOn: $settings.iCloudSaves) { Text("Keep saves in iCloud").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
-                        Toggle(isOn: aircraftNotes) { Text("Tell me when an aircraft needs me").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
-                        Toggle(isOn: dailyNotes) { Text("Remind me of the daily dispatch").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
-                        Text("Notes arrive only while you are away from the game, at most two at a time. If none arrive, allow notifications for the game in the iPhone Settings app.")
-                            .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
-                        Text("Volume").pixelFont(10.667).foregroundStyle(Theme.textMuted)
-                        PixelChoice(options: VolumeLevel.allCases.map { (label: $0.label, value: $0) }, selection: $settings.volume)
-                        Text("Text size").pixelFont(10.667).foregroundStyle(Theme.textMuted)
-                        PixelChoice(options: TextSize.allCases.map { (label: $0.label, value: $0) }, selection: $settings.textSize)
+                VStack(alignment: .leading, spacing: 10) {
+                    Card {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Toggle(isOn: $settings.scanlines) { Text("CRT scanlines").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                            Toggle(isOn: $settings.haptics) { Text("Vibration").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                            Toggle(isOn: $settings.soundEffects) { Text("Sound effects").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                            Toggle(isOn: $settings.music) { Text("Music").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                            Toggle(isOn: $settings.iCloudSaves) { Text("Keep saves in iCloud").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                            Text("Copies each airline to your iCloud, so it follows you to another iPhone or iPad with the same Apple Account. Needs iCloud Drive on in the iPhone Settings app. Saves always stay on this phone too.")
+                                .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                            Toggle(isOn: aircraftNotes) { Text("Tell me when an aircraft needs me").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                            Toggle(isOn: dailyNotes) { Text("Remind me of the daily dispatch").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                            Text("Notes arrive only while you are away from the game, at most two at a time. If none arrive, allow notifications for the game in the iPhone Settings app.")
+                                .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                            Text("Volume").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                            PixelChoice(options: VolumeLevel.allCases.map { (label: $0.label, value: $0) }, selection: $settings.volume)
+                            Text("Text size").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                            PixelChoice(options: TextSize.allCases.map { (label: $0.label, value: $0) }, selection: $settings.textSize)
+                        }
                     }
+                    PrivacyCard()
                 }
             }
         }
