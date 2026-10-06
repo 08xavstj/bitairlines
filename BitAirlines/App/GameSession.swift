@@ -124,7 +124,8 @@ final class GameSession {
 
     /// `toCloud` also copies the save to iCloud now and sends Game Center scores (leaving, or the app going to the background).
     func save(toCloud: Bool = false) {
-        do { try store.save(world, slot: slot, toCloud: toCloud) } catch { notice = "Could not save the game." }
+        // Written on the save queue: encoding a big airline never holds up the screen.
+        store.saveInBackground(world, slot: slot, toCloud: toCloud) { [weak self] in self?.notice = "Could not save the game." }
         lastSave = Date()
         GameCenter.shared.report(world, now: toCloud)
         if let state = world.ops.scenario, let medal = state.medal { ScenarioRecords.record(medal, for: state.id) }

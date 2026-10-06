@@ -8,6 +8,8 @@
 | `generate_xcodeproj.rb` | Generates `BitAirlines.xcodeproj` (the project is not committed). |
 | `check-core-purity.sh` | Fails if `AirlineCore` uses UI frameworks, system randomness, wall-clock time, libm or similar. |
 | `ci_publish_logs.sh` | Used by CI to publish trimmed logs to a branch. |
+| `ci_pick_simulator.sh` | Used by CI to pick an iPhone simulator (an iPhone 17 Pro, or the first iPhone the runner has). |
+| `../.githooks/pre-push` | Optional check before each push: `git config core.hooksPath .githooks`. Runs the purity check, and the Core tests when Swift or Docker is installed. |
 
 ## Raw data (not committed, re-download into `data/raw/`)
 

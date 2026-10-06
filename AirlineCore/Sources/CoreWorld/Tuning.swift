@@ -100,7 +100,7 @@ public enum Tuning {
     /// Airports from this certificate level up hand out slots.
     public static let slotAirportLevel = 3
     /// Price of one daily slot at the smallest slot airport (bigger ones cost the square of their tier times this).
-    public static let slotBasePrice = 60_000
+    public static let slotBasePrice = 150_000
 
     // MARK: Jobs and events
     /// Jobs and events happen at airports within this distance of the network.

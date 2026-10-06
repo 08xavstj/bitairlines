@@ -45,7 +45,7 @@ jobs:
         continue-on-error: true
         run: |
           set -o pipefail
-          UDID=$(xcrun simctl list devices available | grep -E "iPhone 17 Pro \(" | head -1 | grep -oE '[0-9A-F]{8}-([0-9A-F]{4}-){3}[0-9A-F]{12}')
+          UDID=$(bash tools/ci_pick_simulator.sh)
           echo "simulator: $UDID"
           xcodebuild test -project BitAirlines.xcodeproj -scheme BitAirlines \
             -destination "id=$UDID" -derivedDataPath build/DD \
@@ -56,11 +56,12 @@ jobs:
         continue-on-error: true
         run: |
           set -o pipefail
-          UDID=$(xcrun simctl list devices available | grep -E "iPhone 17 Pro \(" | head -1 | grep -oE '[0-9A-F]{8}-([0-9A-F]{4}-){3}[0-9A-F]{12}')
+          UDID=$(bash tools/ci_pick_simulator.sh)
           bash tools/ci_screenshots.sh build/DD/Build/Products/Debug-iphonesimulator/BitAirlines.app "$UDID" 2>&1 | tee ci-out/screenshots.log
 
       - name: Publish logs
         if: always()
+        continue-on-error: true
         run: |
           tools/ci_publish_logs.sh "generate=${{ steps.gen.outcome }}" "app_build_and_test=${{ steps.apptest.outcome }}" "screenshots=${{ steps.shots.outcome }}"
 

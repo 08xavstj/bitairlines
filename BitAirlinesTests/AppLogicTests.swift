@@ -72,6 +72,7 @@ import CoreWorld
         try w.assign(aircraftID: w.aircraft[0].id, toRoute: route)
         w.advance(byMinutes: 3 * 1440)
         try store.save(w, slot: 2)
+        #expect(FileManager.default.fileExists(atPath: store.summaryURL(slot: 2).path), "a small summary file sits next to the save")
         let back = try store.load(slot: 2)
         #expect(back.airline.cash == w.airline.cash && back.clock == w.clock && back.aircraft == w.aircraft && back.routes == w.routes)
         let summary = try #require(store.summary(slot: 2))

@@ -6,6 +6,8 @@ name: Core
 on:
   push:
     branches: [main]
+    # Docs, art and economy prototypes do not change the Swift code, so they do not need a run.
+    paths-ignore: ['docs/**', '**/*.md', 'tools/art/**', 'tools/sim/**']
   workflow_dispatch:
 
 permissions:
@@ -53,6 +55,7 @@ jobs:
 
       - name: Publish logs
         if: always()
+        continue-on-error: true
         run: |
           bash tools/ci_publish_logs.sh "purity=${{ steps.purity.outcome }}" "core_tests=${{ steps.core.outcome }}"
 

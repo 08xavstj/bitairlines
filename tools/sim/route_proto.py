@@ -1,6 +1,7 @@
 """Prototype of fares and operating costs: how much does an aircraft earn on a route? Used to balance the economy before the Swift port.
 
     python tools/sim/route_proto.py
+    python tools/sim/route_proto.py --fares    (how the fare multiplier trades people for money; needs no airport data)
 """
 import math
 import os
@@ -47,6 +48,27 @@ def load_types():
 def fare(a, b):
     base = dp.interpolate(FARE_TABLE, dp.km(a, b))
     return FARE_SCALE * base * (1.0 + ISOLATION_PREMIUM * (dp.isolation(a) + dp.isolation(b)) / 2.0)
+
+
+# Passengers won or lost by the player's fare multiplier m. ratio = going fare / m (the going fare is 1.0, or a rival's fare level).
+# Cheaper than the going fare (ratio above 1) wins people slowly, about ratio^0.6; dearer (ratio below 1) loses them as ratio^1.5.
+# Same numbers as Tuning.fareGainByRatio and FareDemand.factor in Swift.
+FARE_GAIN_TABLE = [(1.0, 1.0), (1.25, 1.143), (1.5, 1.275), (2.0, 1.5)]
+
+
+def fare_demand(ratio):
+    if ratio <= 1.0:
+        return ratio * math.sqrt(ratio)
+    return dp.interpolate(FARE_GAIN_TABLE, ratio)
+
+
+def fare_sweep():
+    """Revenue by fare multiplier, relative to fare 1.0: on a route with spare seats, and on one where demand is 1.3 times the seats."""
+    print('fare  people  revenue(spare seats)  revenue(full route)')
+    for m in (0.5, 0.6, 0.7, 0.76, 0.8, 0.9, 1.0, 1.05, 1.1, 1.15, 1.2, 1.3, 1.5, 2.0):
+        people = fare_demand(1.0 / m)
+        full = min(1.3 * people, 1.0)
+        print(f'{m:4.2f}  {people:6.3f}  {m * people:20.3f}  {m * full:19.3f}')
 
 
 def cargo_per_day(a, b):
@@ -97,6 +119,9 @@ def evaluate(t, a, b, wealth, round_trips):
 
 
 if __name__ == '__main__':
+    if '--fares' in sys.argv:
+        fare_sweep()
+        sys.exit(0)
     airports = dp.load_airports()
     by = {a['code']: a for a in airports}
     wealth = {iso: w for iso, (_, _, w) in countries.load().items()}
