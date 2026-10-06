@@ -217,6 +217,8 @@ import CoreCatalog
 
     @Test func aFreePostersCampaignCostsNothingAndComesEveryTwoWeeks() throws {
         var w = try Fixtures.flyingWorld()
+        // The first route starts fully known; make it less known so the campaign has something to raise.
+        for l in w.routes[0].legs.indices { w.routes[0].legs[l].maturity = 0.7 }
         let cash = w.airline.cash
         let known = w.routes[0].legs[0].maturity
         try w.grantReward(.freePosters, realDay: Self.day)
