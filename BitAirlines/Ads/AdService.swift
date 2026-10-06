@@ -18,6 +18,7 @@ protocol AdService: AnyObject {
 
 /// Every id the ad network needs, in one place. The defaults are Google's public TEST ids: they always show a test ad and
 /// never pay. tools/generate_xcodeproj.rb reads `appID` from this file for Info.plist, so keep it on one line.
+/// Before an App Store build with AdMob (BIT_ADS=1), both ids must be the real ones: see docs/app-store.md, section 4.
 enum AdConfig {
     // TODO: replace with the real AdMob app id (AdMob, Apps, App settings) before the App Store build.
     static let appID = "ca-app-pub-3940256099942544~1458002511"
@@ -25,10 +26,19 @@ enum AdConfig {
     static let rewardedUnitID = "ca-app-pub-3940256099942544/1712485313"
     /// How long the stand-in ad runs when the ad network is not built in.
     static let placeholderSeconds = 5
-    /// Without the ad network built in, the stand-in ad lets the flow be tested. Set to false to hide every ad button in such
-    /// builds instead (for example an App Store build made before AdMob is switched on).
+    /// Without the ad network built in, the stand-in ad lets the flow be tested, but only in Debug builds (Xcode Run on a phone
+    /// or the simulator). A Release build (Archive, TestFlight, the App Store) without AdMob hides every ad button instead.
+    #if DEBUG
     static let placeholderWithoutSDK = true
+    #else
+    static let placeholderWithoutSDK = false
+    #endif
 }
+
+#if canImport(GoogleMobileAds) && !DEBUG
+// A reminder in Xcode's warning list for every Archive with AdMob built in. Delete these lines once AdConfig holds the real ids.
+#warning("AdMob release build: check that AdConfig.appID and AdConfig.rewardedUnitID are the real ids, not Google's test ids.")
+#endif
 
 /// The one ad service the app uses.
 @MainActor

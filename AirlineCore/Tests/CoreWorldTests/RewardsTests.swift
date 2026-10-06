@@ -28,11 +28,13 @@ import CoreCatalog
         #expect(w.rewardProfitDay == Tuning.rewardProfitDayFloor, "a losing airline still gets the floor")
     }
 
-    @Test func theAwayProfitIsPaidAgainUpToTwoProfitDaysThreeTimesADay() throws {
+    @Test func theAwayProfitIsPaidAgainUpToThreeProfitDaysThreeTimesADay() throws {
         var w = try Fixtures.world()
         w.books = []
-        let most = 2 * Tuning.rewardProfitDayFloor
+        #expect(Tuning.awayRewardProfitDays == 3, "matches the three game days a break can pay")
+        let most = 3 * Tuning.rewardProfitDayFloor
         #expect(w.rewardOffer(.awayDouble, realDay: Self.day, target: 1_500)?.cash == 1_500)
+        #expect(w.rewardOffer(.awayDouble, realDay: Self.day, target: most)?.cash == most, "a full three-day break is paid again in full")
         #expect(w.rewardOffer(.awayDouble, realDay: Self.day, target: 50_000)?.cash == most)
         #expect(w.rewardOffer(.awayDouble, realDay: Self.day, target: 0) == nil, "nothing to pay again after a loss")
         let noTarget = refused { try w.grantReward(.awayDouble, realDay: Self.day) }
@@ -43,8 +45,8 @@ import CoreCatalog
         let booked = w.today.revenue
         try w.grantReward(.awayDouble, realDay: Self.day, target: 50_000)
         #expect(w.airline.cash == cash + most)
-        #expect(w.airline.stats.revenue == revenue + most, "booked as revenue")
-        #expect(w.today.revenue == booked + most, "and shows in today's books")
+        #expect(w.airline.stats.revenue == revenue, "not revenue: an ad never counts toward a level or a revenue goal")
+        #expect(w.today.revenue == booked, "and it stays out of the day books")
 
         try w.grantReward(.awayDouble, realDay: Self.day, target: 1_000)
         try w.grantReward(.awayDouble, realDay: Self.day, target: 1_000)
@@ -92,6 +94,7 @@ import CoreCatalog
         #expect(a.routes[0].sinceOpened.revenue == b.routes[0].sinceOpened.revenue, "fares and demand are the same")
         #expect(b.lastSponsorPayment > 0)
         #expect(b.airline.cash - a.airline.cash == b.lastSponsorPayment)
+        #expect(b.airline.stats.revenue == a.airline.stats.revenue, "the sponsor's money is not revenue")
     }
 
     @Test func anAircraftInTheHangarComesOutNowThreeTimesADay() throws {
@@ -135,8 +138,10 @@ import CoreCatalog
         let reward = try #require(w.ops.weeklyGoal?.reward)
         #expect(w.rewardOffer(.doubleGoalBonus, realDay: Self.day)?.cash == reward)
         let cash = w.airline.cash
+        let revenue = w.airline.stats.revenue
         try w.grantReward(.doubleGoalBonus, realDay: Self.day)
         #expect(w.airline.cash == cash + reward)
+        #expect(w.airline.stats.revenue == revenue, "a bonus is not revenue")
         #expect(w.rewardOffer(.doubleGoalBonus, realDay: Self.day + 1) == nil, "once per goal")
     }
 

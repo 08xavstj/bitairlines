@@ -23,7 +23,7 @@ struct RewardButton: View {
                 Button { watch() } label: {
                     HStack(spacing: 6) {
                         PixelIconView(icon: .tv, pixel: 1)
-                        Text((service.skipsAds ? "Take it: " : "Watch an ad: ") + RewardWords.reward(offer))
+                        Text((service.skipsAds ? "Take it: " : "Watch an ad: ") + RewardWords.reward(offer, target: target))
                     }
                 }
                 .buttonStyle(.small)
@@ -69,11 +69,17 @@ struct RewardButton: View {
     }
 }
 
-/// The words for each reward, from the numbers the world gives.
+/// The words for each reward, from the numbers the world gives. `target` is what the button was given (the away profit for
+/// `.awayDouble`), so the words never promise more than the offer pays.
 enum RewardWords {
-    static func reward(_ offer: RewardOffer) -> String {
+    static func reward(_ offer: RewardOffer, target: Int? = nil) -> String {
         switch offer.kind {
-        case .awayDouble: return "the away profit again, \(Format.compactMoney(offer.cash))"
+        case .awayDouble:
+            // The offer is capped at a few profit days; say so when the cap is below the profit made while away.
+            if let target, offer.cash < target {
+                return "+\(Format.compactMoney(offer.cash)), up to \(Tuning.awayRewardProfitDays) days of profit"
+            }
+            return "the away profit again, \(Format.compactMoney(offer.cash))"
         case .sponsorBoost:
             let share = Int((Tuning.sponsorRevenueShare * 100).rounded())
             return "a sponsor pays \(share)% of a day's route income"

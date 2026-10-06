@@ -13,15 +13,35 @@ public struct SpareMove: Sendable, Hashable {
 }
 
 extension World {
-    /// Aircraft the route's schedule needs: the suggested schedule (or the player's own, when they set one) divided by the
-    /// rotations one aircraft flies a day. Nil for a route with no aircraft.
+    /// Aircraft the route's schedule needs: the schedule it flies (picked to fit its aircraft, or the player's own) divided by the
+    /// rotations one aircraft flies a day. Fewer aircraft than this means departures are missed. Nil for a route with no aircraft.
+    /// An automatic schedule is already cut to what its aircraft can fly, so a market that would fill more aircraft does not make
+    /// it short (see `aircraftForDemand`).
     public func aircraftNeeded(routeID: Int) -> Int? {
         guard let r = routeIndex(routeID), let type = routeType(routes[r]) else { return nil }
         let route = routes[r]
         let cycles = cyclesPerAircraftPerDay(route: route, type: type)
         guard cycles > 0 else { return nil }
-        let frequency = route.autoFrequency ? Route.snapFrequency(demandFrequency(route: route, type: type)) : route.frequency
+        return max(1, Int((route.frequency / cycles - 0.01).rounded(.up)))
+    }
+
+    /// Aircraft of the route's type the market would fill: the schedule the people on it would fill at a healthy load, divided by
+    /// the rotations one aircraft flies a day. A room-to-grow figure, not a shortfall. Nil for a route with no aircraft.
+    public func aircraftForDemand(routeID: Int) -> Int? {
+        guard let r = routeIndex(routeID), let type = routeType(routes[r]) else { return nil }
+        let route = routes[r]
+        let cycles = cyclesPerAircraftPerDay(route: route, type: type)
+        guard cycles > 0 else { return nil }
+        let frequency = Route.snapFrequency(demandFrequency(route: route, type: type))
         return max(1, Int((frequency / cycles - 0.01).rounded(.up)))
+    }
+
+    /// Aircraft away on a job that come back to this route by themselves when the job is done (JobFlights.swift), in fleet order.
+    /// While away they are not in the route's `aircraftIDs`.
+    public func aircraftAwayOnJobs(routeID: Int) -> [Int] {
+        aircraft.filter { plane in
+            plane.jobID != nil && (plane.returnRouteID == routeID || (plane.returnOtherRoutesStore ?? []).contains(routeID))
+        }.map(\.id)
     }
 
     /// Aircraft flying only this route, beyond what it needs, that could go elsewhere.

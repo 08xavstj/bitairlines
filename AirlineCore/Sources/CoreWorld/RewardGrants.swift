@@ -1,6 +1,7 @@
 // CoreWorld/RewardGrants.swift: applying a reward the player earned by watching an ad (see Rewards.swift for the offers and
-// caps), and the midnight part: the sponsor's daily payment and the broker's listings leaving. Cash is booked with `earn`, so
-// it shows as revenue on the Money screen. Only the broker's listings and new jobs draw random numbers, from ops.rng.
+// caps), and the midnight part: the sponsor's daily payment and the broker's listings leaving. Cash goes to the bank with
+// `payRewardCash`, not as revenue, so ads never count toward a certificate level or a revenue goal. Only the broker's listings
+// and new jobs draw random numbers, from ops.rng.
 import CoreCatalog
 import CoreSim
 
@@ -12,7 +13,7 @@ extension World {
         guard let offer = rewardOffer(kind, realDay: realDay, target: target) else { throw WorldError.invalidChoice }
         switch kind {
         case .awayDouble:
-            earn(offer.cash)
+            payRewardCash(offer.cash)
         case .sponsorBoost:
             let days = ops.rewards.sponsorDays
             ops.rewards.sponsorDays = min(Tuning.sponsorMaxDays, days + 1)
@@ -20,7 +21,7 @@ extension World {
             try finishHangarNow(target)
         case .doubleGoalBonus:
             let week = ops.weeklyGoal?.week
-            earn(offer.cash)
+            payRewardCash(offer.cash)
             ops.rewards.goalWeek = week
         case .overdraftSponsor:
             try sponsorOverdraft(offer.cash)
@@ -54,7 +55,7 @@ extension World {
         let days = ops.rewards.sponsorDays
         if days > 0 {
             let pay = sponsorPayment()
-            if pay > 0 { earn(pay) }
+            if pay > 0 { payRewardCash(pay) }
             ops.rewards.sponsorDays = days - 1
             ops.rewards.lastSponsorPay = pay
         }
@@ -76,6 +77,13 @@ extension World {
         ops.rewards.counts[kind.rawValue] = taken + 1
     }
 
+    /// Reward cash goes into the bank only. It is not revenue: it never counts toward a certificate level, a revenue goal or the
+    /// borrowing limit, and it stays out of the day books, so it does not grow the profit day that sizes the next reward. The
+    /// weekly goal bonus is paid the same way (WeeklyGoals).
+    mutating func payRewardCash(_ amount: Int) {
+        airline.cash += amount
+    }
+
     /// The list with the id added, keeping the last few.
     static func keeping(_ ids: [Int], adding id: Int) -> [Int] { Array((ids + [id]).suffix(Tuning.rewardIDsKept)) }
 
@@ -92,7 +100,7 @@ extension World {
     mutating func sponsorOverdraft(_ amount: Int) throws {
         guard let k = overdraftIssueIndex() else { throw WorldError.invalidChoice }
         let id = issues[k].id
-        earn(amount)
+        payRewardCash(amount)
         let kept = World.keeping(ops.rewards.overdraftIssueIDs, adding: id)
         ops.rewards.overdraftIssueIDs = kept
         if airline.cash >= -Tuning.overdraftLimit {

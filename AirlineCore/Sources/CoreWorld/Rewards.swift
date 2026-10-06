@@ -1,6 +1,7 @@
 // CoreWorld/Rewards.swift: rewards for watching an ad (docs/rewarded-ads.md). Never forced: the app shows an offer only when
 // `rewardOffer` returns one and an ad is ready, and calls `grantReward` (RewardGrants.swift) once the ad network says the player
-// earned it. Cash rewards are sized to the airline (a "profit day") and booked as revenue. Each kind has a cap per real day:
+// earned it. Cash rewards are sized to the airline (a "profit day") and go to the bank, not to revenue (`payRewardCash`), so
+// ads never count toward a certificate level or a revenue goal. Each kind has a cap per real day:
 // Core has no clock, so the app passes the real day in (days since 2000-01-01 on the player's calendar). Some kinds also have
 // a limit in game time or per thing (per overdraft, per breakdown, per listing, per weekly goal).
 // Sandbox has no rewards: money never runs out there, so there is nothing to win.
@@ -9,7 +10,8 @@ import CoreCatalog
 import CoreSim
 
 public enum RewardKind: String, Sendable, Hashable, Codable, CaseIterable {
-    /// The profit made while the player was away, paid again (up to two profit days). `target` is that profit in dollars.
+    /// The profit made while the player was away, paid again (up to `Tuning.awayRewardProfitDays` profit days). `target` is
+    /// that profit in dollars.
     case awayDouble
     /// A sponsor pays a share of a game day's route revenue, for one more game day (stacks up to a limit).
     case sponsorBoost
@@ -101,8 +103,9 @@ extension Tuning {
     /// A profit day: the average daily operating result over this many game days, never below the floor.
     public static let rewardProfitDayWindow = 7
     public static let rewardProfitDayFloor = 2_000
-    /// The away profit is paid again up to this many profit days.
-    public static let awayRewardProfitDays = 2
+    /// The away profit is paid again up to this many profit days. It matches the longest break the app pays out
+    /// (AwayReport.maxGameMinutes, three game days), so a full break is usually paid again in full.
+    public static let awayRewardProfitDays = 3
     /// The sponsor pays this share of a game day's route revenue, for at most this many game days in hand.
     public static let sponsorRevenueShare = 0.25
     public static let sponsorMaxDays = 4

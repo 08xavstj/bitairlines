@@ -68,13 +68,23 @@ extension Tuning {
 extension World {
     static let workingCapitalFloor = 600_000
 
-    public static func starterOffers(home: String, difficulty: Difficulty) -> [StarterOffer] {
+    /// The used aircraft offered at the start: level 1 types that can use the home under the game mode's rules and fit the budget.
+    public static func starterOffers(home: String, difficulty: Difficulty, mode: GameMode = .normal) -> [StarterOffer] {
         guard let airport = AirportCatalog.airport(home) else { return [] }
-        return AircraftCatalog.available(atLevel: 1).filter { $0.canLand(at: airport) }.compactMap { (type: AircraftType) -> StarterOffer? in
+        return AircraftCatalog.available(atLevel: 1).filter { starterCanUse($0, at: airport, mode: mode) }.compactMap { (type: AircraftType) -> StarterOffer? in
             let age = type.inProduction ? 12.0 : 45.0
             let price = Valuation.value(type: type, ageYears: age, condition: 78)
             return price <= difficulty.startingBudget - workingCapitalFloor ? StarterOffer(typeID: type.id, ageYears: age, condition: 78, price: price) : nil
         }
+    }
+
+    /// Whether a starter can use the home airport, by the same rule the game uses once it runs (World.canUse, with no kits or base
+    /// upgrades yet): a water aerodrome needs a floatplane in every mode; on land, Relaxed (no runway checks) takes any aircraft
+    /// with wheels, and the other modes also need a long enough runway of the right surface.
+    static func starterCanUse(_ type: AircraftType, at airport: Airport, mode: GameMode) -> Bool {
+        if airport.surface == .water { return type.water }
+        if !mode.checksRunways { return type.paved || type.gravel }
+        return type.canLand(at: airport)
     }
 
     /// The permits a new airline starts with: its own country, and when that country has hardly any other airports (a small island
@@ -90,8 +100,8 @@ extension World {
         guard let home = AirportCatalog.airport(config.homeAirport) else { throw WorldError.unknownAirport(config.homeAirport) }
         guard let type = AircraftCatalog.type(config.starterTypeID) else { throw WorldError.unknownType(config.starterTypeID) }
         guard type.level == 1 else { throw WorldError.levelTooLow(required: type.level) }
-        guard type.canLand(at: home) else { throw WorldError.aircraftCannotUse(airport: home.code) }
-        let offer = starterOffers(home: home.code, difficulty: config.difficulty).first { $0.typeID == type.id }
+        guard starterCanUse(type, at: home, mode: config.mode) else { throw WorldError.aircraftCannotUse(airport: home.code) }
+        let offer = starterOffers(home: home.code, difficulty: config.difficulty, mode: config.mode).first { $0.typeID == type.id }
         guard let offer else { throw WorldError.notEnoughCash(needed: Valuation.value(type: type, ageYears: 12, condition: 78) + workingCapitalFloor) }
 
         let airline = Airline(name: config.airlineName, code: config.airlineCode, home: home.code, cash: config.difficulty.startingBudget - offer.price,

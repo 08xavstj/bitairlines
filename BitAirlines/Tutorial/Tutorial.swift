@@ -34,18 +34,30 @@ enum TutorialStep: Int, CaseIterable {
 
     /// The tips after the first route, in order.
     static let tour: [TutorialStep] = [.review, .money, .inbox, .hangar, .secondRoute, .jobs, .level]
+
+    /// The same tips where routes from home pay little: jobs come straight after the routes tip, since they are the early money there.
+    static let tourJobsEarly: [TutorialStep] = [.review, .jobs, .money, .inbox, .hangar, .secondRoute, .level]
+
+    static func order(jobsEarly: Bool) -> [TutorialStep] { jobsEarly ? tourJobsEarly : tour }
 }
 
 enum Tutorial {
     /// How many flights the player watches before the tour.
     static let flightsToWatch = 3
+    /// Below this profit a day (the guide's suggestion, after head office) the routes count as thin and jobs are taught early.
+    static let thinRoutePerDay = 500.0
 
     /// The step the player is on, or nil once they have been through all of it. `seen` holds the tips already read or put off.
-    static func step(world: World, speed: GameSpeed, seen: Set<TutorialStep>) -> TutorialStep? {
+    static func step(world: World, speed: GameSpeed, seen: Set<TutorialStep>, jobsEarly: Bool = false) -> TutorialStep? {
         if world.routes.isEmpty { return .openRoute }
-        if world.routes.allSatisfy({ $0.aircraftIDs.isEmpty }) { return .assignAircraft }
+        // An aircraft away on a job goes back to its route by itself afterwards, so it is not parked.
+        let onJob = world.aircraft.contains { $0.jobID != nil }
+        if world.routes.allSatisfy({ $0.aircraftIDs.isEmpty }) && !onJob {
+            // A route none of the aircraft can fly cannot be given one: back to opening a route they can fly.
+            return world.routes.contains { world.fleetCanFly(route: $0) } ? .assignAircraft : .openRoute
+        }
         if world.airline.stats.flights < flightsToWatch, !seen.contains(.review) { return speed == .paused ? .startClock : .watch }
-        for step in TutorialStep.tour where !seen.contains(step) {
+        for step in TutorialStep.order(jobsEarly: jobsEarly) where !seen.contains(step) {
             if step == .hangar && world.aircraft.count >= 2 { continue }
             if step == .secondRoute && world.routes.count >= 2 { continue }
             return step
@@ -60,11 +72,20 @@ enum Tutorial {
         return (code: idea.stops[1], perDay: idea.profitPerDay)
     }
 
+    /// True when the best first route from home earns little once head office is paid (or there is none): then the guide teaches
+    /// jobs right after the routes tip.
+    static func routesAreThin(_ suggestion: (code: String, perDay: Double)?) -> Bool {
+        guard let suggestion else { return true }
+        return suggestion.perDay - Tuning.headOfficePerDay(level: 1) < thinRoutePerDay
+    }
+
     /// What the guide says on each step. Plain words, no jargon.
     static func text(for step: TutorialStep, world: World, suggestion: (code: String, perDay: Double)?, flights: Int) -> String {
         switch step {
         case .openRoute:
-            var line = "Open your first route. On the Map press New route, then tap two airports, one after the other."
+            var line = world.routes.isEmpty
+                ? "Open your first route. On the Map press New route, then tap two airports, one after the other."
+                : "Your aircraft cannot fly the route you opened. Close it under Routes, then open one it can fly: on the Map press New route and tap two airports."
             if let suggestion {
                 line += " Try \(Place.name(world.airline.home)) to \(Place.name(suggestion.code)), about \(Format.perDay(suggestion.perDay)) once people know it."
             }

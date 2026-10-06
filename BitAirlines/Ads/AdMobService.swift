@@ -20,6 +20,8 @@ final class AdMobService: NSObject, AdService, FullScreenContentDelegate {
     @ObservationIgnored private var pending: ((Bool) -> Void)?
     /// A tap that came before consent was settled: show as soon as an ad loads (or give up after a few seconds).
     @ObservationIgnored private var waiting: (host: UIViewController?, completion: (Bool) -> Void)?
+    /// Counts the waits, so the time limit of an earlier tap never ends a newer wait.
+    @ObservationIgnored private var waitCount = 0
 
     /// The consent status is fetched first; ads load only where they may. Where consent is still needed (EU, UK,
     /// Switzerland), the button shows anyway: the first tap asks the question (AdConsent), then loads and plays an ad.
@@ -54,7 +56,9 @@ final class AdMobService: NSObject, AdService, FullScreenContentDelegate {
         isReady = loaded != nil
         if let waiting {
             self.waiting = nil
-            if loaded != nil { showRewarded(from: waiting.host, completion: waiting.completion) } else { waiting.completion(false) }
+            // The screen that asked may have been closed while the ad loaded: then show it over whatever is on top now.
+            let host = waiting.host?.view.window != nil ? waiting.host : Ads.topController()
+            if loaded != nil { showRewarded(from: host, completion: waiting.completion) } else { waiting.completion(false) }
             return
         }
         if loaded == nil {
@@ -68,13 +72,21 @@ final class AdMobService: NSObject, AdService, FullScreenContentDelegate {
 
     func showRewarded(from host: UIViewController?, completion: @escaping (Bool) -> Void) {
         guard let ad else {
+            // Consent is still missing after the questions: no ad may be asked for, so the buttons hide until it changes
+            // (Settings, Ad privacy choices).
+            guard AdConsent.canRequestAds else {
+                isReady = false
+                completion(false)
+                return
+            }
             // Consent was just given: load now and play when ready, or give up after a few seconds.
-            guard AdConsent.canRequestAds else { completion(false); return }
+            waitCount += 1
+            let mine = waitCount
             waiting = (host, completion)
             loadAd()
             Task { @MainActor [weak self] in
                 try? await Task.sleep(nanoseconds: 8_000_000_000)
-                guard let self, let waiting = self.waiting else { return }
+                guard let self, self.waitCount == mine, let waiting = self.waiting else { return }
                 self.waiting = nil
                 waiting.completion(false)
             }
@@ -97,6 +109,15 @@ final class AdMobService: NSObject, AdService, FullScreenContentDelegate {
         pending = nil
         earned = false
         done?(got)
+        load()
+    }
+
+    /// After the player changed their ad privacy choices: drop an ad loaded under the old answer, then load again where allowed.
+    /// Does nothing while an ad is on screen (it finishes first, and `finish` loads the next one).
+    func consentChanged() {
+        guard pending == nil else { return }
+        ad = nil
+        isReady = false
         load()
     }
 

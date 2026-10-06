@@ -3,7 +3,8 @@ import UIKit
 import Observation
 
 /// The stand-in used while the ad network is not built in: a full-screen pixel "ad" that counts down, so every reward can be
-/// tried now. Closing it early gives nothing, as a real rewarded ad would.
+/// tried now. Closing it early gives nothing, as a real rewarded ad would. Debug builds only: in a Release build
+/// `AdConfig.placeholderWithoutSDK` is false, so `isReady` stays false and no ad button shows.
 @MainActor
 @Observable
 final class DevAdService: AdService {

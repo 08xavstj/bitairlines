@@ -63,12 +63,13 @@ extension World {
     }
 
     /// The used aircraft to buy now (the most seats the bank can pay for) or else the cheapest to save for.
-    /// Only types of the airline's level that can use the home airport, and no barn finds (they need restoring first).
+    /// Only types of the airline's level that can use the home airport (by the game mode's rules, as buying checks), and no barn
+    /// finds (they need restoring first).
     func aircraftStep() -> NextStep? {
-        guard let home = AirportCatalog.airport(airline.home) else { return nil }
+        guard AirportCatalog.airport(airline.home) != nil else { return nil }
         var offers: [(listing: UsedListing, seats: Int)] = []
         for listing in market.listings where listing.rare != .barnFind {
-            guard let type = AircraftCatalog.type(listing.typeID), type.level <= airline.level, type.canLand(at: home) else { continue }
+            guard let type = AircraftCatalog.type(listing.typeID), type.level <= airline.level, homeProblem(type) == nil else { continue }
             offers.append((listing: listing, seats: type.seats))
         }
         offers.sort { a, b in a.listing.price != b.listing.price ? a.listing.price < b.listing.price : a.listing.id < b.listing.id }

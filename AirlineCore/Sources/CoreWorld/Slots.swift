@@ -1,6 +1,8 @@
 // CoreWorld/Slots.swift: busy airports ration departures. At an airport of certificate level 3 or above the airline needs a slot for
 // every daily departure it schedules there; small strips are free. Slots are bought once (and can be sold back for half).
 // A route scheduled beyond its slots still flies, but only as many departures a day as there are slots; the rest wait for tomorrow.
+// The headquarters comes with a few slots for free (Tuning.headquartersSlots), so a home at a busy airport (Rio Branco, Boa Vista,
+// Pokhara) never strands the first aircraft. They are not bought, so they cannot be sold, and they move with the headquarters.
 import CoreCatalog
 
 public struct SlotHolding: Sendable, Hashable, Codable {
@@ -9,13 +11,24 @@ public struct SlotHolding: Sendable, Hashable, Codable {
     public var daily: Int
 }
 
+extension Tuning {
+    /// Daily slots the airline holds for free at its headquarters (only counted where the airport hands out slots).
+    public static let headquartersSlots = 8
+}
+
 extension World {
     /// Whether this airport hands out slots (only in Normal and Realism).
     public func needsSlots(_ airport: Airport) -> Bool {
         ops.mode.needsSlots && Progression.requiredLevel(for: airport) >= Tuning.slotAirportLevel
     }
 
-    public func slotsHeld(at code: String) -> Int { ops.slots.first { $0.airport == code }?.daily ?? 0 }
+    /// Daily slots the airline holds at an airport: those it bought, plus the free ones at its headquarters.
+    public func slotsHeld(at code: String) -> Int {
+        slotsBought(at: code) + (code == airline.home ? Tuning.headquartersSlots : 0)
+    }
+
+    /// Daily slots bought at an airport: the ones that can be sold back.
+    public func slotsBought(at code: String) -> Int { ops.slots.first { $0.airport == code }?.daily ?? 0 }
 
     /// Departures a day the airline's routes schedule from an airport.
     public func slotsScheduled(at code: String) -> Int {
@@ -62,6 +75,7 @@ extension World {
     }
 
     /// True if a departure from this airport would go beyond today's slots (and the flight must wait until tomorrow).
+    /// Slots held include the free ones at the headquarters.
     func outOfSlots(at airport: Airport) -> Bool {
         guard needsSlots(airport) else { return false }
         let used = ops.slotsUsedToday.first { $0.airport == airport.code }?.daily ?? 0
