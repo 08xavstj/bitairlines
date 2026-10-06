@@ -84,6 +84,11 @@ public enum Tuning {
     public static let emergencyLoanRate = 0.15
     /// Catchment above which a market has competing airlines (the share a newcomer gets is then limited).
     public static let competitiveCatchment = 1_500_000.0
+    /// A used aircraft arrives after its listing's estimate (2 to 9) times this many hours: 4 to 18 hours.
+    public static let usedDeliveryHoursPerStep = 2
+    /// A new aircraft arrives after base + per level x its level hours: a day for a bush plane, 4 days for a jumbo.
+    public static let newDeliveryBaseHours = 12
+    public static let newDeliveryHoursPerLevel = 12
 
     // MARK: Bases, fuel stock and slots
     public static let runwayExtensionFt = 1500

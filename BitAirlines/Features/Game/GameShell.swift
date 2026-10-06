@@ -103,7 +103,10 @@ struct TopBar: View {
             SpeedControls(session: session, coach: coach)
             Spacer(minLength: 4)
             VStack(alignment: .trailing, spacing: 1) {
-                Text(Format.compactMoney(world.airline.cash)).pixelFont(13.333).foregroundStyle(world.airline.cash < 0 ? Theme.bad : Theme.good)
+                HStack(spacing: 6) {
+                    PayoutTag(payout: session.payout)
+                    Text(Format.compactMoney(world.airline.cash)).pixelFont(13.333).foregroundStyle(world.airline.cash < 0 ? Theme.bad : Theme.good)
+                }
                 Text("Level \(world.airline.level)  Rep \(Int(world.airline.reputation))").pixelFont(10.667).foregroundStyle(Theme.textMuted)
             }
         }

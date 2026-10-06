@@ -14,7 +14,7 @@ extension World {
         guard airline.cash >= listing.price else { throw WorldError.notEnoughCash(needed: listing.price) }
         airline.cash -= listing.price
         let id = takeAircraftID()
-        let delivery = clock.minute + listing.deliveryDays * GameClock.minutesPerDay
+        let delivery = clock.minute + Valuation.usedDeliveryMinutes(listing)
         aircraft.append(Aircraft(id: id, typeID: type.id, registration: nextRegistration(), builtDay: clock.dayIndex - Int(listing.ageYears * 365.25),
                                  condition: listing.condition, price: listing.price, location: airline.home, status: .onOrder(until: delivery)))
         market.listings.removeAll { $0.id == listingID }
@@ -30,7 +30,7 @@ extension World {
         guard airline.cash >= type.priceUSD else { throw WorldError.notEnoughCash(needed: type.priceUSD) }
         airline.cash -= type.priceUSD
         let id = takeAircraftID()
-        let delivery = clock.minute + Valuation.newDeliveryDays(level: type.level) * GameClock.minutesPerDay
+        let delivery = clock.minute + Valuation.newDeliveryMinutes(level: type.level)
         aircraft.append(Aircraft(id: id, typeID: type.id, registration: nextRegistration(), builtDay: clock.dayIndex, condition: 100,
                                  price: type.priceUSD, location: airline.home, status: .onOrder(until: delivery)))
         return id

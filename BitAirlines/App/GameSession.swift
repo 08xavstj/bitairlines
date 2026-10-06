@@ -37,6 +37,8 @@ final class GameSession {
     var speed: GameSpeed = .paused
     /// A message about the last thing the player tried (for example why a purchase was refused).
     var notice: String?
+    /// Money just earned from flights and jobs, shown next to the bank total for a moment.
+    var payout: Payout?
     let slot: Int
     /// Set by the game screen, so changes the player makes can be heard.
     @ObservationIgnored var audio: AudioEngine?
@@ -87,9 +89,21 @@ final class GameSession {
         let minutes = Int(carry)
         guard minutes > 0 else { return }
         carry -= Double(minutes)
+        let revenueBefore = world.airline.stats.revenue
         let result = world.advance(byMinutes: minutes)
+        notePayout(world.airline.stats.revenue - revenueBefore, at: now)
         if result == .pausedForIssue || result == .gameOver { save() }
         if now.timeIntervalSince(lastSave) > 45 { save() }
+    }
+
+    /// Payments that land close together add up in one tag, so fast speeds do not flicker.
+    private func notePayout(_ amount: Int, at now: Date) {
+        guard amount > 0 else { return }
+        if let current = payout, now.timeIntervalSince(current.shownAt) < Payout.mergeSeconds {
+            payout = Payout(id: current.id, amount: current.amount + amount, shownAt: current.shownAt)
+        } else {
+            payout = Payout(id: (payout?.id ?? 0) + 1, amount: amount, shownAt: now)
+        }
     }
 
     func save() {

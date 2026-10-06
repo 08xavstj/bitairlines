@@ -6,28 +6,43 @@ import CoreWorld
 struct MarketScreen: View {
     let session: GameSession
     @State private var tab = 0
+    @State private var filter = MarketFilter()
 
     var body: some View {
         let world = session.world
         Page {
             ScreenHeader(title: "Hangar") { Text("Cash \(Format.compactMoney(world.airline.cash))").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
             PixelChoice(options: [(label: "Used", value: 0), (label: "New", value: 1)], selection: $tab)
+            MarketFilterBar(filter: $filter)
             if tab == 0 {
-                Text("Used aircraft arrive at your home airport a few days after you buy them. The listings change every week.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
-                ForEach(world.market.listings) { listing in
+                Text("Used aircraft are ferried to your home airport within a day. The listings change every week.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                ForEach(usedListings(world)) { listing in
                     if let type = AircraftCatalog.type(listing.typeID) {
-                        UsedCard(session: session, listing: listing, type: type)
+                        UsedCard(session: session, listing: listing, type: type, fit: world.fit(of: type))
                     }
                 }
             } else {
-                Text("New aircraft cost more and take longer to arrive, but they are in perfect condition.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
-                ForEach(newTypes) { type in NewCard(session: session, type: type) }
+                Text("New aircraft cost more and take a little longer to arrive, but they are in perfect condition.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                ForEach(newTypes(world)) { type in NewCard(session: session, type: type, fit: world.fit(of: type)) }
+            }
+            if nothingShown(world) {
+                Text("Nothing for sale matches. Clear the search or pick another level.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
             }
         }
     }
 
-    private var newTypes: [AircraftType] {
-        AircraftCatalog.all.filter { $0.inProduction }.sorted { ($0.level, $0.priceUSD) < ($1.level, $1.priceUSD) }
+    private func shows(_ type: AircraftType, in world: World) -> Bool { filter.matches(type, fit: world.fit(of: type)) }
+
+    private func usedListings(_ world: World) -> [UsedListing] {
+        world.market.listings.filter { AircraftCatalog.type($0.typeID).map { shows($0, in: world) } ?? false }
+    }
+
+    private func newTypes(_ world: World) -> [AircraftType] {
+        AircraftCatalog.all.filter { $0.inProduction && shows($0, in: world) }.sorted { ($0.level, $0.priceUSD) < ($1.level, $1.priceUSD) }
+    }
+
+    private func nothingShown(_ world: World) -> Bool {
+        tab == 0 ? usedListings(world).isEmpty : newTypes(world).isEmpty
     }
 }
 
@@ -43,6 +58,7 @@ struct UsedCard: View {
     let session: GameSession
     let listing: UsedListing
     let type: AircraftType
+    let fit: AircraftFit
 
     var body: some View {
         let world = session.world
@@ -53,7 +69,8 @@ struct UsedCard: View {
                 VStack(alignment: .leading, spacing: 3) {
                     Text(type.displayName.uppercased()).pixelFont(13.333).foregroundStyle(locked ? Theme.textMuted : Theme.textPrimary).lineLimit(1)
                     SpecLine(type: type)
-                    Text("\(Int(listing.ageYears)) years old, condition \(Int(listing.condition))%, arrives in \(listing.deliveryDays) days").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
+                    Text("\(Int(listing.ageYears)) years old, condition \(Int(listing.condition))%, arrives in \(Format.wait(minutes: Valuation.usedDeliveryMinutes(listing)))").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
+                    FitSummary(fit: fit)
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 6) {
@@ -72,6 +89,7 @@ struct UsedCard: View {
 struct NewCard: View {
     let session: GameSession
     let type: AircraftType
+    let fit: AircraftFit
 
     var body: some View {
         let world = session.world
@@ -82,7 +100,8 @@ struct NewCard: View {
                 VStack(alignment: .leading, spacing: 3) {
                     Text(type.displayName.uppercased()).pixelFont(13.333).foregroundStyle(locked ? Theme.textMuted : Theme.textPrimary).lineLimit(1)
                     SpecLine(type: type)
-                    Text("Arrives in about \(Valuation.newDeliveryDays(level: type.level)) days").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
+                    Text("Arrives in about \(Format.wait(minutes: Valuation.newDeliveryMinutes(level: type.level)))").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
+                    FitSummary(fit: fit)
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 6) {

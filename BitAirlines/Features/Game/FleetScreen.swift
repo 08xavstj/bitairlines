@@ -17,7 +17,7 @@ enum FleetText {
         case .grounded:
             return ("Grounded: needs your decision", Theme.bad)
         case .onOrder(let until):
-            return ("Arrives \(Format.date(GameClock(minute: until).date))", Theme.gold)
+            return ("Arrives \(Format.date(GameClock(minute: until).date)) at \(Format.time(GameClock(minute: until)))", Theme.gold)
         }
     }
 

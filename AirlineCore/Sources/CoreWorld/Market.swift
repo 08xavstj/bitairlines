@@ -8,7 +8,8 @@ public struct UsedListing: Sendable, Hashable, Codable, Identifiable {
     public var ageYears: Double
     public var condition: Double
     public var price: Int
-    /// Days until the aircraft arrives at the buyer's home airport.
+    /// The seller's ferry estimate, 2 to 9. Kept under its old name so saves still load;
+    /// the wait is `Valuation.usedDeliveryMinutes` (a few hours, not days).
     public var deliveryDays: Int
 }
 
@@ -43,8 +44,15 @@ public enum Valuation {
         min(2.2, 1.0 + 0.02 * ageYears) * (1.0 + (100.0 - condition) / 250.0)
     }
 
-    /// Delivery time for a new aircraft: bigger types take longer to build.
-    public static func newDeliveryDays(level: Int) -> Int { 5 + 12 * level }
+    /// Minutes until a used aircraft reaches the home airport: a ferry flight of a few hours.
+    public static func usedDeliveryMinutes(_ listing: UsedListing) -> Int {
+        listing.deliveryDays * Tuning.usedDeliveryHoursPerStep * 60
+    }
+
+    /// Minutes until a new aircraft is delivered: bigger types take a little longer.
+    public static func newDeliveryMinutes(level: Int) -> Int {
+        (Tuning.newDeliveryBaseHours + Tuning.newDeliveryHoursPerLevel * level) * 60
+    }
 }
 
 public enum Seasons {

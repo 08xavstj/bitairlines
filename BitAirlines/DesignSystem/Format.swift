@@ -74,4 +74,12 @@ enum Format {
         if h == 0 { return "\(m)m" }
         return "\(h)h " + (m < 10 ? "0" : "") + "\(m)m"
     }
+
+    /// A wait of hours or days: 300 -> "5h", 2160 -> "1 day 12h", 2880 -> "2 days"
+    static func wait(minutes: Int) -> String {
+        let hours = (minutes + 59) / 60
+        if hours < 24 { return "\(hours)h" }
+        let days = hours / 24, rest = hours % 24
+        return "\(days) day" + (days == 1 ? "" : "s") + (rest > 0 ? " \(rest)h" : "")
+    }
 }
