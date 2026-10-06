@@ -94,6 +94,7 @@ import CoreCatalog
 
     @Test func anAircraftElsewhereFliesToTheRouteFirst() throws {
         var w = try Fixtures.world()
+        Fixtures.light(&w, "YUB")   // an empty hop waits for daylight at an unlit strip, like any take-off
         let id = try w.createRoute(stops: ["YUB", "YSY"])
         try w.assign(aircraftID: w.aircraft[0].id, toRoute: id)
         guard case .flying = w.aircraft[0].status else { Issue.record("should be ferrying to Tuktoyaktuk"); return }

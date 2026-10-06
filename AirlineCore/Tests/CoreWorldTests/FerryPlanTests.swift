@@ -10,6 +10,7 @@ import CoreCatalog
         w.setPausePolicy(.never)
         w.aircraft.append(Aircraft(id: 501, typeID: "dhc2", registration: "C-FBVR", builtDay: 0, condition: 100, price: 150_000,
                                    location: "YEV", status: .idle))
+        w.autoCrew(aircraftIndex: w.aircraft.count - 1, free: true)   // an empty hop needs a pilot, like any take-off
         return (w, w.aircraft.count - 1)
     }
 

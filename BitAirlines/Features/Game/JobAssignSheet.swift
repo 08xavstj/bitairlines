@@ -15,6 +15,7 @@ struct JobAssignSheet: View {
             ScreenHeader(title: "Who flies it?") { Button("Close") { dismiss() }.buttonStyle(.small) }
             if let job = world.ops.jobs.first(where: { $0.id == jobID }) {
                 let choices = PlaneChoiceCache.shared.choices(world: world, jobID: jobID)
+                let planes = PlaneChoiceWords.planesByID(world)
                 JobCard(world: world, job: job) { EmptyView() }
                 if world.aircraft.isEmpty {
                     EmptyNote("You have no aircraft yet. Buy one in the Hangar, then come back to fly this job.")
@@ -24,7 +25,7 @@ struct JobAssignSheet: View {
                 ScrollView {
                     VStack(spacing: 8) {
                         ForEach(choices) { choice in
-                            if let plane = world.aircraft.first(where: { $0.id == choice.aircraftID }) {
+                            if let plane = planes[choice.aircraftID] {
                                 JobPlaneRow(world: world, job: job, plane: plane, choice: choice) {
                                     if session.perform({ try $0.takeJob(jobID: jobID, aircraftID: plane.id) }) { dismiss() }
                                 }

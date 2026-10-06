@@ -155,7 +155,10 @@ extension World {
     /// Pilots of an aircraft that has gone (sold or traded in) are spares.
     mutating func freeCrewsOfGoneAircraft() {
         let ids = Set(aircraft.map(\.id))
-        for p in ops.pilots.indices where ops.pilots[p].aircraftID.map({ !ids.contains($0) }) == true { ops.pilots[p].aircraftID = nil }
+        var pilots = ops.pilots
+        guard pilots.contains(where: { $0.aircraftID.map { !ids.contains($0) } == true }) else { return }
+        for p in pilots.indices where pilots[p].aircraftID.map({ !ids.contains($0) }) == true { pilots[p].aircraftID = nil }
+        ops.pilots = pilots
     }
 
     public func trainingPrice(_ group: RatingGroup) -> Int { Int(Double(Tuning.pilotTrainingPrice * group.tier) * pilotCostFactor) }

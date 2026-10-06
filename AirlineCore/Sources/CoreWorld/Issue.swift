@@ -61,6 +61,14 @@ public struct NewsItem: Sendable, Hashable, Codable {
         case growth
         /// A spare aircraft moved to a route that needed it more (FleetBalance.swift): subject the registration, amount the new route's id.
         case fleetMoved
+
+        /// A kind added by a newer version of the game reads as a plain milestone (the subject and amount stay as they were),
+        /// so one new kind of news never makes a whole save unreadable on a device that has not updated yet.
+        /// Only news does this: game rules (perks, kits, jobs, issues) have no harmless stand-in, so those stay strict.
+        public init(from decoder: Decoder) throws {
+            let raw = try decoder.singleValueContainer().decode(String.self)
+            self = Kind(rawValue: raw) ?? .milestone
+        }
     }
     public var minute: Int
     public var kind: Kind

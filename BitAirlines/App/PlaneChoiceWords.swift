@@ -75,16 +75,23 @@ enum PlaneChoiceWords {
         }
     }
 
-    /// The line under a job on the board: who can fly it, or why nobody can.
-    static func jobFlyers(_ choices: [PlaneChoice], job: Job, in world: World) -> (text: String, good: Bool) {
-        let able = choices.filter(\.canDo).compactMap { c in world.aircraft.first { $0.id == c.aircraftID }?.registration }
+    /// The line under a job on the board: who can fly it, or why nobody can. `planes` is the fleet by id (`planesByID`, built once
+    /// per screen, so each job does not search the fleet again).
+    static func jobFlyers(_ choices: [PlaneChoice], job: Job, planes: [Int: Aircraft]) -> (text: String, good: Bool) {
+        let able = choices.filter(\.canDo).compactMap { planes[$0.aircraftID]?.registration }
         if !able.isEmpty { return ("Can fly it: " + able.joined(separator: ", "), true) }
-        if world.aircraft.isEmpty { return ("You have no aircraft yet.", false) }
+        if planes.isEmpty { return ("You have no aircraft yet.", false) }
         let blocked = choices.compactMap { c -> (Int, String)? in
-            guard let problem = c.problem, let plane = world.aircraft.first(where: { $0.id == c.aircraftID }) else { return nil }
+            guard let problem = c.problem, let plane = planes[c.aircraftID] else { return nil }
             return (rank(problem), jobReason(problem, job: job, plane: plane))
         }
         let closest = blocked.min { $0.0 < $1.0 }?.1 ?? "no reason known"
         return ("None of your aircraft can fly this: \(closest).", false)
+    }
+
+    /// The fleet by id, to look aircraft up without searching the whole fleet each time (if an id were ever repeated, the first wins,
+    /// as with `first(where:)`).
+    static func planesByID(_ world: World) -> [Int: Aircraft] {
+        Dictionary(world.aircraft.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
     }
 }

@@ -16,9 +16,13 @@ import CoreCatalog
         w.advance(byMinutes: 365 * 1440)
         // The forecast leaves out head office costs, so add them back to the simulated profit.
         let simulated = Double(w.airline.cash - start) / 365.0 + Tuning.headOfficePerDay(level: 1)
-        print("CALIBRATION forecast Caravan YEV-YUB: predicted \(Int(predicted.profitPerDay)) a day, simulated \(Int(simulated)) a day, load \(predicted.loadFactor)")
+        // The forecast now also counts heavy checks spread over the days, and this year has none (the starter's first one falls
+        // due in its second year), so compare without them.
+        let flown = predicted.profitPerDay + predicted.heavyCheckPerDay
+        print("CALIBRATION forecast Caravan YEV-YUB: predicted \(Int(predicted.profitPerDay)) a day (\(Int(flown)) before heavy checks), simulated \(Int(simulated)) a day, load \(predicted.loadFactor)")
         #expect(predicted.problem == nil && predicted.aircraftNeeded == 1 && predicted.frequency == 1)
-        #expect(predicted.profitPerDay > simulated * 0.75 && predicted.profitPerDay < simulated * 1.3, "predicted \(predicted.profitPerDay) vs simulated \(simulated)")
+        #expect(predicted.heavyCheckPerDay > 0)
+        #expect(flown > simulated * 0.75 && flown < simulated * 1.3, "predicted \(flown) vs simulated \(simulated)")
     }
 
     @Test func aircraftThatCannotFlyTheRouteSaySo() throws {

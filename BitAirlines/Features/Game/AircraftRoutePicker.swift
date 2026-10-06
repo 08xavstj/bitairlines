@@ -13,9 +13,10 @@ struct AircraftRoutePicker: View {
         let world = session.world
         let current = world.routes.filter { $0.id == plane.routeID }
         let others = world.routes.filter { $0.id != plane.routeID }
-        let cache = PlaneChoiceCache.shared
+        // This aircraft weighed for every route, once per screen update (kept between ticks by the cache).
+        let choices = PlaneChoiceCache.shared.routeChoices(world: world, aircraftID: plane.id)
         let rows = others.map { route -> RouteOption in
-            let choice = cache.choice(world: world, aircraftID: plane.id, routeID: route.id)
+            let choice = choices[route.id]
             return RouteOption(route: route, problem: choice == nil ? .unknownAircraft(plane.id) : choice?.problem)
         }
         let open = rows.filter { $0.problem == nil }.map(\.route)
@@ -42,8 +43,8 @@ struct AircraftRoutePicker: View {
                     HStack(alignment: .top, spacing: 12) {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(route.name).pixelFont(13.333).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
-                            AssignOutlook(world: world, route: route, type: type)
-                            Text(PlaneChoiceWords.routePlan(cache.choice(world: world, aircraftID: plane.id, routeID: route.id)?.ferry))
+                            AssignOutlookLine(world: world, route: route, type: type)
+                            Text(PlaneChoiceWords.routePlan(choices[route.id]?.ferry))
                                 .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -67,6 +68,21 @@ struct AircraftRoutePicker: View {
                     .opacity(0.6)
                 }
             }
+        }
+    }
+}
+
+/// "On its own: $X a day" for an aircraft that could join a route. The forecast comes from OutlookCache, so it is not worked out
+/// again on every clock tick.
+struct AssignOutlookLine: View {
+    let world: World
+    let route: Route
+    let type: AircraftType
+
+    var body: some View {
+        let forecast = OutlookCache.shared.assignForecast(world: world, route: route, type: type)
+        if forecast.problem == nil {
+            Text("On its own: \(Format.perDay(forecast.profitPerDay))").pixelFont(10.667).foregroundStyle(forecast.profitPerDay >= 0 ? Theme.good : Theme.bad)
         }
     }
 }

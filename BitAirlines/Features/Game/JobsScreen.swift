@@ -15,7 +15,8 @@ struct JobsScreen: View {
         let taken = world.ops.jobs.filter { $0.isTaken }
         let choices = PlaneChoiceCache.shared.jobChoices(world: world)
         let shown = onlyFlyable ? open.filter { job in choices[job.id]?.contains(where: \.canDo) ?? false } : open
-        Page {
+        let planes = PlaneChoiceWords.planesByID(world)
+        Page(lazy: true) {
             ScreenHeader(title: "Jobs") { Text("\(open.count) on offer").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
             if !taken.isEmpty {
                 SectionTitle("Being flown")
@@ -44,7 +45,7 @@ struct JobsScreen: View {
             }
             RewardButton(session: session, kind: .newJobs)
             ForEach(shown) { job in
-                let flyers = PlaneChoiceWords.jobFlyers(choices[job.id] ?? [], job: job, in: world)
+                let flyers = PlaneChoiceWords.jobFlyers(choices[job.id] ?? [], job: job, planes: planes)
                 JobCard(world: world, job: job) {
                     VStack(alignment: .trailing, spacing: 6) {
                         if flyers.good {

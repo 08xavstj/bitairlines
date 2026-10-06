@@ -15,6 +15,7 @@ struct RouteAssignSheet: View {
             ScreenHeader(title: "Add an aircraft") { Button("Close") { dismiss() }.buttonStyle(.small) }
             if let route = world.routes.first(where: { $0.id == routeID }) {
                 let choices = PlaneChoiceCache.shared.routeChoices(world: world, routeID: routeID).filter { !route.aircraftIDs.contains($0.aircraftID) }
+                let planes = PlaneChoiceWords.planesByID(world)
                 Text(route.name).pixelFont(13.333).foregroundStyle(Theme.accent).fixedSize(horizontal: false, vertical: true)
                 if world.aircraft.isEmpty {
                     EmptyNote("You have no aircraft yet. Buy one in the Hangar, then come back.")
@@ -26,7 +27,7 @@ struct RouteAssignSheet: View {
                 ScrollView {
                     VStack(spacing: 8) {
                         ForEach(choices) { choice in
-                            if let plane = world.aircraft.first(where: { $0.id == choice.aircraftID }) {
+                            if let plane = planes[choice.aircraftID] {
                                 RoutePlaneRow(world: world, route: route, plane: plane, choice: choice) {
                                     if session.perform({ try $0.assign(aircraftID: plane.id, toRoute: routeID) }) { dismiss() }
                                 }
@@ -62,7 +63,7 @@ struct RoutePlaneRow: View {
                         .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                 } else {
                     Text(PlaneChoiceWords.routePlan(choice.ferry)).pixelFont(10.667).foregroundStyle(Theme.good).fixedSize(horizontal: false, vertical: true)
-                    if let type = plane.type { AssignOutlook(world: world, route: route, type: type) }
+                    if let type = plane.type { AssignOutlookLine(world: world, route: route, type: type) }
                     if plane.routeID != nil {
                         Text("Leaves \(FleetText.routeName(plane, in: world)).").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                     }
