@@ -56,6 +56,9 @@ struct MapProjection {
     func point(for airport: Airport) -> CGPoint { point(lat: airport.latitude, lon: airport.longitude) }
 
     var visible: CGRect { CGRect(origin: .zero, size: size).insetBy(dx: -30, dy: -30) }
+
+    /// How many degrees of longitude a width in points covers.
+    func degreesOfLongitude(across width: CGFloat) -> Double { Double(width) / kx }
 }
 
 enum MapPalette {
@@ -97,7 +100,7 @@ enum MapPalette {
     }
 }
 
-/// Draws the world: land and sea as chunky pixels straight from the land mask, then routes, airports and aircraft.
+/// Draws the world: the cached land and sea picture, then routes, airports and aircraft.
 enum MapRenderer {
     /// Map pixel size in points for a zoom: never finer than 3 points, never coarser than one mask cell.
     static func cellSize(ppd: Double) -> CGFloat {
@@ -105,44 +108,9 @@ enum MapRenderer {
         return CGFloat(max(3.0, maskCell))
     }
 
-    static func drawTerrain(_ context: inout GraphicsContext, projection p: MapProjection) {
-        let cell = cellSize(ppd: p.camera.ppd)
-        let mask = LandMask.world
-        let cols = Int(p.size.width / cell) + 2, rows = Int(p.size.height / cell) + 2
-        var water = Path(), shallow = Path()
-        var land: [Int: Path] = [:]
-        var landColors: [Int: Color] = [:]
-
-        func isLand(_ gx: Int, _ gy: Int) -> Bool {
-            let c = p.coordinate(at: CGPoint(x: (CGFloat(gx) + 0.5) * cell, y: (CGFloat(gy) + 0.5) * cell))
-            return mask.isLand(latitude: c.lat, longitude: c.lon)
-        }
-
-        var grid = [Bool](repeating: false, count: (cols + 2) * (rows + 2))
-        for gy in -1...rows {
-            for gx in -1...cols { grid[(gy + 1) * (cols + 2) + (gx + 1)] = isLand(gx, gy) }
-        }
-        for gy in 0..<rows {
-            for gx in 0..<cols {
-                let rect = CGRect(x: CGFloat(gx) * cell, y: CGFloat(gy) * cell, width: cell + 0.5, height: cell + 0.5)
-                let here = grid[(gy + 1) * (cols + 2) + (gx + 1)]
-                if here {
-                    let c = p.coordinate(at: CGPoint(x: (CGFloat(gx) + 0.5) * cell, y: (CGFloat(gy) + 0.5) * cell))
-                    let hash = (gx &* 73856093) ^ (gy &* 19349663)
-                    let shade = UInt(bitPattern: hash) % 3 == 0
-                    let category = MapPalette.category(latitude: c.lat)
-                    let band = category * 2 + (shade ? 1 : 0)
-                    if landColors[band] == nil { landColors[band] = MapPalette.land(category: category, shade: shade); land[band] = Path() }
-                    land[band]?.addRect(rect)
-                } else {
-                    let near = grid[(gy + 1) * (cols + 2) + gx] || grid[(gy + 1) * (cols + 2) + gx + 2] || grid[gy * (cols + 2) + gx + 1] || grid[(gy + 2) * (cols + 2) + gx + 1]
-                    if near { shallow.addRect(rect) } else { water.addRect(rect) }
-                }
-            }
-        }
-        context.fill(water, with: .color(MapPalette.deepWater), style: FillStyle(antialiased: false))
-        context.fill(shallow, with: .color(MapPalette.shallowWater), style: FillStyle(antialiased: false))
-        for (band, path) in land { context.fill(path, with: .color(landColors[band] ?? MapPalette.grass), style: FillStyle(antialiased: false)) }
+    /// Draws the cached terrain picture (see `MapTerrain` and `MapCache`).
+    static func drawTerrain(_ context: inout GraphicsContext, image: UIImage, size: CGSize) {
+        context.draw(Image(uiImage: image).interpolation(.none), in: CGRect(origin: .zero, size: size))
     }
 
     /// Which airports to draw at a zoom, so the world view is not a smear of dots.
@@ -154,18 +122,26 @@ enum MapRenderer {
         return a.kind == .large && a.population > 2_500_000
     }
 
-    static func drawRoutes(_ context: inout GraphicsContext, world: World, projection p: MapProjection) {
-        let colour = Livery.color(world.airline.branding.primary)
-        for route in world.routes {
-            for leg in route.legs {
-                guard let a = AirportCatalog.airport(leg.from), let b = AirportCatalog.airport(leg.to) else { continue }
-                var line = Path()
-                line.move(to: p.point(for: a))
-                line.addLine(to: p.point(for: b))
-                context.stroke(line, with: .color(.black.opacity(0.55)), style: StrokeStyle(lineWidth: 4, lineCap: .butt))
-                context.stroke(line, with: .color(colour), style: StrokeStyle(lineWidth: 2, lineCap: .butt, dash: [6, 3]))
-            }
+    static func drawRoutes(_ context: inout GraphicsContext, legs: [MapLeg], colour: Color, projection p: MapProjection) {
+        for leg in legs {
+            guard let a = AirportCatalog.airport(leg.from), let b = AirportCatalog.airport(leg.to) else { continue }
+            var line = Path()
+            line.move(to: p.point(for: a))
+            line.addLine(to: p.point(for: b))
+            context.stroke(line, with: .color(.black.opacity(0.55)), style: StrokeStyle(lineWidth: 4, lineCap: .butt))
+            context.stroke(line, with: .color(colour), style: StrokeStyle(lineWidth: 2, lineCap: .butt, dash: [6, 3]))
         }
+    }
+
+    /// The route being planned: a dashed line through the chosen stops, closed back to the first when there are more than two.
+    static func drawPlan(_ context: inout GraphicsContext, stops: [String], projection p: MapProjection) {
+        var path = Path()
+        for (i, code) in stops.enumerated() {
+            guard let a = AirportCatalog.airport(code) else { continue }
+            if i == 0 { path.move(to: p.point(for: a)) } else { path.addLine(to: p.point(for: a)) }
+        }
+        if stops.count > 2, let first = AirportCatalog.airport(stops[0]) { path.addLine(to: p.point(for: first)) }
+        context.stroke(path, with: .color(Theme.accent), style: StrokeStyle(lineWidth: 3, dash: [2, 4]))
     }
 
     /// Whether an airport earns a name label at this zoom (more labels as the map zooms in).
@@ -177,49 +153,27 @@ enum MapRenderer {
         return false
     }
 
-    static func drawAirports(_ context: inout GraphicsContext, world: World, projection p: MapProjection, important: Set<String>, selected: Set<String>, labels: Bool) {
-        let rect = p.visible
-        var inView: [(airport: Airport, point: CGPoint)] = []
-        for a in AirportCatalog.all where shows(a, ppd: p.camera.ppd, important: important) {
-            let pt = p.point(for: a)
-            if rect.contains(pt) { inView.append((airport: a, point: pt)) }
-        }
-        for item in inView {
-            let a = item.airport, pt = item.point
+    /// Draws the dots and names worked out by `MapAirportLayout`, then the box around home.
+    static func drawAirports(_ context: inout GraphicsContext, layout: MapAirportLayout, home: String, projection p: MapProjection) {
+        for dot in layout.dots {
+            let a = dot.airport, pt = dot.point
             let size: CGFloat = a.kind == .large ? 6 : (a.kind == .medium ? 5 : 4)
-            let isMine = important.contains(a.code)
-            let fill: Color = isMine ? Theme.gold : (a.kind == .seaplane ? Theme.info : (a.scheduled ? Theme.textPrimary : Theme.textMuted))
+            let fill: Color = dot.mine ? Theme.gold : (a.kind == .seaplane ? Theme.info : (a.scheduled ? Theme.textPrimary : Theme.textMuted))
             let box = CGRect(x: pt.x - size / 2, y: pt.y - size / 2, width: size, height: size)
             context.fill(Path(box.insetBy(dx: -1, dy: -1)), with: .color(.black.opacity(0.7)), style: FillStyle(antialiased: false))
             context.fill(Path(box), with: .color(fill), style: FillStyle(antialiased: false))
-            if selected.contains(a.code) { context.stroke(Path(box.insetBy(dx: -4, dy: -4)), with: .color(Theme.accent), style: StrokeStyle(lineWidth: 2)) }
+            if dot.selected { context.stroke(Path(box.insetBy(dx: -4, dy: -4)), with: .color(Theme.accent), style: StrokeStyle(lineWidth: 2)) }
         }
-        if labels {
-            // Labels, most important first, skipping any that would land on one already drawn.
-            func priority(_ a: Airport) -> Int {
-                if selected.contains(a.code) { return 4 }
-                if important.contains(a.code) { return 3 }
-                return a.kind == .large ? 2 : (a.kind == .medium ? 1 : 0)
+        for label in layout.labels {
+            let outline = context.resolve(Text(label.text).font(Theme.pixel(8)).foregroundColor(.black))
+            for (dx, dy) in [(-1.0, 0.0), (1.0, 0.0), (0.0, -1.0), (0.0, 1.0)] {
+                context.draw(outline, at: CGPoint(x: label.origin.x + dx, y: label.origin.y + dy), anchor: .leading)
             }
-            let ordered = inView.sorted { priority($0.airport) != priority($1.airport) ? priority($0.airport) > priority($1.airport) : $0.airport.population > $1.airport.population }
-            var placed: [CGRect] = []
-            for item in ordered {
-                let a = item.airport, pt = item.point
-                let mine = important.contains(a.code) || selected.contains(a.code)
-                guard wantsLabel(a, ppd: p.camera.ppd, mine: mine) else { continue }
-                let box = CGRect(x: pt.x + 6, y: pt.y - 6, width: CGFloat(a.label.count) * 7 + 4, height: 12)
-                if !mine && placed.contains(where: { $0.intersects(box.insetBy(dx: -2, dy: -1)) }) { continue }
-                placed.append(box)
-                let outline = context.resolve(Text(a.label).font(Theme.pixel(8)).foregroundColor(.black))
-                for (dx, dy) in [(-1.0, 0.0), (1.0, 0.0), (0.0, -1.0), (0.0, 1.0)] {
-                    context.draw(outline, at: CGPoint(x: box.minX + dx, y: pt.y + dy), anchor: .leading)
-                }
-                let text = Text(a.label).font(Theme.pixel(8)).foregroundColor(mine ? Theme.gold : Theme.textPrimary)
-                context.draw(context.resolve(text), at: CGPoint(x: box.minX, y: pt.y), anchor: .leading)
-            }
+            let text = Text(label.text).font(Theme.pixel(8)).foregroundColor(label.mine ? Theme.gold : Theme.textPrimary)
+            context.draw(context.resolve(text), at: label.origin, anchor: .leading)
         }
-        if let home = AirportCatalog.airport(world.airline.home) {
-            let pt = p.point(for: home)
+        if let airport = AirportCatalog.airport(home) {
+            let pt = p.point(for: airport)
             context.stroke(Path(CGRect(x: pt.x - 7, y: pt.y - 7, width: 14, height: 14)), with: .color(Theme.gold), style: StrokeStyle(lineWidth: 2))
         }
     }

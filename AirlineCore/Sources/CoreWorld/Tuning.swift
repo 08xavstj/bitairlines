@@ -158,3 +158,24 @@ public enum Tuning {
         }
     }
 }
+
+// MARK: Rare finds (RareFinds.swift)
+extension Tuning {
+    /// Chance a rare find comes up at each weekly market turnover.
+    public static let rareFindChancePerWeek = 0.15
+    /// Relative odds of low hours, heritage and barn find (in RareFind.allCases order).
+    public static let rareFindWeights: [Double] = [0.4, 0.3, 0.3]
+    /// How long a rare find stays on the market (two weekly turnovers).
+    public static let rareFindDays = 14
+    /// Price as a share of the market value.
+    public static let rareLowHoursPriceShare = 0.70
+    public static let rareHeritagePriceShare = 1.0
+    public static let rareBarnFindPriceShare = 0.40
+    /// Age in years and condition in percent of each kind.
+    public static let rareLowHoursAge: ClosedRange<Double> = 1...4
+    public static let rareLowHoursCondition: ClosedRange<Double> = 94...99
+    public static let rareOldAgeInProduction: ClosedRange<Double> = 25...35
+    public static let rareOldAgeOutOfProduction: ClosedRange<Double> = 45...75
+    public static let rareHeritageCondition: ClosedRange<Double> = 65...85
+    public static let rareBarnFindCondition: ClosedRange<Double> = 30...40
+}

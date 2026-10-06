@@ -41,7 +41,7 @@ import CoreCatalog
     @Test func aNewAircraftComesWithItsCrewUnlessHiringIsOff() throws {
         var w = try Fixtures.world()
         w.airline.cash = 30_000_000
-        let listing = try #require(w.market.listings.first { (AircraftCatalog.type($0.typeID)?.level ?? 9) <= 1 })
+        let listing = try #require(w.market.listings.first { (AircraftCatalog.type($0.typeID).map { $0.level <= 1 && w.homeProblem($0) == nil } ?? false) })
         let id = try w.buyUsed(listingID: listing.id)
         Fixtures.advance(&w, days: 12) { $0.aircraft.first { $0.id == id }?.isDelivered == true }
         #expect(w.ops.pilots.contains { $0.aircraftID == id })
@@ -49,7 +49,7 @@ import CoreCatalog
         var manual = try Fixtures.world()
         manual.airline.cash = 30_000_000
         manual.setAutoHire(false)
-        let other = try #require(manual.market.listings.first { (AircraftCatalog.type($0.typeID)?.level ?? 9) <= 1 })
+        let other = try #require(manual.market.listings.first { (AircraftCatalog.type($0.typeID).map { $0.level <= 1 && manual.homeProblem($0) == nil } ?? false) })
         let id2 = try manual.buyUsed(listingID: other.id)
         Fixtures.advance(&manual, days: 12) { $0.aircraft.first { $0.id == id2 }?.isDelivered == true }
         #expect(!manual.ops.pilots.contains { $0.aircraftID == id2 })

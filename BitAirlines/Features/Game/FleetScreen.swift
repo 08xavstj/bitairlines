@@ -127,7 +127,7 @@ struct AircraftSheet: View {
                         SectionTitle("Paint")
                         Card {
                             VStack(alignment: .leading, spacing: 8) {
-                                Text(plane.livery == nil ? "Wearing the airline livery." : "Wearing the special livery \"\(plane.livery?.name ?? "")\".").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                                Text(plane.livery == nil ? "Wearing the airline livery." : "Wearing the special livery \"\(Words.liveryName(plane.livery?.name ?? ""))\".").pixelFont(10.667).foregroundStyle(Theme.textMuted)
                                 HStack(spacing: 8) {
                                     Button("Special livery") { editingLivery = true }.buttonStyle(.small)
                                     if plane.livery != nil { Button("Use airline livery") { session.perform { try $0.setLivery(aircraftID: aircraftID, livery: nil) } }.buttonStyle(.small) }
@@ -207,7 +207,7 @@ struct LiverySheet: View {
         .onAppear {
             if let plane = session.world.aircraft.first(where: { $0.id == aircraftID }) {
                 branding = plane.livery?.branding ?? session.world.airline.branding
-                name = plane.livery?.name ?? "Special"
+                name = Words.liveryName(plane.livery?.name ?? "Special")
             }
         }
     }

@@ -20,7 +20,7 @@ struct AirlineScreen: View {
                     ScenarioCard(world: world)
                     totals(world)
                     RulesCard(world: world)
-                    RankingsCard(world: world)
+                    if world.airline.level >= GameSection.lateLevel { RankingsCard(world: world) }
                     pauseCard(world)
                 }
             } else {

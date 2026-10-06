@@ -33,8 +33,10 @@ struct MarketScreen: View {
 
     private func shows(_ type: AircraftType, in world: World) -> Bool { filter.matches(type, fit: world.fit(of: type)) }
 
+    /// The listings that match the filter, rare finds first.
     private func usedListings(_ world: World) -> [UsedListing] {
-        world.market.listings.filter { AircraftCatalog.type($0.typeID).map { shows($0, in: world) } ?? false }
+        let shown = world.market.listings.filter { AircraftCatalog.type($0.typeID).map { shows($0, in: world) } ?? false }
+        return shown.filter { $0.rare != nil } + shown.filter { $0.rare == nil }
     }
 
     private func newTypes(_ world: World) -> [AircraftType] {
@@ -63,10 +65,16 @@ struct UsedCard: View {
     var body: some View {
         let world = session.world
         let locked = type.level > world.airline.level
+        // A heritage find is shown in the paint it arrives in.
+        let paint = listing.rare == .heritage ? RareFinds.heritageLivery(logo: world.airline.branding.logo).branding : world.airline.branding
         Card {
             HStack(spacing: 12) {
-                AircraftSpriteView(family: type.family, branding: world.airline.branding, pixel: 2).frame(width: 130)
+                AircraftSpriteView(family: type.family, branding: paint, pixel: 2).frame(width: 130)
                 VStack(alignment: .leading, spacing: 3) {
+                    if let rare = listing.rare {
+                        Tag(text: "Rare find", color: Theme.gold)
+                        Text(Words.explain(rare)).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                    }
                     Text(type.displayName.uppercased()).pixelFont(13.333).foregroundStyle(locked ? Theme.textMuted : Theme.textPrimary).lineLimit(1)
                     SpecLine(type: type)
                     Text("\(Int(listing.ageYears)) years old, condition \(Int(listing.condition))%, arrives in \(Format.wait(minutes: Valuation.usedDeliveryMinutes(listing)))").pixelFont(10.667).foregroundStyle(Theme.textPrimary)

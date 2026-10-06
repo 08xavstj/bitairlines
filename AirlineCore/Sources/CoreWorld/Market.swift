@@ -11,6 +11,10 @@ public struct UsedListing: Sendable, Hashable, Codable, Identifiable {
     /// The seller's ferry estimate, 2 to 9. Kept under its old name so saves still load;
     /// the wait is `Valuation.usedDeliveryMinutes` (a few hours, not days).
     public var deliveryDays: Int
+    /// Set when the listing is a rare find (see RareFinds.swift). Optional, so older saves load.
+    public var rare: RareFind? = nil
+    /// The day a rare find leaves the market. Rare finds skip the weekly turnover until then.
+    public var rareUntilDay: Int? = nil
 }
 
 public struct Closure: Sendable, Hashable, Codable {

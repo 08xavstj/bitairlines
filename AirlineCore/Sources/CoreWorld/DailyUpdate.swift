@@ -14,6 +14,7 @@ extension World {
             if let type = plane.type { fixed += LegEconomics.fixedPerDay(type: type) }
         }
         spendOnOverhead(Int(fixed.rounded()))
+        rollRouteBooks()
 
         for i in aircraft.indices { aircraft[i].blockMinutesToday = 0 }
 
@@ -23,6 +24,16 @@ extension World {
         dailyOperations()
         checkMoney()
         checkCertificate()
+    }
+
+    /// Starts a new day in every route's book and charges each route the fixed daily cost of the aircraft assigned to it
+    /// (the same amount just paid above). Head office stays with the airline.
+    mutating func rollRouteBooks() {
+        for r in routes.indices { routes[r].book.closeDay() }
+        for plane in aircraft where plane.isDelivered {
+            guard let rid = plane.routeID, let r = routeIndex(rid), let type = plane.type else { continue }
+            routes[r].book.add(RouteDay(aircraftCost: Int(LegEconomics.fixedPerDay(type: type).rounded())))
+        }
     }
 
     mutating func weeklyUpdate() {
@@ -72,6 +83,9 @@ extension World {
     /// Weather closes remote airports for a day or three now and then; flights to or from them wait.
     mutating func updateClosures() {
         market.closures.removeAll { $0.untilMinute <= clock.minute }
+        // A weather notice goes from the inbox once the airport is open again.
+        let now = clock.minute
+        issues.removeAll { if case .weather(_, let until) = $0.kind { return until <= now } else { return false } }
         guard ops.mode.hasWeather else { return }
         for code in Set(routes.flatMap { $0.stops }).sorted() {
             guard let airport = AirportCatalog.airport(code) else { continue }

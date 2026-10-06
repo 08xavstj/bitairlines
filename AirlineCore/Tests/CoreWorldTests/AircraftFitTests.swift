@@ -64,7 +64,7 @@ import CoreCatalog
 
     @Test func deliveriesTakeHoursNotDays() throws {
         var w = try Fixtures.world(difficulty: .easy)
-        let listing = try #require(w.market.listings.first { (AircraftCatalog.type($0.typeID)?.level ?? 9) <= 1 && $0.price < w.airline.cash })
+        let listing = try #require(w.market.listings.first { (AircraftCatalog.type($0.typeID).map { $0.level <= 1 && w.homeProblem($0) == nil } ?? false) && $0.price < w.airline.cash })
         #expect(Valuation.usedDeliveryMinutes(listing) <= 18 * 60)
         #expect(Valuation.newDeliveryMinutes(level: 7) <= 4 * 1440)
         let id = try w.buyUsed(listingID: listing.id)

@@ -37,6 +37,8 @@ import CoreWorld
     @Test func theRailHasEveryScreen() {
         #expect(GameSection.allCases.count == 9)
         #expect(Set(GameSection.allCases.map(\.title)).count == 9)
+        #expect(GameSection.rail.count == 6, "six buttons on the rail")
+        for s in GameSection.allCases where s != .airline { #expect(s.railButton.map { GameSection.rail.contains($0) } == true, "\(s) is reachable from the rail") }
     }
 
     @Test func aBusyWorldReadsCleanlyInTheNews() throws {

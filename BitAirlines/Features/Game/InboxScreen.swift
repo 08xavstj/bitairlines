@@ -14,7 +14,10 @@ extension Messages {
         case .weather: return "Weather closed \(Place.name(item.subject)) for a few days."
         case .loan: return item.subject == "taken" ? "You took a loan of \(Format.dollars(item.amount))." : "You repaid a loan of \(Format.dollars(item.amount))."
         case .permit: return "You bought a permit for \(CountryCatalog.country(item.subject)?.name ?? item.subject) (\(Format.dollars(item.amount)))."
-        case .milestone: return item.subject
+        case .milestone:
+            if item.subject.hasPrefix("rare:") { return rareFind(item) }
+            if item.subject.hasPrefix("goal:") { return "Weekly goal met. Bonus of \(Format.dollars(item.amount)) paid." }
+            return item.subject
         case .perk: return "You took the \(Perk(rawValue: item.subject).map { Words.name($0) } ?? "new") perk."
         case .fuelBought: return "You bought \(Format.number(item.amount)) kg of fuel ahead."
         case .jobDone: return "Job done at \(Place.name(item.subject)): \(Format.dollars(item.amount))."
@@ -38,6 +41,16 @@ extension Messages {
         case .noCrew: return "\(item.subject) is waiting for a pilot."
         case .scenario: return item.subject == "failed" ? "The scenario deadline passed." : "Scenario complete: \(item.subject) medal."
         }
+    }
+
+    /// A rare find came up on the used market. The subject is "rare:<kind>:<type id>", the amount the price.
+    static func rareFind(_ item: NewsItem) -> String {
+        let parts = item.subject.split(separator: ":").map(String.init)
+        let kind = parts.count > 1 ? RareFind(rawValue: parts[1]) : nil
+        let model = parts.count > 2 ? AircraftCatalog.type(parts[2])?.displayName : nil
+        let what = kind.map { ", " + Words.name($0).lowercased() } ?? ""
+        let weeks = Tuning.rareFindDays / 7
+        return "Rare find in the hangar: \(model ?? "a used aircraft")\(what), \(Format.dollars(item.amount)). On sale for \(weeks) week\(weeks == 1 ? "" : "s")."
     }
 }
 

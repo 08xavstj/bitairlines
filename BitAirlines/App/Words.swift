@@ -180,3 +180,27 @@ enum Words {
         }
     }
 }
+
+// MARK: Rare finds on the used market
+extension Words {
+    static func name(_ find: RareFind) -> String {
+        switch find {
+        case .lowHours: "Low hours"
+        case .heritage: "Heritage aircraft"
+        case .barnFind: "Barn find"
+        }
+    }
+
+    static func explain(_ find: RareFind) -> String {
+        switch find {
+        case .lowHours: "Low hours: barely flown, priced to sell."
+        case .heritage: "Heritage: arrives in a historic paint scheme."
+        case .barnFind: "Barn find: cheap, but it needs a lot of work."
+        }
+    }
+
+    /// The name of a special livery. Heritage finds arrive with a code; names the player typed are shown as they are.
+    static func liveryName(_ name: String) -> String {
+        name == RareFinds.heritageLiveryCode ? "Heritage" : name
+    }
+}

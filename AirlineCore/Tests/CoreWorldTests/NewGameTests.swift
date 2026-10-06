@@ -51,7 +51,7 @@ import CoreCatalog
 
     @Test func buyingAndSellingAnAircraft() throws {
         var w = try Fixtures.world(difficulty: .easy)
-        let listing = try #require(w.market.listings.first { (AircraftCatalog.type($0.typeID)?.level ?? 9) <= 1 && $0.price < w.airline.cash })
+        let listing = try #require(w.market.listings.first { (AircraftCatalog.type($0.typeID).map { $0.level <= 1 && w.homeProblem($0) == nil } ?? false) && $0.price < w.airline.cash })
         let cash = w.airline.cash
         let id = try w.buyUsed(listingID: listing.id)
         #expect(w.airline.cash == cash - listing.price)
@@ -71,7 +71,7 @@ import CoreCatalog
         let big = try #require(w.market.listings.first { (AircraftCatalog.type($0.typeID)?.level ?? 0) >= 2 })
         #expect(throws: WorldError.levelTooLow(required: AircraftCatalog.type(big.typeID)?.level ?? 0)) { try w.buyUsed(listingID: big.id) }
         w.airline.cash = 1000
-        let cheap = try #require(w.market.listings.first { (AircraftCatalog.type($0.typeID)?.level ?? 9) <= 1 })
+        let cheap = try #require(w.market.listings.first { (AircraftCatalog.type($0.typeID).map { $0.level <= 1 && w.homeProblem($0) == nil } ?? false) })
         #expect(throws: WorldError.notEnoughCash(needed: cheap.price)) { try w.buyUsed(listingID: cheap.id) }
         #expect(throws: WorldError.notInProduction) { try w.orderNew(typeID: "dc3") }
     }
@@ -79,7 +79,7 @@ import CoreCatalog
     @Test func registrationsAreUniqueAndInTheHomeStyle() throws {
         var w = try Fixtures.world(difficulty: .easy)
         for _ in 0..<5 {
-            if let listing = w.market.listings.first(where: { (AircraftCatalog.type($0.typeID)?.level ?? 9) <= 1 && $0.price < w.airline.cash }) { try w.buyUsed(listingID: listing.id) }
+            if let listing = w.market.listings.first(where: { (AircraftCatalog.type($0.typeID).map { $0.level <= 1 && w.homeProblem($0) == nil } ?? false) && $0.price < w.airline.cash }) { try w.buyUsed(listingID: listing.id) }
         }
         let regs = w.aircraft.map(\.registration)
         #expect(Set(regs).count == regs.count)

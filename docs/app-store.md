@@ -32,6 +32,7 @@ Create these in App Store Connect (your app, Services, Game Center). The IDs mus
 |---|---|---|---|
 | Leaderboard (classic, high score, integer) | `ca.amaruq.bitairlines.revenue` | Lifetime revenue | Formatted as money |
 | Leaderboard (classic, high score, integer) | `ca.amaruq.bitairlines.fleet` | Fleet size | |
+| Leaderboard (classic, high score, integer) | `ca.amaruq.bitairlines.goals` | Weekly goals met | One game's count |
 | Achievement | `ca.amaruq.bitairlines.firstroute` | First route | |
 | Achievement | `ca.amaruq.bitairlines.tenaircraft` | Ten aircraft | |
 | Achievement | `ca.amaruq.bitairlines.level2` ... `level7` | Commuter ... Jumbo operator | One per certificate level |

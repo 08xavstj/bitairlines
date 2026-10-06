@@ -33,7 +33,7 @@ struct BasesScreen: View {
             if !world.ops.bases.contains(where: { $0.airport == world.airline.home }) {
                 Button("Build at \(Place.name(world.airline.home))") { building = world.airline.home }.buttonStyle(.smallProminent)
             }
-            SlotsCard(session: session)
+            if session.world.airline.level >= GameSection.lateLevel { SlotsCard(session: session) }
         }
         .sheet(item: Binding(get: { building.map { CodeSheet(id: $0) } }, set: { building = $0?.id })) { sheet in
             BuildSheet(session: session, code: sheet.id)
@@ -69,7 +69,7 @@ struct BuildSheet: View {
             ScrollView {
                 VStack(spacing: 8) {
                     if let airport = AirportCatalog.airport(code) {
-                        ForEach(Facility.allCases, id: \.self) { facility in
+                        ForEach(Facility.allCases.filter { $0 != .hubTerminal || world.airline.level >= GameSection.lateLevel }, id: \.self) { facility in
                             let built = world.ops.bases.first { $0.airport == code }?.has(facility) == true
                             let problem = world.facilityProblem(facility, at: code)
                             HStack(alignment: .top) {

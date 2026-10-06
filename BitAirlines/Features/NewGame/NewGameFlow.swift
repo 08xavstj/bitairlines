@@ -236,10 +236,6 @@ struct AircraftStep: View {
         let offers = World.starterOffers(home: draft.home, difficulty: draft.difficulty).filter { draft.scenario == nil || $0.typeID == draft.starterID }
         Page {
             Text("Your starting money and your first aircraft. A bigger aircraft carries more but costs more to run.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
-            if draft.scenario == nil {
-                PixelChoice(options: Difficulty.allCases.map { (label: Self.name($0), value: $0) }, selection: $draft.difficulty)
-                    .onChange(of: draft.difficulty) { _, _ in fixSelection() }
-            }
             Text("Starting money \(Format.dollars(draft.difficulty.startingBudget))").pixelFont(13.333).foregroundStyle(Theme.textPrimary)
             if let problem { Text(problem).pixelFont(10.667).foregroundStyle(Theme.bad) }
             ForEach(offers) { offer in

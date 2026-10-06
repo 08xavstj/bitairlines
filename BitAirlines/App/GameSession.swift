@@ -39,6 +39,8 @@ final class GameSession {
     var notice: String?
     /// Money just earned from flights and jobs, shown next to the bank total for a moment.
     var payout: Payout?
+    /// What happened while the player was away, until they close the summary.
+    var away: AwayReport?
     let slot: Int
     /// Set by the game screen, so changes the player makes can be heard.
     @ObservationIgnored var audio: AudioEngine?
@@ -94,6 +96,20 @@ final class GameSession {
         notePayout(world.airline.stats.revenue - revenueBefore, at: now)
         if result == .pausedForIssue || result == .gameOver { save() }
         if now.timeIntervalSince(lastSave) > 45 { save() }
+    }
+
+    /// Moves the game on for a break of this many real seconds and keeps a summary to show. Stops early at anything that needs the
+    /// player, as the clock always does.
+    func catchUp(realSeconds: TimeInterval) {
+        let minutes = AwayReport.gameMinutes(forRealSeconds: realSeconds)
+        guard minutes >= AwayReport.minGameMinutes, !world.isBankrupt, !world.isPausedByIssue else { return }
+        let before = world.airline.stats, cash = world.airline.cash, start = world.clock.minute
+        let result = world.advance(byMinutes: minutes)
+        let after = world.airline.stats
+        away = AwayReport(gameMinutes: world.clock.minute - start, flights: after.flights - before.flights, passengers: after.passengers - before.passengers,
+                          revenue: after.revenue - before.revenue, cashChange: world.airline.cash - cash, stoppedForIssue: result == .pausedForIssue)
+        lastTick = Date()
+        save()
     }
 
     /// Payments that land close together add up in one tag, so fast speeds do not flicker.

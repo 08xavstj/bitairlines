@@ -12,6 +12,10 @@ struct MapScreen: View {
     @State private var planning = false
     @State private var stops: [String] = []
     @State private var building: String?
+    /// Terrain picture and airport layout, kept between frames.
+    @State private var cache = MapCache()
+    /// Frames of the buttons and panels over the map (no airport name goes under them).
+    @State private var covered: [CGRect] = []
 
     init(session: GameSession) {
         self.session = session
@@ -27,18 +31,22 @@ struct MapScreen: View {
 
     var body: some View {
         let world = session.world
-        let important = Set(world.routes.flatMap { $0.stops } + [world.airline.home])
+        let important = network(world)
         let marked = Set(stops + (selected.map { [$0] } ?? []))
+        let legs = world.routes.flatMap { route in route.legs.map { MapLeg(from: $0.from, to: $0.to) } }
         GeometryReader { geo in
             ZStack(alignment: .topLeading) {
-                Canvas { context, size in
-                    let projection = MapProjection(camera: camera, size: size)
-                    MapRenderer.drawTerrain(&context, projection: projection)
-                    MapRenderer.drawRoutes(&context, world: world, projection: projection)
-                    if planning && stops.count >= 2 { drawPlan(&context, projection: projection) }
-                    MapRenderer.drawAirports(&context, world: world, projection: projection, important: important, selected: marked, labels: true)
-                    MapRenderer.drawAircraft(&context, world: world, projection: projection)
+                ZStack {
+                    // Still while the clock runs: redrawn only when the camera, network, selection or plan changes.
+                    MapStillLayer(camera: camera, legs: legs, routePalette: world.airline.branding.primary, home: world.airline.home,
+                                  important: important, marked: marked, plan: planning ? stops : [], blocked: covered, cache: cache)
+                        .equatable()
+                    // Redrawn every tick: only the aircraft.
+                    Canvas { context, size in
+                        MapRenderer.drawAircraft(&context, world: world, projection: MapProjection(camera: camera, size: size))
+                    }
                 }
+                .contentShape(Rectangle())
                 .gesture(DragGesture(minimumDistance: 4)
                     .onChanged { pan($0, size: geo.size) }
                     .onEnded { _ in dragStart = nil })
@@ -56,14 +64,18 @@ struct MapScreen: View {
                     HStack(alignment: .bottom, spacing: 8) {
                         if planning {
                             RoutePlannerPanel(session: session, stops: $stops, onClose: { planning = false; stops = [] })
+                                .coversMap()
                         } else if let code = selected, let airport = AirportCatalog.airport(code) {
                             AirportPanel(world: world, airport: airport, onPlan: { startPlan(from: code) }, onBuild: { building = code }, onClose: { selected = nil })
+                                .coversMap()
                         }
                         Spacer(minLength: 0)
                     }
                 }
                 .padding(8)
             }
+            .coordinateSpace(.named(MapOverlayFramesKey.space))
+            .onPreferenceChange(MapOverlayFramesKey.self) { covered = $0 }
         }
         .background(Theme.background)
         .clipped()
@@ -83,6 +95,12 @@ struct MapScreen: View {
                 if planning { planning = false; stops = [] } else { startPlan(from: nil) }
             }.buttonStyle(planning ? AnyButtonStyle(SmallButtonStyle(kind: .danger)) : AnyButtonStyle(SmallButtonStyle(kind: .prominent)))
         }
+        .coversMap()
+    }
+
+    /// Airports always shown and named: every stop on a route, and home.
+    private func network(_ world: World) -> Set<String> {
+        Set(world.routes.flatMap { $0.stops } + [world.airline.home])
     }
 
     private func goHome() {
@@ -121,12 +139,12 @@ struct MapScreen: View {
 
     private func tap(at point: CGPoint, size: CGSize, world: World) {
         let projection = MapProjection(camera: camera, size: size)
-        let important = Set(world.routes.flatMap { $0.stops } + [world.airline.home])
+        let marked = Set(stops + (selected.map { [$0] } ?? []))
+        let layout = cache.airports(projection: projection, important: network(world), selected: marked, blocked: covered)
         var best: (code: String, distance: CGFloat)?
-        for a in AirportCatalog.all where MapRenderer.shows(a, ppd: camera.ppd, important: important) {
-            let p = projection.point(for: a)
-            let d = hypot(p.x - point.x, p.y - point.y)
-            if d < 24, best == nil || d < best!.distance { best = (a.code, d) }
+        for dot in layout.dots {
+            let d = hypot(dot.point.x - point.x, dot.point.y - point.y)
+            if d < 24, best == nil || d < best!.distance { best = (dot.airport.code, d) }
         }
         guard let code = best?.code else {
             if !planning { selected = nil }
@@ -137,16 +155,6 @@ struct MapScreen: View {
         } else {
             selected = selected == code ? nil : code
         }
-    }
-
-    private func drawPlan(_ context: inout GraphicsContext, projection: MapProjection) {
-        var path = Path()
-        for (i, code) in stops.enumerated() {
-            guard let a = AirportCatalog.airport(code) else { continue }
-            if i == 0 { path.move(to: projection.point(for: a)) } else { path.addLine(to: projection.point(for: a)) }
-        }
-        if stops.count > 2, let first = AirportCatalog.airport(stops[0]) { path.addLine(to: projection.point(for: first)) }
-        context.stroke(path, with: .color(Theme.accent), style: StrokeStyle(lineWidth: 3, dash: [2, 4]))
     }
 }
 

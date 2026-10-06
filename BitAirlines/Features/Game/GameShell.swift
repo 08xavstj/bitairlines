@@ -33,6 +33,22 @@ enum GameSection: String, CaseIterable, Identifiable {
         case .airline: "Airline"
         }
     }
+
+    /// The buttons on the rail. Jobs sit with Routes, Bases with Fleet, and the Airline screen is in the menu.
+    static let rail: [GameSection] = [.map, .fleet, .routes, .market, .money, .inbox]
+
+    /// The rail button a screen belongs to (nil for the Airline screen, which opens from the menu).
+    var railButton: GameSection? {
+        switch self {
+        case .jobs: .routes
+        case .bases: .fleet
+        case .airline: nil
+        default: self
+        }
+    }
+
+    /// The level from which late-game screens show (slots, rival rankings, hub terminals).
+    static let lateLevel = 3
 }
 
 /// A game in progress: top bar with the clock and money, a rail of screens, and the screen itself.
@@ -41,6 +57,8 @@ struct GameShell: View {
     let onExit: () -> Void
     @State private var section: GameSection
     @State private var confirmExit = false
+    @State private var showMenu = false
+    @State private var showSettings = false
     @State private var coach: TutorialCoach
 
     init(session: GameSession, onExit: @escaping () -> Void, initialSection: GameSection = .map) {
@@ -52,7 +70,7 @@ struct GameShell: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            TopBar(session: session, coach: coach, onMenu: { confirmExit = true })
+            TopBar(session: session, coach: coach, onMenu: { showMenu = true })
             CoachStrip(session: session, coach: coach)
             HStack(spacing: 0) {
                 Rail(session: session, coach: coach, section: $section)
@@ -63,17 +81,25 @@ struct GameShell: View {
         .background { SoundWatcher(session: session) }
         .overlay { PerkChoiceOverlay(session: session) }
         .overlay { IssueOverlay(session: session, onExit: onExit) }
+        .overlay { AwaySummary(session: session) }
         .overlay(alignment: .bottom) { NoticeBanner(session: session) }
         .pixelConfirm("Leave the game?", message: "Your airline is saved. You can continue it from the title screen.", confirm: "Leave", isPresented: $confirmExit) { onExit() }
+        .sheet(isPresented: $showMenu) {
+            GameMenu(session: session,
+                     onAirline: { showMenu = false; section = .airline },
+                     onSettings: { showMenu = false; showSettings = true },
+                     onLeave: { showMenu = false; confirmExit = true })
+        }
+        .sheet(isPresented: $showSettings) { SettingsSheet() }
     }
 
     @ViewBuilder private var content: some View {
         switch section {
         case .map: MapScreen(session: session)
-        case .jobs: JobsScreen(session: session)
-        case .fleet: FleetScreen(session: session)
-        case .routes: RoutesScreen(session: session)
-        case .bases: BasesScreen(session: session)
+        case .jobs: SubTabs(first: .routes, second: .jobs, section: $section) { JobsScreen(session: session) }
+        case .fleet: SubTabs(first: .fleet, second: .bases, section: $section) { FleetScreen(session: session) }
+        case .routes: SubTabs(first: .routes, second: .jobs, section: $section) { RoutesScreen(session: session) }
+        case .bases: SubTabs(first: .fleet, second: .bases, section: $section) { BasesScreen(session: session) }
         case .market: MarketScreen(session: session)
         case .money: MoneyScreen(session: session)
         case .inbox: InboxScreen(session: session)
@@ -91,8 +117,13 @@ struct TopBar: View {
         let world = session.world
         HStack(spacing: 10) {
             Button { onMenu() } label: {
-                Text(world.airline.code.uppercased()).pixelFont(13.333).foregroundStyle(Theme.accent).padding(.horizontal, 8).frame(height: 32)
-                    .background(PixelShape(step: 2).fill(Theme.surfaceRaised))
+                VStack(spacing: 0) {
+                    Text("MENU").pixelFont(8).foregroundStyle(Theme.textMuted)
+                    Text(world.airline.code.uppercased()).pixelFont(13.333).foregroundStyle(Theme.accent)
+                }
+                .padding(.horizontal, 8).frame(height: 34)
+                .background(PixelShape(step: 2).fill(Theme.surfaceRaised))
+                .coachOutline(coach.step?.section == .airline)
             }
             .buttonStyle(.tap).accessibilityLabel("Menu")
             VStack(alignment: .leading, spacing: 1) {
@@ -151,8 +182,8 @@ struct Rail: View {
         let waiting = session.world.issues.count
         ScrollView {
             VStack(spacing: 2) {
-                ForEach(GameSection.allCases) { s in
-                    let on = s == section
+                ForEach(GameSection.rail) { s in
+                    let on = s == section.railButton
                     Button { section = s } label: {
                         VStack(spacing: 1) {
                             PixelIconView(icon: s.icon, pixel: 2)
@@ -166,7 +197,7 @@ struct Rail: View {
                                 Text("\(waiting)").pixelFont(8).foregroundStyle(Theme.onAccent).padding(.horizontal, 4).background(Theme.bad)
                             }
                         }
-                        .coachOutline(coach.step?.section == s && !on)
+                        .coachOutline(coach.step?.section?.railButton == s && !on)
                     }
                     .buttonStyle(.tap)
                     .accessibilityLabel(s.title)

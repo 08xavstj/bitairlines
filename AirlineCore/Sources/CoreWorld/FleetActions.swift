@@ -11,12 +11,17 @@ extension World {
         guard let listing = market.listings.first(where: { $0.id == listingID }) else { throw WorldError.unknownListing(listingID) }
         guard let type = AircraftCatalog.type(listing.typeID) else { throw WorldError.unknownType(listing.typeID) }
         guard type.level <= airline.level else { throw WorldError.levelTooLow(required: type.level) }
+        if let problem = homeProblem(type) { throw problem }
         guard airline.cash >= listing.price else { throw WorldError.notEnoughCash(needed: listing.price) }
         airline.cash -= listing.price
         let id = takeAircraftID()
         let delivery = clock.minute + Valuation.usedDeliveryMinutes(listing)
         aircraft.append(Aircraft(id: id, typeID: type.id, registration: nextRegistration(), builtDay: clock.dayIndex - Int(listing.ageYears * 365.25),
                                  condition: listing.condition, price: listing.price, location: airline.home, status: .onOrder(until: delivery)))
+        if listing.rare == .heritage {
+            let livery = RareFinds.heritageLivery(logo: airline.branding.logo)
+            aircraft[aircraft.count - 1].livery = livery
+        }
         market.listings.removeAll { $0.id == listingID }
         return id
     }
@@ -27,6 +32,7 @@ extension World {
         guard let type = AircraftCatalog.type(typeID) else { throw WorldError.unknownType(typeID) }
         guard type.inProduction else { throw WorldError.notInProduction }
         guard type.level <= airline.level else { throw WorldError.levelTooLow(required: type.level) }
+        if let problem = homeProblem(type) { throw problem }
         guard airline.cash >= type.priceUSD else { throw WorldError.notEnoughCash(needed: type.priceUSD) }
         airline.cash -= type.priceUSD
         let id = takeAircraftID()
@@ -34,6 +40,13 @@ extension World {
         aircraft.append(Aircraft(id: id, typeID: type.id, registration: nextRegistration(), builtDay: clock.dayIndex, condition: 100,
                                  price: type.priceUSD, location: airline.home, status: .onOrder(until: delivery)))
         return id
+    }
+
+    /// New aircraft are delivered to the home airport, so a type that cannot land there (a floatplane at a paved airport, a jet on
+    /// a short strip) would be stranded. Nil when it can.
+    public func homeProblem(_ type: AircraftType) -> WorldError? {
+        guard let home = AirportCatalog.airport(airline.home) else { return nil }
+        return canUse(type: type, at: home) ? nil : .aircraftCannotUse(airport: home.code)
     }
 
     /// What a dealer pays for the aircraft today.

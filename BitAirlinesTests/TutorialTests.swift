@@ -42,7 +42,7 @@ import CoreWorld
         for _ in 0..<60 where w.airline.stats.flights < Tutorial.flightsToWatch { w.advance(byMinutes: 1440) }
         let read: Set<TutorialStep> = [.review, .money, .inbox]
         #expect(Tutorial.step(world: w, speed: .x4, seen: read) == .hangar)
-        let listing = try #require(w.market.listings.first { (AircraftCatalog.type($0.typeID)?.level ?? 9) <= 1 })
+        let listing = try #require(w.market.listings.first { (AircraftCatalog.type($0.typeID).map { $0.level <= 1 && w.homeProblem($0) == nil } ?? false) })
         try w.buyUsed(listingID: listing.id)
         #expect(Tutorial.step(world: w, speed: .x4, seen: read) == .secondRoute)
         _ = try w.createRoute(stops: ["YEV", "YSY"])

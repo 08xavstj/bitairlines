@@ -206,8 +206,12 @@ extension World {
                 routes[r].legs[l].passengersCarried += flight.passengers
                 routes[r].legs[l].revenue += flight.revenue
                 routes[r].legs[l].maturity = min(1.0, routes[r].legs[l].maturity + Tuning.maturityPerFlight)
+                routes[r].book.add(RouteDay(revenue: flight.revenue, flightCost: flight.cost, passengers: flight.passengers, seats: aircraft[i].seats, flights: 1))
             }
             airline.reputation = min(100, airline.reputation + reputationGain(passengers: flight.passengers, seats: aircraft[i].seats, service: service))
+        } else if aircraft[i].jobID == nil, let rid = aircraft[i].routeID, let r = routeIndex(rid) {
+            // Flying empty to reach the route is a cost of the route.
+            routes[r].book.add(RouteDay(flightCost: flight.cost))
         }
 
         if aircraft[i].routeID == nil && aircraft[i].jobID == nil {

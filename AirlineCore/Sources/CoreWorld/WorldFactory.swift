@@ -113,9 +113,16 @@ extension World {
     }
 
     /// Weekly turnover: a few aircraft sell to other airlines and new ones come up.
+    /// Rare finds sit outside the turnover (so the world's draws see the same market as before) and leave when their time is up;
+    /// then a new one may come up (drawn from ops.rng).
     mutating func rotateListings() {
+        let day = clock.dayIndex
+        let rare = market.listings.filter { $0.rare != nil }
+        market.listings.removeAll { $0.rare != nil }
         for _ in 0..<min(6, market.listings.count) { market.listings.remove(at: rng.int(0...(market.listings.count - 1))) }
         addListings(6)
+        market.listings.append(contentsOf: rare.filter { ($0.rareUntilDay ?? 0) > day })
+        rollRareFind()
     }
 
     mutating func addListings(_ count: Int) {

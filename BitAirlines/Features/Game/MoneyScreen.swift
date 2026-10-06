@@ -36,6 +36,7 @@ struct MoneyScreen: View {
         let costs = recent.reduce(0) { $0 + $1.flightCosts + $1.overhead }
         Page {
             ScreenHeader("Money")
+            WeeklyGoalCard(world: world)
             Card {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(Format.dollars(world.airline.cash)).pixelFont(21.333).foregroundStyle(world.airline.cash < 0 ? Theme.bad : Theme.good)

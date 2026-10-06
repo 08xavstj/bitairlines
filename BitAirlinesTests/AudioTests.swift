@@ -74,7 +74,7 @@ import CoreWorld
 
     @Test func aDeliveredAircraftIsHeard() throws {
         var w = try newWorld()
-        let listing = try #require(w.market.listings.first { (AircraftCatalog.type($0.typeID)?.level ?? 9) <= 1 && $0.price < w.airline.cash })
+        let listing = try #require(w.market.listings.first { (AircraftCatalog.type($0.typeID).map { $0.level <= 1 && w.homeProblem($0) == nil } ?? false) && $0.price < w.airline.cash })
         try w.buyUsed(listingID: listing.id)
         let heard = WorldHeard(w)
         w.advance(byMinutes: 120 * 1440)

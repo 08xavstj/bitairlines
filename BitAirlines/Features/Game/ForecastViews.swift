@@ -41,6 +41,7 @@ struct ForecastRow: View {
 }
 
 /// On a route card: what the route should earn with the aircraft on it now, next to what it earned last month.
+/// The forecast is cached (see OutlookCache) and only worked out again when the route's settings or aircraft change.
 struct RouteOutlook: View {
     let world: World
     let route: Route
@@ -48,7 +49,7 @@ struct RouteOutlook: View {
     var body: some View {
         let planes = route.aircraftIDs.compactMap { id in world.aircraft.first { $0.id == id } }
         if let type = planes.first?.type, route.aircraftIDs.count > 0 {
-            let forecast = world.forecast(route: route, type: type, aircraftCount: planes.count)
+            let forecast = OutlookCache.shared.forecast(world: world, route: route, planes: planes, type: type)
             if forecast.problem == nil {
                 KeyValueRow("Expected", Format.perDay(forecast.profitPerDay), color: forecast.profitPerDay >= 0 ? Theme.good : Theme.bad)
                 Text("Once people know the route, at this schedule and fare, with \(planes.count) \(type.displayName). Carries about \(Int(forecast.passengersPerDay.rounded())) people and \(Format.number(Int(forecast.cargoKgPerDay.rounded()))) kg a day.")

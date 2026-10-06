@@ -94,9 +94,9 @@ enum Tutorial {
         case .secondRoute:
             return "Give the new aircraft its own route. Towns with no road to them pay best. Check the forecast before you open it: a green number means profit."
         case .jobs:
-            return "Jobs are one-off flights: medevac, mail and charters. They pay well and have a deadline. Send a free aircraft from the Jobs board."
+            return "Jobs are one-off flights: medevac, mail and charters. They pay well and have a deadline. Open Routes, then Jobs, and send a free aircraft."
         case .level:
-            return "Airline shows your certificate level. Earn enough and keep a good reputation to buy the next one: it opens bigger aircraft and bigger airports."
+            return "Your certificate level is under MENU, then Airline. Earn enough and keep a good reputation to buy the next one: it opens bigger aircraft and bigger airports."
         }
     }
 }

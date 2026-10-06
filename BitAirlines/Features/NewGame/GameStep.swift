@@ -12,9 +12,11 @@ struct GameStep: View {
             PixelChoice(options: [(label: "Free play", value: false), (label: "Scenario", value: true)],
                         selection: Binding(get: { draft.scenario != nil }, set: { on in choose(on ? (draft.scenario ?? ScenarioID.allCases[0]) : nil) }))
             if draft.scenario == nil {
-                SectionTitle("Rules")
-                PixelChoice(options: GameMode.allCases.map { (label: Words.name($0), value: $0) }, selection: $draft.mode)
-                Text(Words.explain(draft.mode)).pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
+                SectionTitle("Difficulty")
+                let preset = StartPreset.of(mode: draft.mode, difficulty: draft.difficulty)
+                PixelChoice(options: StartPreset.allCases.map { (label: $0.label, value: $0) },
+                            selection: Binding(get: { preset }, set: { draft.mode = $0.mode; draft.difficulty = $0.difficulty }))
+                Text(preset.explain).pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
             } else {
                 ForEach(ScenarioDefinition.all) { def in
                     let selected = def.id == draft.scenario

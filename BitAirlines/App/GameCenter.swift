@@ -3,7 +3,7 @@ import Observation
 import UIKit
 import CoreWorld
 
-/// Game Center: sign-in, two leaderboards and a handful of achievements.
+/// Game Center: sign-in, three leaderboards and a handful of achievements.
 ///
 /// Needs the Game Center entitlement (`CLOUD_FEATURES` in tools/generate_xcodeproj.rb) and the IDs below created in
 /// App Store Connect (see docs/app-store.md). Without them, or when the player is not signed in, every call does nothing.
@@ -15,6 +15,8 @@ final class GameCenter {
     enum Board {
         static let revenue = "ca.amaruq.bitairlines.revenue"
         static let fleet = "ca.amaruq.bitairlines.fleet"
+        /// Weekly goals met in one game.
+        static let goals = "ca.amaruq.bitairlines.goals"
     }
 
     enum Achievement {
@@ -57,6 +59,7 @@ final class GameCenter {
         let revenue = min(world.airline.stats.revenue, Int(Int32.max))
         GKLeaderboard.submitScore(revenue, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [Board.revenue]) { _ in }
         GKLeaderboard.submitScore(world.aircraft.count, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [Board.fleet]) { _ in }
+        GKLeaderboard.submitScore(world.ops.goalsCompleted, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [Board.goals]) { _ in }
 
         var earned: [String] = []
         if !world.routes.isEmpty { earned.append(Achievement.firstRoute) }

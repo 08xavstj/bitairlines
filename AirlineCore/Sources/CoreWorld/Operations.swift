@@ -41,6 +41,10 @@ public struct Operations: Sendable, Codable {
 
     public var scenario: ScenarioState?
 
+    /// This week's goal (see WeeklyGoals.swift) and how many have been met in this game.
+    public var weeklyGoal: WeeklyGoal?
+    public var goalsCompleted = 0
+
     public init() {}
 
     public init(mode: GameMode, seed: UInt64) {
@@ -75,6 +79,8 @@ public struct Operations: Sendable, Codable {
         nextPilotID = try c.decodeIfPresent(Int.self, forKey: .nextPilotID) ?? 1
         autoHirePilots = try c.decodeIfPresent(Bool.self, forKey: .autoHirePilots) ?? true
         scenario = try c.decodeIfPresent(ScenarioState.self, forKey: .scenario)
+        weeklyGoal = try c.decodeIfPresent(WeeklyGoal.self, forKey: .weeklyGoal)
+        goalsCompleted = try c.decodeIfPresent(Int.self, forKey: .goalsCompleted) ?? 0
     }
 }
 
@@ -103,5 +109,6 @@ extension World {
         refreshPilotMarket()
         refreshJobArea()
         ops.fuelHistory = [market.fuelIndex]
+        startWeeklyGoal()
     }
 }

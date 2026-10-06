@@ -39,7 +39,7 @@ enum Demo {
                                                 difficulty: .easy, starterTypeID: "c208", seed: 42))
         let milkRun = try w.createRoute(stops: ["YEV", "YUB", "YSY"])
         try w.assign(aircraftID: w.aircraft[0].id, toRoute: milkRun)
-        if let listing = w.market.listings.first(where: { (AircraftCatalog.type($0.typeID)?.level ?? 9) <= 1 && AircraftCatalog.type($0.typeID)?.canLand(at: AirportCatalog.airport("YZF") ?? AirportCatalog.all[0]) == true && $0.price < w.airline.cash }) {
+        if let listing = w.market.listings.first(where: { (AircraftCatalog.type($0.typeID).map { $0.level <= 1 && w.homeProblem($0) == nil } ?? false) && AircraftCatalog.type($0.typeID)?.canLand(at: AirportCatalog.airport("YZF") ?? AirportCatalog.all[0]) == true && $0.price < w.airline.cash }) {
             let id = try w.buyUsed(listingID: listing.id)
             w.advance(byMinutes: 12 * 1440)
             let long = try w.createRoute(stops: ["YEV", "YZF"])

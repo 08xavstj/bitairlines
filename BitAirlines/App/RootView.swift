@@ -14,6 +14,8 @@ struct RootView: View {
     @State private var firstSection: GameSection = .map
     @State private var firstStep = 0
     @State private var firstScenario: ScenarioID?
+    /// When the app went to the background, so the fleet can catch up on return.
+    @State private var backgroundedAt: Date?
 
     var body: some View {
         ZStack {
@@ -33,7 +35,15 @@ struct RootView: View {
         .background(Theme.background.ignoresSafeArea())
         .onChange(of: screen, initial: true) { _, now in audio?.setMusic(now == .game ? .flying : .title) }
         // iOS may close a game in the background without warning, so save the moment the player leaves the app.
-        .onChange(of: scenePhase) { _, phase in if phase == .background { session?.save(toCloud: true) } }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .background {
+                session?.save(toCloud: true)
+                backgroundedAt = Date()
+            } else if phase == .active, let since = backgroundedAt {
+                backgroundedAt = nil
+                session?.catchUp(realSeconds: Date().timeIntervalSince(since))
+            }
+        }
         .onAppear {
             store.cloud?.enabled = { [settings] in settings.iCloudSaves }
             GameCenter.shared.signIn()
@@ -76,7 +86,9 @@ struct RootView: View {
 
     private func continueGame(slot: Int) {
         guard let world = try? store.load(slot: slot) else { return }
+        let savedAt = store.summary(slot: slot)?.savedAt
         begin(world: world, slot: slot)
+        if let savedAt { session?.catchUp(realSeconds: Date().timeIntervalSince(savedAt)) }
     }
 
     private func begin(world: World, slot: Int) {

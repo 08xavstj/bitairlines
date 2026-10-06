@@ -73,6 +73,7 @@ struct RouteCard: View {
                     Tag(text: "\(planes.count) aircraft", color: planes.isEmpty ? Theme.bad : Theme.good)
                     Button("Close") { onDelete() }.buttonStyle(.smallDanger)
                 }
+                RouteProfitLine(route: route)
                 ListStepper(label: "Flights", values: RouteSteps.frequencies, current: route.frequency, display: RouteSteps.frequencyText) { v in
                     session.perform { try $0.setFrequency(routeID: route.id, perDay: v) }
                 }
