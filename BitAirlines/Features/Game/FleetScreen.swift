@@ -6,6 +6,7 @@ enum FleetText {
     static func status(_ plane: Aircraft, in world: World) -> (text: String, color: Color) {
         switch plane.status {
         case .idle:
+            if plane.awaitingRestoration { return ("Barn find at \(Place.name(plane.location)): needs restoring", Theme.gold) }
             return ("Parked at \(Place.name(plane.location))", Theme.textMuted)
         case .boarding(let until):
             return (until > world.clock.minute + 120 ? "Waiting at \(Place.name(plane.location)) until \(Format.time(GameClock(minute: until)))" : "Boarding at \(Place.name(plane.location))", Theme.info)
@@ -13,7 +14,10 @@ enum FleetText {
             let to = Place.name(plane.flight?.to ?? "?")
             return ("\(Place.name(plane.location)) to \(to), lands \(Format.time(GameClock(minute: until)))", Theme.good)
         case .maintenance(let until):
-            return ("In the hangar until \(Format.date(GameClock(minute: until).date))", Theme.gold)
+            let date = Format.date(GameClock(minute: until).date)
+            if plane.restoration?.untilMinute == until { return ("Being restored until \(date)", Theme.gold) }
+            if plane.lastHeavyCheckMinute == until { return ("Heavy check until \(date)", Theme.gold) }
+            return ("In the hangar until \(date)", Theme.gold)
         case .grounded:
             return ("Grounded: needs your decision", Theme.bad)
         case .onOrder(let until):
@@ -125,6 +129,8 @@ struct AircraftSheet: View {
                                 }
                             }
                         }
+                        SectionTitle("Upkeep")
+                        UpkeepCard(session: session, plane: plane)
                         SectionTitle("Crew and kit")
                         KitsCard(session: session, aircraftID: aircraftID)
                         SectionTitle("Route")

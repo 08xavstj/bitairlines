@@ -10,7 +10,8 @@ public enum RareFind: String, Sendable, Hashable, Codable, CaseIterable {
     case lowHours
     /// An older type in a historic paint scheme; it arrives wearing that livery.
     case heritage
-    /// A cheap aircraft in poor condition: a project for the hangar.
+    /// A cheap aircraft in poor condition: a project for the hangar. It arrives needing restoration and cannot fly until
+    /// the player pays for it (Restoration.swift); it then comes out in the heritage livery.
     case barnFind
 }
 
