@@ -14,6 +14,8 @@ enum Theme {
     static let surfaceRaised = Color(hex: 0x1E2846)
     static let accent = Color(hex: 0x4FB6F0)
     static let accentDark = Color(hex: 0x1F6FA0)
+    /// Text and icons drawn on an accent-coloured button.
+    static let onAccent = Color(hex: 0x0B1020)
     static let textPrimary = Color(hex: 0xEEF2FA)
     static let textMuted = Color(hex: 0x9AA7C2)
     static let good = Color(hex: 0x6FD08C)

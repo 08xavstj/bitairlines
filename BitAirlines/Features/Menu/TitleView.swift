@@ -1,0 +1,162 @@
+import SwiftUI
+import CoreWorld
+
+/// The title screen: the game's name, a plane crossing the night sky, and the way in.
+struct TitleView: View {
+    let store: SaveStore
+    let onNew: () -> Void
+    let onContinue: (Int) -> Void
+    @State private var saves: [SaveSummary] = []
+    @State private var showContinue = false
+    @State private var showCredits = false
+    @State private var showSettings = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        ZStack {
+            Theme.background.ignoresSafeArea()
+            Sky(reduceMotion: reduceMotion)
+            HStack(alignment: .center, spacing: 24) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("BIT").pixelFont(48).foregroundStyle(Theme.textPrimary)
+                    Text("AIRLINES").pixelFont(32).foregroundStyle(Theme.accent)
+                    Text("Grow a bush airline into a world carrier.").pixelFont(10.667).foregroundStyle(Theme.textMuted).padding(.top, 6)
+                }
+                Spacer(minLength: 0)
+                VStack(spacing: 12) {
+                    if !saves.isEmpty { Button("Continue") { showContinue = true }.buttonStyle(PrimaryButtonStyle()) }
+                    Button("New airline") { onNew() }.buttonStyle(saves.isEmpty ? AnyButtonStyle(PrimaryButtonStyle()) : AnyButtonStyle(SecondaryButtonStyle()))
+                    HStack(spacing: 10) {
+                        Button("Settings") { showSettings = true }.buttonStyle(SecondaryButtonStyle())
+                        Button("Credits") { showCredits = true }.buttonStyle(SecondaryButtonStyle())
+                    }
+                }
+                .frame(width: 260)
+            }
+            .padding(.horizontal, 32)
+        }
+        .onAppear { saves = store.summaries() }
+        .sheet(isPresented: $showContinue) { ContinueSheet(store: store, saves: $saves) { slot in showContinue = false; onContinue(slot) } }
+        .sheet(isPresented: $showCredits) { CreditsView() }
+        .sheet(isPresented: $showSettings) { SettingsSheet() }
+    }
+}
+
+/// Stars, drifting clouds and a plane, drawn with blocks.
+struct Sky: View {
+    let reduceMotion: Bool
+
+    private static let stars: [(x: Double, y: Double, size: CGFloat, phase: Double)] = (0..<70).map { i in
+        let a = Double((i * 7919) % 1000) / 1000
+        let b = Double((i * 104729) % 1000) / 1000
+        return (x: a, y: b * 0.8, size: CGFloat(i % 9 == 0 ? 3 : 2), phase: Double(i % 7))
+    }
+
+    var body: some View {
+        TimelineView(.animation(minimumInterval: reduceMotion ? 1 : 1.0 / 30.0)) { timeline in
+            let t: Double = reduceMotion ? 0 : timeline.date.timeIntervalSinceReferenceDate
+            GeometryReader { geo in
+                ZStack {
+                    Canvas { context, size in
+                        for star in Self.stars {
+                            let blink = (t + star.phase).truncatingRemainder(dividingBy: 2.0) < 1.0 ? 1.0 : 0.4
+                            let twinkle = reduceMotion ? 1.0 : 0.55 + 0.45 * blink
+                            let rect = CGRect(x: star.x * size.width, y: star.y * size.height, width: star.size, height: star.size)
+                            context.fill(Path(rect), with: .color(Theme.textPrimary.opacity(0.7 * twinkle)), style: FillStyle(antialiased: false))
+                        }
+                        let span = size.width + 200
+                        for (i, row) in [0.30, 0.55, 0.72].enumerated() {
+                            let speed = 6.0 * (1 + Double(i) * 0.4)
+                            let x = (size.width - CGFloat(t * speed) + CGFloat(i) * 150).truncatingRemainder(dividingBy: span)
+                            let wrapped = (x < 0 ? x + span : x) - 100
+                            let y = size.height * row
+                            context.fill(Path(CGRect(x: wrapped, y: y, width: 96, height: 10)), with: .color(Theme.surfaceRaised), style: FillStyle(antialiased: false))
+                            context.fill(Path(CGRect(x: wrapped + 18, y: y - 10, width: 52, height: 10)), with: .color(Theme.surfaceRaised), style: FillStyle(antialiased: false))
+                        }
+                    }
+                    let progress: Double = reduceMotion ? 0.55 : (t / 22).truncatingRemainder(dividingBy: 1.0)
+                    let planeX: CGFloat = -160 + (geo.size.width + 320) * CGFloat(progress)
+                    let bob: CGFloat = CGFloat(sin(t * 1.3)) * 4
+                    AircraftSpriteView(family: .narrowbody, branding: .starter, pixel: 3).position(x: planeX, y: geo.size.height * 0.2 + bob)
+                }
+            }
+        }
+        .ignoresSafeArea()
+        .accessibilityHidden(true)
+    }
+}
+
+struct ContinueSheet: View {
+    let store: SaveStore
+    @Binding var saves: [SaveSummary]
+    let onPick: (Int) -> Void
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            ScreenHeader(title: "Continue") { Button("Close") { dismiss() }.buttonStyle(.small) }
+            ForEach(saves) { save in
+                Card {
+                    HStack(spacing: 12) {
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(save.airlineName).pixelFont(13.333).foregroundStyle(Theme.textPrimary)
+                            Text("\(Format.date(save.date)) - \(Format.compactMoney(save.cash)) - \(save.aircraft) aircraft - level \(save.level)")
+                                .pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                        }
+                        Spacer()
+                        Button("Delete") { store.delete(slot: save.slot); saves = store.summaries() }.buttonStyle(.smallDanger)
+                        Button("Play") { onPick(save.slot) }.buttonStyle(.smallProminent)
+                    }
+                }
+            }
+            if saves.isEmpty { EmptyNote("No saved airlines.") }
+            Spacer()
+        }
+        .padding(16)
+        .screenBackground()
+    }
+}
+
+struct CreditsView: View {
+    @Environment(\.dismiss) private var dismiss
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            ScreenHeader(title: "Credits") { Button("Close") { dismiss() }.buttonStyle(.small) }
+            Card {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("A Lontra Industries game.").pixelFont(13.333).foregroundStyle(Theme.textPrimary)
+                    Text("Airports and runways: OurAirports, public domain.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                    Text("Places and populations: GeoNames (geonames.org), CC BY 4.0.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                    Text("Coastlines: Natural Earth, public domain.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                    Text("All airlines are made up. Aircraft figures are rounded for play, not for flying.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                }
+            }
+            Spacer()
+        }
+        .padding(16)
+        .screenBackground()
+    }
+}
+
+struct SettingsSheet: View {
+    @Environment(AppSettings.self) private var settings
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        @Bindable var settings = settings
+        VStack(alignment: .leading, spacing: 10) {
+            ScreenHeader(title: "Settings") { Button("Close") { dismiss() }.buttonStyle(.small) }
+            Card {
+                VStack(alignment: .leading, spacing: 12) {
+                    Toggle(isOn: $settings.scanlines) { Text("CRT scanlines").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                    Toggle(isOn: $settings.haptics) { Text("Vibration").pixelFont(13.333).foregroundStyle(Theme.textPrimary) }.toggleStyle(PixelToggleStyle())
+                    Text("Text size").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                    PixelChoice(options: TextSize.allCases.map { (label: $0.label, value: $0) }, selection: $settings.textSize)
+                }
+            }
+            Spacer()
+        }
+        .padding(16)
+        .screenBackground()
+    }
+}
