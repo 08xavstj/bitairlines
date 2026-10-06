@@ -12,7 +12,7 @@ struct LiveryCodeImport: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            PixelField(title: "Import code", text: $text, prompt: "BITAIR-...", capitalization: .characters)
+            PixelField(title: "Import code", text: $text, prompt: "PROPS-...", capitalization: .characters)
             HStack(spacing: 8) {
                 Button("Use this look") { use() }.buttonStyle(.smallProminent).disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 Button("Copy my code") {
@@ -45,7 +45,7 @@ struct LiveryCodeImport: View {
 
     static func describe(_ error: LiveryCodeError) -> String {
         switch error {
-        case .wrongPrefix: "A livery code starts with BITAIR-."
+        case .wrongPrefix: "A livery code starts with PROPS-."
         case .badCharacter: "The code has a letter that does not belong in it. Check for a typo."
         case .tooShort, .badChecksum: "Part of the code is missing or mistyped. Copy it again in one piece."
         case .unknownVersion: "This code comes from a newer version of the game."

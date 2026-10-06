@@ -1,6 +1,6 @@
 // CoreWorld/LiveryCode.swift: an airline's look as a short text code players can share and paste into the branding editor.
 //
-// Format: "BITAIR-" then base-32 symbols (Crockford's alphabet, 5 bits each, so one symbol holds one palette index):
+// Format: "PROPS-" then base-32 symbols (Crockford's alphabet, 5 bits each, so one symbol holds one palette index):
 //   version, primary, secondary, accent, paint scheme,
 //   the 24 x 24 logo as runs (colour, run length - 1), row by row from the top left, runs of at most 32,
 //   and a two-symbol checksum of everything before it.
@@ -19,7 +19,7 @@ public enum LiveryCodeError: Error, Sendable, Hashable {
 }
 
 public enum LiveryCode {
-    public static let prefix = "BITAIR-"
+    public static let prefix = "PROPS-"
     static let version = 1
     static let alphabet: [Character] = Array("0123456789ABCDEFGHJKMNPQRSTVWXYZ")
     static let maxRun = 32
@@ -50,7 +50,7 @@ public enum LiveryCode {
     public static func decode(_ text: String) throws -> Branding {
         var cleaned: [Character] = []
         for ch in text where !ignored(ch) { cleaned.append(ch) }
-        let head: [Character] = Array("BITAIR")
+        let head: [Character] = Array("PROPS")
         guard cleaned.count >= head.count, zip(cleaned.prefix(head.count), head).allSatisfy({ upper($0.0) == $0.1 }) else { throw LiveryCodeError.wrongPrefix }
 
         var symbols: [Int] = []
