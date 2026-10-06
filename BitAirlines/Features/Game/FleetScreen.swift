@@ -166,9 +166,12 @@ struct AircraftSheet: View {
                                 if let reason = sellBlock(plane) {
                                     Text(reason).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                                 }
-                                Button { confirmSell = true } label: { HangarButtonText("Sell for \(Format.dollars(world.saleValue(of: plane)))") }
-                                    .buttonStyle(.smallDanger)
-                                    .disabled(sellBlock(plane) != nil)
+                                HStack(spacing: 8) {
+                                    Button { confirmSell = true } label: { HangarButtonText("Sell for \(Format.dollars(world.saleValue(of: plane)))") }
+                                        .buttonStyle(.smallDanger)
+                                        .disabled(sellBlock(plane) != nil)
+                                    TradeInButton(session: session, plane: plane)
+                                }
                             }
                         }
                     }

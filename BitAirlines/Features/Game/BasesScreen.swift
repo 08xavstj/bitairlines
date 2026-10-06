@@ -32,7 +32,10 @@ struct BasesScreen: View {
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        Button { building = base.airport } label: { HangarButtonText("Build more") }.buttonStyle(.small)
+                        VStack(alignment: .trailing, spacing: 6) {
+                            Button { building = base.airport } label: { HangarButtonText("Build more") }.buttonStyle(.small)
+                            if base.airport != world.airline.home { LeaveAirportButton(session: session, code: base.airport) }
+                        }
                     }
                 }
             }

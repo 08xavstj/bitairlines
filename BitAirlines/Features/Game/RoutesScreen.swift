@@ -35,6 +35,7 @@ enum RouteSteps {
 struct RoutesScreen: View {
     let session: GameSession
     @State private var deleting: Int?
+    @State private var selling: Int?
 
     var body: some View {
         let world = session.world
@@ -44,12 +45,17 @@ struct RoutesScreen: View {
             if world.routes.isEmpty {
                 Card { Text("No routes yet. Open one of the suggested routes above, or go to the Map, tap New route and tap the airports in the order you want to fly them. Then assign an aircraft from Fleet.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true) }
             }
-            ForEach(world.routes) { route in RouteCard(session: session, route: route, onDelete: { deleting = route.id }) }
+            ForEach(world.routes) { route in RouteCard(session: session, route: route, onDelete: { deleting = route.id }, onSell: { selling = route.id }) }
         }
         .pixelConfirm("Close this route?", message: "Its aircraft are parked. Money already earned is kept.", confirm: "Close route", destructive: true,
                       isPresented: Binding(get: { deleting != nil }, set: { if !$0 { deleting = nil } })) {
             if let id = deleting { session.perform { try $0.deleteRoute(id: id) } }
             deleting = nil
+        }
+        .pixelConfirm("Sell this route?", message: GrowthWords.sellRoute(price: selling.map { world.routeSalePrice(routeID: $0) } ?? 0), confirm: "Sell route", destructive: true,
+                      isPresented: Binding(get: { selling != nil }, set: { if !$0 { selling = nil } })) {
+            if let id = selling { session.perform(sound: .coin) { _ = try $0.sellRoute(routeID: id) } }
+            selling = nil
         }
     }
 }
@@ -58,6 +64,7 @@ struct RouteCard: View {
     let session: GameSession
     let route: Route
     let onDelete: () -> Void
+    var onSell: (() -> Void)? = nil
 
     var body: some View {
         let world = session.world
@@ -74,7 +81,10 @@ struct RouteCard: View {
                         Tag(text: "\(planes.count) aircraft", color: planes.isEmpty ? Theme.bad : Theme.good)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    Button("Close route") { onDelete() }.buttonStyle(.smallDanger)
+                    VStack(alignment: .trailing, spacing: 6) {
+                        Button("Close route") { onDelete() }.buttonStyle(.smallDanger)
+                        if let onSell { Button("Sell route") { onSell() }.buttonStyle(.small) }
+                    }
                 }
                 RouteProfitLine(route: route)
                 ListStepper(label: "Flights", values: RouteSteps.frequencies, current: route.frequency, display: RouteSteps.frequencyText) { v in

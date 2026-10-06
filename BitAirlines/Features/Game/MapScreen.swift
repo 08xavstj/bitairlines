@@ -69,7 +69,7 @@ struct MapScreen: View {
                             RoutePlannerPanel(session: session, stops: $stops, onClose: { planning = false; stops = [] })
                                 .coversMap()
                         } else if let code = selected, let airport = AirportCatalog.airport(code) {
-                            AirportPanel(world: world, airport: airport, onPlan: { startPlan(from: code) }, onBuild: { building = code }, onClose: { selected = nil })
+                            AirportPanel(world: world, airport: airport, onPlan: { startPlan(from: code) }, onBuild: { building = code }, onClose: { selected = nil }, session: session)
                                 .coversMap()
                         }
                         Spacer(minLength: 0)
@@ -171,6 +171,8 @@ struct AirportPanel: View {
     let onPlan: () -> Void
     let onBuild: () -> Void
     let onClose: () -> Void
+    /// For the Leave button (GrowthSheets.swift); nil hides it.
+    var session: GameSession? = nil
 
     var body: some View {
         let required = Progression.requiredLevel(for: airport)
@@ -203,6 +205,7 @@ struct AirportPanel: View {
                     Button("Plan a route") { onPlan() }.buttonStyle(.smallProminent).disabled(locked)
                     Button("Build here") { onBuild() }.buttonStyle(.small).disabled(locked)
                 }
+                if let session, world.leaveAirportProblem(code: airport.code) == nil { LeaveAirportButton(session: session, code: airport.code) }
             }
         }
         .frame(width: 340)

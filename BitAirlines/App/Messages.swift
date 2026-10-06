@@ -41,6 +41,7 @@ enum Messages {
         case .notEnoughRoom: return "This aircraft has too few seats or too small a hold for the job."
         case .routesDoNotMeet: return "That route does not touch any airport this aircraft already flies to."
         case .tooManyRoutes: return "An aircraft can fly at most \(World.maxRoutesPerAircraft) routes."
+        case .isHeadquarters: return "This is your headquarters. Move the headquarters first, from the Airline screen."
         }
     }
 

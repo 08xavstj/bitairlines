@@ -38,6 +38,7 @@ extension Messages {
         case .pilotSick: return "\(item.subject) is off sick for a few days."
         case .noCrew: return "\(item.subject) is waiting for a pilot."
         case .scenario: return item.subject == "failed" ? "The scenario deadline passed." : "Scenario complete: \(item.subject) medal."
+        case .growth: return GrowthWords.news(item)
         }
     }
 

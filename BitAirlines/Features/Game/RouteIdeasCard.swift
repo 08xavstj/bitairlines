@@ -3,7 +3,7 @@ import CoreCatalog
 import CoreWorld
 
 /// Remembers the suggested routes, so they are not worked out again on every clock tick. They are worked out again when the
-/// network, the fleet's types, the permits or the level change, and otherwise once a game week.
+/// network, the fleet's types, the hangar, the permits, the level or the focus change, and otherwise once a game week.
 @MainActor
 final class RouteIdeasCache {
     static let shared = RouteIdeasCache()
@@ -17,21 +17,26 @@ final class RouteIdeasCache {
         var level: Int
         var permits: [String]
         var week: Int
+        var focus: RouteIdeaFocus
+        /// Bigger-city ideas are also judged for types on sale in the hangar.
+        var listings: [String]
     }
 
     private var key: Key?
     private var ideas: [RouteIdea] = []
 
-    func ideas(world: World) -> [RouteIdea] {
+    func ideas(world: World, focus: RouteIdeaFocus) -> [RouteIdea] {
         let key = Key(home: world.airline.home,
                       routes: world.routes.map { $0.stops.joined(separator: "-") }.sorted(),
                       bases: world.ops.bases.map { $0.airport }.sorted(),
                       types: world.aircraft.map { $0.isDelivered ? $0.typeID : $0.typeID + " on order" }.sorted(),
                       level: world.airline.level,
                       permits: world.airline.permits.sorted(),
-                      week: world.clock.dayIndex / 7)
+                      week: world.clock.dayIndex / 7,
+                      focus: focus,
+                      listings: focus == .biggerCities ? world.market.listings.map { $0.typeID }.sorted() : [])
         if key == self.key { return ideas }
-        ideas = world.routeIdeas(limit: 5)
+        ideas = world.routeIdeas(limit: 5, focus: focus)
         self.key = key
         return ideas
     }
@@ -44,12 +49,11 @@ enum RouteIdeaWords {
         "\(Place.name(idea.stops.first ?? "")) to \(Place.name(idea.stops.last ?? ""))"
     }
 
-    /// "About +$1,200 a day with a Cessna 208B Grand Caravan EX."
+    /// "About +$1,200 a day with a Cessna 208B Grand Caravan EX." For a type the airline does not have: "... with a DHC-6 Twin Otter you could buy."
     static func profit(_ idea: RouteIdea) -> String {
         let name = AircraftCatalog.type(idea.typeID)?.displayName ?? idea.typeID
-        let startsWithVowel = name.first.map { "AEIOU".contains($0) } ?? false
-        let article = startsWithVowel ? "an" : "a"
-        return "About \(Format.perDay(idea.profitPerDay)) with \(article) \(name)."
+        let buy = idea.typeOwned ? "" : " you could buy"
+        return "About \(Format.perDay(idea.profitPerDay)) with \(GrowthWords.article(name)) \(name)\(buy)."
     }
 
     /// The distance and why the route is worth a look.
@@ -69,9 +73,22 @@ enum RouteIdeaWords {
 struct RouteIdeasCard: View {
     let session: GameSession
     @State private var open = true
+    /// The focus picked for this game slot ("" until the player picks one: then it follows the level).
+    @AppStorage private var focusChoice: String
+
+    init(session: GameSession) {
+        self.session = session
+        _focusChoice = AppStorage(wrappedValue: "", "routeIdeasFocus.\(session.slot)")
+    }
+
+    /// Small strips at the start; bigger cities from certificate level 2, unless the player picked.
+    private var focus: RouteIdeaFocus {
+        RouteIdeaFocus(rawValue: focusChoice) ?? (session.world.airline.level >= 2 ? .biggerCities : .smallStrips)
+    }
 
     var body: some View {
-        let ideas = RouteIdeasCache.shared.ideas(world: session.world)
+        let focus = self.focus
+        let ideas = RouteIdeasCache.shared.ideas(world: session.world, focus: focus)
         Card {
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
@@ -80,8 +97,12 @@ struct RouteIdeasCard: View {
                     Button(open ? "Hide" : "Show") { open.toggle() }.buttonStyle(.small)
                 }
                 if open {
+                    PixelChoice(options: [(label: "Small strips", value: RouteIdeaFocus.smallStrips), (label: "Bigger cities", value: RouteIdeaFocus.biggerCities)],
+                                selection: Binding(get: { focus }, set: { focusChoice = $0.rawValue }))
                     if ideas.isEmpty {
-                        Text("No new route nearby would make money with the aircraft you have now.")
+                        Text(focus == .biggerCities
+                             ? "No bigger town within reach would make money yet. A higher certificate level opens busier airports."
+                             : "No new route nearby would make money with the aircraft you have now.")
                             .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                     } else {
                         Text("Profit is for one aircraft, once people know the route.")
@@ -107,6 +128,9 @@ struct RouteIdeaRow: View {
                 Text(RouteIdeaWords.route(idea)).pixelFont(13.333).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
                 Text(RouteIdeaWords.profit(idea)).pixelFont(10.667).foregroundStyle(Theme.good).fixedSize(horizontal: false, vertical: true)
                 Text(RouteIdeaWords.reason(idea)).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                if !idea.typeOwned {
+                    Text(GrowthWords.buyHint(idea.typeID)).pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             VStack(alignment: .trailing, spacing: 6) {

@@ -13,13 +13,13 @@ extension Tuning {
     /// Fee to move the headquarters, per certificate level, at a small airport (bigger airports cost more, see `World.sizeFactor`).
     public static let headquartersFeePerLevel = 100_000
     /// Catchment population from which an airport counts as a bigger city for suggested routes, by certificate level 1...7.
-    public static let biggerCityPopulation: [Int] = [10_000, 30_000, 100_000, 300_000, 1_000_000, 3_000_000, 6_000_000]
+    public static let biggerCityPopulationByLevel: [Int] = [10_000, 30_000, 100_000, 300_000, 1_000_000, 3_000_000, 6_000_000]
     /// A network airport with at least this share of the bigger-city population is a starting point for bigger-city routes.
     public static let biggerCityOriginShare = 0.25
 
     /// Catchment population from which an airport counts as a bigger city at this level.
     public static func biggerCityPopulation(level: Int) -> Int {
-        biggerCityPopulation[min(max(level, 1), biggerCityPopulation.count) - 1]
+        biggerCityPopulationByLevel[min(max(level, 1), biggerCityPopulationByLevel.count) - 1]
     }
 }
 

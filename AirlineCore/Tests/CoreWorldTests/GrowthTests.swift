@@ -186,11 +186,11 @@ import CoreCatalog
 
     @Test func biggerCityIdeasStayWithinTheLevelAndUseBuyableTypes() throws {
         var w = try Fixtures.world()
-        w.airline.level = 3
+        w.airline.level = 4
         let ideas = w.routeIdeas(limit: 8, focus: .biggerCities)
-        print("CALIBRATION bigger-city ideas YEV level 3: " + ideas.map { "\($0.id) \($0.typeID) owned=\($0.typeOwned) \(Int($0.profitPerDay))/day" }.joined(separator: "; "))
+        print("CALIBRATION bigger-city ideas YEV level 4: " + ideas.map { "\($0.id) \($0.typeID) owned=\($0.typeOwned) \(Int($0.profitPerDay))/day" }.joined(separator: "; "))
         #expect(!ideas.isEmpty)
-        let threshold = Tuning.biggerCityPopulation(level: 3)
+        let threshold = Tuning.biggerCityPopulation(level: 4)
         let fleet = Set(w.aircraft.map(\.typeID))
         let listed = Set(w.market.listings.map(\.typeID))
         for idea in ideas {
@@ -199,14 +199,14 @@ import CoreCatalog
             #expect(problem == nil, "\(idea.id)")
             for code in idea.stops {
                 let airport = try Fixtures.airport(code)
-                #expect(Progression.requiredLevel(for: airport) <= 3 || code == w.airline.home, "\(code) is open at level 3")
+                #expect(Progression.requiredLevel(for: airport) <= 4 || code == w.airline.home, "\(code) is open at level 4")
             }
             let farEnd = try Fixtures.airport(idea.stops[1])
             #expect(farEnd.population >= threshold, "\(idea.id)")
             let type = try Fixtures.type(idea.typeID)
             #expect(idea.typeOwned == fleet.contains(type.id), "\(idea.id)")
             if !idea.typeOwned {
-                #expect(type.level <= 3, "\(idea.id)")
+                #expect(type.level <= 4, "\(idea.id)")
                 #expect(type.inProduction || listed.contains(type.id), "\(idea.id)")
             }
         }
@@ -215,6 +215,20 @@ import CoreCatalog
 
         let again = w.routeIdeas(limit: 8, focus: .biggerCities)
         #expect(again == ideas)
+    }
+
+    @Test func aBusyCityPairIsJudgedForABiggerTypeToBuy() throws {
+        var w = try Fixtures.world()
+        w.airline.level = 4
+        let types = w.biggerIdeaTypes()
+        let yeg = try Fixtures.airport("YEG")
+        let yvr = try Fixtures.airport("YVR")
+        let km = yeg.distanceKm(to: yvr)
+        let idea = try #require(w.bestIdea(stops: ["YEG", "YVR"], km: km, types: types, inNetwork: ["YEV"]))
+        let type = try Fixtures.type(idea.typeID)
+        print("CALIBRATION bigger-city YEG-YVR level 4: \(idea.typeID) owned=\(idea.typeOwned) \(Int(idea.profitPerDay))/day")
+        #expect(!idea.typeOwned)
+        #expect(type.seats > 9, "a bigger aircraft than the Caravan: \(idea.typeID)")
     }
 
     @Test func aBushAirlineIsShownABiggerTypeItCouldBuy() throws {
@@ -239,7 +253,8 @@ import CoreCatalog
     @Test func savesWithGrowthNewsLoadAndOldSavesStillDecode() throws {
         var w = try Fixtures.flyingWorld()
         w.routes[0].book = week(profitPerDay: 500)
-        try w.sellRoute(routeID: w.routes[0].id)
+        let routeID = w.routes[0].id
+        try w.sellRoute(routeID: routeID)
         let data = try Fixtures.encode(w)
         let loaded = try JSONDecoder().decode(World.self, from: data)
         #expect(loaded.news.last?.kind == .growth)
