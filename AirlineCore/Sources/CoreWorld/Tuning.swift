@@ -61,6 +61,25 @@ public enum Tuning {
     public static let adminPerAircraftPerDay = 120.0
     public static let insuranceShareOfPricePerYear = 0.0025
 
+    public static let cargoHandlingPerKg = 0.06
+
+    // MARK: Wear, breakdowns and the market
+    /// Condition points lost per block hour (100 is perfect).
+    public static let conditionLossPerBlockHour = 0.012
+    /// Below this the aircraft is taken out of service for a scheduled check.
+    public static let maintenanceThreshold = 55.0
+    public static let conditionAfterCheck = 96.0
+    /// Chance per departure of a failure on the ground, before the wear multiplier (1 for new, up to 4 for worn out).
+    public static let breakdownPerDeparture = 0.00015
+    /// How fast waiting passengers lose patience: the bucket is divided by 1 + this x days waited.
+    public static let waitingDecayPerDay = 0.35
+    public static let overdraftLimit = 100_000
+    public static let daysOverdrawnBeforeBankruptcy = 14
+    public static let emergencyLoanAmount = 250_000
+    public static let emergencyLoanRate = 0.15
+    /// Catchment above which a market has competing airlines (the share a newcomer gets is then limited).
+    public static let competitiveCatchment = 1_500_000.0
+
     // MARK: Turnaround and utilisation
     public static func turnaroundHours(_ engine: EngineKind) -> Double {
         switch engine {
