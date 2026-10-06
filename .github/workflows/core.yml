@@ -15,6 +15,10 @@ concurrency:
   group: core
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   core:
     runs-on: ubuntu-latest
