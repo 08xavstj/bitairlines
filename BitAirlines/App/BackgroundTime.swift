@@ -3,7 +3,7 @@ import UIKit
 /// A little time from iOS to finish a write after the app goes to the background. The time is given back when the work is done,
 /// or as soon as iOS asks for it back (if it is not given back then, iOS ends the app instead of suspending it).
 final class BackgroundTime: @unchecked Sendable {
-    /// Only read and changed on the main thread, after `init`.
+    /// Set by `init`; after that only used on the main thread.
     private var id = UIBackgroundTaskIdentifier.invalid
 
     init(_ name: String) {

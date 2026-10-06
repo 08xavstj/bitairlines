@@ -13,7 +13,8 @@ struct MarketFilter: Equatable {
         let q = query.trimmingCharacters(in: .whitespaces).lowercased()
         if !q.isEmpty && !type.displayName.lowercased().contains(q) && !type.id.contains(q) { return false }
         if level != 0 && type.level != level { return false }
-        if fitsOnly && !fit.fitsAny { return false }
+        // Fits my airports: it can land at home (first in the list), where every aircraft is delivered, so it can be bought.
+        if fitsOnly && fit.airports.first?.fits != true { return false }
         return true
     }
 }
@@ -24,7 +25,7 @@ struct MarketFilterBar: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            TextField("", text: $filter.query, prompt: Text("SEARCH: CESSNA, DASH 8").foregroundStyle(Theme.textMuted.opacity(0.6)))
+            TextField("", text: $filter.query, prompt: Text("SEARCH").foregroundStyle(Theme.textMuted.opacity(0.6)))
                 .pixelFont(13.333).foregroundStyle(Theme.textPrimary).tint(Theme.accent)
                 .textInputAutocapitalization(.never).autocorrectionDisabled()
                 .padding(.horizontal, 10).frame(minHeight: 44)

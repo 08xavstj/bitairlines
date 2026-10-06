@@ -40,6 +40,8 @@ struct HangarPriceColumn: View {
     let cash: Int
     /// The level needed, when the airline has not reached it yet.
     let neededLevel: Int?
+    /// True when it cannot land at the home airport, where it would be delivered (the card says why).
+    var cannotDeliver = false
     let action: String
     let onBuy: () -> Void
 
@@ -49,6 +51,8 @@ struct HangarPriceColumn: View {
             Text(priceText).pixelFont(13.333).foregroundStyle(affordable ? Theme.good : Theme.bad)
             if let neededLevel {
                 Tag(text: "Needs level \(neededLevel)", color: Theme.bad)
+            } else if cannotDeliver {
+                Tag(text: "Cannot deliver", color: Theme.bad)
             } else {
                 Button { onBuy() } label: { HangarButtonText(action) }
                     .buttonStyle(.smallProminent)
