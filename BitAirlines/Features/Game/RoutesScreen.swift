@@ -34,35 +34,38 @@ enum RouteSteps {
 
 struct RoutesScreen: View {
     let session: GameSession
-    @State private var deleting: Int?
-    @State private var selling: Int?
-    @State private var assigning: Int?
+    /// The route whose details are open.
+    @State private var open: Int?
+    @State private var sort: RouteSort = .attention
 
     var body: some View {
         let world = session.world
+        // Ideas stay on top while the airline is small; once it has a few routes, the routes come first.
+        let ideasFirst = world.routes.count < 3
         Page {
             ScreenHeader(title: "Routes") { Text("\(world.routes.count) routes").pixelFont(10.667).foregroundStyle(Theme.textMuted) }
-            RouteIdeasCard(session: session)
+            if ideasFirst { RouteIdeasCard(session: session) }
             if world.routes.isEmpty {
                 Card { Text("No routes yet. Open one of the suggested routes above, or go to the Map, tap New route and tap the airports in the order you want to fly them. Then assign an aircraft from Fleet.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true) }
+            } else {
+                RoutesSummary(world: world)
+                if world.routes.count > 1 {
+                    PixelChoice(options: [(label: "To look at", value: RouteSort.attention), (label: "Most profit", value: RouteSort.profit), (label: "Name", value: RouteSort.name)],
+                                selection: $sort)
+                }
+                ForEach(sort.sorted(world.routes, in: world)) { route in
+                    RouteRow(world: world, route: route) { open = route.id }
+                }
+                Text("Tap a route to change its schedule, fare and aircraft.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            ForEach(world.routes) { route in RouteCard(session: session, route: route, onDelete: { deleting = route.id }, onSell: { selling = route.id }, onAddAircraft: { assigning = route.id }) }
+            if !ideasFirst { RouteIdeasCard(session: session) }
         }
-        .pixelConfirm("Close this route?", message: "Its aircraft are parked. Money already earned is kept.", confirm: "Close route", destructive: true,
-                      isPresented: Binding(get: { deleting != nil }, set: { if !$0 { deleting = nil } })) {
-            if let id = deleting { session.perform { try $0.deleteRoute(id: id) } }
-            deleting = nil
-        }
-        .pixelConfirm("Sell this route?", message: GrowthWords.sellRoute(price: selling.map { world.routeSalePrice(routeID: $0) } ?? 0), confirm: "Sell route", destructive: true,
-                      isPresented: Binding(get: { selling != nil }, set: { if !$0 { selling = nil } })) {
-            if let id = selling { session.perform(sound: .coin) { _ = try $0.sellRoute(routeID: id) } }
-            selling = nil
-        }
-        .sheet(item: Binding(get: { assigning.map { SheetID(id: $0) } }, set: { assigning = $0?.id })) { sheet in
-            RouteAssignSheet(session: session, routeID: sheet.id)
+        .sheet(item: Binding(get: { open.map { SheetID(id: $0) } }, set: { open = $0?.id })) { sheet in
+            RouteDetailSheet(session: session, routeID: sheet.id)
         }
         // A stopping issue is drawn under any sheet: close the sheet so the player sees it.
-        .onChange(of: session.world.isPausedByIssue) { _, now in if now { assigning = nil } }
+        .onChange(of: session.world.isPausedByIssue) { _, now in if now { open = nil } }
     }
 }
 

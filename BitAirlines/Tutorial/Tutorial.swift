@@ -76,7 +76,7 @@ enum Tutorial {
         case .watch:
             return "Watch it fly. You earn money when an aircraft lands. Flights so far: \(min(flights, Tutorial.flightsToWatch)) of \(Tutorial.flightsToWatch)."
         case .review:
-            return "Routes shows what each route earns a day and how full the seats are. Planes flying full: raise the fare. Flying empty: lower it or fly less often."
+            return "Routes shows what each route earns a day. Tap a route to see how full the seats are. Planes flying full: raise the fare. Flying empty: lower it or fly less often."
         case .money:
             return "Money shows each day: income from landings, then fuel, crew, upkeep and fees. A parked aircraft still costs money every day, so keep them flying."
         case .inbox:

@@ -70,7 +70,8 @@ struct MapScreen: View {
                     .padding(8)
 
                 VStack {
-                    Spacer()
+                    // Clear of the toolbar along the top.
+                    Spacer(minLength: MapFraming.toolbarReserve)
                     HStack(alignment: .bottom, spacing: 8) {
                         if planning {
                             RoutePlannerPanel(session: session, stops: $stops, check: planCheck, onClose: { planning = false; stops = [] })
@@ -267,37 +268,50 @@ struct RoutePlannerPanel: View {
     let onClose: () -> Void
 
     var body: some View {
-        let world = session.world
-        let problem = world.routeProblem(stops: stops)
+        let problem = session.world.routeProblem(stops: stops)
         Card {
-            VStack(alignment: .leading, spacing: 6) {
-                HStack {
-                    Text("NEW ROUTE").pixelFont(13.333).foregroundStyle(Theme.accent)
-                    Spacer()
-                    Button("Clear") { stops = [] }.buttonStyle(.small).disabled(stops.isEmpty)
-                }
-                if stops.isEmpty {
-                    Text("Tap airports on the map, in the order you want to fly them.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
-                } else {
-                    Text(Place.list(stops, separator: " > ")).pixelFont(13.333).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
-                    Text("Cycle \(Format.km(cycleKm))" + (stops.count > 2 ? ", back to \(Place.name(stops[0]))" : ", and back")).pixelFont(10.667).foregroundStyle(Theme.textMuted)
-                }
-                if stops.count >= 2, let problem {
-                    Text(Messages.describe(problem, cash: session.world.airline.cash)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
-                    if case .permitRequired(let country, let price) = problem {
-                        Button("Buy permit \(Format.compactMoney(price))") { session.perform(sound: .coin) { try $0.buyPermit(country: country) } }.buttonStyle(.small)
-                    }
-                }
-                if stops.count >= 2, let check { PlannerFleetNote(world: world, stops: $stops, check: check) }
-                if stops.count >= 2, problem == nil { ForecastList(session: session, stops: stops) }
-                if let notice = session.notice { Text(notice).pixelFont(10.667).foregroundStyle(Theme.gold) }
+            VStack(alignment: .leading, spacing: 8) {
+                // The buttons sit at the top, so a long list of notes below never pushes them off the screen.
                 HStack(spacing: 8) {
+                    Text("NEW ROUTE").pixelFont(13.333).foregroundStyle(Theme.accent).lineLimit(1).fixedSize()
+                    Spacer(minLength: 4)
                     Button("Open route") { open() }.buttonStyle(.smallProminent).disabled(stops.count < 2 || problem != nil)
                     Button("Close") { onClose() }.buttonStyle(.small)
+                }
+                ViewThatFits(in: .vertical) {
+                    details(problem: problem)
+                    ScrollView { details(problem: problem) }
                 }
             }
         }
         .frame(width: 340)
+    }
+
+    @ViewBuilder private func details(problem: WorldError?) -> some View {
+        let world = session.world
+        VStack(alignment: .leading, spacing: 6) {
+            if stops.isEmpty {
+                Text("Tap airports on the map, in the order you want to fly them.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+            } else {
+                HStack(alignment: .top, spacing: 8) {
+                    Text(Place.list(stops, separator: " > ")).pixelFont(13.333).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
+                    Spacer(minLength: 4)
+                    Button("Clear") { stops = [] }.buttonStyle(.small)
+                }
+                Text("Cycle \(Format.km(cycleKm))" + (stops.count > 2 ? ", back to \(Place.name(stops[0]))" : ", and back")).pixelFont(10.667).foregroundStyle(Theme.textMuted)
+            }
+            if stops.count >= 2, let problem {
+                Text(Messages.describe(problem, cash: world.airline.cash)).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
+                if case .permitRequired(let country, let price) = problem {
+                    Button("Buy permit \(Format.compactMoney(price))") { session.perform(sound: .coin) { try $0.buyPermit(country: country) } }.buttonStyle(.small)
+                }
+            }
+            if let notice = session.notice { Text(notice).pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true) }
+            if stops.count >= 2, let check { PlannerFleetNote(world: world, stops: $stops, check: check) }
+            if stops.count >= 2, problem == nil { ForecastList(session: session, stops: stops) }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var cycleKm: Double {
