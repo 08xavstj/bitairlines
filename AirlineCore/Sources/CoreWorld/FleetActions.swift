@@ -49,6 +49,7 @@ extension World {
         let plane = aircraft[i]
         guard plane.isDelivered else { throw WorldError.notDelivered }
         guard plane.routeID == nil else { throw WorldError.aircraftHasRoute }
+        guard plane.jobID == nil else { throw WorldError.aircraftBusy }
         if case .flying = plane.status { throw WorldError.aircraftBusy }
         let price = saleValue(of: plane)
         airline.cash += price
@@ -70,7 +71,7 @@ extension World {
     public mutating func buyPermit(country: String) throws {
         guard CountryCatalog.country(country) != nil else { throw WorldError.unknownAirport(country) }
         guard !airline.permits.contains(country) else { throw WorldError.alreadyHasPermit }
-        let price = Progression.permitPrice(country: country)
+        let price = permitPrice(country: country)
         guard airline.cash >= price else { throw WorldError.notEnoughCash(needed: price) }
         airline.cash -= price
         airline.permits.append(country)
@@ -93,6 +94,7 @@ extension World {
         issues.removeAll { if case .certificateReady = $0.kind { return true } else { return false } }
         addNews(.certificate, subject: "level", amount: r.level)
         addListings(4)
+        offerPerks()
     }
 
     // MARK: Loans

@@ -12,6 +12,7 @@ extension World {
     /// Runs the world forward to the target minute, or until something needs the player. Safe to call again at once after an issue is resolved.
     @discardableResult
     public mutating func advance(toMinute target: Int) -> AdvanceResult {
+        upgradeOldSave()
         if isBankrupt { return .gameOver }
         while clock.minute < target {
             if isPausedByIssue { return .pausedForIssue }
@@ -51,12 +52,13 @@ extension World {
 
     mutating func deliver(_ i: Int) {
         aircraft[i].status = .idle
+        autoCrew(aircraftIndex: i, free: false)
         addNews(.aircraftDelivered, subject: aircraft[i].registration, amount: aircraft[i].id)
         if pausePolicy == .all { raise(.delivery(aircraftID: aircraft[i].id), options: [IssueOption(choice: .acknowledge, costUSD: 0, days: 0)]) }
     }
 
     mutating func finishMaintenance(_ i: Int) {
         aircraft[i].condition = max(aircraft[i].condition, Tuning.conditionAfterCheck)
-        aircraft[i].status = aircraft[i].routeID == nil ? .idle : .boarding(until: clock.minute + 1)
+        aircraft[i].status = aircraft[i].routeID == nil && aircraft[i].jobID == nil ? .idle : .boarding(until: clock.minute + 1)
     }
 }

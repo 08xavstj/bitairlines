@@ -24,4 +24,12 @@ public enum WorldError: Error, Sendable, Hashable {
     case requirementsNotMet
     case alreadyHasPermit
     case invalidAmount
+    case fuelStorageFull(capacityKg: Int)
+    /// Realism: a stretch of the route between fuel stops is longer than the aircraft can fly.
+    case noFuel(airport: String)
+    case alreadyBuilt
+    case cannotBuildHere
+    case kitDoesNotFit
+    case jobUnavailable
+    case notEnoughRoom
 }

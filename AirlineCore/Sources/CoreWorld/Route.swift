@@ -24,6 +24,9 @@ public struct LegState: Sendable, Hashable, Codable {
     public var departuresLastWeek: Int
     /// Earliest minute the next departure on this leg is allowed (the schedule slot).
     public var nextSlot: Int
+    /// Through passengers from hubs (see Hubs.swift); missing from older saves.
+    var connectingPaxStore: Double?
+    var connectingFareStore: Double?
 }
 
 public struct Route: Sendable, Hashable, Codable, Identifiable {
@@ -45,6 +48,8 @@ public struct Route: Sendable, Hashable, Codable, Identifiable {
     public var costThisMonth: Int
     public var revenueLastMonth: Int
     public var costLastMonth: Int
+    /// Service level (see Service.swift); missing from older saves, which read as standard.
+    var serviceStore: ServiceLevel?
 
     public static let minFare = 0.5
     public static let maxFare = 2.0

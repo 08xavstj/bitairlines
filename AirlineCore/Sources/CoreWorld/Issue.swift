@@ -56,6 +56,7 @@ public enum PausePolicy: String, Sendable, Hashable, Codable, CaseIterable {
 public struct NewsItem: Sendable, Hashable, Codable {
     public enum Kind: String, Sendable, Hashable, Codable {
         case routeOpened, aircraftDelivered, aircraftSold, certificate, breakdown, weather, loan, permit, milestone
+        case perk, fuelBought, jobDone, jobLate, event, baseBuilt, kitFitted, slotBought, rivalRoute, pilotHired, pilotSick, noCrew, scenario
     }
     public var minute: Int
     public var kind: Kind

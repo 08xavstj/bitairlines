@@ -57,6 +57,12 @@ public struct Aircraft: Sendable, Hashable, Codable, Identifiable {
     public var blockMinutesToday: Int
     public var totalFlights: Int
     public var totalBlockMinutes: Int
+    /// Kits fitted (see Kits.swift); missing from older saves.
+    var kitsStore: [Kit]?
+    /// The job it is flying, if any (see JobFlights.swift).
+    public var jobID: Int?
+    /// The route it goes back to after the job.
+    public var returnRouteID: Int?
 
     public var eventMinute: Int? {
         switch status {

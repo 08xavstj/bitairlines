@@ -1,11 +1,20 @@
 import Foundation
+import Testing
 import CoreCatalog
 @testable import CoreWorld
 
 enum Fixtures {
-    static func world(seed: UInt64 = 7, home: String = "YEV", type: String = "c208", difficulty: Difficulty = .standard) throws -> World {
+    static func world(seed: UInt64 = 7, home: String = "YEV", type: String = "c208", difficulty: Difficulty = .standard, mode: GameMode = .normal) throws -> World {
         try World.newGame(NewGameConfig(airlineName: "Lontra Air", airlineCode: "LT", homeAirport: home, branding: .starter,
-                                        difficulty: difficulty, starterTypeID: type, seed: seed))
+                                        difficulty: difficulty, starterTypeID: type, seed: seed, mode: mode))
+    }
+
+    static func airport(_ code: String) throws -> Airport { try #require(AirportCatalog.airport(code)) }
+    static func type(_ id: String) throws -> AircraftType { try #require(AircraftCatalog.type(id)) }
+
+    /// Runs the world a day at a time until `done` is true or `days` pass.
+    static func advance(_ w: inout World, days: Int, until done: (World) -> Bool) {
+        for _ in 0..<days where !done(w) { w.advance(byMinutes: 1440) }
     }
 
     /// A Caravan on Inuvik - Tuktoyaktuk, two departures a day each way.

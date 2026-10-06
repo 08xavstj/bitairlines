@@ -20,6 +20,7 @@ extension World {
         if clock.weekday == 0 { weeklyUpdate() }
         if clock.date.day == 1 { monthlyUpdate() }
         updateClosures()
+        dailyOperations()
         checkMoney()
         checkCertificate()
     }
@@ -33,6 +34,7 @@ extension World {
                 if routes[r].legs[l].departuresLastWeek == 0 { routes[r].legs[l].maturity = max(Tuning.minimumMaturity, routes[r].legs[l].maturity - 0.15) }
             }
         }
+        weeklyOperations()
     }
 
     mutating func monthlyUpdate() {
@@ -64,11 +66,13 @@ extension World {
             routes[r].revenueThisMonth = 0
             routes[r].costThisMonth = 0
         }
+        monthlyOperations()
     }
 
     /// Weather closes remote airports for a day or three now and then; flights to or from them wait.
     mutating func updateClosures() {
         market.closures.removeAll { $0.untilMinute <= clock.minute }
+        guard ops.mode.hasWeather else { return }
         for code in Set(routes.flatMap { $0.stops }).sorted() {
             guard let airport = AirportCatalog.airport(code) else { continue }
             let chance = (airport.surface == .paved && airport.kind != .small) ? 0.004 : 0.012
@@ -82,7 +86,7 @@ extension World {
     }
 
     mutating func checkMoney() {
-        if airline.cash < -Tuning.overdraftLimit {
+        if airline.cash < -Tuning.overdraftLimit && !ops.mode.unlimitedMoney {
             daysOverdrawn += 1
             let alreadyRaised = issues.contains { if case .overdraft = $0.kind { return true } else { return false } }
             if !alreadyRaised {

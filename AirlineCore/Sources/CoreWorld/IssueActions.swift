@@ -24,7 +24,9 @@ extension World {
 
     mutating func raiseBreakdown(aircraftIndex i: Int, type: AircraftType) {
         let wear = Valuation.wearFactor(ageYears: aircraft[i].ageYears(atDay: clock.dayIndex), condition: aircraft[i].condition)
-        let hourly = Double(type.maintenanceUSDPerHour) * wear
+        // Repairs are cheaper where the airline has a hangar, and with the mechanics' perk.
+        let hangar = hasHangar(at: aircraft[i].location) ? 0.6 : 1.0
+        let hourly = Double(type.maintenanceUSDPerHour) * wear * hangar * maintenanceFactor
         let id = nextIssueID
         raise(.breakdown(aircraftID: aircraft[i].id), options: [
             IssueOption(choice: .repairNow, costUSD: Int((hourly * 30).rounded()), days: 1),

@@ -17,7 +17,7 @@ extension World {
         }
         for code in stops {
             if let airport = AirportCatalog.airport(code), !airline.permits.contains(airport.country) {
-                return .permitRequired(country: airport.country, price: Progression.permitPrice(country: airport.country))
+                return .permitRequired(country: airport.country, price: permitPrice(country: airport.country))
             }
         }
         return nil
@@ -87,7 +87,7 @@ extension World {
     /// Whole trips round the route one aircraft can fly in a day: limited by the 24-hour day and by the crew's flying hours.
     public func cyclesPerAircraftPerDay(route: Route, type: AircraftType) -> Double {
         let block = route.legs.reduce(0.0) { $0 + type.blockHours(km: $1.distanceKm) }
-        let cycle = block + Tuning.turnaroundHours(type.engine) * Double(route.legs.count)
+        let cycle = block + turnaroundHours(type.engine) * Double(route.legs.count)
         return min(24.0 / max(0.5, cycle), Tuning.maxBlockHoursPerDay(level: type.level) * 0.9 / max(0.25, block))
     }
 
@@ -110,13 +110,31 @@ extension World {
         routes[r].name = name
     }
 
-    /// Why this aircraft type cannot fly the route (nil if it can).
-    public func fitProblem(type: AircraftType, route: Route) -> WorldError? {
+    /// Why this aircraft type (with these kits) cannot fly the route (nil if it can). Seasons are not counted: a lake that freezes
+    /// in winter still fits a floatplane.
+    public func fitProblem(type: AircraftType, route: Route, kits: [Kit] = []) -> WorldError? {
+        let cap = Capability(type: type, kits: kits)
         for code in route.stops {
             guard let airport = AirportCatalog.airport(code) else { return .unknownAirport(code) }
-            if !type.canLand(at: airport) { return .aircraftCannotUse(airport: code) }
+            if !canUse(cap, at: airport) { return .aircraftCannotUse(airport: code) }
         }
         for leg in route.legs where !type.canFly(km: leg.distanceKm) { return .outOfRange(km: Int(leg.distanceKm)) }
+        if ops.mode.fuelOnlyWhereSold, let dry = fuelProblem(type: type, route: route) { return dry }
+        return nil
+    }
+
+    /// Realism: every stretch between fuel stops must be within the aircraft's range. Nil if it is.
+    func fuelProblem(type: AircraftType, route: Route) -> WorldError? {
+        let n = route.legs.count
+        let sells = route.stops.map { code in AirportCatalog.airport(code).map { sellsFuel($0) } ?? false }
+        guard n > 0, let start = sells.firstIndex(of: true) else { return .noFuel(airport: route.stops.first ?? "") }
+        var since = 0.0
+        for k in 0..<n {
+            let l = (start + k) % n
+            since += route.legs[l].distanceKm
+            if since > Double(type.rangeKm) { return .noFuel(airport: route.legs[l].from) }
+            if sells[(l + 1) % n] { since = 0 }
+        }
         return nil
     }
 
@@ -127,7 +145,8 @@ extension World {
         guard aircraft[i].isDelivered else { throw WorldError.notDelivered }
         if case .grounded = aircraft[i].status { throw WorldError.aircraftBusy }
         guard let type = aircraft[i].type else { throw WorldError.unknownType(aircraft[i].typeID) }
-        if let problem = fitProblem(type: type, route: routes[r]) { throw problem }
+        if aircraft[i].jobID != nil { throw WorldError.aircraftBusy }
+        if let problem = fitProblem(type: type, route: routes[r], kits: aircraft[i].kits) { throw problem }
 
         if let old = aircraft[i].routeID, let oldIndex = routeIndex(old) { routes[oldIndex].aircraftIDs.removeAll { $0 == aircraftID } }
         aircraft[i].routeID = routeID

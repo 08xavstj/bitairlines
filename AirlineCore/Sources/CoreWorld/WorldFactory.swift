@@ -32,8 +32,12 @@ public struct NewGameConfig: Sendable {
     public var difficulty: Difficulty
     public var starterTypeID: String
     public var seed: UInt64
+    public var mode: GameMode
+    /// Set for a scenario game (the home, starter and difficulty should then come from its definition).
+    public var scenario: ScenarioID?
 
-    public init(airlineName: String, airlineCode: String, homeAirport: String, branding: Branding, difficulty: Difficulty, starterTypeID: String, seed: UInt64) {
+    public init(airlineName: String, airlineCode: String, homeAirport: String, branding: Branding, difficulty: Difficulty, starterTypeID: String, seed: UInt64,
+                mode: GameMode = .normal, scenario: ScenarioID? = nil) {
         self.airlineName = airlineName
         self.airlineCode = airlineCode
         self.homeAirport = homeAirport
@@ -41,6 +45,8 @@ public struct NewGameConfig: Sendable {
         self.difficulty = difficulty
         self.starterTypeID = starterTypeID
         self.seed = seed
+        self.mode = mode
+        self.scenario = scenario
     }
 }
 
@@ -82,6 +88,16 @@ extension World {
         world.aircraft.append(Aircraft(id: world.takeAircraftID(), typeID: type.id, registration: registration, builtDay: -Int(offer.ageYears * 365.25),
                                        condition: offer.condition, price: offer.price, location: home.code, status: .idle))
         world.refreshListings()
+        world.ops = Operations(mode: config.mode, seed: config.seed)
+        if config.mode.unlimitedMoney {
+            world.airline.cash = Tuning.sandboxStartCash
+            world.airline.level = Airline.maxLevel
+            world.announcedLevel = Airline.maxLevel
+        }
+        if let id = config.scenario, let def = ScenarioDefinition.definition(id) {
+            world.ops.scenario = ScenarioState(id: id, startDay: 0, deadlineDay: def.deadlineDays, progress: 0, freightKg: 0, finishedDay: nil, medal: nil, failed: false)
+        }
+        world.startOperations(freeCrews: true)
         return world
     }
 

@@ -34,6 +34,8 @@ public struct World: Sendable, Codable {
     public var isBankrupt: Bool
     /// The highest certificate level the player has already been told they qualify for.
     var announcedLevel: Int
+    /// The systems added after the first version (see Operations.swift). Missing from older saves; use `ops`.
+    var operationsStore: Operations?
 
     public static let newsLimit = 120
     public static let bookLimit = 180

@@ -85,6 +85,52 @@ public enum Tuning {
     /// Catchment above which a market has competing airlines (the share a newcomer gets is then limited).
     public static let competitiveCatchment = 1_500_000.0
 
+    // MARK: Bases, fuel stock and slots
+    public static let runwayExtensionFt = 1500
+    /// Fuel the airline can stock without a depot, and how much each depot adds, in kilograms.
+    public static let fuelStorageBaseKg = 20_000.0
+    public static let fuelStoragePerDepotKg = 150_000.0
+    /// Airports from this certificate level up hand out slots.
+    public static let slotAirportLevel = 3
+    /// Price of one daily slot at the smallest slot airport (bigger ones cost the square of their tier times this).
+    public static let slotBasePrice = 60_000
+
+    // MARK: Jobs and events
+    /// Jobs and events happen at airports within this distance of the network.
+    public static let jobAreaKm = 600.0
+    public static let jobRecordsKept = 300
+    public static let eventChancePerWeek = 0.25
+
+    // MARK: Hubs
+    /// Through passengers only take a connection that is at most this much longer than flying direct.
+    public static let maxConnectionDetour = 1.6
+    /// Share of the A to B market that will change planes at a hub.
+    public static let connectingShare = 0.5
+    /// Through fares are a little cheaper than the going direct fare.
+    public static let connectingFareDiscount = 0.9
+
+    // MARK: Rival airlines
+    /// Chance each month that a rival moves into one of the player's busy routes.
+    public static let rivalEntryChance = 0.25
+    /// A leg must have at least this many people a day before a rival bothers.
+    public static let rivalEntryPaxPerDay = 40.0
+    /// Share of a market a rival is assumed to carry (for the rankings).
+    public static let rivalMarketShare = 0.3
+    /// Where a rival flies the same pair, competition is at least this intense.
+    public static let rivalIntensity = 0.4
+
+    // MARK: Pilots
+    /// Monthly base salary for a pilot on small types (bigger types pay a multiple); flight pay is in the leg costs.
+    public static let pilotSalaryPerMonth = 2_000
+    public static let pilotHireFee = 6_000
+    public static let pilotTrainingPrice = 20_000
+    public static let pilotSickChancePerWeek = 0.015
+
+    // MARK: Sandbox
+    public static let sandboxStartCash = 1_000_000_000
+    public static let sandboxCashFloor = 100_000_000
+    public static let sandboxTopUp = 900_000_000
+
     // MARK: Turnaround and utilisation
     public static func turnaroundHours(_ engine: EngineKind) -> Double {
         switch engine {

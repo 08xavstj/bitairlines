@@ -81,19 +81,21 @@ extension World {
             mature.departuresLastWeek = max(1, Int((f * 7).rounded()))
             let share = capture(route: route, leg: mature, from: a, to: b)
             // Only so many people (and so much freight) wait at a gate at once, which caps what a sparse schedule can ever carry.
-            let paxPerDay = leg.marketPaxPerDay * share
+            let paxPerDay = (leg.marketPaxPerDay + leg.connectingPaxPerDay) * share
             let cargoPerDay = leg.marketCargoKgPerDay * share
             let carriedPax = min(paxPerDay, f * (2.0 * paxPerDay + 4.0), f * Double(type.seats) * Tuning.loadFactorCap)
             let carriedCargo = route.carriesCargo ? min(cargoPerDay, f * (2.0 * cargoPerDay + 40.0), f * Double(type.cargoKg) * Tuning.cargoLoadLimit) : 0
-            let fare = leg.marketFare * route.fareMultiplier
-            revenue += carriedPax * fare * (1.0 - Tuning.salesShare) + carriedCargo * Fares.cargoRate(distanceKm: leg.distanceKm)
-            let flight = LegEconomics.cost(type: type, from: a, to: b, distanceKm: leg.distanceKm, fuelIndex: market.fuelIndex, wearFactor: wear).total
-            cost += f * flight + carriedPax * LegEconomics.perPassenger(from: a, to: b) + carriedCargo * Tuning.cargoHandlingPerKg
+            let fare = leg.blendedFare * route.fareMultiplier
+            revenue += carriedPax * fare * (1.0 - Tuning.salesShare) + carriedCargo * Fares.cargoRate(distanceKm: leg.distanceKm) * cargoRateFactor
+            let flight = LegEconomics.cost(type: type, from: a, to: b, distanceKm: leg.distanceKm, fuelIndex: fuelIndex(leaving: a.code),
+                                           wearFactor: wear * maintenanceFactor, adjust: costAdjust).total
+            cost += f * flight + carriedPax * passengerCost(from: a, to: b, service: route.service) + carriedCargo * Tuning.cargoHandlingPerKg
             passengers += carriedPax
             cargo += carriedCargo
             seats += f * Double(type.seats)
         }
-        cost += Double(count) * LegEconomics.fixedPerDay(type: type)
+        let pilotPay = Double(World.pilotsNeeded(type) * salary(for: RatingGroup.of(type.family))) * 12.0 / 365.0
+        cost += Double(count) * (LegEconomics.fixedPerDay(type: type) + pilotPay)
         let profit = revenue - cost
 
         let age = type.inProduction ? 12.0 : 35.0
