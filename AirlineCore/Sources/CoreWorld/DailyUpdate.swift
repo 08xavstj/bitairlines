@@ -9,7 +9,7 @@ extension World {
         if books.count > World.bookLimit { books.removeFirst(books.count - World.bookLimit) }
         today = DayBook(day: day, revenue: 0, flightCosts: 0, overhead: 0)
 
-        var fixed = Tuning.headOfficePerDay
+        var fixed = Tuning.headOfficePerDay(level: airline.level)
         for plane in aircraft where plane.isDelivered {
             if let type = plane.type { fixed += LegEconomics.fixedPerDay(type: type) }
         }
@@ -30,7 +30,7 @@ extension World {
             for l in routes[r].legs.indices {
                 routes[r].legs[l].departuresLastWeek = routes[r].legs[l].departuresThisWeek
                 routes[r].legs[l].departuresThisWeek = 0
-                if routes[r].legs[l].departuresLastWeek == 0 { routes[r].legs[l].maturity = max(0.3, routes[r].legs[l].maturity - 0.15) }
+                if routes[r].legs[l].departuresLastWeek == 0 { routes[r].legs[l].maturity = max(Tuning.minimumMaturity, routes[r].legs[l].maturity - 0.15) }
             }
         }
     }

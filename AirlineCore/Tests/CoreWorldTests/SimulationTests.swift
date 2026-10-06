@@ -113,8 +113,9 @@ import CoreCatalog
         #expect(w.advance(byMinutes: 2 * 1440) == .pausedForIssue)
         let issue = try #require(w.issues.first { if case .overdraft = $0.kind { return true } else { return false } })
         #expect(issue.options.map(\.choice) == [.emergencyLoan, .declareBankruptcy])
+        let before = w.airline.cash
         try w.resolve(issueID: issue.id, choice: .emergencyLoan)
-        #expect(w.airline.loans.count == 1 && w.airline.cash == -250_000)
+        #expect(w.airline.loans.count == 1 && w.airline.cash == before + Tuning.emergencyLoanAmount)
     }
 
     @Test func stayingOverdrawnEndsTheGame() throws {

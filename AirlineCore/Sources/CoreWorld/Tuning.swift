@@ -39,6 +39,8 @@ public enum Tuning {
     public static let cargoRateByDistance = LinearTable([(0, 1.2), (100, 2.0), (400, 2.6), (1000, 3.2), (3000, 3.5), (10000, 3.8)])
     /// Usable fraction of a hold's capacity on an ordinary day.
     public static let cargoLoadLimit = 0.7
+    /// A route never drops below this share of its potential, and a new one starts here.
+    public static let minimumMaturity = 0.5
 
     // MARK: Operating costs (US dollars)
     public static let jetFuelPerKg = 1.00
@@ -57,7 +59,8 @@ public enum Tuning {
     public static let fuelPremium: [AirportKind: Double] = [.large: 0, .medium: 0.10, .small: 0.35, .seaplane: 0.40]
     public static let navigationPerKm = 0.9
     /// Fixed daily cost per airline and per aircraft (admin, insurance), plus insurance as a share of hull value per year.
-    public static let headOfficePerDay = 500.0
+    /// Head office costs per day grow with the size of the operation: a one-plane bush airline has a desk, a jumbo carrier has a headquarters.
+    public static func headOfficePerDay(level: Int) -> Double { 120.0 * Double(level * level) }
     public static let adminPerAircraftPerDay = 120.0
     public static let insuranceShareOfPricePerYear = 0.0025
 
@@ -72,7 +75,7 @@ public enum Tuning {
     /// Chance per departure of a failure on the ground, before the wear multiplier (1 for new, up to 4 for worn out).
     public static let breakdownPerDeparture = 0.00015
     /// How fast waiting passengers lose patience: the bucket is divided by 1 + this x days waited.
-    public static let waitingDecayPerDay = 0.35
+    public static let waitingDecayPerDay = 0.25
     public static let overdraftLimit = 100_000
     public static let daysOverdrawnBeforeBankruptcy = 14
     public static let emergencyLoanAmount = 250_000

@@ -15,7 +15,7 @@ public struct LegState: Sendable, Hashable, Codable {
     public var waitingCargoKg: Double
     /// Minute the buckets were last brought up to date.
     public var lastUpdate: Int
-    /// 0.3...1.0: a new route takes time to build awareness; good service raises it.
+    /// 0.5...1.0: a new route takes time to build awareness; good service raises it.
     public var maturity: Double
     public var passengersCarried: Int
     public var revenue: Int

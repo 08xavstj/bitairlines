@@ -12,7 +12,7 @@ import CoreCatalog
         #expect(route.legs[2].from == "YSY" && route.legs[2].to == "YEV")
         #expect(route.name == "YEV-YUB-YSY")
         #expect(route.frequency == 2 && route.fareMultiplier == 1)
-        #expect(route.legs.allSatisfy { $0.marketPaxPerDay > 0 && $0.marketFare > 0 && $0.maturity == 0.3 })
+        #expect(route.legs.allSatisfy { $0.marketPaxPerDay > 0 && $0.marketFare > 0 && $0.maturity == Tuning.minimumMaturity })
         #expect(w.news.last?.kind == .routeOpened)
     }
 

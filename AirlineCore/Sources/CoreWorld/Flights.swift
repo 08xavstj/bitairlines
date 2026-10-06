@@ -13,7 +13,7 @@ extension World {
         let ownShare = min(0.5, max(0.05, 0.05 + 0.004 * airline.reputation + 0.03 * perDay))
         let competitive = (1.0 - intensity) + intensity * ownShare
         let fareEffect = min(1.5, Powers.oneAndAHalf(1.0 / route.fareMultiplier))
-        let quality = 0.85 + 0.0015 * airline.reputation
+        let quality = 0.9 + 0.001 * airline.reputation
         return competitive * fareEffect * quality
     }
 

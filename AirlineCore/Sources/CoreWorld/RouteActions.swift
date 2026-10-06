@@ -33,7 +33,7 @@ extension World {
             let km = a.distanceKm(to: b)
             legs.append(LegState(from: a.code, to: b.code, distanceKm: km, marketPaxPerDay: Demand.passengersPerDay(from: a, to: b, distanceKm: km),
                                  marketCargoKgPerDay: Demand.cargoKgPerDay(from: a, to: b), marketFare: Fares.market(from: a, to: b, distanceKm: km),
-                                 waitingPax: 0, waitingCargoKg: 0, lastUpdate: clock.minute, maturity: 0.3, passengersCarried: 0, revenue: 0,
+                                 waitingPax: 0, waitingCargoKg: 0, lastUpdate: clock.minute, maturity: Tuning.minimumMaturity, passengersCarried: 0, revenue: 0,
                                  departuresThisWeek: 0, departuresLastWeek: 0, nextSlot: clock.minute))
         }
         let id = takeRouteID()
