@@ -5,7 +5,10 @@ import CoreCatalog
 @Suite struct AircraftFitTests {
     private func type(_ id: String) throws -> AircraftType { try #require(AircraftCatalog.type(id)) }
 
-    private func airport(_ test: (Airport) -> Bool) throws -> Airport { try #require(AirportCatalog.all.first(where: test)) }
+    private func airport(_ test: (Airport) -> Bool) throws -> Airport {
+        let found = AirportCatalog.all.first(where: test)
+        return try #require(found)
+    }
 
     @Test func theStarterFitsHomeAndTheNetworkStartsAtHome() throws {
         let w = try Fixtures.world()
