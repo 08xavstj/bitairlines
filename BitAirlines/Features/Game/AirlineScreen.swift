@@ -19,6 +19,7 @@ struct AirlineScreen: View {
                 Page {
                     ScenarioCard(world: world)
                     totals(world)
+                    ReputationCard(world: world)
                     RulesCard(world: world)
                     if world.airline.level >= GameSection.lateLevel { RankingsCard(world: world) }
                     pauseCard(world)

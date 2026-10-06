@@ -16,7 +16,7 @@ extension Messages {
         case .permit: return "You bought a permit for \(CountryCatalog.country(item.subject)?.name ?? item.subject) (\(Format.dollars(item.amount)))."
         case .milestone:
             if item.subject.hasPrefix("rare:") { return rareFind(item) }
-            if item.subject.hasPrefix("goal:") { return "Weekly goal met. Bonus of \(Format.dollars(item.amount)) paid." }
+            if item.subject.hasPrefix("goal:") { return goalMet(item) }
             return item.subject
         case .perk: return "You took the \(Perk(rawValue: item.subject).map { Words.name($0) } ?? "new") perk."
         case .fuelBought: return "You bought \(Format.number(item.amount)) kg of fuel ahead."
@@ -38,6 +38,15 @@ extension Messages {
         case .noCrew: return "\(item.subject) is waiting for a pilot."
         case .scenario: return item.subject == "failed" ? "The scenario deadline passed." : "Scenario complete: \(item.subject) medal."
         }
+    }
+
+    /// A weekly goal was met. The subject is "goal:<kind>" or, for a place goal, "goal:<kind>:<airport>"; the amount the bonus.
+    static func goalMet(_ item: NewsItem) -> String {
+        let parts = item.subject.split(separator: ":").map(String.init)
+        let bonus = "Bonus of \(Format.dollars(item.amount)) paid."
+        guard parts.count > 2 else { return "Weekly goal met. " + bonus }
+        let what = parts[1] == WeeklyGoalKind.freightKg.rawValue ? "freight" : "passengers"
+        return "Weekly goal met: \(what) to \(Place.name(parts[2])). " + bonus
     }
 
     /// A rare find came up on the used market. The subject is "rare:<kind>:<type id>", the amount the price.

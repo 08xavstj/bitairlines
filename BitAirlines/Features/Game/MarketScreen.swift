@@ -90,6 +90,12 @@ struct UsedCard: View {
                     Text(type.displayName.uppercased()).pixelFont(13.333).foregroundStyle(locked ? Theme.textMuted : Theme.textPrimary).lineLimit(1)
                     SpecLine(type: type)
                     Text("\(Int(listing.ageYears)) years old, condition \(Int(listing.condition))%, arrives in \(Format.wait(minutes: Valuation.usedDeliveryMinutes(listing)))").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
+                    if listing.rare == .barnFind {
+                        let cost = Restorations.cost(type: type, ageYears: listing.ageYears)
+                        let days = Restorations.days(ageYears: listing.ageYears, fasterHangar: false)
+                        Text("It cannot fly until restored: about \(Format.compactMoney(cost)) and \(days) days in the hangar (half that with a hangar). Then it is near new, in the heritage livery.")
+                            .pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
+                    }
                     FitSummary(fit: fit)
                 }
                 Spacer()

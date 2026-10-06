@@ -183,12 +183,52 @@ struct AircraftSheet: View {
                             Button("Take off route") { session.perform { try $0.unassign(aircraftID: aircraftID) } }.buttonStyle(.small)
                         } else {
                             Button("Assign") { session.perform { try $0.assign(aircraftID: aircraftID, toRoute: route.id) } }.buttonStyle(.smallProminent)
-                                .disabled(problem != nil || !plane.isDelivered)
+                                .disabled(problem != nil || !plane.isDelivered || plane.awaitingRestoration)
                         }
                     }
                 }
             }
         }
+    }
+}
+
+/// The next heavy check (when and what it costs), or the restoration a barn find needs before it can fly.
+struct UpkeepCard: View {
+    let session: GameSession
+    let plane: Aircraft
+
+    var body: some View {
+        let world = session.world
+        Card {
+            VStack(alignment: .leading, spacing: 8) {
+                if plane.awaitingRestoration {
+                    let cost = world.restorationCost(aircraftID: plane.id) ?? 0
+                    let days = world.restorationDays(aircraftID: plane.id) ?? 0
+                    Text("Barn find. It cannot fly until it is restored: about \(Format.compactMoney(cost)) and \(days) days in the hangar. It comes out near new, in the heritage livery.")
+                        .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                    Button("Restore for \(Format.compactMoney(cost))") { session.perform(sound: .coin) { try $0.startRestoration(aircraftID: plane.id) } }
+                        .buttonStyle(.smallProminent)
+                        .disabled(world.restorationProblem(aircraftID: plane.id) != nil)
+                } else {
+                    Text(heavyCheckLine(world)).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                }
+            }
+        }
+    }
+
+    /// "Heavy check due in about 14 months, about $110k and 14 days in the hangar."
+    private func heavyCheckLine(_ world: World) -> String {
+        let days = world.daysUntilHeavyCheck(plane)
+        let months = Int((Double(days) / 30.4).rounded())
+        let when: String
+        if days <= 0 {
+            when = "due now"
+        } else if months < 1 {
+            when = "due within a month"
+        } else {
+            when = "due in about \(months) month\(months == 1 ? "" : "s")"
+        }
+        return "Heavy check \(when), about \(Format.compactMoney(world.heavyCheckCost(plane))) and \(world.heavyCheckDays(plane)) days in the hangar."
     }
 }
 

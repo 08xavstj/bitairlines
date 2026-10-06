@@ -24,7 +24,7 @@ struct WeeklyGoalCard: View {
                         }
                     }
                     .frame(height: 8)
-                    Text("\(WeeklyGoalCard.amount(goal.kind, progress)) of \(WeeklyGoalCard.amount(goal.kind, goal.target)). Goals met: \(world.ops.goalsCompleted).")
+                    Text("\(WeeklyGoalCard.amount(goal.kind, progress)) of \(WeeklyGoalCard.amount(goal.kind, goal.target))\(goal.place == nil ? "" : " landed there"). Goals met: \(world.ops.goalsCompleted).")
                         .pixelFont(10.667).foregroundStyle(Theme.textMuted)
                 }
             }
@@ -32,11 +32,18 @@ struct WeeklyGoalCard: View {
     }
 
     static func describe(_ goal: WeeklyGoal) -> String {
+        if let place = goal.place {
+            let name = Place.name(place)
+            switch goal.kind {
+            case .freightKg: return "Deliver \(Format.number(goal.target)) kg of freight to \(name) before Monday."
+            default: return "Carry \(Format.number(goal.target)) passengers to \(name) before Monday."
+            }
+        }
         switch goal.kind {
-        case .passengers: "Carry \(Format.number(goal.target)) passengers before Monday."
-        case .freightKg: "Move \(Format.number(goal.target)) kg of freight before Monday."
-        case .flights: "Fly \(Format.number(goal.target)) flights before Monday."
-        case .revenue: "Earn \(Format.compactMoney(goal.target)) from flights before Monday."
+        case .passengers: return "Carry \(Format.number(goal.target)) passengers before Monday."
+        case .freightKg: return "Move \(Format.number(goal.target)) kg of freight before Monday."
+        case .flights: return "Fly \(Format.number(goal.target)) flights before Monday."
+        case .revenue: return "Earn \(Format.compactMoney(goal.target)) from flights before Monday."
         }
     }
 

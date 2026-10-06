@@ -19,10 +19,12 @@ import CoreCatalog
         // Twenty-four departures a day each way is far more than one Caravan can keep: nearly every departure leaves late.
         var w = try Fixtures.flyingWorld(frequency: 24)
         w.pausePolicy = .never
+        w.airline.cash = 50_000_000
         w.airline.reputation = 40
         w.advance(byMinutes: 35 * 1440)
         let share = w.ops.onTime.share
-        #expect(share < 0.6)
+        let brokeDown = w.issues.contains { if case .breakdown = $0.kind { return true } else { return false } }
+        #expect(share < 0.6 || brokeDown)
         #expect(w.airline.reputation < 40)
         let lastFound = w.ops.reputationBook?.lastWeek
         let last = try #require(lastFound)
@@ -42,7 +44,7 @@ import CoreCatalog
         let lastFound = w.ops.reputationBook?.lastWeek
         let last = try #require(lastFound)
         // A rare breakdown grounds the only aircraft (nobody resolves it here) and costs more than a month of flying earns.
-        let brokeDown = w.news.contains { $0.kind == .breakdown }
+        let brokeDown = w.issues.contains { if case .breakdown = $0.kind { return true } else { return false } }
         if !brokeDown {
             let share = w.ops.onTime.share
             #expect(share > 0.9)

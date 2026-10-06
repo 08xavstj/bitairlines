@@ -70,6 +70,7 @@ extension World {
 
     /// Days until the next heavy check: by the calendar, or sooner by the hours at the pace flown since the last one. 0 when due.
     public func daysUntilHeavyCheck(_ plane: Aircraft) -> Int {
+        if isHeavyCheckDue(plane) { return 0 }
         let last = lastHeavyCheckDay(plane)
         var days = last + Tuning.heavyCheckIntervalDays - clock.dayIndex
         let hours = blockHoursSinceHeavyCheck(plane)
