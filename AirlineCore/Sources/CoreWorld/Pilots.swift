@@ -141,12 +141,15 @@ extension World {
     /// Courses that have ended count from the minute they end: the pilot is rated and paid for the new type.
     mutating func finishCourses() {
         let now = clock.minute
-        for p in ops.pilots.indices {
-            guard let group = ops.pilots[p].trainingFor, ops.pilots[p].trainingUntilMinute <= now else { continue }
-            if !ops.pilots[p].ratings.contains(group) { ops.pilots[p].ratings.append(group) }
-            ops.pilots[p].trainingFor = nil
-            ops.pilots[p].salaryPerMonth = max(ops.pilots[p].salaryPerMonth, salary(for: group))
+        var pilots = ops.pilots
+        guard pilots.contains(where: { $0.trainingFor != nil && $0.trainingUntilMinute <= now }) else { return }
+        for p in pilots.indices {
+            guard let group = pilots[p].trainingFor, pilots[p].trainingUntilMinute <= now else { continue }
+            if !pilots[p].ratings.contains(group) { pilots[p].ratings.append(group) }
+            pilots[p].trainingFor = nil
+            pilots[p].salaryPerMonth = max(pilots[p].salaryPerMonth, salary(for: group))
         }
+        ops.pilots = pilots
     }
 
     /// Pilots of an aircraft that has gone (sold or traded in) are spares.
@@ -178,8 +181,14 @@ extension World {
         guard let type = aircraft[i].type else { return [] }
         let group = RatingGroup.of(type.family)
         let id = aircraft[i].id
-        let own = ops.pilots.filter { $0.aircraftID == id && $0.isRated(group) && $0.isAvailable(at: clock.minute) }.map(\.id)
-        let spare = ops.pilots.filter { isSpare($0) && $0.isRated(group) && $0.isAvailable(at: clock.minute) }.map(\.id)
+        let now = clock.minute
+        let pilots = ops.pilots
+        let fleet = Set(aircraft.map(\.id))
+        let own = pilots.filter { $0.aircraftID == id && $0.isRated(group) && $0.isAvailable(at: now) }.map(\.id)
+        let spare = pilots.filter { pilot in
+            let free = pilot.aircraftID.map { !fleet.contains($0) } ?? true
+            return free && pilot.isRated(group) && pilot.isAvailable(at: now)
+        }.map(\.id)
         return own + spare
     }
 
