@@ -12,8 +12,9 @@ on:
 permissions:
   contents: write
 
+# Only a real app build replaces a running one; a push without [app] lands in its own group and cancels nothing.
 concurrency:
-  group: app
+  group: app-${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[app]') }}
   cancel-in-progress: true
 
 jobs:

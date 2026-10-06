@@ -24,7 +24,7 @@ Status as of the first push. "Tested" means a test runs in CI; "written" means t
 1. **Run it on a phone and fix what looks wrong.** The UI has been compile-checked and screenshotted in a simulator, not played. Expect layout and feel problems, and listen to the sound.
 2. **Contracts and jobs.** Medevac, mail, charter offers, a subsidised essential service for a village; a job board with deadlines and reputation.
 3. **Airport investment in remote places.** Lighting, gravel to paved, fuel depot, hangar base.
-4. **Easy and Realism modes.** Easy ignores runway, surface and weather limits.
+4. **Easy, Realism and Sandbox modes, and a perk to pick at each certificate level.** Easy ignores runway, surface and weather limits; Realism sells fuel only where it is really sold; Sandbox has no money limit.
 5. **Competitor airlines** as real entities in the world instead of an average market share.
 6. **Hubs and connecting passengers.**
 7. **Seasons and time of day.** Daylight limits on unlit strips, polar night, holiday peaks.
