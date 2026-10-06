@@ -202,6 +202,8 @@ extension World {
         logHours(i, minutes: minutes)
         countScenarioFreight(kg: flight.cargoKg, at: flight.to)
         countGoalArrival(flight)
+        countRealWeekArrival(flight)
+        logLanding(aircraftIndex: i, at: flight.to)
         settleLateDepartures()
 
         // A job that ends here is paid now, and the aircraft goes back to its route by itself.

@@ -14,7 +14,6 @@ BQS|UHBB|Ignatyevo Airport|Blagoveschensk|Blagoveschensk|RU|AMU|50.4267|127.4155
 BTK|UIBB|Bratsk Airport|Bratsk|Bratsk|RU|IRK|56.3696|101.7018|1610|10368|P|M|1|280515
 BZK|UUBP|Bryansk International Airport|Bryansk|Bryansk|RU|BRY|53.2144|34.1760|663|7874|P|M|0|746776
 CEE|ULWC|Cherepovets Airport|Cherepovets|Cherepovets|RU|VLG|59.2736|38.0158|377|8202|P|M|1|398863
-CEK|USCC|Kurchatov Chelyabinsk International Airport|Chelyabinsk|Chelyabinsk|RU|CHE|55.3031|61.5049|769|10499|P|L|1|2380723
 CKH|UESO|Chokurdakh Airport|Chokurdah|Chokurdah|RU|SA|70.6231|147.9020|151|6233|P|M|1|2506
 CZR|UIAR|Chara Airport|Chara|Chara|RU|ZAB|56.9144|118.2701|2201|5905|P|S|0|6339
 DHG|DHG|Dalnegorsk Airport|Dalnegorsk|Dalnegorsk|RU|PRI|44.5587|135.4900|833|3000|G|S|0|44589
@@ -35,7 +34,6 @@ GVN|UHKM|Sovetskaya Gavan (Maygatka) Airport|Sovetskaya Gavan|Sovetskaya Gavan|R
 HMA|USHH|Khanty Mansiysk Airport|Khanty-Mansiysk|Khanty-Mansiysk|RU|KHM|61.0285|69.0861|76|9180|P|M|1|101466
 HTA|UIAA|Chita-Kadala International Airport|Chita|Chita|RU|ZAB|52.0248|113.3058|2272|9430|P|L|1|465719
 HTG|UOHH|Khatanga Airport|Khatanga|Khatanga|RU|KYA|71.9781|102.4910|95|8872|P|M|1|3205
-IGT|URMS|Magas Airport|Sunzha|Sunzha|RU|IN|43.3233|45.0126|1165|9842|P|M|1|452731
 IKS|UEST|Tiksi Airport|Tiksi|Tiksi|RU|SA|71.6977|128.9030|26|9845|P|M|1|5700
 IKT|UIII|Irkutsk International Airport|Irkutsk|Irkutsk|RU|IRK|52.2667|104.3956|1675|11696|P|L|1|1255196
 ITU|UHSI|Iturup Airport|Kurilsk|Kurilsk|RU|SAK|45.2564|147.9555|387|7546|P|S|1|1607
@@ -43,7 +41,6 @@ KHV|UHHH|Khabarovsk Novy Airport|Khabarovsk|Khabarovsk|RU|KHA|48.5283|135.1886|2
 KJA|UNKL|Krasnoyarsk International Airport|Krasnoyarsk|Krasnoyarsk|RU|KYA|56.1757|92.4858|942|12139|P|L|1|1482926
 KPW|UHMK|Keperveem Airport|Keperveem|Keperveem|RU|CHU|67.8450|166.1400|623|11482|P|M|1|5757
 KRR|URKK|Krasnodar Pashkovsky International Airport|Krasnodar|Krasnodar|RU|KDA|45.0345|39.1742|118|9835|P|L|1|2868235
-KUF|UWWW|Kurumoch International Airport|Samara|Samara|RU|SAM|53.5049|50.1643|477|9846|P|L|1|2930511
 KVM|UHMO|Markovo Airport|Markovo|Markovo|RU|CHU|64.6654|170.4176|75|7874|G|S|1|150
 KVX|USKK|Pobedilovo Airport|Kirov|Kirov|RU|KIR|58.5039|49.3478|479|7230|P|M|1|756274
 KYZ|UNKY|Kyzyl Airport|Kyzyl|Kyzyl|RU|TY|51.6694|94.4006|2123|8858|P|M|1|153187

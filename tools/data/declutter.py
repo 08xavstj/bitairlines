@@ -14,11 +14,13 @@ import math
 # The circle each kept airport claims, in km: about one airport per 200,000 square km away from big cities.
 SPACING_KM = 250
 # A metro area of this many people claims only this much, so big neighbouring cities both stay.
-BIG_CITY_POP = 2_000_000
-BIG_CITY_SPACING_KM = 150
+BIG_CITY_POP = 5_000_000
+BIG_CITY_SPACING_KM = 180
 # Around the start regions' headquarters a new airline needs places to fly to, so airports there only need to be this far apart.
-START_AREA_KM = 600
-START_AREA_SPACING_KM = 45
+START_AREA_KM = 300
+START_AREA_SPACING_KM = 130
+# Only small places get the closer spacing there; cities follow the normal rules.
+START_AREA_MAX_POP = 300_000
 START_HQ = set("""
 SXM ANU SKB VLI HIR SUV ASP ISA BME TBT RBR BVB HGU GKA MAG PUQ USH FTE LUA JMO PHH BET OTZ DLG YEV YCB YRT JAV GOH
 """.split())
@@ -65,7 +67,7 @@ def metro_population(airports):
 def spacing(a, metro, start_areas=()):
     if metro[a['code']] >= BIG_CITY_POP:
         return BIG_CITY_SPACING_KM
-    if any(km(a, hq) <= START_AREA_KM for hq in start_areas):
+    if a['pop'] <= START_AREA_MAX_POP and any(km(a, hq) <= START_AREA_KM for hq in start_areas):
         return START_AREA_SPACING_KM
     return SPACING_KM
 

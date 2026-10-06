@@ -4,20 +4,17 @@
 enum AirportRows_NAM {
     static let rows = #"""
 BDA|TXKF|L.F. Wade International Airport|Hamilton|Hamilton, BM|BM|A|32.3638|-64.6782|12|9705|P|L|1|67818
-LAK|CYKD|Aklavik/Freddie Carmichael Airport|Aklavik|Aklavik|CA|NT|68.2233|-135.0060|23|3002|G|S|1|528
 QBC|CYBD|Bella Coola Airport|Bella Coola|Bella Coola|CA|BC|52.3875|-126.5960|117|4200|P|M|1|2201
 XTL|CYBQ|Tadoule Lake Airport|Tadoule Lake|Tadoule Lake|CA|MB|58.7063|-98.5111|923|3201|G|S|1|150
 YAY|CYAY|St. Anthony Airport|St. Anthony|St. Anthony|CA|NL|51.3919|-56.0832|108|4000|P|M|1|3744
+YBA|CYBA|Banff Airport|Banff|Banff|CA|AB|51.2082|-115.5406|4583|3000|G|S|0|10347
 YBG|CYBG|Saguenay-Bagotville Airport|Saguenay|Saguenay|CA|QC|48.3301|-70.9920|522|10000|P|M|1|265356
 YBK|CYBK|Baker Lake Airport|Baker Lake|Baker Lake|CA|NU|64.2989|-96.0778|59|4200|G|M|1|2061
 YBV|CYBV|Berens River Airport|Berens River|Berens River|CA|MB|52.3589|-97.0183|728|2900|G|S|1|150
 YCB|CYCB|Cambridge Bay Airport|Cambridge Bay|Cambridge Bay|CA|NU|69.1081|-105.1380|90|5000|G|M|1|1760
-YCK|CYVL|Tommy Kochon Airport|Colville Lake|Colville Lake|CA|NT|67.0202|-126.1284|870|3000|G|S|1|150
 YCN|CYCN|Cochrane Airport|Cochrane|Cochrane|CA|ON|49.1056|-81.0136|861|4500|P|M|0|7871
 YCO|CYCO|Kugluktuk Airport|Kugluktuk|Kugluktuk|CA|NU|67.8164|-115.1431|74|5500|G|S|1|1382
-YCS|CYCS|Chesterfield Inlet Airport|Chesterfield Inlet|Chesterfield Inlet|CA|NU|63.3469|-90.7311|32|3600|G|S|1|150
 YCY|CYCY|Clyde River Airport|Clyde River|Clyde River|CA|NU|70.4861|-68.5167|87|3500|G|S|1|1181
-YDA|CYDA|Dawson City Airport|Dawson City|Dawson City|CA|YT|64.0431|-139.1280|1215|5000|P|M|1|1375
 YDF|CYDF|Deer Lake Airport|Deer Lake|Deer Lake|CA|NL|49.2082|-57.3961|72|8005|P|M|1|38790
 YEG|CYEG|Edmonton International Airport|Edmonton|Edmonton|CA|AB|53.3097|-113.5800|2373|11000|P|L|1|2200277
 YEK|CYEK|Arviat Airport|Arviat|Arviat|CA|NU|61.0942|-94.0708|32|4000|G|S|1|2864
@@ -26,7 +23,6 @@ YFB|CYFB|Iqaluit Airport|Iqaluit|Iqaluit|CA|NU|63.7564|-68.5558|110|8605|P|M|1|7
 YFC|CYFC|Fredericton International Airport|Fredericton|Fredericton|CA|NB|45.8687|-66.5299|68|8005|P|M|1|252227
 YFO|CYFO|Flin Flon Airport|Flin Flon|Flin Flon|CA|MB|54.6781|-101.6820|997|5004|P|S|1|7562
 YFS|CYFS|Fort Simpson Airport|Fort Simpson|Fort Simpson|CA|NT|61.7602|-121.2370|555|6000|P|M|1|1100
-YGH|CYGH|Fort Good Hope Airport|Fort Good Hope|Fort Good Hope|CA|NT|66.2407|-128.6478|268|4434|G|S|1|516
 YGO|CYGO|Gods Lake Narrows Airport|Gods Lake Narrows|Gods Lake Narrows|CA|MB|54.5577|-94.4901|617|3810|G|S|1|150
 YGV|CYGV|Havre-Saint-Pierre Airport|Havre-Saint-Pierre|Havre-Saint-Pierre|CA|QC|50.2819|-63.6114|124|4500|P|M|1|3277
 YGZ|CYGZ|Grise Fiord Airport|Grise Fiord|Grise Fiord|CA|NU|76.4258|-82.9086|146|3000|G|S|1|150
@@ -44,12 +40,12 @@ YNO|CKQ3|North Spirit Lake Airport|North Spirit Lake|North Spirit Lake|CA|ON|52.
 YNP|CNH2|Natuashish Airport|Natuashish|Natuashish|CA|NL|55.9139|-61.1844|30|3000|G|S|1|856
 YOC|CYOC|Old Crow Airport|Old Crow|Old Crow|CA|YT|67.5706|-139.8390|824|4900|G|S|1|150
 YOJ|CYOJ|High Level Airport|High Level|High Level|CA|AB|58.6214|-117.1650|1110|5000|P|M|1|8067
-YOW|CYOW|Ottawa Macdonald-Cartier International Airport|Ottawa|Ottawa|CA|ON|45.3225|-75.6692|374|10000|P|L|1|2109284
 YPC|CYPC|Paulatuk (Nora Aliqatchialuk Ruben) Airport|Paulatuk|Paulatuk|CA|NT|69.3608|-124.0755|15|4000|G|S|1|150
 YPO|CYPO|Peawanuck Airport|Peawanuck|Peawanuck|CA|ON|54.9879|-85.4426|173|3520|G|S|1|150
 YPX|CYPX|Puvirnituq Airport|Puvirnituq|Puvirnituq|CA|QC|60.0506|-77.2869|74|6299|G|M|1|2129
 YQH|CYQH|Watson Lake Airport|Watson Lake|Watson Lake|CA|YT|60.1168|-128.8220|2255|5504|P|M|1|2189
 YQJ|YQJ|April Point Seaplane Base|Quadra Island|Quadra Island|CA|BC|50.0650|-125.2350|0|0|W|W|0|2890
+YQL|CYQL|Lethbridge County Airport|Lethbridge|Lethbridge|CA|AB|49.6303|-112.8000|3048|6500|P|M|1|136756
 YQN|CYQN|Nakina Airport|Nakina|Nakina|CA|ON|50.1828|-86.6964|1057|3500|P|M|1|2519
 YQT|CYQT|Thunder Bay International Airport|Thunder Bay|Thunder Bay|CA|ON|48.3719|-89.3239|653|7318|P|M|1|185474
 YQU|CYQU|Grande Prairie Airport|Grande Prairie|Grande Prairie|CA|AB|55.1797|-118.8850|2195|8502|P|M|1|83434
@@ -69,26 +65,20 @@ YUL|CYUL|Montreal / Pierre Elliott Trudeau International Airport|Montreal|Montre
 YUT|CYUT|Naujaat Airport|Repulse Bay|Repulse Bay|CA|NU|66.5210|-86.2252|80|3400|G|S|1|1225
 YUX|CYUX|Hall Beach Airport|Sanirajak|Sanirajak|CA|NU|68.7761|-81.2425|30|5410|G|M|1|1099
 YVB|CYVB|Bonaventure Airport|Bonaventure|Bonaventure|CA|QC|48.0711|-65.4603|123|5985|P|M|1|43537
-YVM|CYVM|Qikiqtarjuaq Airport|Qikiqtarjuaq|Qikiqtarjuaq|CA|NU|67.5466|-64.0314|21|3800|G|S|1|150
 YVO|CYVO|Val-d'Or Airport|Val-d'Or|Val-d'Or|CA|QC|48.0533|-77.7828|1107|10000|P|M|1|32177
 YVP|CYVP|Kuujjuaq Airport|Kuujjuaq|Kuujjuaq|CA|QC|58.0961|-68.4269|129|6000|P|M|1|2668
 YVQ|CYVQ|Norman Wells Airport|Norman Wells|Norman Wells|CA|NT|65.2816|-126.7980|238|5998|P|M|1|1027
 YVR|CYVR|Vancouver International Airport|Vancouver|Vancouver|CA|BC|49.1939|-123.1840|14|11500|P|L|1|3746414
 YWB|CYKG|Kangiqsujuaq (Wakeham Bay) Airport|Kangiqsujuaq|Kangiqsujuaq|CA|QC|61.5886|-71.9294|501|3511|G|S|1|837
 YWG|CYWG|Winnipeg / James Armstrong Richardson International Airport|Winnipeg|Winnipeg|CA|MB|49.9100|-97.2399|783|11000|P|L|1|1020607
-YWJ|CYWJ|Deline Airport|Deline|Deline|CA|NT|65.2111|-123.4360|703|3933|G|S|1|533
 YWK|CYWK|Wabush Airport|Wabush|Wabush|CA|NL|52.9219|-66.8644|1808|6002|P|M|1|12150
 YWR|CNJ8|White River Seaplane Base|White River|White River|CA|ON|48.6269|-85.2233|1380|0|W|W|0|332
 YXE|CYXE|Saskatoon John G. Diefenbaker International Airport|Saskatoon|Saskatoon|CA|SK|52.1707|-106.7008|1653|8300|P|L|1|956167
-YXH|CYXH|Medicine Hat Regional Airport|Medicine Hat|Medicine Hat|CA|AB|50.0189|-110.7210|2352|5000|P|M|1|74407
-YXN|CYXN|Whale Cove Airport|Whale Cove|Whale Cove|CA|NU|62.2400|-92.5981|40|4000|G|S|1|150
 YXP|CYXP|Pangnirtung Airport|Pangnirtung|Pangnirtung|CA|NU|66.1449|-65.7136|75|2920|G|S|1|1504
 YXS|CYXS|Prince George (International) Airport|Prince George|Prince George|CA|BC|53.8843|-122.6666|2267|11450|P|M|1|83289
 YXT|CYXT|Northwest Regional Airport Terrace-Kitimat|Terrace|Terrace|CA|BC|54.4685|-128.5760|713|7497|P|M|1|28430
 YXY|CYXY|Whitehorse / Erik Nielsen International Airport|Whitehorse|Whitehorse|CA|YT|60.7085|-135.0657|2317|9497|P|M|1|28201
-YYC|CYYC|Calgary International Airport|Calgary|Calgary|CA|AB|51.1188|-114.0099|3557|14000|P|L|1|2897677
 YYE|CYYE|Fort Nelson Airport|Fort Nelson|Fort Nelson|CA|BC|58.8364|-122.5970|1253|6400|P|M|1|2611
-YYH|CYYH|Taloyoak Airport|Taloyoak|Taloyoak|CA|NU|69.5467|-93.5767|92|4020|G|S|1|150
 YYQ|CYYQ|Churchill Airport|Churchill|Churchill|CA|MB|58.7392|-94.0650|94|9200|P|M|1|899
 YYR|CYYR|Goose Bay Airport|Goose Bay|Goose Bay|CA|NL|53.3192|-60.4258|160|11046|P|M|1|9181
 YYT|CYYT|St. John's International Airport|St. John's|St. John's|CA|NL|47.6186|-52.7519|461|8502|P|L|1|397540
@@ -97,15 +87,12 @@ YZF|CYZF|Yellowknife International Airport|Yellowknife|Yellowknife|CA|NT|62.4628
 YZP|CYZP|Sandspit Airport|Sandspit|Sandspit|CA|BC|53.2543|-131.8140|21|5120|P|M|1|1342
 YZS|CYZS|Coral Harbour Airport|Coral Harbour|Coral Harbour|CA|NU|64.1933|-83.3594|210|5000|G|M|1|1035
 ZFD|CZFD|Fond-du-Lac Airport|Fond-du-Lac|Fond-du-Lac|CA|SK|59.3344|-107.1820|814|3800|G|S|1|150
-ZFM|CZFM|Fort Mcpherson Airport|Fort Mcpherson|Fort Mcpherson|CA|NT|67.4070|-134.8602|116|3500|G|S|1|700
-ZFN|CZFN|Tulita Airport|Tulita|Tulita|CA|NT|64.9095|-125.5703|332|3935|G|S|1|150
 ZKE|CZKE|Kashechewan Airport|Kashechewan|Kashechewan|CA|ON|52.2825|-81.6778|35|3903|G|S|1|2530
 ZQS|CAQ6|Queen Charlotte City Seaplane Base|Queen Charlotte|Queen Charlotte|CA|BC|53.2528|-132.0742|0|0|W|W|0|365
 ZWL|CZWL|Wollaston Lake Airport|Wollaston Lake|Wollaston Lake|CA|SK|58.1069|-103.1720|1360|3793|P|S|1|150
 CNP|BGCO|Neerlerit Inaat Airport|Neerlerit Inaat|Neerlerit Inaat|GL|SE|70.7431|-22.6505|45|3281|G|M|1|150
 GOH|BGGH|Nuuk International Airport|Nuuk|Nuuk|GL|SE|64.1911|-51.6791|283|7217|P|L|1|15000
 JAV|BGJN|Ilulissat Airport|Ilulissat|Ilulissat|GL|AV|69.2432|-51.0571|95|2772|P|M|1|4951
-JEG|BGAA|Aasiaat Airport|Aasiaat|Aasiaat|GL|QK|68.7218|-52.7847|74|2621|G|M|1|4907
 JFR|BGPT|Paamiut Airport|Paamiut|Paamiut|GL|SE|62.0147|-49.6709|120|2621|P|S|1|2294
 JHS|BGSS|Sisimiut Airport|Sisimiut|Sisimiut|GL|QA|66.9513|-53.7293|33|2621|P|M|1|5227
 JJU|BGQO|Qaqortoq Airport|Qaqortoq|Qaqortoq|GL|KU|60.7638|-46.0650|505|4924|P|M|1|5755
@@ -117,7 +104,6 @@ NAQ|BGQQ|Qaanaaq Airport|Qaanaaq|Qaanaaq|GL|AV|77.4886|-69.3887|51|3314|G|M|1|64
 SFJ|BGSF|Kangerlussuaq International Airport|Kangerlussuaq|Kangerlussuaq|GL|QA|67.0104|-50.7153|165|9219|P|M|1|508
 ACA|MMAA|General Juan N. Alvarez International Airport|Acapulco|Acapulco|MX|GRO|16.7571|-99.7531|16|10832|P|L|1|1825401
 ACN|MMCC|Ciudad Acuna International Airport|Ciudad Acuna|Ciudad Acuna|MX|COA|29.3337|-101.1006|1410|5910|P|M|0|80332
-AGU|MMAS|Aguascalientes International Airport|Aguascalientes|Aguascalientes|MX|AGU|21.6996|-102.3184|6112|9843|P|L|1|2077973
 CUA|MMDA|Ciudad Constitucion National Airport|Comondu|Comondu|MX|BCS|25.0538|-111.6150|213|5249|G|S|1|39155
 CUN|MMUN|Cancun International Airport|Cancun|Cancun|MX|ROO|21.0408|-86.8735|22|11483|P|L|1|902227
 CUU|MMCU|General Roberto Fierro Villalobos International Airport|Chihuahua|Chihuahua|MX|CHH|28.7026|-105.9638|4462|8530|P|L|1|1491019
@@ -139,72 +125,50 @@ TLC|MMTO|Adolfo Lopez Mateos International Airport|Toluca|Toluca|MX|MEX|19.3369|
 TRC|MMTC|Francisco Sarabia Tinoco International Airport|Torreon|Torreon|MX|COA|25.5623|-103.4046|3688|9039|P|M|1|1555507
 VER|MMVR|General Heriberto Jara International Airport|Veracruz|Veracruz|MX|VER|19.1396|-96.1886|90|7874|P|L|1|3139694
 VSA|MMVA|Carlos Rovirosa Perez International Airport|Villahermosa|Villahermosa|MX|TAB|17.9943|-92.8182|46|7218|P|L|1|2340120
+ZCL|MMZC|General Leobardo C. Ruiz International Airport|Zacatecas|Zacatecas|MX|ZAC|22.8949|-102.6872|7141|9843|P|M|1|712585
 FSP|LFVP|Saint-Pierre Pointe-Blanche Airport|Saint-Pierre|Saint-Pierre, PM|PM|SP|46.7627|-56.1750|27|5906|P|M|1|24245
-ABL|PAFM|Ambler Airport|Ambler|Ambler|US|AK|67.1055|-157.8553|334|4000|G|M|1|150
 ABQ|KABQ|Albuquerque International Sunport|Albuquerque|Albuquerque|US|NM|35.0400|-106.6089|5355|13793|P|L|1|947455
+ACV|KACV|California Redwood Coast-Humboldt County Airport|Arcata|Arcata|US|CA|40.9781|-124.1090|221|6046|P|M|1|68718
 ADK|PADK|Adak Airport|Adak|Adak|US|AK|51.8836|-176.6428|18|7790|P|M|1|150
 ADQ|PADQ|Kodiak Airport|Kodiak|Kodiak|US|AK|57.7500|-152.4940|78|7534|P|M|1|6669
-AET|PFAL|Allakaket Airport|Allakaket|Allakaket|US|AK|66.5518|-152.6220|441|4000|G|S|1|150
-AIN|PAWI|Wainwright Airport|Wainwright|Wainwright|US|AK|70.6380|-159.9950|41|4494|G|M|1|580
-AKK|PAKH|Akhiok Airport|Akhiok|Akhiok|US|AK|56.9387|-154.1830|44|3120|G|S|1|150
-AKN|PAKN|King Salmon Airport|King Salmon|King Salmon|US|AK|58.6778|-156.6520|73|8901|P|M|1|164
 AKP|PAKP|Anaktuvuk Pass Airport|Anaktuvuk Pass|Anaktuvuk Pass|US|AK|68.1336|-151.7430|2102|4800|G|M|1|150
 ALS|KALS|San Luis Valley Regional Airport/Bergman Field|Alamosa|Alamosa|US|CO|37.4349|-105.8670|7539|8521|P|M|1|25038
 ANC|PANC|Ted Stevens Anchorage International Airport|Anchorage|Anchorage|US|AK|61.1790|-149.9926|152|12400|P|L|1|340580
 ANI|PANI|Aniak Airport|Aniak|Aniak|US|AK|61.5816|-159.5430|88|6200|P|M|1|469
-ANV|PANV|Anvik Airport|Anvik|Anvik|US|AK|62.6467|-160.1910|291|4000|G|M|1|150
-AQY|AQY|Girdwood-Alyeska Airport|Girdwood|Girdwood|US|AK|60.9688|-149.1198|150|2088|G|S|0|782
-ARC|PARC|Arctic Village Airport|Arctic Village|Arctic Village|US|AK|68.1147|-145.5790|2092|4500|G|M|1|150
-ATK|PATQ|Atqasuk Edward Burnell Sr Memorial Airport|Atqasuk|Atqasuk|US|AK|70.4670|-157.4360|96|4370|G|M|1|150
 ATL|KATL|Hartsfield Jackson Atlanta International Airport|Atlanta|Atlanta|US|GA|33.6367|-84.4281|1026|12390|P|L|1|2385421
 AUW|KAUW|Wausau Downtown Airport|Wausau|Wausau|US|WI|44.9262|-89.6266|1201|8000|W|M|0|67857
+AVL|KAVL|Asheville Regional Airport|Asheville|Asheville|US|NC|35.4355|-82.5419|2165|8002|P|M|1|260278
 BDE|KBDE|Baudette International Airport|Baudette|Baudette|US|MN|48.7284|-94.6122|1086|6000|W|M|0|7140
 BET|PABE|Bethel Airport|Bethel|Bethel|US|AK|60.7798|-161.8380|126|6400|P|M|1|4142
 BIL|KBIL|Billings Logan International Airport|Billings|Billings|US|MT|45.8089|-108.5412|3652|10518|P|M|1|145921
 BIS|KBIS|Bismarck Municipal Airport|Bismarck|Bismarck|US|ND|46.7727|-100.7469|1661|8794|P|M|1|111907
-BKC|PABL|Buckland Airport|Buckland|Buckland|US|AK|65.9816|-161.1490|31|3200|G|S|1|150
-BMG|KBMG|Monroe County Airport|Bloomington|Bloomington, IN|US|IN|39.1460|-86.6167|846|6500|P|M|0|105258
 BNA|KBNA|Nashville International Airport|Nashville|Nashville|US|TN|36.1245|-86.6782|599|11030|P|L|1|1998671
 BOI|KBOI|Boise Air Terminal/Gowen Field|Boise|Boise|US|ID|43.5644|-116.2230|2871|10000|P|L|1|594137
 BOS|KBOS|Boston Logan International Airport|Boston|Boston|US|MA|42.3620|-71.0079|20|10083|P|L|1|5292009
 BRW|PABR|Wiley Post Will Rogers Memorial Airport|Utqiagvik|Utqiagvik|US|AK|71.2854|-156.7660|44|7100|P|M|1|4384
-BTI|PABA|Barter Island Long Range Radar Station Airport|Barter Island|Barter Island|US|AK|70.1340|-143.5820|2|4500|G|M|1|150
-BTT|PABT|Bettles Airport|Bettles|Bettles|US|AK|66.9139|-151.5290|647|5190|G|S|1|150
 CDB|PACD|Cold Bay Airport|Cold Bay|Cold Bay|US|AK|55.2079|-162.7250|96|10179|P|M|1|415
 CDC|KCDC|Cedar City Regional Airport|Cedar City|Cedar City|US|UT|37.7010|-113.0990|5622|8653|P|M|1|62378
 CHS|KCHS|Charleston International Airport|Charleston|Charleston|US|SC|32.8962|-80.0382|46|9001|P|L|1|541588
-CIK|PACI|Chalkyitsik Airport|Chalkyitsik|Chalkyitsik|US|AK|66.6450|-143.7400|544|4000|G|S|1|150
 CIU|KCIU|Chippewa County International Airport|Kincheloe|Kincheloe|US|MI|46.2420|-84.4621|800|7203|P|M|1|26684
-CLE|KCLE|Cleveland Hopkins International Airport|Cleveland|Cleveland|US|OH|41.4117|-81.8498|791|9953|P|L|1|2132193
-CLT|KCLT|Charlotte Douglas International Airport|Charlotte|Charlotte|US|NC|35.2140|-80.9431|748|10000|P|L|1|1658189
-CMH|KCMH|John Glenn Columbus International Airport|Columbus|Columbus|US|OH|39.9980|-82.8919|815|10114|P|L|1|2063777
 CPR|KCPR|Casper-Natrona County International Airport|Casper|Casper|US|WY|42.9074|-106.4616|5350|10165|P|M|1|80594
 CVG|KCVG|Cincinnati Northern Kentucky International Airport|Cincinnati|Cincinnati|US|KY|39.0488|-84.6678|896|12001|P|L|1|1845369
+CVO|KCVO|Corvallis Municipal Airport|Corvallis|Corvallis|US|OR|44.4972|-123.2900|250|5900|P|M|0|93830
 CYF|PACK|Chefornak Airport|Chefornak|Chefornak|US|AK|60.1367|-164.2792|49|3230|G|S|1|150
 DEN|KDEN|Denver International Airport|Denver|Denver|US|CO|39.8600|-104.6738|5431|16000|P|L|1|2340507
 DFW|KDFW|Dallas Fort Worth International Airport|Dallas-Fort Worth|Dallas-Fort Worth|US|TX|32.8968|-97.0380|607|13401|P|L|1|2792150
 DHT|KDHT|Dalhart Municipal Airport|Dalhart|Dalhart|US|TX|36.0226|-102.5470|3991|6400|P|M|0|23464
 DLG|PADL|Dillingham Airport|Dillingham|Dillingham|US|AK|59.0447|-158.5050|81|6400|P|M|1|1893
-DRG|PADE|Deering Airport|Deering|Deering|US|AK|66.0689|-162.7669|21|3320|G|M|1|150
 DSM|KDSM|Des Moines International Airport|Des Moines|Des Moines|US|IA|41.5340|-93.6567|958|9004|P|L|1|808465
 DTW|KDTW|Detroit Metropolitan Wayne County Airport|Detroit|Detroit|US|MI|42.2138|-83.3538|645|12003|P|L|1|1669626
 DUG|KDUG|Bisbee Douglas International Airport|Douglas Bisbee|Douglas Bisbee|US|AZ|31.4641|-109.6046|4154|6430|P|M|0|124059
 DUT|PADU|Tom Madsen (Dutch Harbor) Airport|Unalaska|Unalaska|US|AK|53.8988|-166.5450|22|4500|P|M|1|9164
-EAA|PAEG|Eagle Airport|Eagle|Eagle, AK|US|AK|64.7780|-141.1505|908|3600|G|S|1|150
 EAR|KEAR|Kearney Regional Airport|Kearney|Kearney|US|NE|40.7270|-99.0068|2131|7094|P|M|1|75241
-EEK|PAEE|Eek Airport|Eek|Eek|US|AK|60.2132|-162.0440|12|3243|G|S|1|150
-EGX|PAII|Egegik Airport|Egegik|Egegik|US|AK|58.1844|-157.3749|92|5600|G|M|1|150
 EKO|KEKO|Elko Regional Airport|Elko|Elko|US|NV|40.8249|-115.7920|5140|7214|P|M|1|36618
-ELI|PFEL|Elim Airport|Elim|Elim|US|AK|64.6147|-162.2720|162|3401|G|S|1|150
 ELP|KELP|El Paso International Airport|El Paso|El Paso|US|TX|31.8099|-106.3756|3959|12020|P|L|1|1171391
-ENA|PAEN|Kenai Municipal Airport|Kenai|Kenai|US|AK|60.5709|-151.2452|99|7855|P|M|1|22558
 FAI|PAFA|Fairbanks International Airport|Fairbanks|Fairbanks|US|AK|64.8151|-147.8560|439|11800|P|M|1|80726
 FAR|KFAR|Hector International Airport|Fargo|Fargo|US|ND|46.9207|-96.8158|902|9001|P|M|1|248616
 FAT|KFAT|Fresno Yosemite International Airport|Fresno|Fresno|US|CA|36.7758|-119.7180|336|9539|P|L|1|1277016
 FSD|KFSD|Sioux Falls Regional Airport|Sioux Falls|Sioux Falls|US|SD|43.5855|-96.7412|1429|9000|P|M|1|280741
-FYU|PFYU|Fort Yukon Airport|Fort Yukon|Fort Yukon|US|AK|66.5717|-145.2500|433|5000|G|M|1|570
-GAL|PAGA|Edward G. Pitka Sr Airport|Galena|Galena|US|AK|64.7362|-156.9370|153|6000|P|M|1|150
-GAM|PAGM|Gambell Airport|Gambell|Gambell|US|AK|63.7677|-171.7333|27|4500|P|M|1|700
 GCK|KGCK|Garden City Regional Airport|Garden City|Garden City|US|KS|37.9275|-100.7240|2891|7299|P|M|1|44676
 GEG|KGEG|Spokane International Airport|Spokane|Spokane|US|WA|47.6199|-117.5340|2376|11002|P|L|1|528840
 GJT|KGJT|Grand Junction Regional Airport|Grand Junction|Grand Junction|US|CO|39.1267|-108.5294|4858|9339|P|M|1|121746
@@ -212,127 +176,68 @@ GNU|GNU|Goodnews Airport|Goodnews|Goodnews|US|AK|59.1176|-161.5752|15|2835|G|S|1
 GRB|KGRB|Austin Straubel International Airport|Green Bay|Green Bay|US|WI|44.4835|-88.1308|695|8700|P|M|1|333499
 GTF|KGTF|Great Falls International Airport|Great Falls|Great Falls|US|MT|47.4820|-111.3710|3680|10502|P|M|1|73156
 HBR|KHBR|Hobart Regional Airport|Hobart|Hobart, US|US|OK|34.9913|-99.0513|1563|5507|P|M|0|54799
-HCR|PAHC|Holy Cross Airport|Holy Cross|Holy Cross|US|AK|62.1883|-159.7750|70|4000|G|M|1|150
 HIB|KHIB|Range Regional Airport|Hibbing|Hibbing|US|MN|47.3848|-92.8369|1354|6758|P|M|1|68690
 HNL|PHNL|Daniel K. Inouye International Airport|Honolulu|Honolulu|US|HI|21.3184|-157.9257|13|12360|P|L|1|1955325
-HPB|PAHP|Hooper Bay Airport|Hooper Bay|Hooper Bay|US|AK|61.5239|-166.1470|13|3300|P|S|1|1114
 HRL|KHRL|Valley International Airport|Harlingen|Harlingen|US|TX|26.2285|-97.6544|36|9400|P|M|1|279062
-HSL|PAHL|Huslia Airport|Huslia|Huslia|US|AK|65.6979|-156.3510|220|4000|G|M|1|150
 IAD|KIAD|Washington Dulles International Airport|Dulles|Dulles|US|VA|38.9445|-77.4558|312|11500|P|L|1|2046099
 IAH|KIAH|George Bush Intercontinental Airport|Houston|Houston|US|TX|29.9844|-95.3414|97|12001|P|L|1|4120818
 IDA|KIDA|Idaho Falls Regional Airport|Idaho Falls|Idaho Falls|US|ID|43.5146|-112.0710|4744|9002|P|M|1|126397
-IGG|PAIG|Igiugig Airport|Igiugig|Igiugig|US|AK|59.3240|-155.9020|90|3000|G|S|1|150
 ILI|PAIL|Iliamna Airport|Iliamna|Iliamna|US|AK|59.7544|-154.9110|192|5086|P|M|1|150
-IRC|PACR|Circle City (New) Airport|Circle|Circle|US|AK|65.8277|-144.0762|613|2979|G|S|1|150
-ITH|KITH|Ithaca Tompkins Regional Airport|Ithaca|Ithaca|US|NY|42.4910|-76.4584|1099|6977|P|M|1|115846
 JAN|KJAN|Jackson-Medgar Wiley Evers International Airport|Jackson|Jackson|US|MS|32.3112|-90.0759|346|8500|P|M|1|409759
 JAX|KJAX|Jacksonville International Airport|Jacksonville|Jacksonville|US|FL|30.4925|-81.6878|30|10000|P|L|1|1493991
 JFK|KJFK|John F. Kennedy International Airport|New York|New York|US|NY|40.6394|-73.7793|13|14511|P|L|1|14188750
 JNU|PAJN|Juneau International Airport|Juneau|Juneau|US|AK|58.3549|-134.5744|21|8857|P|M|1|29313
-KAL|PAKV|Kaltag Airport|Kaltag|Kaltag|US|AK|64.3186|-158.7420|181|3986|G|S|1|150
-KCQ|A79|Chignik Lake Airport|Chignik Lake|Chignik Lake|US|AK|56.2550|-158.7750|50|2800|G|S|1|150
 KEH|S60|Kenmore Air Harbor LLC Seaplane Base|Kenmore|Kenmore|US|WA|47.7548|-122.2590|14|10000|W|W|1|201497
-KEK|KEK|Ekwok Airport|Ekwok|Ekwok|US|AK|59.3568|-157.4710|135|3300|G|S|0|150
-KFP|PAKF|False Pass Airport|False Pass|False Pass|US|AK|54.8475|-163.4072|20|2100|G|S|1|150
-KKA|PAKK|Koyuk Alfred Adams Airport|Koyuk|Koyuk|US|AK|64.9395|-161.1540|154|3002|G|S|1|150
-KKH|PADY|Kongiganak Airport|Kongiganak|Kongiganak|US|AK|59.9608|-162.8810|30|2400|G|S|1|150
-KLN|PALB|Larsen Bay Airport|Larsen Bay|Larsen Bay|US|AK|57.5352|-153.9765|87|2690|G|S|1|150
-KOT|PFKO|Kotlik Airport|Kotlik|Kotlik|US|AK|63.0306|-163.5330|15|4400|G|S|1|539
-KPV|PAPE|Perryville Airport|Perryville|Perryville|US|AK|55.9065|-159.1609|29|3300|G|S|1|150
-KSM|PASM|St Mary's Airport|St Mary's|St Mary's|US|AK|62.0605|-163.3020|312|5997|G|S|1|577
-KTS|PFKT|Brevig Mission Airport|Brevig Mission|Brevig Mission|US|AK|65.3318|-166.4678|38|2990|G|S|1|150
-KVL|PAVL|Kivalina Airport|Kivalina|Kivalina|US|AK|67.7346|-164.5599|13|3000|G|S|1|150
-KWN|PAQH|Quinhagak Airport|Quinhagak|Quinhagak|US|AK|59.7551|-161.8450|42|4000|G|S|1|632
+KGX|PAGX|Grayling Airport|Grayling|Grayling|US|AK|62.8952|-160.0663|99|4000|G|S|1|150
 LAS|KLAS|Harry Reid International Airport|Las Vegas|Las Vegas|US|NV|36.0834|-115.1518|2181|14835|P|L|1|2035026
 LAX|KLAX|Los Angeles International Airport|Los Angeles|Los Angeles|US|CA|33.9425|-118.4080|125|12894|P|L|1|3155125
 LBB|KLBB|Lubbock Preston Smith International Airport|Lubbock|Lubbock|US|TX|33.6636|-101.8230|3282|11500|P|M|1|349530
-LMA|PAMH|Minchumina Airport|Minchumina|Minchumina|US|AK|63.8860|-152.3020|678|4184|G|S|1|150
 LUR|PALU|Cape Lisburne LRRS Airport|Cape Lisburne|Cape Lisburne|US|AK|68.8751|-166.1100|16|4800|G|M|1|150
 LWB|KLWB|Greenbrier Valley Airport|Lewisburg|Lewisburg|US|WV|37.8579|-80.4004|2302|7003|P|M|1|60395
 MCG|PAMC|McGrath Airport|McGrath|McGrath|US|AK|62.9529|-155.6060|341|5936|P|M|1|150
 MCI|KMCI|Kansas City International Airport|Kansas City|Kansas City|US|MO|39.3017|-94.7139|1026|10801|P|L|1|2238030
 MEM|KMEM|Frederick W. Smith International Airport|Memphis|Memphis|US|TN|35.0438|-89.9763|341|11120|P|L|1|1971897
-MFR|KMFR|Rogue Valley International-Medford Airport|Medford|Medford|US|OR|42.3742|-122.8730|1335|8800|P|M|1|220237
 MIA|KMIA|Miami International Airport|Miami|Miami|US|FL|25.7960|-80.2898|8|13016|P|L|1|2229610
-MLB|KMLB|Melbourne Orlando International Airport|Melbourne|Melbourne, US|US|FL|28.1020|-80.6411|33|10181|P|M|1|331803
-MLL|PADM|Marshall Don Hunter Sr Airport|Marshall|Marshall|US|AK|61.8643|-162.0260|103|3200|G|S|1|150
-MLY|PAML|Manley Hot Springs Airport|Manley Hot Springs|Manley Hot Springs|US|AK|64.9919|-150.6441|270|3400|G|S|1|150
 MSP|KMSP|MinneapolisSaint Paul International Airport / WoldChamberlain Field|Minneapolis|Minneapolis|US|MN|44.8801|-93.2217|841|11006|P|L|1|3344982
 MSY|KMSY|Louis Armstrong New Orleans International Airport|New Orleans|New Orleans|US|LA|29.9934|-90.2647|4|10104|P|L|1|1514601
 MUE|PHMU|Waimea Kohala Airport|Waimea|Waimea|US|HI|20.0013|-155.6680|2671|5197|P|M|1|21712
-MYU|PAMY|Mekoryuk Airport|Mekoryuk|Mekoryuk|US|AK|60.3723|-166.2698|48|3070|G|M|1|150
-MYV|KMYV|Yuba County Airport|Marysville|Marysville|US|CA|39.0978|-121.5700|64|6007|P|M|0|229581
-NIB|PAFS|Nikolai Airport|Nikolai|Nikolai|US|AK|63.0179|-154.3604|441|4003|G|S|1|150
-NIN|NIN|Ninilchik Airport|Ninilchik|Ninilchik|US|AK|60.0202|-151.5890|276|2400|G|S|0|806
-NLG|PAOU|Nelson Lagoon Airport|Nelson Lagoon|Nelson Lagoon|US|AK|56.0075|-161.1600|14|4003|G|S|1|150
 NNK|5NK|Naknek Airport|Naknek|Naknek|US|AK|58.7356|-157.0222|70|2000|W|S|0|150
-NUI|PAQT|Nuiqsut Airport|Nuiqsut|Nuiqsut|US|AK|70.2100|-151.0060|38|4343|G|M|1|150
-NUL|PANU|Nulato Airport|Nulato|Nulato|US|AK|64.7293|-158.0740|399|4011|G|S|1|150
 NUP|PPIT|Nunapitchuk Airport|Nunapitchuk|Nunapitchuk|US|AK|60.9056|-162.4405|12|3000|W|S|1|547
 OBU|PAOB|Kobuk Airport|Kobuk|Kobuk|US|AK|66.9123|-156.8970|137|4020|G|S|1|150
-OLH|OLH|Old Harbor Airport|Old Harbor|Old Harbor|US|AK|57.2181|-153.2700|55|2750|G|S|1|150
 OME|PAOM|Nome Airport|Nome|Nome|US|AK|64.5122|-165.4450|37|6176|P|M|1|3806
 ORD|KORD|Chicago O'Hare International Airport|Chicago|Chicago|US|IL|41.9786|-87.9048|680|13000|P|L|1|9624304
 ORF|KORF|Norfolk International Airport|Norfolk|Norfolk|US|VA|36.8953|-76.2010|26|9001|P|L|1|1805220
 ORT|PAOR|Northway Airport|Northway|Northway|US|AK|62.9613|-141.9290|1715|5100|G|M|1|150
-ORV|PFNO|Robert (Bob) Curtis Memorial Airport|Noorvik|Noorvik|US|AK|66.8179|-161.0190|55|4000|G|S|1|441
 OTZ|PAOT|Ralph Wien Memorial Airport|Kotzebue|Kotzebue|US|AK|66.8847|-162.5990|14|6300|P|M|1|3377
-PAQ|PAAQ|Warren 'Bud' Woods Palmer Municipal Airport|Palmer|Palmer|US|AK|61.5949|-149.0890|242|6006|P|M|0|29027
-PDX|KPDX|Portland International Airport|Portland|Portland|US|OR|45.5887|-122.5980|31|11000|P|L|1|2180896
-PGM|PGM|Port Graham Airport|Port Graham|Port Graham|US|AK|59.3484|-151.8300|93|1975|G|S|1|263
-PHL|KPHL|Philadelphia International Airport|Philadelphia|Philadelphia|US|PA|39.8719|-75.2411|36|12000|P|L|1|6191834
-PHO|PAPO|Point Hope Airport|Point Hope|Point Hope|US|AK|68.3488|-166.7990|12|4000|P|S|1|609
 PHX|KPHX|Phoenix Sky Harbor International Airport|Phoenix|Phoenix|US|AZ|33.4353|-112.0059|1135|11489|P|L|1|4543764
-PIP|PAPN|Pilot Point Airport|Pilot Point|Pilot Point|US|AK|57.5804|-157.5720|57|3280|G|S|1|150
 PIT|KPIT|Pittsburgh International Airport|Pittsburgh|Pittsburgh|US|PA|40.4915|-80.2329|1203|11500|P|L|1|1582844
-PIZ|PPIZ|Point Lay LRRS Airport|Point Lay|Point Lay|US|AK|69.7329|-163.0050|22|3519|G|M|1|150
 PNS|KPNS|Pensacola International Airport|Pensacola|Pensacola|US|FL|30.4727|-87.1866|121|7004|P|L|1|697080
-PTA|PALJ|Port Alsworth Airport|Port Alsworth|Port Alsworth|US|AK|60.2017|-154.3259|280|3000|G|S|1|150
 PTH|PAPH|Port Heiden Airport|Port Heiden|Port Heiden|US|AK|56.9579|-158.6302|95|5000|G|M|1|150
 RAP|KRAP|Rapid City Regional Airport|Rapid City|Rapid City|US|SD|44.0453|-103.0570|3204|8701|P|M|1|142137
-RBY|PARY|Ruby Airport|Ruby|Ruby|US|AK|64.7272|-155.4700|658|4000|G|M|1|150
 RDU|KRDU|Raleigh-Durham International Airport|Raleigh|Raleigh|US|NC|35.8787|-78.7873|435|10000|P|L|1|1801442
-RDV|RDV|Red Devil Airport|Red Devil|Red Devil|US|AK|61.7881|-157.3500|174|4820|G|S|1|150
 RKS|KRKS|Southwest Wyoming Regional Airport|Rock Springs|Rock Springs|US|WY|41.5942|-109.0650|6764|10002|P|M|1|41338
-RMP|PFMP|Rampart Airport|Rampart|Rampart|US|AK|65.5079|-150.1410|302|3520|G|S|1|150
+RNO|KRNO|Reno Tahoe International Airport|Reno|Reno|US|NV|39.4991|-119.7680|4415|11001|P|L|1|650029
 SAT|KSAT|San Antonio International Airport|San Antonio|San Antonio|US|TX|29.5337|-98.4698|809|8505|P|L|1|2114849
 SCC|PASC|Deadhorse Airport|Deadhorse|Deadhorse|US|AK|70.1947|-148.4650|65|6500|P|M|1|2174
-SCM|PACM|Scammon Bay Airport|Scammon Bay|Scammon Bay|US|AK|61.8447|-165.5752|14|3001|G|S|1|557
-SDP|PASD|Sand Point Airport|Sand Point|Sand Point|US|AK|55.3139|-160.5221|21|4000|P|M|1|1064
-SEA|KSEA|SeattleTacoma International Airport|Seattle|Seattle|US|WA|47.4479|-122.3103|433|11901|P|L|1|2506015
 SFO|KSFO|San Francisco International Airport|San Francisco|San Francisco|US|CA|37.6198|-122.3748|13|11870|P|L|1|1999454
 SGF|KSGF|Springfield Branson National Airport|Springfield|Springfield|US|MO|37.2450|-93.3886|1268|8000|P|M|1|277451
 SHH|PASH|Shishmaref Airport|Shishmaref|Shishmaref|US|AK|66.2496|-166.0891|12|4997|P|S|1|580
 SHV|KSHV|Shreveport Regional Airport|Shreveport|Shreveport|US|LA|32.4447|-93.8267|258|8348|P|M|1|335631
 SKK|PFSH|Shaktoolik Airport|Shaktoolik|Shaktoolik|US|AK|64.3711|-161.2240|24|4001|G|S|1|150
 SLC|KSLC|Salt Lake City International Airport|Salt Lake City|Salt Lake City|US|UT|40.7889|-111.9799|4227|12002|P|L|1|1646473
-SMK|PAMK|St Michael Airport|St Michael|St Michael|US|AK|63.4901|-162.1100|98|4001|G|S|1|158
 SNP|PASN|St Paul Island Airport|St Paul Island|St Paul Island|US|AK|57.1663|-170.2226|63|6500|P|M|1|150
 STL|KSTL|St. Louis Lambert International Airport|St Louis|St Louis|US|MO|38.7487|-90.3700|618|11020|P|L|1|2338615
-SVA|PASA|Savoonga Airport|Savoonga|Savoonga|US|AK|63.6864|-170.4930|53|4400|G|M|1|692
-SWD|PAWD|Seward Airport|Seward|Seward|US|AK|60.1305|-149.4186|22|4249|P|M|0|4422
 SXP|SXP|Nunam Iqua Airport|Nunam Iqua|Nunam Iqua|US|AK|62.5206|-164.8480|12|15000|W|S|1|150
-TAL|PATA|Ralph M Calhoun Memorial Airport|Tanana|Tanana|US|AK|65.1744|-152.1090|236|4400|G|S|1|150
+SYR|KSYR|Syracuse Hancock International Airport|Syracuse|Syracuse|US|NY|43.1112|-76.1063|421|9013|P|L|1|686777
 TCL|KTCL|Tuscaloosa National Airport|Tuscaloosa|Tuscaloosa|US|AL|33.2206|-87.6114|170|6498|P|M|0|145862
 TEK|PAKA|Tatitlek Airport|Tatitlek|Tatitlek|US|AK|60.8714|-146.6903|62|8000|W|S|1|203
-TKA|PATK|Talkeetna Airport|Talkeetna|Talkeetna|US|AK|62.3205|-150.0940|358|3500|P|M|0|2707
 TLH|KTLH|Tallahassee International Airport|Tallahassee|Tallahassee|US|FL|30.4012|-84.3543|81|8000|P|M|1|264693
-TLT|TLT|Tuluksak Airport|Tuluksak|Tuluksak|US|AK|61.0870|-160.9228|30|3300|G|S|1|150
-TNC|PATC|Tin City Long Range Radar Station Airport|Tin City|Tin City|US|AK|65.5631|-167.9220|271|4702|G|S|1|150
-TNK|4KA|Tununak Airport|Tununak|Tununak|US|AK|60.5696|-165.2466|14|1778|G|S|1|164
-TOG|PATG|Togiak Airport|Togiak Village|Togiak Village|US|AK|59.0528|-160.3970|21|4400|G|S|1|493
 TPA|KTPA|Tampa International Airport|Tampa|Tampa|US|FL|27.9755|-82.5332|26|11002|P|L|1|1705522
 TPH|KTPH|Tonopah Airport|Tonopah|Tonopah|US|NV|38.0602|-117.0870|5430|7160|P|M|0|2746
 TUL|KTUL|Tulsa International Airport|Tulsa|Tulsa|US|OK|36.1971|-95.8862|677|10000|P|L|1|1010347
-UNK|PAUN|Unalakleet Airport|Unalakleet|Unalakleet|US|AK|63.8884|-160.7990|27|5900|P|M|1|737
 UTO|PAIM|Indian Mountain LRRS Airport|Utopia Creek|Utopia Creek|US|AK|65.9928|-153.7040|1273|4100|G|M|1|150
 VEE|PAVE|Venetie Airport|Venetie|Venetie|US|AK|67.0087|-146.3660|574|4000|G|S|1|150
-WLK|PASK|Selawik Airport|Selawik|Selawik|US|AK|66.6001|-159.9860|17|3002|G|S|1|710
-WMO|PAWM|White Mountain Airport|White Mountain|White Mountain|US|AK|64.6892|-163.4130|267|3000|G|S|1|150
-WOW|PAUO|Willow Airport|Willow|Willow|US|AK|61.7542|-150.0520|221|4400|G|S|0|2429
-WTK|PAWN|Noatak Airport|Noatak|Noatak|US|AK|67.5612|-162.9805|88|3992|G|S|1|471
 WWP|96Z|Whale Pass Seaplane Float Harbor Facility|Whale Pass|Whale Pass|US|AK|56.1163|-133.1220|0|10000|W|W|1|150
-WWT|PAEW|Mertarvik Airport|Mertarvik|Mertarvik|US|AK|60.8104|-164.4995|346|3300|G|S|1|150
 XWA|KXWA|Williston Basin International Airport|Williston|Williston|US|ND|48.2609|-103.7512|2344|7503|P|M|1|32886
 YAK|PAYA|Yakutat Airport|Yakutat|Yakutat|US|AK|59.5087|-139.6604|33|7732|P|M|1|662
 """#

@@ -6,7 +6,7 @@ Status in October 2026. "Tested" means a test runs in CI; "written" means the co
 
 | Area | State |
 |---|---|
-| Airport data | 1,602 real airports on the map, one per area: 250 km apart (big cities 150 km, the start regions 45 km so a new airline has places to fly), remote towns kept because nothing is near them (tools/data/declutter.py); the rest are retired but still load for old saves, named by place, 204 countries, catchment populations, runway and surface. Tested. |
+| Airport data | 1,288 real airports on the map, one per area: 250 km apart (cities of 5 million or more 180 km; small places within 300 km of a start region 130 km, so a new airline has places to fly), remote towns kept because nothing is near them (tools/data/declutter.py); the rest are retired but still load for old saves, named by place, 193 countries, catchment populations, runway and surface. Tested. |
 | World map data | 2880 x 1440 land mask from Natural Earth, decoded in Core. Tested. |
 | Aircraft | 52 real models from the Cessna 172 and DC-3 to the A380, with floatplane variants. Tested. |
 | Economy | Demand fitted to real traffic, fares, freight, leg costs, schedules, competition. Python prototypes and Swift port agree. Tested. |

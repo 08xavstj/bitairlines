@@ -1,4 +1,6 @@
-# Bit Airlines
+# Pixel Props
+
+The game's name (it was "Bit Airlines" while in development; the code, folders and project still use BitAirlines inside).
 
 An iPhone airline management game in 8-bit pixel art, played in landscape. Start with one Twin Otter at a remote strip, design your own airline (name, logo,
 colours, liveries), and grow it into a world network that flies jets into major hubs. The aircraft fly your routes on their own; the game pauses when something

@@ -6,11 +6,15 @@ extension World {
         dailyFuelMarket()
         let upkeep = baseUpkeepPerDay
         if upkeep > 0 { spendOnOverhead(upkeep) }
+        // The real calendar (RealDay.swift) before the board is cleared, so dispatch and event jobs stay on it.
+        dailyRealCalendar()
         dailyJobs()
         checkScenario()
         checkWeeklyGoal()
         checkMissedDepartures()
         endCampaigns()
+        // Rewards from ads (RewardGrants.swift): the sponsor's payment for the day just closed, the broker's listings leaving.
+        dailyRewards()
         if ops.mode.unlimitedMoney && airline.cash < Tuning.sandboxCashFloor { airline.cash += Tuning.sandboxTopUp }
     }
 

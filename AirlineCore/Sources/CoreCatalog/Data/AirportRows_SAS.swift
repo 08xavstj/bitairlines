@@ -5,66 +5,42 @@ enum AirportRows_SAS {
     static let rows = #"""
 CGP|VGEG|Shah Amanat International Airport|Chattogram|Chattogram|BD|B|22.2496|91.8133|12|9646|P|L|1|5764156
 DAC|VGHS|Hazrat Shahjalal International Airport|Dhaka|Dhaka|BD|C|23.8433|90.3978|30|11500|P|L|1|20402219
-RJH|VGRJ|Shah Makhdum Airport|Rajshahi|Rajshahi|BD|E|24.4372|88.6165|64|6000|P|M|1|3494039
 SPD|VGSD|Saidpur Airport|Saidpur|Saidpur|BD|E|25.7592|88.9089|125|6000|P|M|1|1821657
-ZYL|VGSY|Osmany International Airport|Sylhet|Sylhet|BD|G|24.9640|91.8647|50|9478|P|L|1|1267585
-BUT|VQBT|Bathpalathang Airport|Jakar|Jakar|BT|33|27.5622|90.7471|8485|3937|P|S|1|8447
-GLU|VQGP|Gelephu Airport|Gelephu|Gelephu|BT|31|26.8846|90.4641|980|4921|P|M|0|141475
-PBH|VQPR|Paro International Airport|Paro|Paro|BT|11|27.4032|89.4246|7364|7431|P|L|1|701388
-YON|VQTY|Yongphulla Airport|Yongphulla|Yongphulla|BT|41|27.2563|91.5146|9000|4154|P|S|1|13870
-AGR|VIAG|Agra Airport / Agra Air Force Station|Agra|Agra|IN|UP|27.1580|77.9610|551|9000|P|M|1|3788773
 AGX|VOAT|Agatti Airport|Agatti|Agatti|IN|LD|10.8237|72.1760|14|4235|P|M|1|32157
-AHA|VEAP|Maa Mahamaya Airport|Ambikapur|Ambikapur|IN|CT|22.9875|83.1961|1930|6299|P|M|1|655119
-AKD|VAAK|Akola Airport|Akola|Akola|IN|MM|20.6989|77.0569|999|4600|P|M|0|1114682
 AMD|VAAH|Sardar Vallabh Patel International Airport|Ahmedabad|Ahmedabad|IN|GJ|23.0772|72.6347|189|11499|P|L|1|9439021
 ATQ|VIAR|Sri Guru Ram Das Ji International Airport|Amritsar|Amritsar|IN|PB|31.7096|74.7973|756|12000|P|L|1|5710609
-AYJ|VEAY|Maharshi Valmiki International Airport|Faizabad|Faizabad|IN|UP|26.7477|82.1637|335|7381|P|M|1|611326
 BBI|VEBS|Biju Patnaik International Airport|Bhubaneswar|Bhubaneswar|IN|OR|20.2510|85.8147|138|9003|P|L|1|3807461
 BEK|VIBY|Bareilly Air Force Station|Bareilly|Bareilly|IN|UP|28.4221|79.4508|580|9000|P|M|1|2229720
-BHO|VABP|Raja Bhoj International Airport|Bhopal|Bhopal|IN|MP|23.2875|77.3374|1711|9022|P|L|1|4295488
 BLR|VOBL|Kempegowda International Airport Bengaluru|Bengaluru|Bengaluru|IN|KA|13.1979|77.7063|3000|13123|P|L|1|12463908
 BOM|VABB|Chhatrapati Shivaji Maharaj International Airport|Mumbai|Mumbai|IN|MM|19.0887|72.8679|39|11511|P|L|1|17376093
 CCU|VECC|Netaji Subhash Chandra Bose International Airport|Kolkata|Kolkata|IN|WB|22.6540|88.4476|16|11919|P|L|1|16292983
-CNN|VOKN|Kannur International Airport|Kannur|Kannur|IN|KL|11.9163|75.5450|330|10007|P|L|1|4530093
 COK|VOCI|Cochin International Airport|Kochi|Kochi|IN|KL|10.1510|76.4008|30|11155|P|L|1|8806675
-DED|VIDN|Dehradun Jolly Grant Airport|Dehradun|Dehradun|IN|UT|30.1892|78.1767|1831|7000|P|M|1|1674434
 DEL|VIDP|Indira Gandhi International Airport|New Delhi|New Delhi|IN|DL|28.5556|77.0952|777|14534|P|L|1|29191882
-DGH|VEDO|Deoghar Airport|Deoghar|Deoghar|IN|JH|24.4468|86.7050|361|2398|P|S|1|297951
 GAU|VEGT|Lokpriya Gopinath Bordoloi International Airport|Guwahati|Guwahati|IN|AS|26.1067|91.5852|162|9000|P|L|1|2236873
-GAY|VEGY|Gaya Airport|Gaya|Gaya|IN|BR|24.7443|84.9512|380|7500|P|M|1|1779482
 GOX|VOGA|Manohar International Airport|Mopa|Mopa|IN|GA|15.7443|73.8606|552|11483|P|L|1|1115686
-HJR|VEKO|Khajuraho Airport|Khajuraho|Khajuraho|IN|MP|24.8172|79.9186|728|7460|P|M|1|986986
-HSR|VAHS|Rajkot International Airport|Rajkot|Rajkot|IN|GJ|22.3788|71.0394|647|9974|P|L|1|3192862
 HYD|VOHS|Rajiv Gandhi International Airport|Hyderabad|Hyderabad|IN|TG|17.2313|78.4299|2024|13976|P|L|1|12220944
 IDR|VAID|Devi Ahilya Bai Holkar International Airport|Indore|Indore|IN|MP|22.7214|75.8005|1850|9035|G|L|1|5799129
-ISK|VAOZ|Nashik International Airport|Nashik|Nashik|IN|MM|20.1191|73.9129|1900|9843|P|L|1|4473856
-IXB|VEBD|Bagdogra Airport|Siliguri|Siliguri|IN|WB|26.6812|88.3286|412|9035|P|L|1|2608987
+IMF|VEIM|Bir Tikendrajit International Airport|Imphal|Imphal|IN|MN|24.7600|93.8967|2540|9009|P|L|1|1099313
 IXC|VICG|Shaheed Bhagat Singh International Airport|Chandigarh|Chandigarh|IN|CH|30.6735|76.7885|1012|12467|P|L|1|5642389
-IXD|VEAB|Prayagraj Airport|Allahabad|Allahabad|IN|UP|25.4401|81.7339|322|8110|P|M|1|1384996
-IXL|VILH|Leh Kushok Bakula Rimpochee Airport|Leh|Leh|IN|LA|34.1359|77.5465|10682|9040|P|M|1|52276
+IXE|VOML|Mangaluru International Airport|Mangaluru|Mangaluru|IN|KA|12.9547|74.8868|337|8035|P|L|1|2346959
+IXI|VELR|Lilabari North Lakhimpur Airport|Lilabari|Lilabari|IN|AS|27.2957|94.0973|330|7500|P|M|1|187951
 IXR|VERC|Birsa Munda Airport|Ranchi|Ranchi|IN|JH|23.3143|85.3217|2148|8855|P|M|1|2607705
 IXU|VAAU|Aurangabad Airport|Aurangabad|Aurangabad|IN|MM|19.8629|75.3963|1911|9314|P|M|1|2124513
+IXY|VAKE|Kandla Airport|Kandla|Kandla|IN|GJ|23.1127|70.1003|96|4997|P|M|1|487204
 IXZ|VOPB|Veer Savarkar International Airport / INS Utkrosh|Port Blair|Port Blair|IN|AN|11.6402|92.7290|13|10795|P|L|1|210216
 JAI|VIJP|Jaipur International Airport|Jaipur|Jaipur|IN|RJ|26.8242|75.8122|1263|9177|P|L|1|5913923
 JDH|VIJO|Jodhpur Airport|Jodhpur|Jodhpur|IN|RJ|26.2511|73.0489|717|9005|P|M|1|1575689
 JLR|VAJB|Jabalpur Airport|Jabalpur|Jabalpur|IN|MP|23.1778|80.0520|1624|6522|P|M|1|1859642
-JRH|VEJT|Jorhat Airport|Jorhat|Jorhat|IN|AS|26.7305|94.1754|311|9000|P|M|1|443475
-KBK|VEKI|Kushinagar International Airport|Kushinagar|Kushinagar|IN|UP|26.7765|83.8892|266|10500|P|M|0|696545
 LKO|VILK|Chaudhary Charan Singh International Airport|Lucknow|Lucknow|IN|UP|26.7606|80.8893|410|8996|P|L|1|5899495
 MAA|VOMM|Chennai International Airport|Chennai|Chennai|IN|TN|12.9900|80.1693|52|12001|P|L|1|9869286
 NAG|VANP|Dr. Babasaheb Ambedkar International Airport|Nagpur|Nagpur|IN|MM|21.0922|79.0472|1033|10500|P|L|1|5946253
 PAT|VEPT|Jay Prakash Narayan Airport|Patna|Patna|IN|BR|25.5913|85.0880|170|6410|P|M|1|4155808
-RDP|VEDG|Kazi Nazrul Islam Airport|Durgapur|Durgapur|IN|WB|23.6225|87.2430|300|9186|P|M|1|4074490
-REW|VERW|Rewa Airport, Chorhata, REWA|Rewa|Rewa|IN|MP|24.5034|81.2203|1000|4593|P|M|1|972896
 RPR|VERP|Swami Vivekananda Airport|Raipur|Raipur|IN|CT|21.1804|81.7388|1041|6414|P|M|1|3003950
 SSE|VASL|Solapur Airport|Solapur|Solapur|IN|MM|17.6280|75.9348|1584|6591|P|M|0|1514237
 STV|VASU|Surat International Airport|Surat|Surat|IN|GJ|21.1155|72.7433|16|9530|P|L|1|6851593
-SXR|VISR|Srinagar International Airport|Srinagar|Srinagar|IN|JK|33.9871|74.7742|5429|12090|P|L|1|2828263
 TRV|VOTV|Thiruvananthapuram International Airport|Thiruvananthapuram|Thiruvananthapuram|IN|KL|8.4819|76.9200|15|11148|P|L|1|7378914
 TRZ|VOTR|Tiruchirappalli International Airport|Tiruchirappalli|Tiruchirappalli|IN|TN|10.7629|78.7177|288|6115|P|L|1|7979354
 VGA|VOBZ|Vijayawada International Airport|Vijayawada|Vijayawada|IN|AP|16.5300|80.8049|82|11023|P|L|1|6061684
-VNS|VEBN|Lal Bahadur Shastri International Airport|Varanasi|Varanasi|IN|UP|25.4522|82.8625|266|9006|P|L|1|4423287
-VSV|VISV|Shravasti Airport|Shravasti|Shravasti|IN|UP|27.4997|82.0329|366|5019|P|S|1|69907
 VTZ|VOVI|Alluri Sitarama Raju International Airport (Vizag)|Visakhapatnam|Visakhapatnam|IN|AP|17.9715|83.5036|188|9000|G|L|1|4844566
 CMB|VCBI|Bandaranaike International Colombo Airport|Colombo|Colombo|LK|1|7.1808|79.8841|30|10991|P|L|1|2107040
 DWO|DWO|Diyawanna Oya Seaplane Base|Sri Jayawardenepura|Sri Jayawardenepura|LK|1|6.9066|79.9090|10|0|W|W|1|575163
@@ -72,32 +48,20 @@ GAN|VRMG|Gan International Airport|Gan|Gan|MV|01|-0.6930|73.1526|6|12000|P|L|1|2
 HAQ|VRMH|Hanimaadhoo International Airport|Haa Dhaalu Atoll|Haa Dhaalu Atoll|MV|23|6.7432|73.1671|4|8087|P|L|1|11531
 KDO|VRMK|Kadhdhoo Airport|Kadhdhoo|Kadhdhoo|MV|05|1.8592|73.5219|4|4003|P|M|1|5445
 MLE|VRMM|Velana International Airport|Male|Male|MV|MLE|4.1918|73.5291|6|11155|P|L|1|119270
-BHP|VNBJ|Bhojpur Airport|Bhojpur|Bhojpur|NP|P1|27.1474|87.0508|4000|3000|G|S|0|5013
-BHR|VNBP|Bharatpur Airport|Bharatpur|Bharatpur|NP|P3|27.6781|84.4294|600|3799|P|S|1|231502
-BIR|VNVT|Biratnagar Airport|Biratnagar|Biratnagar|NP|P1|26.4815|87.2640|236|4937|P|M|1|1130086
-BWA|VNBW|Gautam Buddha International Airport|Siddharthanagar|Siddharthanagar|NP|P5|27.5046|83.4104|358|9843|P|L|1|1020910
-DHI|VNDH|Dhangarhi Airport|Dhangarhi|Dhangarhi|NP|P7|28.7553|80.5834|690|5000|G|S|0|243335
-DOP|VNDP|Dolpa Airport|Dolpa|Dolpa|NP|P6|28.9857|82.8187|8200|3000|G|S|1|150
 IMK|VNST|Simikot Airport|Simikot|Simikot|NP|P6|29.9711|81.8189|9246|3000|G|S|1|1975
 JMO|VNJS|Jomsom Airport|Jomsom|Jomsom|NP|P4|28.7804|83.7230|8976|2424|P|S|1|286
-JUM|VNJL|Jumla Airport|Jumla|Jumla|NP|P6|29.2742|82.1933|7700|2165|P|S|1|9073
-KEP|VNNG|Nepalgunj Airport|Nepalgunj|Nepalgunj|NP|P5|28.1036|81.6670|540|4935|P|M|1|539574
 LUA|VNLK|Tenzing-Hillary Airport|Lukla|Lukla|NP|P1|27.6868|86.7295|9380|1729|P|M|1|22902
 PHH|VNPR|Pokhara International Airport|Pokhara|Pokhara|NP|P4|28.1838|84.0147|2595|8202|P|L|1|856433
 RJB|VNRB|Rajbiraj Airport|Rajbiraj|Rajbiraj|NP|P2|26.5101|86.7339|250|3000|G|S|0|72315
-SIH|VNDT|Silgadi Doti Airport|Silgadi Doti|Silgadi Doti|NP|P7|29.2622|80.9360|2100|3000|G|S|1|52982
 SKH|VNSK|Surkhet Airport|Surkhet|Surkhet|NP|P6|28.5860|81.6360|2400|3400|G|S|1|143912
-TPU|VNTP|Tikapur Airport|Tikapur|Tikapur|NP|P7|28.5219|81.1230|522|3000|G|S|0|35768
-VNSL|VNSL|Rukum Salle Airport|Musikot|Musikot|NP|P6|28.6362|82.4502|5184|3000|G|S|1|150
 CJL|OPCH|Chitral Airport|Chitral|Chitral|PK|KP|35.8862|71.7999|4920|5741|P|M|1|141992
 DBA|OPDB|Dalbandin Airport|Dalbandin|Dalbandin|PK|BA|28.8783|64.3998|2800|3000|G|S|1|14621
 ISB|OPIS|Islamabad International Airport|Attock|Attock|PK|PB|33.5490|72.8257|1761|12001|P|L|1|7064911
+KDU|OPSD|Skardu International Airport|Skardu|Skardu|PK|GB|35.3387|75.5386|7316|11995|P|L|1|335380
 KHI|OPKC|Jinnah International Airport|Karachi|Karachi|PK|SD|24.9065|67.1608|100|11155|P|L|1|12756932
-LYP|OPFA|Faisalabad International Airport|Faisalabad|Faisalabad|PK|PB|31.3649|72.9953|591|9324|P|L|1|12772853
 MUX|OPMT|Multan International Airport|Multan|Multan|PK|PB|30.2032|71.4191|403|12353|P|L|1|5955161
 SKZ|OPSK|Begum Nusrat Bhutto International Airport Sukkur|Sukkur|Sukkur|PK|SD|27.7220|68.7917|196|9000|P|M|1|2646838
 TUK|OPTU|Turbat International Airport|Turbat|Turbat|PK|BA|25.9848|63.0289|498|9022|P|L|1|103475
 UET|OPQT|Quetta International Airport|Quetta|Quetta|PK|BA|30.2514|66.9378|5267|12001|P|L|1|1981282
-WNS|OPNH|Shaheed Benazirabad Airport|Nawabashah|Nawabashah|PK|SD|26.2194|68.3901|95|8999|P|M|1|1818546
 """#
 }

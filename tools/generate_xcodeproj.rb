@@ -13,7 +13,7 @@ PROJECT_PATH = File.join(ROOT, 'BitAirlines.xcodeproj')
 
 APP_NAME = 'BitAirlines'
 TEST_NAME = 'BitAirlinesTests'
-DISPLAY_NAME = 'Bit Airlines'                      # working title
+DISPLAY_NAME = 'Pixel Props'                       # the name under the icon
 BUNDLE_ID = 'ca.amaruq.bitairlines'                # change freely until the first App Store upload; permanent after that
 DEVELOPMENT_TEAM = 'AKLDHPSZ33'                    # personal team (Apple Development certificate); not a secret
 DEPLOYMENT_TARGET = '17.0'

@@ -22,7 +22,6 @@ ATZ|HEAT|Asyut International Airport|Asyut|Asyut|EG|AST|27.0460|31.0128|748|9905
 CAI|HECA|Cairo International Airport|Cairo|Cairo|EG|C|30.1115|31.3967|322|13124|P|L|1|26335621
 HBE|HEAX|Alexandria International Airport|Alexandria|Alexandria|EG|ALX|30.9325|29.6964|171|11156|P|L|1|7211629
 HRG|HEGN|Hurghada International Airport|Hurghada|Hurghada|EG|BA|27.1768|33.7967|32|13171|P|L|1|296978
-PSD|HEPS|Port Said International Airport|Port Said|Port Said|EG|PTS|31.2793|32.2406|10|7707|P|L|1|5400460
 VIL|GMMH|Dakhla Airport|Dakhla|Dakhla|EH|A|23.7183|-15.9320|36|9842|P|L|1|114839
 AKF|HLKF|Kufra Airport|Kufra|Kufra|LY|KF|24.1787|23.3140|1367|12007|P|M|1|88129
 BEN|HLLB|Benina International Airport|Benina|Benina|LY|BA|32.0968|20.2695|433|11732|P|L|1|1010047
@@ -32,7 +31,6 @@ SEB|HLLS|Sabha Airport|Sabha|Sabha|LY|SB|26.9925|14.4662|1427|11778|P|M|1|279261
 SRX|HLGD|Sirt International Airport / Ghardabiya Airbase|Sirt|Sirt|LY|SR|31.0586|16.5971|267|11807|P|L|0|127104
 AGA|GMAD|Al Massira Airport|Agadir|Agadir|MA|09|30.3225|-9.4120|250|10499|P|L|1|1948493
 CMN|GMMN|Mohammed V International Airport|Casablanca|Casablanca|MA|06|33.3675|-7.5900|656|12205|P|L|1|5217109
-FEZ|GMFF|Fes Saiss International Airport|Saiss|Saiss|MA|03|33.9273|-4.9780|1900|10499|P|L|1|2684037
 OZG|GMAZ|Zagora Airport|Zagora|Zagora|MA|08|30.2658|-5.8608|2414|9000|G|L|1|94717
 TNG|GMTT|Tangier Ibn Battuta Airport|Tangier|Tangier|MA|01|35.7317|-5.9215|62|11483|P|L|1|1318988
 TTA|GMAT|Tan Tan Airport|Tan Tan|Tan Tan|MA|10|28.4476|-11.1617|653|6562|P|M|1|91592

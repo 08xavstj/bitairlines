@@ -4,32 +4,27 @@
 enum AirportRows_EUW {
     static let rows = #"""
 VIE|LOWW|Vienna International Airport|Vienna|Vienna|AT|9|48.1103|16.5697|600|11811|P|L|1|4581443
-BRU|EBBR|Brussels Airport|Zaventem|Zaventem|BE|VBR|50.9014|4.4844|175|11936|P|L|1|6239413
+CRL|EBCI|Brussels South Charleroi Airport|Charleroi|Charleroi|BE|WHT|50.4620|4.4596|614|10023|P|L|1|4345379
 PFO|LCPH|Paphos International Airport|Paphos|Paphos|CY|06|34.7180|32.4857|41|8858|P|L|1|195641
 AGB|EDMA|Augsburg Airport|Augsburg|Augsburg|DE|BY|48.4253|10.9317|1516|5230|P|M|0|466690
 BER|EDDB|Berlin Brandenburg Airport|Berlin|Berlin|DE|BR|52.3617|13.5023|157|13123|P|L|1|9100529
-BWE|EDVE|Braunschweig-Wolfsburg Airport|Braunschweig|Braunschweig|DE|NI|52.3192|10.5561|295|7546|P|M|0|674959
 CGN|EDDK|Cologne Bonn Airport|Koln|Koln|DE|NW|50.8659|7.1427|302|12516|P|L|1|6103880
-ERF|EDDE|Erfurt-Weimar Airport|Erfurt|Erfurt|DE|TH|50.9783|10.9607|1036|8530|P|L|1|3117930
 HAM|EDDH|Hamburg Helmut Schmidt Airport|Hamburg|Hamburg|DE|HH|53.6304|9.9882|53|12028|P|L|1|8037879
 MHG|EDFM|Mannheim-City Airport|Mannheim|Mannheim|DE|BW|49.4731|8.5142|308|3497|P|M|1|2029890
 ALC|LEAL|Alicante-Elche Miguel Hernandez Airport|Alicante|Alicante|ES|VC|38.2822|-0.5582|142|9842|P|L|1|3725027
 BCN|LEBL|Josep Tarradellas Barcelona-El Prat Airport|Barcelona|Barcelona|ES|CT|41.2971|2.0785|12|11000|P|L|1|9562640
 BIO|LEBB|Bilbao Airport|Bilbao|Bilbao|ES|PV|43.3011|-2.9106|138|8530|P|L|1|1589303
 FUE|GCFV|Fuerteventura Airport|El Matorral|El Matorral|ES|CN|28.4527|-13.8638|85|11220|P|L|1|126094
+GRX|LEGR|F.G.L. Airport Granada-Jaen Airport|Granada|Granada|ES|AN|37.1887|-3.7774|1860|9514|P|M|1|881010
 MAD|LEMD|Adolfo Suarez MadridBarajas Airport|Madrid|Madrid|ES|MD|40.4934|-3.5722|1998|14271|P|L|1|14571272
-SCQ|LEST|Santiago-Rosalia de Castro Airport|Santiago de Compostela|Santiago de Compostela|ES|GA|42.8963|-8.4151|1213|10499|P|L|1|1164777
-SVQ|LEZL|Seville Airport|Seville|Seville|ES|AN|37.4180|-5.8931|112|11030|P|L|1|2278874
+OVD|LEAS|Asturias Airport|Ranon|Ranon|ES|AS|43.5636|-6.0346|416|7218|P|L|1|1150031
 TFS|GCTS|Tenerife Sur Airport|Tenerife|Tenerife|ES|CN|28.0445|-16.5725|209|10499|P|L|1|887805
 BES|LFRB|Brest Bretagne airport|Brest|Brest, FR|FR|BRE|48.4479|-4.4185|325|10171|P|L|1|791939
 BSL|LFSB|EuroAirport BaselMulhouseFreiburg|Bale|Bale|FR|GES|47.6007|7.5211|885|12795|P|L|1|3128216
-BZR|LFMU|Beziers Vias airport|Beziers|Beziers|FR|OCC|43.3235|3.3539|56|5971|P|M|1|275910
 CDG|LFPG|Charles de Gaulle International Airport|Paris|Paris|FR|IDF|49.0090|2.5541|392|13829|P|L|1|17542551
-DOL|LFRG|Deauville Normandie airport|Deauville|Deauville|FR|NOR|49.3652|0.1545|479|8366|P|M|1|570311
 FSC|LFKF|Figari Sud-Corse Airport|Figari|Figari|FR|COR|41.5018|9.0971|85|8136|P|L|1|159297
 LYS|LFLL|Lyon Saint-Exupery Airport|Colombier-Saugnieu|Colombier-Saugnieu|FR|ARA|45.7260|5.0901|821|13124|P|L|1|3428536
 MRS|LFML|Marseille Provence Airport|Marignane|Marignane|FR|PAC|43.4381|5.2125|74|11483|P|L|1|4252585
-NCE|LFMN|Nice-Cote d'Azur Airport|Nice|Nice|FR|PAC|43.6584|7.2159|12|9721|P|L|1|2109514
 NTE|LFRS|Nantes Atlantique Airport|Nantes|Nantes|FR|PDL|47.1532|-1.6107|90|9514|P|L|1|2078059
 TLS|LFBO|Toulouse-Blagnac Airport|Toulouse|Toulouse|FR|OCC|43.6291|1.3638|499|11483|P|L|1|1623945
 CWL|EGFF|Cardiff International Airport|Cardiff|Cardiff|GB|WLS|51.3967|-3.3433|220|7723|P|L|1|2333805
@@ -37,7 +32,6 @@ FIE|EGEF|Fair Isle Airport|Fair Isle|Fair Isle|GB|SCT|59.5347|-1.6285|223|1761|G
 GLA|EGPF|Glasgow Airport|Glasgow|Glasgow|GB|SCT|55.8719|-4.4331|26|8730|P|L|1|1684697
 LHR|EGLL|London Heathrow Airport|London|London|GB|ENG|51.4707|-0.4599|83|12799|P|L|1|19057730
 MAN|EGCC|Manchester Airport|Manchester|Manchester|GB|ENG|53.3494|-2.2795|257|10007|P|L|1|4838297
-NCL|EGNT|Newcastle International Airport|Newcastle upon Tyne|Newcastle upon Tyne|GB|ENG|55.0380|-1.6896|266|7644|P|L|1|2014557
 SYY|EGPO|Stornoway Airport|Stornoway|Stornoway|GB|SCT|58.2156|-6.3311|26|7218|P|M|1|28056
 ATH|LGAV|Athens Eleftherios Venizelos International Airport|Spata-Artemida|Spata-Artemida|GR|I|37.9364|23.9445|308|13123|P|L|1|4356596
 CHQ|LGSA|Chania International Airport|Souda|Souda|GR|M|35.5312|24.1507|490|10982|P|L|1|163198
@@ -47,16 +41,14 @@ DUB|EIDW|Dublin Airport|Dublin|Dublin|IE|D|53.4287|-6.2621|242|10203|P|L|1|27846
 KIR|EIKY|Kerry Airport|Farranfore|Farranfore|IE|KY|52.1809|-9.5238|112|6562|P|M|1|63033
 BDS|LIBR|Brindisi Airport|Brindisi|Brindisi|IT|75|40.6576|17.9470|47|10000|P|L|1|1420473
 CAG|LIEE|Cagliari Elmas Airport|Cagliari|Cagliari|IT|88|39.2515|9.0543|13|9196|P|L|1|890194
-CTA|LICC|Catania-Fontanarossa Airport|Catania|Catania|IT|82|37.4668|15.0664|39|7989|P|L|1|1953537
 FCO|LIRF|RomeFiumicino Leonardo da Vinci International Airport|Rome|Rome|IT|62|41.8045|12.2520|13|12801|P|L|1|4652833
 MXP|LIMC|Milan Malpensa International Airport|Ferno|Ferno|IT|25|45.6306|8.7281|768|12861|P|L|1|3125786
 NAP|LIRN|Naples International Airport|Napoli|Napoli|IT|72|40.8860|14.2908|294|8622|P|L|1|6696443
 PMO|LICJ|FalconeBorsellino Airport|Palermo|Palermo|IT|82|38.1760|13.0910|65|10912|P|L|1|1605606
 PSA|LIRP|Pisa International Airport|Pisa|Pisa|IT|52|43.6839|10.3927|6|9820|P|L|1|1395648
 VCE|LIPZ|Venice Marco Polo Airport|Venezia|Venezia|IT|34|45.5053|12.3519|7|10827|P|L|1|1535500
-LUX|ELLX|Luxembourg-Findel International Airport|Luxembourg|Luxembourg|LU|L|49.6268|6.2121|1234|13123|P|L|1|2917010
+MLA|LMML|Malta International Airport|Valletta|Valletta|MT|25|35.8459|14.4915|300|10991|P|L|1|574125
 AMS|EHAM|Amsterdam Airport Schiphol|Amsterdam|Amsterdam|NL|NH|52.3086|4.7639|-11|12467|P|L|1|6541437
-GRQ|EHGG|Groningen Airport Eelde|Groningen|Groningen|NL|DR|53.1191|6.5777|17|8202|P|L|1|2795524
 FLW|LPFL|Flores Airport|Santa Cruz das Flores|Santa Cruz das Flores|PT|20|39.4553|-31.1314|112|4593|P|M|1|5235
 FNC|LPMA|Cristiano Ronaldo International Airport|Funchal|Funchal|PT|30|32.6978|-16.7746|192|9110|P|L|1|342512
 LIS|LPPT|Lisbon Humberto Delgado Airport|Lisbon|Lisbon|PT|11|38.7813|-9.1359|374|12500|P|L|1|3758076

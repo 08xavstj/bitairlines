@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Draws the app icon: a pixel-art high-wing turboprop over snowy mountains at dusk, on a 64x64 grid scaled up with no smoothing.
+"""Draws the Pixel Props app icon: a pixel-art high-wing turboprop over the sea and a small island at dusk, on a 64x64 grid
+scaled up with no smoothing.
 
     python tools/make_icon.py            # writes BitAirlines/Resources/Assets.xcassets/AppIcon.appiconset/icon-1024.png
 
@@ -13,7 +14,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 OUT_DIR = os.path.join(ROOT, 'BitAirlines', 'Resources', 'Assets.xcassets', 'AppIcon.appiconset')
 
 NAVY, SKY1, SKY2, SKY3, SKY4 = '#0B1020', '#16224A', '#25407F', '#3F7FC4', '#7FC0EC'
-SUN, SUN2, SNOW, SNOW2, ROCK, ROCK2 = '#FFD166', '#FFB347', '#EEF2FA', '#B9C6E4', '#141C33', '#243257'
+SUN, SUN2, SEA, SEA2, ISLE, ISLE2, SAND, CLOUD = '#FFD166', '#FFB347', '#12356B', '#1F6FA0', '#1E6B3A', '#3FA34D', '#D9B382', '#EEF2FA'
 WHITE, SHADE, STRIPE, TAIL, METAL = '#EEF2FA', '#B9C6E4', '#1F6FA0', '#FF9F43', '#6F7FA6'
 
 def rgb(hex_color):
@@ -40,20 +41,27 @@ d.ellipse([43, 38, 57, 52], fill=SUN)
 d.pieslice([43, 38, 57, 52], 0, 180, fill=SUN2)
 
 
-def ridge(peaks, slope=1):
-    """Height of a mountain range at every column: the highest of several 45-degree peaks, so the range is one connected skyline."""
-    return [min(top + abs(x - cx) * slope for cx, top in peaks) for x in range(G)]
+# the sea: two flat bands with a dithered seam, and a light line where the sun meets the water
+d.rectangle([0, 47, G - 1, G - 1], fill=SEA2)
+d.rectangle([0, 55, G - 1, G - 1], fill=SEA)
+for x in range(G):
+    px[x, 54] = rgb(SEA if x % 2 == 0 else SEA2)
+    px[x, 55] = rgb(SEA2 if x % 2 == 0 else SEA)
+for x in range(44, 57, 2):
+    px[x, 48] = rgb(SUN)
+d.rectangle([47, 50, 53, 50], fill=SUN2)
 
+# a small island on the left: a sand rim and two green hills
+d.rectangle([2, 49, 27, 50], fill=SAND)
+d.polygon([(4, 49), (10, 42), (15, 46), (19, 41), (26, 49)], fill=ISLE)
+d.polygon([(10, 42), (12, 44), (15, 46), (13, 46)], fill=ISLE2)
+d.polygon([(19, 41), (22, 45), (24, 47), (21, 47)], fill=ISLE2)
 
-def range_fill(heights, rock, snow, snow_depth):
-    for x in range(G):
-        for y in range(heights[x], G):
-            jag = ((x * 5) // 2) % 3
-            px[x, y] = rgb(snow if y - heights[x] < snow_depth + jag - 1 else rock)
+# pixel clouds
+for cx, cy, w in ((50, 10, 9), (7, 13, 7), (28, 6, 6)):
+    d.rectangle([cx - w // 2, cy, cx + w // 2, cy + 1], fill=CLOUD)
+    d.rectangle([cx - w // 2 + 2, cy - 1, cx + w // 2 - 1, cy - 1], fill=CLOUD)
 
-
-range_fill(ridge([(12, 43), (47, 42), (30, 50)]), ROCK2, SNOW2, 6)
-range_fill(ridge([(3, 55), (31, 53), (59, 54)]), ROCK, SNOW, 4)
 
 # the plane (facing right, high wing), tapered fuselage
 d.polygon([(12, 30), (16, 27), (43, 27), (49, 29), (51, 31), (50, 33), (45, 35), (18, 35), (12, 32)], fill=WHITE)

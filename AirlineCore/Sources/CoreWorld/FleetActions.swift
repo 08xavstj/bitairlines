@@ -19,6 +19,7 @@ extension World {
         aircraft.append(Aircraft(id: id, typeID: type.id, registration: nextRegistration(), builtDay: clock.dayIndex - Int(listing.ageYears * 365.25),
                                  condition: listing.condition, price: listing.price, location: airline.home, status: .onOrder(until: delivery)))
         let last = aircraft.count - 1
+        if let rare = listing.rare { logRareFind(rare, typeID: type.id) }
         if listing.rare == .heritage {
             let livery = RareFinds.heritageLivery(logo: airline.branding.logo)
             aircraft[last].livery = livery

@@ -3,7 +3,7 @@ import Testing
 
 @Suite struct AirportCatalogTests {
     @Test func loadsEveryRow() {
-        #expect(AirportCatalog.all.count > 1400 && AirportCatalog.all.count < 1800, "one airport per area keeps the map clean")
+        #expect(AirportCatalog.all.count > 1150 && AirportCatalog.all.count < 1450, "one airport per area keeps the map clean")
         #expect(AirportCatalog.byCode.count == AirportCatalog.all.count, "airport codes must be unique")
         #expect(AirportCatalog.retired.count > 3000)
         #expect(Set(AirportCatalog.retired.keys).isDisjoint(with: AirportCatalog.byCode.keys), "a retired airport is never also on the map")
@@ -18,7 +18,7 @@ import Testing
     }
 
     @Test func awayFromTheStartRegionsSmallAirportsAreWellApart() {
-        // tools/data/declutter.py: 250 km apart (big cities 150 km); the start regions keep more places to fly to.
+        // tools/data/declutter.py: 250 km apart (the biggest cities 180 km); the start regions keep a few more small places to fly to.
         let starts = StartRegions.all.flatMap(\.headquarters).compactMap { AirportCatalog.airport($0) }
         let far = AirportCatalog.all.filter { a in
             a.population < 500_000 && a.surface != .water && starts.allSatisfy { a.distanceKm(to: $0) > 900 }

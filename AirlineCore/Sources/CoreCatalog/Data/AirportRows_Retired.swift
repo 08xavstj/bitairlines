@@ -13,6 +13,7 @@ KDH|OAKN|Ahmad Shah Baba International Airport|Kandahar|Kandahar|AF|KAN|31.5058|
 KHT|OAKS|Khost International Airport|Khost|Khost|AF|KHO|33.2846|69.8073|4204|8740|P|M|1|826993
 MMZ|OAMN|Maymana Zahiraddin Faryabi Airport|Maymana|Maymana|AF|FYB|35.9308|64.7609|2743|5090|G|M|0|93298
 UND|OAUZ|Kunduz Airport|Kunduz|Kunduz|AF|KDZ|36.6651|68.9108|1457|6558|P|M|0|336127
+BBQ|TAPB|Burton-Nibbs International Airport|Codrington|Codrington|AG|10|17.6212|-61.7983|28|6100|P|M|1|5438
 TIA|LATI|Tirana International Airport Mother Teresa|Rinas|Rinas|AL|02|41.4147|19.7206|126|9843|P|L|1|1404925
 BUG|FNBG|Benguela Airport|Benguela|Benguela|AO|BGU|-12.6090|13.4037|118|5315|P|M|0|582289
 CAB|FNCA|Cabinda Airport|Cabinda|Cabinda|AO|CAB|-5.5984|12.1881|66|8202|P|M|1|532669
@@ -29,6 +30,7 @@ XGN|FNXA|Xangongo Airport|Xangongo|Xangongo|AO|CNN|-16.7554|14.9653|3635|7400|P|
 AFA|SAMR|Suboficial Ay Santiago Germano Airport|San Rafael|San Rafael|AR|M|-34.5883|-68.4039|2470|6923|P|M|1|174440
 AOL|SARL|Paso De Los Libres Airport|Paso de los Libres|Paso de los Libres|AR|W|-29.6894|-57.1521|230|7415|P|M|0|49949
 APZ|SAHZ|Zapala Airport|Zapala|Zapala|AR|Q|-38.9755|-70.1136|3330|7218|P|M|0|41291
+ARR|SAVR|D. Casimiro Szlapelis Airport|Alto Rio Senguerr|Alto Rio Senguerr|AR|U|-45.0136|-70.8122|2286|4593|G|S|0|1700
 BRC|SAZS|Teniente Luis Candelaria International Airport|San Carlos de Bariloche|San Carlos de Bariloche|AR|R|-41.1512|-71.1575|2774|7703|P|L|1|124730
 CLX|SATC|Aerodromo de Clorinda|Clorinda|Clorinda|AR|P|-25.3036|-57.7344|206|3937|G|S|0|139039
 CNQ|SARC|Corrientes Airport|Corrientes|Corrientes|AR|W|-27.4455|-58.7619|202|6890|P|M|1|269268
@@ -38,6 +40,7 @@ CPG|AR-0390|Carmen de Patagones Airport|Carmen de Patagones|Carmen de Patagones|
 CSZ|SAZC|Brigadier D.H.E. Ruiz Airport|Coronel Suarez|Coronel Suarez|AR|B|-37.4461|-61.8893|767|4265|P|S|0|32525
 CTC|SANC|Coronel Felipe Varela International Airport|Catamarca|Catamarca|AR|K|-28.5931|-65.7512|1522|9186|P|M|1|250216
 CUT|SAZW|Cutral-Co Airport|Cutral-Co|Cutral-Co|AR|Q|-38.9397|-69.2646|2132|5558|P|M|0|53599
+CVI|AR-0007|Caleta Olivia Airport|Caleta Olivia|Caleta Olivia|AR|Z|-46.3743|-67.5941|37|3000|G|S|0|22169
 EHL|SAVB|El Bolson Airfield|El Bolson|El Bolson|AR|R|-41.9432|-71.5323|1141|4265|P|M|0|21583
 ELO|SATD|El Dorado Airport|El Dorado|El Dorado, AR|AR|N|-26.3975|-54.5747|685|4695|P|S|0|36124
 EMX|SAVD|El Maiten Airport|El Maiten|El Maiten|AR|U|-42.0292|-71.1725|2355|4961|G|S|0|3346
@@ -51,6 +54,7 @@ HOS|SAHC|Chos Malal Airport|Chos Malal|Chos Malal|AR|Q|-37.4447|-70.2225|2788|49
 IGB|SAVJ|Ingeniero Jacobacci - Captain H R Bordon Airport|Ingeniero Jacobacci|Ingeniero Jacobacci|AR|R|-41.3209|-69.5749|2925|6890|P|S|0|6409
 JSM|SAWS|Jose De San Martin Airport|Chubut|Chubut|AR|U|-44.0486|-70.4589|2407|4921|G|S|0|3638
 LCP|LCP|Loncopue Airport|Loncopue|Loncopue|AR|Q|-38.0819|-70.6439|3627|5249|P|S|0|4323
+LHS|SAVH|Las Heras Airport|Las Heras|Las Heras|AR|Z|-46.5385|-68.9653|1082|4593|P|M|1|34391
 LMD|AR-0011|Los Menucos Airport|Los Menucos|Los Menucos|AR|R|-40.8177|-68.0747|2571|3773|G|S|0|5904
 LPG|SADL|La Plata Airport|La Plata|La Plata|AR|B|-34.9722|-57.8947|72|4682|P|M|0|468354
 MCS|SARM|Monte Caseros Airport|Monte Caseros|Monte Caseros|AR|W|-30.2719|-57.6402|170|4323|G|M|0|68385
@@ -58,20 +62,25 @@ MDX|SATM|Mercedes Airport|Mercedes|Mercedes|AR|W|-29.2214|-58.0878|358|5909|P|S|
 MDZ|SAME|Governor Francisco Gabrielli International Airport|Mendoza|Mendoza|AR|M|-32.8317|-68.7929|2310|9301|P|L|1|722491
 NCJ|SAFS|Sunchales Aeroclub Airport|Sunchales|Sunchales|AR|S|-30.9575|-61.5283|299|6562|P|S|0|31495
 NEC|SAZO|Necochea Airport|Necochea|Necochea|AR|B|-38.4907|-58.8163|72|4921|P|M|1|112015
+OLN|SAVM|Lago Musters Airport|Sarmiento|Sarmiento|AR|U|-45.5752|-69.0770|889|3219|G|S|0|6533
 ORA|SASO|Oran Airport|Oran|Oran|AR|A|-23.1528|-64.3292|1171|4839|P|M|0|175854
 OYA|SATG|Goya Airport|Goya|Goya|AR|W|-29.1058|-59.2189|128|7415|P|M|0|113831
 OYO|SAZH|Tres Arroyos Airport|Tres Arroyos|Tres Arroyos|AR|B|-38.3869|-60.3297|400|3934|P|M|0|54641
 PEH|SAZP|Comodoro Pedro Zanni Airport|Pehuajo|Pehuajo|AR|B|-35.8446|-61.8576|278|4921|P|M|0|159716
+PMQ|SAWP|Perito Moreno Jalil Hamer Airport|Perito Moreno|Perito Moreno|AR|Z|-46.5379|-70.9787|1410|5577|P|M|1|8755
 PMY|SAVY|El Tehuelche Airport|Puerto Madryn|Puerto Madryn|AR|U|-42.7592|-65.1027|427|8202|P|M|1|72433
 PRA|SAAP|General Urquiza Airport|Parana|Parana|AR|E|-31.7948|-60.4804|242|6890|P|M|1|404268
 PRQ|SARS|Termal Airport|Presidencia Roque Saenz|Presidencia Roque Saenz|AR|H|-26.7536|-60.4922|308|5905|P|S|0|113484
 PSS|SARP|Libertador Gral D Jose De San Martin Airport|Posadas|Posadas|AR|N|-27.3858|-55.9707|430|7388|P|M|1|318602
+PUD|SAWD|Puerto Deseado Airport|Puerto Deseado|Puerto Deseado|AR|Z|-47.7353|-65.9041|268|4921|P|M|1|16747
 QRF|AR-0005|Bragado Airport|Bragado|Bragado|AR|B|-35.1458|-60.4803|196|3281|G|S|0|49509
 RAF|SAFR|Rafaela Airport|Rafaela|Rafaela|AR|S|-31.2825|-61.5017|325|3691|P|S|0|65190
 RCQ|SATR|Reconquista Airport|Reconquista|Reconquista|AR|S|-29.2103|-59.6833|160|9186|P|M|0|139421
 RCU|SAOC|Area De Material Airport|Rio Cuarto|Rio Cuarto|AR|X|-33.0851|-64.2613|1380|7431|P|M|0|223711
+RGA|SAWE|Gobernador Ramon Trejo Noel International Airport|Rio Grande|Rio Grande, AR|AR|V|-53.7777|-67.7494|65|6562|P|M|1|53646
 RHD|SANR|Termas de Rio Hondo international Airport|Termas de Rio Hondo|Termas de Rio Hondo|AR|G|-27.4966|-64.9360|935|8232|P|M|1|86866
 RLO|SAOS|Valle Del Conlara International Airport|Merlo|Merlo|AR|D|-32.3847|-65.1865|2021|8366|P|S|0|12825
+ROY|SAWM|Rio Mayo Airport|Rio Mayo|Rio Mayo|AR|U|-45.7039|-70.2456|1784|4921|G|S|0|2939
 SDE|SANE|Vicecomodoro Angel D. La Paz Aragones Airport|Santiago del Estero|Santiago del Estero|AR|G|-27.7656|-64.3100|656|7946|P|M|1|247691
 SFN|SAAV|Sauce Viejo Airport|Santa Fe|Santa Fe|AR|S|-31.7117|-60.8117|55|7628|P|M|1|484740
 SGV|SAVS|Sierra Grande Airport|Sierra Grande|Sierra Grande|AR|R|-41.5917|-65.3394|688|4593|G|S|0|6978
@@ -79,6 +88,7 @@ SLA|SASA|Martin Miguel de Guemes International Airport|Salta|Salta|AR|A|-24.8560
 SST|SAZL|Santa Teresita Airport|Santa Teresita|Santa Teresita|AR|B|-36.5423|-56.7218|9|4921|P|M|1|209069
 TDL|SAZT|Heroes de Malvinas Airport|Tandil|Tandil|AR|B|-37.2346|-59.2286|574|8366|P|M|0|199308
 TTG|SAST|General Enrique Mosconi Airport|Tartagal|Tartagal|AR|A|-22.6169|-63.7930|1472|4921|P|M|0|90794
+ULA|SAWJ|Capitan D Daniel Vazquez Airport|San Julian|San Julian|AR|Z|-49.3068|-67.8026|203|6562|P|M|0|6143
 UZU|SATU|Curuzu Cuatia Airport|Curuzu Cuatia|Curuzu Cuatia|AR|W|-29.7706|-57.9789|229|7054|P|M|0|46289
 VCF|AR-0017|Valcheta Airport|Valcheta|Valcheta|AR|R|-40.7000|-66.1500|629|3117|G|S|0|3596
 VDM|SAVV|Gobernador Castello Airport|Viedma|Viedma|AR|R|-40.8692|-63.0004|20|8366|P|M|1|66573
@@ -99,6 +109,7 @@ ARY|YARA|Ararat Airport|Ararat|Ararat|AU|VIC|-37.3100|142.9887|1008|4068|P|M|0|5
 AUU|YAUR|Aurukun Airport|Aurukun|Aurukun|AU|QLD|-13.3540|141.7200|31|4140|G|S|1|1181
 AYR|YAYR|Ayr Airport|Ayr|Ayr|AU|QLD|-19.5958|147.3245|41|4796|P|S|0|8470
 BCI|YBAR|Barcaldine Airport|Barcaldine|Barcaldine|AU|QLD|-23.5663|145.3021|878|5591|P|M|1|1638
+BDD|YBAU|Badu Island Airport|Badu Island|Badu Island|AU|QLD|-10.1495|142.1737|14|2788|G|S|1|150
 BHS|YBTH|Bathurst Airport|Bathurst|Bathurst|AU|NSW|-33.4068|149.6512|2435|5594|P|M|1|132015
 BKQ|YBCK|Blackall Airport|Blackall|Blackall|AU|QLD|-24.4317|145.4297|928|5538|P|M|1|1365
 BLN|YBLA|Benalla Airport|Benalla|Benalla|AU|VIC|-36.5519|146.0070|569|3422|G|M|0|62898
@@ -111,18 +122,22 @@ CAZ|YCBA|Cobar Airport|Cobar|Cobar|AU|NSW|-31.5383|145.7940|724|5564|P|M|1|4173
 CBR|YSCB|Canberra Airport|Canberra|Canberra|AU|ACT|-35.3069|149.1950|1886|10771|P|M|1|913899
 CCL|YCCA|Chinchilla Airport|Chinchilla|Chinchilla|AU|QLD|-26.7719|150.6176|1028|3497|P|M|0|14504
 CIE|YCOI|Collie Airport|Collie|Collie|AU|WA|-33.3667|116.2170|818|3772|G|S|0|9903
+CKW|YCHK|Christmas Creek Airport|Christmas Creek Mine|Christmas Creek Mine|AU|WA|-22.3543|119.6426|1462|8202|P|S|1|150
 CMA|YCMU|Cunnamulla Airport|Cunnamulla|Cunnamulla|AU|QLD|-28.0300|145.6220|630|5686|P|M|1|1235
 CNB|YCNM|Coonamble Airport|Coonamble|Coonamble|AU|NSW|-30.9809|148.3778|604|5010|P|M|1|5199
+CNJ|YCCY|Cloncurry Airport|Cloncurry|Cloncurry|AU|QLD|-20.6686|140.5040|616|6562|P|M|1|3167
 CTN|YCKN|Cooktown Airport|Cooktown|Cooktown|AU|QLD|-15.4436|145.1832|26|5338|P|M|1|3707
 CUQ|YCOE|Coen Airport|Coen|Coen|AU|QLD|-13.7611|143.1133|532|4107|P|M|1|150
 DGE|YMDG|Mudgee Airport|Mudgee|Mudgee|AU|NSW|-32.5648|149.6095|1545|5705|P|M|0|20424
 DKI|YDKI|Dunk Island Airport|Dunk Island|Dunk Island|AU|QLD|-17.9391|146.1414|6|2673|G|S|0|5527
+DMD|YDMG|Doomadgee Airport|Doomadgee|Doomadgee|AU|QLD|-17.9403|138.8220|153|5433|P|S|1|1468
 DNQ|YDLQ|Deniliquin Airport|Deniliquin|Deniliquin|AU|NSW|-35.5594|144.9460|316|3999|P|M|0|57885
 DOX|YDRA|Dongara Airport|Port Denison|Port Denison|AU|WA|-29.2981|114.9273|0|3280|G|S|0|1823
 DPO|YDPO|Devonport Airport|Devonport|Devonport|AU|TAS|-41.1697|146.4300|33|6030|P|M|1|85889
 EDR|YPMP|Pormpuraaw Airport|Pormpuraaw|Pormpuraaw|AU|QLD|-14.8965|141.6091|10|4462|P|S|1|699
 ELC|YELD|Elcho Island Airport|Elcho Island|Elcho Island|AU|NT|-12.0194|135.5710|101|4724|P|M|1|2484
 EMD|YEML|Emerald Airport|Emerald|Emerald|AU|QLD|-23.5675|148.1790|624|6234|P|M|1|28480
+FIZ|YFTZ|Fitzroy Crossing Airport|Fitzroy Crossing|Fitzroy Crossing|AU|WA|-18.1836|125.5598|368|4265|P|M|1|1783
 FLS|YFLI|Flinders Island Airport|Whitemark|Whitemark|AU|TAS|-40.0917|147.9930|10|5643|G|S|1|150
 FRB|YFBS|Forbes Airport|Forbes|Forbes|AU|NSW|-33.3636|147.9350|760|4029|P|M|0|13188
 GAH|YGAY|Gayndah Airport|Gayndah|Gayndah|AU|QLD|-25.6159|151.6206|369|4150|P|S|0|3374
@@ -130,12 +145,15 @@ GEE|YGTO|George Town Airport|George Town|George Town, AU|AU|TAS|-41.0795|146.839
 GFE|YGNF|Grenfell Airport|Grenfell|Grenfell|AU|NSW|-34.0000|148.1330|1080|2657|G|S|0|5946
 GFF|YGTH|Griffith Airport|Griffith|Griffith|AU|NSW|-34.2508|146.0670|439|4931|P|M|1|28919
 GFN|YGFN|Clarence Valley Regional Airport|Grafton|Grafton|AU|NSW|-29.7548|153.0312|110|5607|P|M|0|36271
+GIC|YBOI|Boigu Island Airport|Boigu Island|Boigu Island|AU|QLD|-9.2328|142.2180|23|2165|G|S|1|150
 GKL|YGKL|Great Keppel Is Airport|Great Keppel Island|Great Keppel Island|AU|QLD|-23.1846|150.9416|21|2870|G|S|0|7232
 GLI|YGLI|Glen Innes Airport|Glen Innes|Glen Innes|AU|NSW|-29.6760|151.6912|3433|5499|G|M|0|12513
 GLT|YGLA|Gladstone Airport|Gladstone|Gladstone|AU|QLD|-23.8698|151.2254|64|5364|P|M|1|100429
 GOS|YSMB|Somersby Airstrip|Gosford|Gosford|AU|NSW|-33.3677|151.2998|860|3000|G|S|0|137842
 GOV|YPGV|Gove Airport|Nhulunbuy|Nhulunbuy|AU|NT|-12.2694|136.8180|192|7244|P|M|1|4201
 GYZ|YGRM|Gruyere Airport|Cosmo Newbery|Cosmo Newbery|AU|WA|-28.0345|123.8151|1542|6890|P|S|1|150
+HID|YHID|Horn Island Airport|Horn|Horn|AU|QLD|-10.5856|142.2928|43|4557|P|M|1|4296
+HMG|YHMB|Hermannsburg Airport|Hermannsburg|Hermannsburg|AU|NT|-23.9265|132.8078|593|3704|G|S|0|619
 HPE|YHPV|Hope Vale Airport|Hope Vale|Hope Vale|AU|QLD|-15.2923|145.1035|228|3000|G|S|0|515
 HTI|YBHM|Hamilton Island Airport|Hamilton Island|Hamilton Island|AU|QLD|-20.3581|148.9520|15|5591|P|M|1|14337
 HVB|YHBA|Hervey Bay Airport|Hervey Bay|Hervey Bay|AU|QLD|-25.3201|152.8807|60|6561|P|M|1|128643
@@ -143,6 +161,7 @@ IRG|YLHR|Lockhart River Airport|Lockhart River|Lockhart River|AU|QLD|-12.7869|14
 IVR|YIVL|Inverell Airport|Inverell|Inverell|AU|NSW|-29.8883|151.1440|2667|6936|P|M|0|15180
 JUR|YJUR|Jurien Bay Airport|Jurien Bay|Jurien Bay|AU|WA|-30.3027|115.0556|15|4265|G|S|0|2326
 KAX|YKBR|Kalbarri Airport|Kalbarri|Kalbarri|AU|WA|-27.6928|114.2592|157|5246|P|S|1|2602
+KBJ|YKCA|Kings Canyon Airport|Petermann|Petermann|AU|NT|-24.2602|131.4889|2100|4908|G|S|0|522
 KDB|YKBL|Kambalda Airport|Kambalda West|Kambalda West|AU|WA|-31.1907|121.5978|1073|3576|G|S|0|1693
 KGC|YKSC|Kingscote Airport|Kingscote|Kingscote|AU|SA|-35.7139|137.5210|24|4600|P|M|1|2457
 KNS|YKII|King Island Airport|Currie|Currie|AU|TAS|-39.8775|143.8780|132|5198|P|M|1|659
@@ -164,16 +183,20 @@ MMG|YMOG|Mount Magnet Airport|Mount Magnet|Mount Magnet|AU|WA|-28.1161|117.8420|
 MNG|YMGD|Maningrida Airport|Maningrida|Maningrida|AU|NT|-12.0561|134.2340|123|5020|P|M|1|3260
 MOV|YMRB|Moranbah Airport|Moranbah|Moranbah|AU|QLD|-22.0578|148.0770|770|5000|P|M|1|20143
 MYA|YMRY|Moruya Airport|Moruya|Moruya|AU|NSW|-35.8978|150.1440|14|4997|P|M|1|63809
+MYI|YMAE|Murray Island Airport|Murray Island|Murray Island|AU|QLD|-9.9151|144.0546|300|1722|G|S|1|150
 NAA|YNBR|Narrabri Airport|Narrabri|Narrabri|AU|NSW|-30.3192|149.8270|788|5000|P|M|1|16599
+NLF|YDNI|Darnley Island Airport|Darnley Island|Darnley Island|AU|QLD|-9.5792|143.7803|0|1640|G|S|1|150
 NRA|YNAR|Narrandera Airport|Narrandera|Narrandera|AU|NSW|-34.7022|146.5120|474|5302|P|M|1|17613
 NRG|YNRG|Narrogin Airport|Narrogin|Narrogin|AU|WA|-32.9300|117.0800|1080|4101|G|S|0|4699
 NSM|YNSM|Norseman Aerodrome|Norseman|Norseman|AU|WA|-32.2030|121.7581|263|4960|G|S|0|640
 NTL|YWLM|Newcastle Airport|Williamtown|Williamtown|AU|NSW|-32.7961|151.8350|31|10033|P|L|1|1697416
 OAG|YORG|Orange Airport|Orange|Orange|AU|NSW|-33.3820|149.1313|3115|5499|P|M|0|40709
+OKR|YYKI|Yorke Island Airport|Yorke Island|Yorke Island|AU|QLD|-9.7528|143.4057|10|3281|G|S|1|150
 OLP|YOLD|Olympic Dam Airport|Olympic Dam|Olympic Dam|AU|SA|-30.4839|136.8767|344|6102|P|S|1|4616
 OOM|YCOM|Cooma Snowy Mountains Airport|Cooma|Cooma|AU|NSW|-36.3004|148.9724|3088|6955|P|M|1|26883
 OYN|YOUY|Ouyen Airport|Ouyen|Ouyen|AU|VIC|-35.0888|142.3548|0|3280|G|S|0|1185
 PBO|YPBO|Paraburdoo Airport|Paraburdoo|Paraburdoo|AU|WA|-23.1711|117.7450|1406|6995|P|M|1|3381
+PHE|YPPD|Port Hedland International Airport|Port Hedland|Port Hedland|AU|WA|-20.3828|118.6298|33|8202|P|L|1|27271
 PKE|YPKS|Parkes Airport|Parkes|Parkes|AU|NSW|-33.1314|148.2390|1069|5525|P|M|1|27293
 PKT|YPKT|Port Keats Airport|Wadeye|Wadeye|AU|NT|-14.2497|129.5295|91|4626|P|M|0|1924
 PLO|YPLC|Port Lincoln Airport|Port Lincoln|Port Lincoln|AU|SA|-34.6053|135.8800|36|4918|P|M|1|17041
@@ -185,10 +208,13 @@ PXH|YPMH|Prominent Hill Airport|Mount Eba|Mount Eba|AU|SA|-29.7160|135.5244|745|
 RAM|YRNG|Ramingining Airport|Ramingining|Ramingining|AU|NT|-12.3564|134.8980|206|4825|G|S|1|748
 RBC|YROI|Robinvale Airport|Robinvale|Robinvale|AU|VIC|-34.6429|142.7730|87|3854|G|S|0|2739
 RBU|YROE|Roebourne Airport|Roebourne|Roebourne|AU|WA|-20.7639|117.1552|0|5137|G|S|0|2491
+RCM|YRMD|Richmond Airport|Richmond|Richmond, AU|AU|QLD|-20.7019|143.1150|676|5000|P|S|1|758
 RPM|YNGU|Ngukurr Airport|Roper River|Roper River|AU|NT|-14.7228|134.7470|45|5020|P|M|0|1154
+SBR|YSII|Saibai Island Airport|Saibai Island|Saibai Island|AU|QLD|-9.3783|142.6250|15|2099|G|S|1|150
 SGO|YSGE|St George Airport|St George|St George, AU|AU|QLD|-28.0497|148.5950|656|4987|P|S|1|3124
 SNB|YSNK|Snake Bay Airport|Milikapiti|Milikapiti|AU|NT|-11.4177|130.6485|173|4734|P|M|1|252
 SXE|YWSL|West Sale Airport|Sale|Sale|AU|VIC|-38.0908|146.9653|72|5010|P|M|0|36284
+SYU|YWBS|Warraber Island Airport|Sue Islet|Sue Islet|AU|QLD|-10.2083|142.8250|3|2362|G|S|1|150
 TEM|YTEM|Temora Airport|Temora|Temora|AU|NSW|-34.4214|147.5120|921|6454|P|M|0|15022
 TGN|YLTV|Latrobe Valley Airport|Morwell|Morwell|AU|VIC|-38.2110|146.4708|180|4692|P|M|0|94682
 THG|YTNG|Thangool Airport|Biloela|Biloela|AU|QLD|-24.4949|150.5780|644|4993|P|M|1|11376
@@ -202,6 +228,7 @@ WGA|YSWG|Wagga Wagga Airport|Forest Hill|Forest Hill|AU|NSW|-35.1635|147.4683|72
 WGE|YWLG|Walgett Airport|Walgett|Walgett|AU|NSW|-30.0328|148.1260|439|5335|P|M|1|2432
 WGT|YWGT|Wangaratta Airport|Laceby|Laceby|AU|VIC|-36.4179|146.3069|504|5381|P|M|0|60142
 WHL|WHL|Welshpool Airport|Welshpool|Welshpool|AU|VIC|-38.6824|146.4453|35|3000|G|S|0|3035
+WIN|YWTN|Winton Airport|Winton|Winton|AU|QLD|-22.3636|143.0860|638|4600|P|M|1|1238
 WSY|YSHR|Shute Harbour/Whitsunday Airport|Shute Harbour|Shute Harbour|AU|QLD|-20.2761|148.7550|40|3608|G|S|0|3091
 WTB|YBWW|Toowoomba Wellcamp Airport|Toowoomba|Toowoomba|AU|QLD|-27.5583|151.7933|1509|9416|P|L|1|619208
 WWY|YWWL|West Wyalong Airport|West Wyalong|West Wyalong|AU|NSW|-33.9372|147.1910|859|5200|P|M|0|4819
@@ -218,12 +245,15 @@ NAJ|UBBN|Nakhchivan International Airport|Nakhchivan|Nakhchivan|AZ|NX|39.1888|45
 ZTU|UBBY|Zaqatala International Airport|Zaqatala|Zaqatala|AZ|ZAQ|41.5578|46.6695|1279|9843|P|M|0|75180
 ZXT|UBTT|Zabrat Airport|Zabrat|Zabrat|AZ|BA|40.4949|49.9771|36|6000|G|M|0|565761
 BNX|LQBK|Banja Luka International Airport|Mahovljani|Mahovljani|BA|SRP|44.9414|17.2975|400|8202|P|L|1|809464
-OMO|LQMO|Mostar International Airport|Mostar|Mostar|BA|BIH|43.2825|17.8461|156|7874|P|L|1|419669
+SJJ|LQSA|Sarajevo International Airport|Sarajevo|Sarajevo|BA|BIH|43.8246|18.3315|1708|8666|P|L|1|1158459
 TZL|LQTZ|Tuzla International Airport|Dubrave Gornje|Dubrave Gornje|BA|BIH|44.4599|18.7236|784|8152|P|L|1|986396
+BGI|TBPB|Grantley Adams International Airport|Bridgetown|Bridgetown|BB|01|13.0747|-59.4910|169|11000|P|L|1|119425
 BZL|VGBR|Barisal Airport|Barisal|Barisal|BD|A|22.8010|90.3012|23|5995|P|M|1|1757239
 CXB|VGCB|Cox's Bazar Airport|Cox's Bazar|Cox's Bazar|BD|B|21.4575|91.9633|12|6790|P|M|1|314889
+RJH|VGRJ|Shah Makhdum Airport|Rajshahi|Rajshahi|BD|E|24.4372|88.6165|64|6000|P|M|1|3494039
+ZYL|VGSY|Osmany International Airport|Sylhet|Sylhet|BD|G|24.9640|91.8647|50|9478|P|L|1|1267585
 ANR|EBAW|Antwerp International Airport (Deurne)|Antwerp|Antwerp|BE|VAN|51.1907|4.4632|39|4954|P|M|1|1942522
-CRL|EBCI|Brussels South Charleroi Airport|Charleroi|Charleroi|BE|WHT|50.4620|4.4596|614|10023|P|L|1|4345379
+BRU|EBBR|Brussels Airport|Zaventem|Zaventem|BE|VBR|50.9014|4.4844|175|11936|P|L|1|6239413
 LGG|EBLG|Liege Airport|Grace-Hollogne|Grace-Hollogne|BE|WLG|50.6386|5.4439|659|12106|P|M|1|1641455
 OST|EBOS|Ostend-Bruges International Airport|Oostende|Oostende|BE|VWV|51.1998|2.8747|13|10499|P|L|1|2702828
 BOJ|LBBG|Burgas Airport|Burgas|Burgas|BG|02|42.5699|27.5152|135|10499|P|L|1|798754
@@ -238,19 +268,22 @@ BWN|WBSB|Brunei International Airport|Bandar Seri Begawan|Bandar Seri Begawan|BN
 BYC|SLYA|Yacuiba Airport|Yacuiba|Yacuiba|BO|T|-21.9609|-63.6517|2112|6890|P|M|0|113308
 CBB|SLCB|Jorge Wilsterman International Airport|Cochabamba|Cochabamba|BO|C|-17.4211|-66.1771|8360|12460|P|L|1|1460848
 CCA|SLHI|Chimore Airport|Chimore|Chimore|BO|C|-16.9768|-65.1456|875|4801|P|S|1|6329
+GYA|SLGM|Guayaramerin Airport|Guayaramerin|Guayaramerin|BO|B|-10.8886|-65.3810|456|5767|P|M|1|75087
 ORU|SLOR|Juan Mendoza International Airport|Oruro|Oruro|BO|O|-17.9562|-67.0758|12152|8075|P|L|1|321697
 POI|SLPO|Capitan Nicolas Rojas Airport|Potosi|Potosi|BO|P|-19.5433|-65.7237|12922|9130|P|M|0|105069
+RBQ|SLRQ|Rurrenabaque Airport|Rurrenabaque|Rurrenabaque|BO|B|-14.4279|-67.4968|676|4921|P|S|1|19125
+SBL|SLSA|Santa Ana Del Yacuma Airport|Santa Ana del Yacuma|Santa Ana del Yacuma|BO|B|-13.7622|-65.4352|472|5013|P|M|0|12783
 TJA|SLTJ|Capitan Oriel Lea Plaza Airport|Tarija|Tarija|BO|T|-21.5557|-64.7013|6079|10007|P|M|1|162789
 UYU|SLUY|Joya Andina International Airport|Quijarro|Quijarro|BO|P|-20.4413|-66.8576|11136|13123|P|L|1|44352
 VLM|SLVM|Teniente Coronel Rafael Pabon Airport|Villamontes|Villamontes|BO|T|-21.2552|-63.4056|1305|4918|P|M|0|41435
 BON|TNCB|Flamingo International Airport|Kralendijk|Kralendijk|BQ|BO|12.1310|-68.2685|20|9449|P|L|1|54449
 EUX|TNCE|F. D. Roosevelt Airport|Oranjestad|Oranjestad, BQ|BQ|SE|17.4965|-62.9794|129|4265|P|M|1|5949
+SAB|TNCS|Juancho E. Yrausquin Airport|Zion's Hill|Zion's Hill|BQ|SA|17.6453|-63.2205|60|1312|P|M|1|5930
 AAX|SBAX|Romeu Zema Airport|Araxa|Araxa|BR|MG|-19.5632|-46.9604|3276|6234|P|M|1|340471
 AFL|SBAT|Piloto Osvaldo Marques Dias Airport|Alta Floresta|Alta Floresta|BR|MT|-9.8664|-56.1063|948|8202|P|M|1|22313
 AIF|SNAX|Marcelo Pires Halzhausen Airport|Assis|Assis|BR|SP|-22.6386|-50.4560|1850|5541|P|S|0|129733
 AIR|SSOU|Aripuana Airport|Aripuana|Aripuana|BR|MT|-10.1874|-59.4575|755|4593|G|S|0|22714
 AIY|SNUI|Aracuai Airport|Aracuai|Aracuai|BR|MG|-16.8516|-42.0456|1076|3937|P|S|0|83927
-AJU|SBAR|Aracaju - Santa Maria Airport|Aracaju|Aracaju|BR|SE|-10.9839|-37.0729|23|7218|P|M|1|1942035
 ALQ|SSLT|Alegrete Novo Airport|Alegrete|Alegrete|BR|RS|-29.8116|-55.8947|410|3937|P|S|0|73028
 ALT|BR-ALT|Alenquer Municipal Airport|Alenquer|Alenquer|BR|PA|-1.9170|-54.7231|55|3280|P|S|0|37409
 AMJ|SNAR|Cirilo Queiroz Airport|Almenara|Almenara|BR|MG|-16.1656|-40.6840|640|4593|P|S|0|55403
@@ -260,6 +293,7 @@ APU|SSAP|Captain Joao Busse Airport|Apucarana|Apucarana|BR|PR|-23.6091|-51.3843|
 APX|SSOG|Arapongas Airport|Arapongas|Arapongas|BR|PR|-23.3526|-51.4920|2599|3937|P|S|0|96713
 APY|BR-2757|Alto Parnaiba Airport|Alto Parnaiba|Alto Parnaiba|BR|MA|-9.0853|-45.9556|968|4593|G|S|0|17196
 AQA|SBAQ|Araraquara Airport|Araraquara|Araraquara|BR|SP|-21.8120|-48.1330|2334|5907|P|M|1|1177328
+AQM|SJOG|Ariquemes Airport|Ariquemes|Ariquemes|BR|RO|-9.8804|-63.0471|466|4285|P|S|0|105319
 ARS|SJVO|Aragarcas Airport|Aragarcas|Aragarcas|BR|GO|-15.8994|-52.2411|1061|3314|P|S|0|47962
 ARX|SBAC|Aracati Dragao do Mar Regional Airport|Aracati|Aracati|BR|CE|-4.5689|-37.8051|128|5906|P|M|0|191859
 AUX|SWGN|Araguaina Airport|Araguaina|Araguaina|BR|TO|-7.2279|-48.2405|771|5919|P|M|1|251081
@@ -299,19 +333,23 @@ CNV|SNED|Socrates Rezende Airport|Canavieiras|Canavieiras|BR|BA|-15.6670|-38.954
 CPU|BR-2235|Cururupu Airport|Cururupu|Cururupu|BR|MA|-1.8200|-44.8641|39|2461|G|S|0|37726
 CPV|SBKG|Presidente Joao Suassuna Airport|Campina Grande|Campina Grande|BR|PB|-7.2697|-35.8961|1646|5135|P|M|1|1067432
 CRQ|SBCV|Caravelas Airport|Caravelas|Caravelas|BR|BA|-17.6523|-39.2531|36|5020|P|M|0|170279
+CSS|SSCL|Cassilandia Airport|Cassilandia|Cassilandia|BR|MS|-19.1469|-51.6769|1568|2953|P|S|0|31083
 CSU|SSSC|Santa Cruz do Sul Airport|Santa Cruz do Sul|Santa Cruz do Sul|BR|RS|-29.6841|-52.4122|653|3871|P|S|0|183217
 CTP|CTP|Carutapera Airport|Carutapera|Carutapera|BR|MA|-1.2254|-46.0191|85|3166|G|S|0|100277
 CTQ|BR-2236|Santa Vitoria do Palmar Airport|Santa Vitoria do Palmar|Santa Vitoria do Palmar|BR|RS|-33.5020|-53.3449|82|2953|G|S|0|48991
 CXJ|SBCX|Hugo Cantergiani Regional Airport|Caxias Do Sul|Caxias Do Sul|BR|RS|-29.1972|-51.1876|2472|5479|P|M|1|1149501
 CZB|SSAK|Carlos Ruhl Airport|Cruz Alta|Cruz Alta|BR|RS|-28.6579|-53.6101|1542|2625|G|S|0|45895
+CZS|SBCZ|Cruzeiro do Sul Airport|Cruzeiro Do Sul|Cruzeiro Do Sul|BR|AC|-7.5999|-72.7695|637|7874|P|M|1|152482
 DIQ|SNDV|Brigadeiro Cabral Airport|Divinopolis|Divinopolis|BR|MG|-20.1807|-44.8709|2608|5052|P|S|0|235794
 DMT|SWDM|Diamantino Airport|Diamantino|Diamantino|BR|MT|-14.3769|-56.4004|1539|5348|P|S|0|23654
 DNO|SWDN|Dianopolis Airport|Dianopolis|Dianopolis|BR|TO|-11.5954|-46.8467|2415|4167|G|S|0|36004
 DOU|SBDO|Dourados Airport|Dourados|Dourados|BR|MS|-22.2019|-54.9266|1503|6398|P|S|0|293732
 DTI|SNDT|Diamantina Airport|Diamantina|Diamantina|BR|MG|-18.2320|-43.6504|4446|5282|P|S|0|61764
+FBA|SWOB|Fonte Boa Airport|Fonte Boa|Fonte Boa|BR|AM|-2.5326|-66.0832|207|4167|P|S|0|16060
 FBE|SSFB|Paulo Abdala Airport|Francisco Beltrao|Francisco Beltrao|BR|PR|-26.0594|-53.0638|2113|4331|P|S|1|190099
 FEC|SDIY|Joao Durval Carneiro Airport|Feira de Santana|Feira de Santana|BR|BA|-12.2007|-38.9062|781|4921|P|M|0|1103957
 FLB|SNQG|Cangapara Airport|Floriano|Floriano|BR|PI|-6.8464|-43.0773|689|5906|P|S|0|81020
+FLN|SBFL|Hercilio Luz International Airport|Florianopolis|Florianopolis|BR|SC|-27.6703|-48.5525|16|7874|P|L|1|2121304
 FRC|SIMK|Tenente Lund Pressoto Airport|Franca|Franca|BR|SP|-20.5922|-47.3829|3292|6562|P|S|0|319751
 GCV|GCV|Gravatai Airport|Gravatai|Gravatai|BR|RS|-29.9494|-50.9851|25|3000|G|S|0|140934
 GDR|SDAG|Angra dos Reis Airport|Angra dos Reis|Angra dos Reis|BR|RJ|-22.9753|-44.3071|10|2995|P|S|0|140132
@@ -327,14 +365,18 @@ GRP|SWGI|Gurupi Airport|Gurupi|Gurupi|BR|TO|-11.7396|-49.1322|1148|5577|P|S|0|93
 GUJ|SBGW|Edu Chaves Field|Guaratingueta|Guaratingueta|BR|SP|-22.7916|-45.2048|1761|5089|P|M|0|822201
 GUZ|SNGA|Guarapari Airport|Guarapari|Guarapari|BR|ES|-20.6465|-40.4919|30|3570|P|S|1|134561
 GVR|SBGV|Coronel Altino Machado Airport|Governador Valadares|Governador Valadares|BR|MG|-18.8959|-41.9829|561|5581|P|M|1|545694
+GYN|SBGO|Santa Genoveva International Airport|Goiania|Goiania|BR|GO|-16.6320|-49.2207|2450|7500|P|L|1|3762817
 HRZ|SSHZ|Walter Bundchen Airport|Horizontina|Horizontina|BR|RS|-27.6383|-54.3391|1063|3445|P|S|0|57243
+HUW|SWHT|Humaita Airport|Humaita|Humaita|BR|AM|-7.5321|-63.0721|230|4987|P|S|0|56144
 IAL|SNSS|Salinas Municipal Airport|Salinas|Salinas, BR|BR|MG|-16.2083|-42.3220|2503|4856|P|S|0|60133
 IDO|SWIY|Santa Izabel do Morro Airport|Cristalandia|Cristalandia|BR|TO|-11.5723|-50.6662|647|5052|P|S|0|6320
 IGU|SBFI|Cataratas International Airport|Foz do Iguacu|Foz do Iguacu|BR|PR|-25.5942|-54.4894|786|8875|P|L|1|966565
 IJU|SSIJ|Joao Batista Bos Filho Airport|Ijui|Ijui|BR|RS|-28.3687|-53.8466|1197|4200|P|S|0|52355
 IOS|SBIL|Bahia - Jorge Amado Airport|Ilheus|Ilheus|BR|BA|-14.8159|-39.0335|15|5174|P|M|1|568763
+IPG|SWII|Ipiranga Airport|Santo Antonio do Ica|Santo Antonio do Ica|BR|AM|-2.9401|-69.6943|220|4921|P|S|0|518
 IPN|SBIP|Usiminas Airport|Ipatinga|Ipatinga|BR|MG|-19.4707|-42.4876|786|6575|P|M|1|917219
 IPU|SNIU|Ipiau Airport|Ipiau|Ipiau|BR|BA|-14.1735|-39.6840|433|4265|P|S|0|132131
+IRZ|SWTP|Tapuruquara Airport|Santa Isabel do Rio|Santa Isabel do Rio|BR|AM|-0.3786|-64.9926|141|3937|G|S|1|25865
 ITA|SBIC|Itacoatiara Airport|Itacoatiara|Itacoatiara|BR|AM|-3.1265|-58.4817|142|4970|P|M|0|170591
 ITB|SBIH|Itaituba Airport|Itaituba|Itaituba|BR|PA|-4.2421|-56.0007|110|5577|P|M|1|150611
 ITE|SNZW|Itubera Airport|Itubera|Itubera|BR|BA|-13.7316|-39.1404|23|2789|P|S|0|127260
@@ -351,7 +393,6 @@ JCS|SNWS|Crateus Airport|Crateus|Crateus|BR|CE|-5.2114|-40.7042|1043|4921|P|S|0|
 JDR|SNJR|Prefeito Octavio de Almeida Neves Airport|Sao Joao Del Rei|Sao Joao Del Rei|BR|MG|-21.0856|-44.2253|3117|4593|P|S|0|184426
 JEQ|SNJK|Jequie Airport|Jequie|Jequie|BR|BA|-13.8777|-40.0716|646|4199|P|S|0|174768
 JJD|SBJE|Comandante Ariston Pessoa Airport|Cruz|Cruz|BR|CE|-2.9064|-40.3573|89|7218|P|M|1|713804
-JJG|SBJA|Humberto Ghizzo Bortoluzzi Regional Airport|Jaguaruna|Jaguaruna|BR|SC|-28.6753|-49.0596|120|8199|P|S|1|183238
 JLS|SDJL|Jales Airport|Jales|Jales|BR|SP|-20.2923|-50.5455|1493|3478|P|S|0|149637
 JMA|SNJM|Aeroporto Elias Breder Airport|Manhuacu|Manhuacu|BR|MG|-20.2597|-42.1839|2723|3839|P|S|0|290952
 JNA|SNJN|Januaria Airport|Januaria|Januaria|BR|MG|-15.4738|-44.3855|1575|3937|P|S|0|87901
@@ -368,6 +409,7 @@ JTC|SBAE|Bauru/ArealvaMoussa Nakhal Tobias State Airport|Bauru|Bauru|BR|SP|-22.1
 JTI|SWJW|Jatai Airport|Jatai|Jatai|BR|GO|-17.8299|-51.7730|2529|4921|P|S|0|105729
 JUA|SIZX|Inacio Luis do Nascimento Airport|Juara|Juara|BR|MT|-11.2966|-57.5495|870|3937|P|S|0|44118
 LAJ|SBLJ|Lages Airport|Lages|Lages|BR|SC|-27.7821|-50.2815|3065|5020|P|M|1|414718
+LBR|SWLB|Labrea Airport|Labrea|Labrea|BR|AM|-7.2790|-64.7695|243|3937|P|S|1|46882
 LDB|SBLO|Governor Jose Richa Airport|Londrina|Londrina|BR|PR|-23.3344|-51.1284|1867|6890|P|M|1|1290419
 LEC|SBLE|Coronel Horacio de Mattos Airport|Lencois|Lencois|BR|BA|-12.4823|-41.2770|1676|6831|P|S|1|68923
 LEP|BR-2171|Leopoldina Airport|Leopoldina|Leopoldina|BR|MG|-21.4682|-42.7271|919|3937|P|S|0|83430
@@ -376,6 +418,7 @@ LIP|SBLN|Lins Airport|Lins|Lins|BR|SP|-21.6635|-49.7300|1575|5577|P|M|0|222085
 LOI|SSLN|Helmuth Baungarten Airport|Lontras|Lontras|BR|SC|-27.1600|-49.5425|1095|3609|P|S|0|61364
 LVR|SILC|Municipal Bom Futuro Airport|Lucas do Rio Verde|Lucas do Rio Verde|BR|MT|-13.0379|-55.9502|1358|5676|P|S|0|92256
 MAB|SBMA|Joao Correa da Rocha Airport|Maraba|Maraba|BR|PA|-5.3686|-49.1380|357|6562|P|M|1|449143
+MCZ|SBMO|Zumbi dos Palmares International Airport|Maceio|Maceio|BR|AL|-9.5126|-35.7918|387|8537|P|L|1|3411484
 MEA|SBME|Macae Benedito Lacerda Airport|Macae|Macae|BR|RJ|-22.3430|-41.7660|8|3937|P|M|0|576828
 MII|SBML|Frank Miloye MilenkowichiMarilia State Airport|Marilia|Marilia|BR|SP|-22.1969|-49.9265|2134|4921|P|M|1|641167
 MQH|SBMC|Minacu Airport|Minacu|Minacu|BR|GO|-13.5491|-48.1953|1401|4183|P|M|0|63147
@@ -396,6 +439,7 @@ OPS|SBSI|Presidente Joao Batista Figueiredo Airport|Sinop|Sinop|BR|MT|-11.8850|-
 OTT|OTT|Andre Maggi Airport|Cotriguacu|Cotriguacu|BR|MT|-9.8986|-58.5819|912|4265|G|S|0|10398
 OUS|SDOU|Jornalista Benedito Pimentel Airport|Ourinhos|Ourinhos|BR|SP|-22.9666|-49.9120|1516|4921|P|S|0|245311
 OYK|SBOI|Oiapoque Airport|Oiapoque|Oiapoque|BR|AP|3.8541|-51.7971|53|3937|P|M|0|15664
+PAV|SBUF|Paulo Afonso Airport|Paulo Afonso|Paulo Afonso|BR|BA|-9.4009|-38.2506|883|5906|P|M|1|590231
 PBB|SSPN|Paranaiba Airport|Paranaiba|Paranaiba|BR|MS|-19.6512|-51.1994|1446|4331|P|S|0|42276
 PBQ|SWPM|Pimenta Bueno Airport|Pimenta Bueno|Pimenta Bueno|BR|RO|-11.6416|-61.1791|682|4265|P|S|0|63189
 PBX|SWPQ|Fazenda Piraguassu Airport|Porto Alegre do Norte|Porto Alegre do Norte|BR|MT|-10.8593|-51.6882|643|3330|G|S|0|18572
@@ -432,7 +476,6 @@ RDC|SNDC|Redencao Airport|Redencao|Redencao|BR|PA|-8.0312|-49.9797|679|3150|P|S|
 REZ|SDRS|Resende Airport|Resende|Resende|BR|RJ|-22.4785|-44.4803|1320|4265|P|S|0|230979
 RIA|SBSM|Santa Maria Airport|Santa Maria|Santa Maria|BR|RS|-29.7114|-53.6882|287|8839|P|M|1|539814
 ROO|SBRD|Maestro Marinho Franco Airport|Rondonopolis|Rondonopolis|BR|MT|-16.5843|-54.7248|1467|6070|P|M|1|311559
-RVD|SWLC|General Leite de Castro Airport|Rio Verde|Rio Verde|BR|GO|-17.8347|-50.9561|2464|4921|P|S|0|279986
 SBJ|SNMX|Sao Mateus - Ernesto Bonomo Airport|Sao Mateus|Sao Mateus|BR|ES|-18.7213|-39.8337|98|4429|P|S|0|158755
 SET|SNHS|Santa Magalhaes Airport|Serra Talhada|Serra Talhada|BR|PE|-8.0614|-38.3289|1542|5905|P|S|1|124303
 SFV|SILT|Santa Fe do Sul Airport|Santa Fe do Sul|Santa Fe do Sul|BR|SP|-20.2285|-50.9689|1276|3281|P|S|0|96107
@@ -442,6 +485,7 @@ SOD|SDCO|Sorocaba Airport|Sorocaba|Sorocaba|BR|SP|-23.4780|-47.4900|2083|5348|P|
 SQM|SWUA|Sao Miguel do Araguaia Airport|Sao Miguel do Araguaia|Sao Miguel do Araguaia|BR|GO|-13.3313|-50.1976|1249|4921|P|S|0|21900
 SQX|SSOE|Sao Miguel do Oeste Helio Wasum Airport|Sao Miguel do Oeste|Sao Miguel do Oeste|BR|SC|-26.7816|-53.5035|2180|4134|P|S|0|113029
 SRA|SSZR|Luis Alberto Lehr Airport|Santa Rosa|Santa Rosa, BR|BR|RS|-27.9066|-54.5206|1014|3937|P|S|1|111485
+SSO|SNLO|Sao Lourenco Airport|Sao Lourenco|Sao Lourenco|BR|MG|-22.0909|-45.0445|2871|3510|P|S|0|141494
 SXO|SWFX|Sao Felix do Araguaia Airport|Sao Felix Do Araguaia|Sao Felix Do Araguaia|BR|MT|-11.6324|-50.6896|650|4757|P|S|0|8012
 SXX|SNFX|Sao Felix do Xingu Airport|Sao Felix do Xingu|Sao Felix do Xingu|BR|PA|-6.6413|-51.9523|656|5249|P|S|0|132138
 TEC|SBTL|Telemaco Borba Airport|Telemaco Borba|Telemaco Borba|BR|PR|-24.3178|-50.6516|2610|5906|P|M|0|339078
@@ -450,6 +494,7 @@ TJL|SBTG|Plinio Alarcom Airport|Tres Lagoas|Tres Lagoas|BR|MS|-20.7526|-51.6820|
 TLZ|SWKT|Catalao Airport|Catalao|Catalao|BR|GO|-18.2168|-47.8997|2612|4593|P|S|0|96120
 TMT|SBTB|Trombetas Airport|Oriximina|Oriximina|BR|PA|-1.4896|-56.3968|167|5249|P|M|1|136296
 TOW|SBTD|Toledo - Luiz Dalcanale Filho Municipal Airport|Toledo|Toledo, BR|BR|PR|-24.6863|-53.6975|1843|5479|P|S|1|155857
+TRQ|SBTK|Tarauaca Airport|Tarauaca|Tarauaca|BR|AC|-8.1555|-70.7830|646|3707|P|M|0|50340
 TSQ|SBTR|Torres Airport|Torres|Torres|BR|RS|-29.4149|-49.8100|30|4944|P|S|0|91078
 TXF|SNTF|9 de Maio - Teixeira de Freitas Airport|Teixeira de Freitas|Teixeira de Freitas|BR|BA|-17.5244|-39.6685|344|4790|P|S|0|82199
 UBA|SBUR|Mario de Almeida Franco Airport|Uberaba|Uberaba|BR|MG|-19.7650|-47.9648|2655|5771|P|M|1|577766
@@ -466,6 +511,7 @@ VOT|SDVG|Domingos Pignatari Airport|Votuporanga|Votuporanga|BR|SP|-20.4584|-50.0
 VRZ|SSOL|Padre Israel Airport|Lavras|Lavras|BR|MG|-21.2406|-44.9639|3146|4921|P|S|0|190941
 XAP|SBCH|Serafin Enoss Bertaso Airport|Chapeco|Chapeco|BR|SC|-27.1342|-52.6566|2154|6758|P|M|1|968463
 XIG|XIG|Xinguara Municipal Airport|Xinguara|Xinguara|BR|PA|-7.0906|-49.9765|810|3117|G|S|0|69134
+ZMD|ZMD|Sena Madureira Airport|Sena Madureira|Sena Madureira|BR|AC|-9.1160|-68.6108|540|3000|G|S|0|29149
 ASD|MYAF|Andros Town Airport|Andros Town|Andros Town|BS|NS|24.6979|-77.7956|5|4058|P|M|1|12461
 ATC|MYCA|Arthur's Town Airport|Arthur's Town|Arthur's Town|BS|CI|24.6294|-75.6738|18|7015|P|M|1|1320
 AXP|MYAP|Spring Point Airport|Spring Point|Spring Point|BS|AK|22.4418|-73.9709|11|5000|P|M|1|150
@@ -487,6 +533,10 @@ TCB|MYAT|Treasure Cay Airport|Treasure Cay|Treasure Cay|BS|CO|26.7453|-77.3913|8
 TYM|MYES|Staniel Cay Airport|Staniel Cay|Staniel Cay|BS|EX|24.1691|-76.4391|5|3030|P|M|0|457
 TZN|MYAK|Congo Town Airport|Andros|Andros|BS|SA|24.1587|-77.5898|15|5300|P|M|1|150
 ZSA|MYSM|San Salvador International Airport|San Salvador|San Salvador, BS|BS|SS|24.0630|-74.5232|24|8000|P|L|1|1501
+BUT|VQBT|Bathpalathang Airport|Jakar|Jakar|BT|33|27.5622|90.7471|8485|3937|P|S|1|8447
+GLU|VQGP|Gelephu Airport|Gelephu|Gelephu|BT|31|26.8846|90.4641|980|4921|P|M|0|141475
+PBH|VQPR|Paro International Airport|Paro|Paro|BT|11|27.4032|89.4246|7364|7431|P|L|1|701388
+YON|VQTY|Yongphulla Airport|Yongphulla|Yongphulla|BT|41|27.2563|91.5146|9000|4154|P|S|1|13870
 BBK|FBKE|Kasane International Airport|Kasane|Kasane|BW|CH|-17.8317|25.1662|3289|6562|P|L|1|41096
 FRW|FBPM|Phillip Gaonwe Matante International Airport|Francistown|Francistown|BW|FR|-21.1592|27.4688|3283|9843|P|L|1|246917
 JWA|FBJW|Jwaneng Airport|Jwaneng|Jwaneng|BW|JW|-24.6023|24.6910|3900|5495|P|M|0|40338
@@ -510,6 +560,7 @@ CYPK|CYPK|Pitt Meadows Regional Airport|Pitt Meadows|Pitt Meadows|CA|BC|49.2149|
 ILF|CZBD|Ilford Airport|Ilford|Ilford|CA|MB|56.0516|-95.6188|642|3000|G|S|1|150
 KEW|CPV8|Keewaywin Airport|Keewaywin|Keewaywin|CA|ON|52.9911|-92.8364|988|3500|G|S|1|150
 KIF|CNM5|Kingfisher Lake Airport|Kingfisher Lake|Kingfisher Lake|CA|ON|53.0125|-89.8553|866|3520|G|S|1|150
+LAK|CYKD|Aklavik/Freddie Carmichael Airport|Aklavik|Aklavik|CA|NT|68.2233|-135.0060|23|3002|G|S|1|528
 MSA|CZMD|Muskrat Dam Airport|Muskrat Dam|Muskrat Dam|CA|ON|53.4414|-91.7628|911|3500|G|S|1|150
 SSQ|CSR8|La Sarre Airport|La Sarre|La Sarre|CA|QC|48.9172|-79.1786|1048|4700|P|S|0|4869
 SUR|CJV7|Summer Beaver Airport|Summer Beaver|Summer Beaver|CA|ON|52.7086|-88.5419|832|3500|G|S|1|150
@@ -534,7 +585,6 @@ YAM|CYAM|Sault Ste Marie Airport|Sault Ste Marie|Sault Ste Marie|CA|ON|46.4832|-
 YAT|CYAT|Attawapiskat Airport|Attawapiskat|Attawapiskat|CA|ON|52.9275|-82.4319|31|3500|G|S|1|1501
 YAX|CKB6|Wapekeka Airport|Angling Lake|Angling Lake|CA|ON|53.8492|-89.5794|712|3600|G|S|1|150
 YAZ|CYAZ|Tofino / Long Beach Airport|Tofino|Tofino|CA|BC|49.0798|-125.7756|80|5000|P|M|1|9266
-YBA|CYBA|Banff Airport|Banff|Banff|CA|AB|51.2082|-115.5406|4583|3000|G|S|0|10347
 YBB|CYBB|Kugaaruk Airport|Kugaaruk|Kugaaruk|CA|NU|68.5357|-89.8055|56|5000|G|S|1|150
 YBC|CYBC|Baie-Comeau Airport|Baie-Comeau|Baie-Comeau|CA|QC|49.1325|-68.2044|71|6000|P|M|1|36650
 YBE|CYBE|Uranium City Airport|Uranium City|Uranium City|CA|SK|59.5614|-108.4810|1044|3935|P|S|1|150
@@ -547,9 +597,12 @@ YBY|CYBF|Bonnyville Airport|Bonnyville|Bonnyville|CA|AB|54.3042|-110.7440|1836|4
 YCA|CAH3|Courtenay Airpark|Courtenay|Courtenay|CA|BC|49.6792|-124.9806|26|1800|P|S|0|7079
 YCG|CYCG|Castlegar/West Kootenay Regional Airport|Castlegar|Castlegar|CA|BC|49.2964|-117.6320|1624|5300|P|M|1|34809
 YCH|CYCH|Miramichi Airport|Miramichi|Miramichi|CA|NB|47.0078|-65.4492|108|10006|P|M|0|40944
+YCK|CYVL|Tommy Kochon Airport|Colville Lake|Colville Lake|CA|NT|67.0202|-126.1284|870|3000|G|S|1|150
 YCL|CYCL|Charlo Airport|Charlo|Charlo|CA|NB|47.9908|-66.3303|132|6000|P|M|0|28206
 YCQ|CYCQ|Chetwynd Airport|Chetwynd|Chetwynd|CA|BC|55.6872|-121.6270|2000|4484|P|M|0|3916
 YCR|CYCR|Cross Lake (Charlie Sinclair Memorial) Airport|Cross Lake|Cross Lake|CA|MB|54.6098|-97.7624|709|3990|G|S|1|2018
+YCS|CYCS|Chesterfield Inlet Airport|Chesterfield Inlet|Chesterfield Inlet|CA|NU|63.3469|-90.7311|32|3600|G|S|1|150
+YDA|CYDA|Dawson City Airport|Dawson City|Dawson City|CA|YT|64.0431|-139.1280|1215|5000|P|M|1|1375
 YDG|CYID|Digby / Annapolis Regional Airport|Digby|Digby|CA|NS|44.5458|-65.7854|499|3950|P|M|0|12941
 YDL|CYDL|Dease Lake Airport|Dease Lake|Dease Lake|CA|BC|58.4222|-130.0320|2600|6000|P|S|1|150
 YDN|CYDN|Dauphin Barker Airport|Dauphin|Dauphin|CA|MB|51.1008|-100.0520|999|5000|P|M|1|9402
@@ -570,6 +623,7 @@ YFJ|CYWE|Wekweeti Airport|Wekweeti|Wekweeti|CA|NT|64.1908|-114.0770|1208|3000|G|
 YFX|CCK4|St. Lewis (Fox Harbour) Airport|St. Lewis|St. Lewis|CA|NL|52.3728|-55.6739|74|2200|G|S|1|150
 YGB|CYGB|Texada Gillies Bay Airport|Texada|Texada|CA|BC|49.6943|-124.5181|326|3000|P|S|0|2398
 YGE|YGE|Gorge Harbour Seaplane Base|Gorge Harbour|Gorge Harbour|CA|BC|50.0994|-125.0235|0|0|W|W|0|1121
+YGH|CYGH|Fort Good Hope Airport|Fort Good Hope|Fort Good Hope|CA|NT|66.2407|-128.6478|268|4434|G|S|1|516
 YGK|CYGK|Kingston Norman Rogers Airport|Kingston|Kingston, CA|CA|ON|44.2253|-76.5969|305|6001|P|M|0|179197
 YGL|CYGL|La Grande Riviere Airport|La Grande Riviere|La Grande Riviere|CA|QC|53.6253|-77.7042|639|6500|P|M|1|504
 YGM|CYGM|Gimli Industrial Park Airport|Gimli|Gimli|CA|MB|50.6281|-97.0433|753|6800|P|M|0|10469
@@ -639,6 +693,7 @@ YOE|CFM4|Donnelly Airport|Donnelly|Donnelly|CA|AB|55.7094|-117.0940|1949|2953|P|
 YOG|CYKP|Ogoki Post Airport|Ogoki Post|Ogoki Post|CA|ON|51.6586|-85.9017|594|3500|G|S|1|150
 YOH|CYOH|Oxford House Airport|Oxford House|Oxford House|CA|MB|54.9333|-95.2789|663|3828|G|S|1|1950
 YOS|CYOS|Owen Sound / Billy Bishop Regional Airport|Owen Sound|Owen Sound|CA|ON|44.5903|-80.8375|1007|3932|P|M|0|34769
+YOW|CYOW|Ottawa Macdonald-Cartier International Airport|Ottawa|Ottawa|CA|ON|45.3225|-75.6692|374|10000|P|L|1|2109284
 YPA|CYPA|Prince Albert Glass Field|Prince Albert|Prince Albert|CA|SK|53.2142|-105.6730|1405|5000|P|M|1|38571
 YPB|CBS8|Alberni Valley Regional Airport|Port Alberni|Port Alberni|CA|BC|49.3219|-124.9310|250|3952|P|S|0|5229
 YPE|CYPE|Peace River Airport|Peace River|Peace River|CA|AB|56.2269|-117.4470|1873|5000|P|M|1|12988
@@ -662,7 +717,6 @@ YQF|CYQF|Red Deer Regional Airport|Springbrook|Springbrook|CA|AB|52.1822|-113.89
 YQG|CYQG|Windsor International Airport|Windsor|Windsor|CA|ON|42.2756|-82.9556|622|9000|P|L|1|2014500
 YQI|CYQI|Yarmouth Airport|Yarmouth|Yarmouth|CA|NS|43.8269|-66.0881|141|6000|P|M|0|12424
 YQK|CYQK|Kenora Airport|Kenora|Kenora|CA|ON|49.7883|-94.3631|1332|5800|P|M|1|15771
-YQL|CYQL|Lethbridge County Airport|Lethbridge|Lethbridge|CA|AB|49.6303|-112.8000|3048|6500|P|M|1|136756
 YQM|CYQM|Greater Moncton Romeo LeBlanc International Airport|Moncton|Moncton|CA|NB|46.1132|-64.6772|232|10001|P|M|1|387205
 YQQ|CYQQ|Comox Valley International Airport / CFB Comox|Comox|Comox|CA|BC|49.7108|-124.8870|84|10000|P|M|1|56073
 YQR|CYQR|Regina International Airport|Regina|Regina|CA|SK|50.4319|-104.6609|1894|7900|P|M|1|459369
@@ -701,26 +755,32 @@ YUY|CYUY|Rouyn Noranda Airport|Rouyn-Noranda|Rouyn-Noranda|CA|QC|48.2061|-78.835
 YVC|CYVC|La Ronge Airport|La Ronge|La Ronge|CA|SK|55.1514|-105.2620|1242|5000|P|M|1|5671
 YVE|CYVK|Vernon Regional Airport|Vernon|Vernon|CA|BC|50.2462|-119.3310|1140|3360|P|M|0|42686
 YVG|CYVG|Vermilion Airport|Vermilion|Vermilion|CA|AB|53.3577|-110.8274|2025|3300|P|S|0|3100
+YVM|CYVM|Qikiqtarjuaq Airport|Qikiqtarjuaq|Qikiqtarjuaq|CA|NU|67.5466|-64.0314|21|3800|G|S|1|150
 YVT|CYVT|Buffalo Narrows Airport|Buffalo Narrows|Buffalo Narrows|CA|SK|55.8419|-108.4180|1423|5006|P|S|0|1014
 YVV|CYVV|Wiarton Airport|Wiarton|Wiarton|CA|ON|44.7458|-81.1072|729|5021|P|M|1|37103
 YVZ|CYVZ|Deer Lake Airport|Deer Lake|Deer Lake, ON|CA|ON|52.6556|-94.0612|1092|3500|G|S|1|150
 YWH|CYWH|Victoria Harbour Seaplane Base|Victoria|Victoria|CA|BC|48.4238|-123.3720|0|0|W|W|1|387453
+YWJ|CYWJ|Deline Airport|Deline|Deline|CA|NT|65.2111|-123.4360|703|3933|G|S|1|533
 YWL|CYWL|Williams Lake Airport|Williams Lake|Williams Lake|CA|BC|52.1831|-122.0540|3085|7000|P|M|1|25725
 YWM|CCA6|Williams Harbour Airport|Williams Harbour|Williams Harbour|CA|NL|52.5674|-55.7849|70|2200|G|S|1|150
 YWP|CYWP|Webequie Airport|Webequie|Webequie|CA|ON|52.9594|-87.3749|685|3500|G|S|1|150
 YWS|CAE5|Whistler/Green Lake Water Aerodrome|Whistler|Whistler|CA|BC|50.1436|-122.9490|2100|0|W|W|1|9525
 YXC|CYXC|Cranbrook/Canadian Rockies International Airport|Cranbrook|Cranbrook|CA|BC|49.6108|-115.7820|3082|6000|P|M|1|39332
+YXH|CYXH|Medicine Hat Regional Airport|Medicine Hat|Medicine Hat|CA|AB|50.0189|-110.7210|2352|5000|P|M|1|74407
 YXJ|CYXJ|Fort St John / North Peace Regional Airport|Fort Saint John|Fort Saint John|CA|BC|56.2381|-120.7400|2280|6909|P|M|1|24416
 YXK|CYXK|Rimouski Airport|Rimouski|Rimouski|CA|QC|48.4776|-68.4963|82|4600|P|M|0|31875
 YXL|CYXL|Sioux Lookout Airport|Sioux Lookout|Sioux Lookout|CA|ON|50.1139|-91.9053|1258|5300|P|M|1|9519
+YXN|CYXN|Whale Cove Airport|Whale Cove|Whale Cove|CA|NU|62.2400|-92.5981|40|4000|G|S|1|150
 YXR|CYXR|Earlton (Timiskaming Regional) Airport|Earlton|Earlton|CA|ON|47.6974|-79.8473|800|5998|P|M|0|19185
 YXU|CYXU|London International Airport|London|London, CA|CA|ON|43.0328|-81.1490|912|8800|P|M|1|505482
 YXX|CYXX|Abbotsford International Airport|Abbotsford|Abbotsford|CA|BC|49.0253|-122.3610|195|9600|P|M|1|711264
 YXZ|CYXZ|Wawa Airport|Wawa|Wawa|CA|ON|47.9667|-84.7867|942|4429|P|M|0|3550
 YYB|CYYB|North Bay Jack Garland Airport|North Bay|North Bay|CA|ON|46.3636|-79.4228|1215|10000|P|M|1|79390
+YYC|CYYC|Calgary International Airport|Calgary|Calgary|CA|AB|51.1188|-114.0099|3557|14000|P|L|1|2897677
 YYD|CYYD|Smithers Airport|Smithers|Smithers|CA|BC|54.8247|-127.1830|1712|5000|P|M|1|8558
 YYF|CYYF|Penticton Airport|Penticton|Penticton|CA|BC|49.4631|-119.6020|1129|6000|P|M|1|70775
 YYG|CYYG|Charlottetown Airport|Charlottetown|Charlottetown|CA|PE|46.2889|-63.1252|160|7002|P|M|1|128791
+YYH|CYYH|Taloyoak Airport|Taloyoak|Taloyoak|CA|NU|69.5467|-93.5767|92|4020|G|S|1|150
 YYL|CYYL|Lynn Lake Airport|Lynn Lake|Lynn Lake|CA|MB|56.8639|-101.0760|1170|5000|P|M|1|150
 YYN|CYYN|Swift Current Airport|Swift Current|Swift Current|CA|SK|50.2919|-107.6910|2680|4250|P|M|0|19981
 YYU|CYYU|Kapuskasing Airport|Kapuskasing|Kapuskasing|CA|ON|49.4116|-82.4696|743|5500|P|M|0|8620
@@ -738,6 +798,8 @@ YZZ|CAD4|Trail Regional Airport|Trail|Trail|CA|BC|49.0556|-117.6090|1427|4000|P|
 ZBF|CZBF|Bathurst Airport|South Tetagouche|South Tetagouche|CA|NB|47.6297|-65.7389|193|5613|P|M|1|67904
 ZEL|CBBC|Bella Bella (Campbell Island) Airport|Bella Bella|Bella Bella|CA|BC|52.1850|-128.1570|141|3700|P|M|1|1193
 ZEM|CZEM|Eastmain River Airport|Eastmain River|Eastmain River|CA|QC|52.2264|-78.5225|24|3512|G|S|1|150
+ZFM|CZFM|Fort Mcpherson Airport|Fort Mcpherson|Fort Mcpherson|CA|NT|67.4070|-134.8602|116|3500|G|S|1|700
+ZFN|CZFN|Tulita Airport|Tulita|Tulita|CA|NT|64.9095|-125.5703|332|3935|G|S|1|150
 ZFW|CEB5|Fairview Airport|Fairview|Fairview|CA|AB|56.0814|-118.4350|2166|3506|P|S|0|2076
 ZGF|CZGF|Grand Forks Airport|Grand Forks|Grand Forks, CA|CA|BC|49.0156|-118.4310|1720|4300|P|M|0|9600
 ZGI|CZGI|Gods River Airport|Gods River|Gods River|CA|MB|54.8397|-94.0786|627|3540|G|S|1|643
@@ -778,11 +840,14 @@ AIT|NCAI|Aitutaki Airport|Aitutaki|Aitutaki|CK|A|-18.8309|-159.7640|14|5920|P|S|
 AIU|NCAT|Enua Airport|Atiu Island|Atiu Island|CK|A|-19.9678|-158.1190|36|3947|G|S|1|150
 MUK|NCMK|Mauke Airport|Mauke Island|Mauke Island|CK|A|-20.1361|-157.3450|26|4921|G|S|1|150
 ARI|SCAR|Chacalluta International Airport|Arica|Arica|CL|AP|-18.3485|-70.3387|167|9186|P|M|1|234789
+CCH|SCCC|Chile Chico Airport|Chile Chico|Chile Chico|CL|AI|-46.5831|-71.6863|1070|3937|P|M|0|5454
 CJC|SCCF|El Loa Airport|Calama|Calama|CL|AN|-22.4982|-68.9036|7543|9974|P|M|1|180552
 ESR|SCES|Ricardo Garcia Posada Airport|El Salvador|El Salvador|CL|AT|-26.3111|-69.7652|5240|7546|P|M|1|13925
 FFU|SCFT|Futaleufu Airport|Futaleufu|Futaleufu|CL|LL|-43.1892|-71.8511|1148|3110|P|S|0|2503
 FRT|SCEV|El Avellano Airport|Frutillar|Frutillar|CL|LL|-41.0517|-73.3511|489|1706|G|S|0|5470
+GXQ|SCCY|Teniente Vidal Airport|Coyhaique|Coyhaique|CL|AI|-45.5942|-72.1061|1020|5072|P|M|0|40634
 KNA|SCVM|Vina del Mar Airport|Vina del Mar|Vina del Mar|CL|VS|-32.9496|-71.4786|461|5760|P|M|0|798388
+LGR|SCHR|Cochrane Airport|Cochrane|Cochrane, CL|CL|AI|-47.2436|-72.5881|643|3346|P|M|0|3529
 LSQ|SCGE|Maria Dolores Airport|Los Angeles|Los Angeles, CL|CL|BI|-37.4017|-72.4254|374|5577|P|S|0|105508
 MHC|SCPQ|Mocopulli Airport|Dalcahue|Dalcahue|CL|LL|-42.3404|-73.7157|528|6562|P|S|1|29752
 OVL|SCOV|El Tuqui Airport|Ovalle|Ovalle|CL|CO|-30.5592|-71.1756|1100|3773|G|S|0|74672
@@ -791,8 +856,9 @@ PUX|SCPV|El Mirador Airport|Puerto Varas|Puerto Varas|CL|LL|-41.3494|-72.9467|43
 TLX|SCTL|Panguilemo Airport|Talca|Talca|CL|ML|-35.3778|-71.6017|371|3660|P|M|0|609024
 TOQ|SCBE|Barriles Airport|Tocopilla|Tocopilla|CL|AN|-22.1411|-70.0629|3475|5380|P|M|0|27862
 VLR|SCLL|Vallenar Airport|Vallenar|Vallenar|CL|AT|-28.5964|-70.7560|1725|4624|P|M|0|64944
-WAP|SCAP|Alto Palena Airport|Palena|Palena|CL|LL|-43.6115|-71.8055|794|2874|P|S|0|1773
 WCA|SCST|Gamboa Airport|Castro|Castro|CL|LL|-42.4903|-73.7728|151|3281|G|S|0|26694
+WPA|SCAS|Cabo Juan Roman Airfield|Puerto Aysen|Puerto Aysen|CL|AI|-45.3992|-72.6703|30|4167|P|S|0|14996
+WPR|SCFM|Captain Fuentes Martinez Airport|Porvenir|Porvenir|CL|MA|-53.2537|-70.3192|104|8202|P|M|0|9828
 WPU|SCGZ|Guardia Marina Zanartu Airport|Puerto Williams|Puerto Williams|CL|MA|-54.9311|-67.6263|88|4724|P|M|0|4646
 YAI|SCCH|Gral. Bernardo O Higgins Airport|Chillan|Chillan|CL|NB|-36.5825|-72.0314|495|5740|P|M|0|250591
 ZAL|SCVD|Pichoy Airport|Valdivia|Valdivia|CL|LR|-39.6500|-73.0861|59|6870|P|M|1|195245
@@ -802,7 +868,7 @@ ZLR|SCLN|Municipal de Linares Airport|Linares|Linares|CL|ML|-35.8617|-71.5486|59
 ZOS|SCJO|Canal Bajo Carlos Hott Siebert Airport|Osorno|Osorno|CL|LL|-40.6112|-73.0610|187|6398|P|M|1|207974
 ZUD|SCAC|Pupelde Airport|Ancud|Ancud|CL|LL|-41.9043|-73.7966|315|3937|P|S|0|22909
 BFX|FKKU|Bafoussam Airport|Bafoussam|Bafoussam|CM|OU|5.5369|10.3546|4347|8203|P|M|0|1057588
-BPC|FKKV|Bamenda Airport|Bamenda|Bamenda|CM|NW|6.0392|10.1226|4065|8202|P|M|0|815305
+DLA|FKKD|Douala International Airport|Douala|Douala|CM|LT|4.0061|9.7195|33|9350|P|L|1|2290106
 MVR|FKKL|Salak Airport|Maroua|Maroua|CM|EN|10.4514|14.2574|1390|6890|P|M|1|551296
 NGE|FKKN|N'Gaoundere Airport|N'Gaoundere|N'Gaoundere|CM|AD|7.3570|13.5592|3655|8858|P|M|1|238196
 TKC|FKKC|Tiko Airport|Tiko|Tiko|CM|SW|4.0892|9.3605|151|4512|P|M|0|268214
@@ -811,25 +877,29 @@ ACX|ZUYI|Xingyi Wanfenglin Airport|Xingyi|Xingyi|CN|52|25.0834|104.9608|4150|754
 AEB|ZGBS|Baise (Bose) Bama Airport|Baise|Baise|CN|45|23.7206|106.9600|490|8202|P|M|1|686078
 AKA|ZLAK|Ankang Fuqiang Airport|Ankang|Ankang|CN|61|32.7570|108.8734|1209|8530|P|S|1|937052
 AOG|ZYAS|Anshan Teng'ao Airport / Anshan Air Base|Anshan|Anshan|CN|21|41.1053|122.8540|0|8530|P|M|1|4579389
+APJ|ZUPL|Ali Pulan Airport|Burang Town|Burang Town|CN|54|30.3979|81.1332|13943|15000|P|M|0|31480
 AQG|ZSAQ|Anqing Tianzhushan Airport / Anqing North Air Base|Anqing|Anqing|CN|34|30.5822|117.0500|0|9186|P|M|1|1322073
 AVA|ZUAS|Anshun Huangguoshu Airport|Anshun|Anshun|CN|52|26.2606|105.8733|4812|9186|P|M|1|763368
 BAR|ZJQH|Qionghai Bo'ao Airport|Qionghai|Qionghai|CN|46|19.1410|110.4528|30|10499|P|M|1|899227
+BAV|ZBOW|Baotou Donghe International Airport|Baotou|Baotou|CN|15|40.5600|109.9970|3321|9186|P|L|1|5072423
 BFJ|ZUBJ|Bijie Feixiong Airport|Bijie|Bijie|CN|52|27.2671|105.4721|4751|8530|P|M|1|1016244
 BFY|ZSBA|Bengbu Tenghu Airport|Bengbu|Bengbu|CN|34|33.1663|117.0583|0|8530|P|M|1|2824189
 BHY|ZGBH|Beihai Fucheng Airport|Beihai|Beihai|CN|45|21.5387|109.2937|75|10499|P|M|1|1524045
+BPE|ZBDH|Qinhuangdao Beidaihe Airport|Qinhuangdao|Qinhuangdao|CN|13|39.6664|119.0614|46|8530|P|M|1|2058283
 BPL|ZWBL|Bole Alashankou Airport|Bole|Bole|CN|65|44.8955|82.3001|1253|8530|P|M|1|247040
 BSD|ZPBS|Baoshan Yunrui Airport|Baoshan|Baoshan|CN|53|25.0533|99.1683|5453|7874|P|M|1|1427199
 CAN|ZGGG|Guangzhou Baiyun International Airport|Guangzhou|Guangzhou|CN|44|23.3924|113.2990|50|12467|P|L|1|22646991
 CDE|ZBCD|Chengde Puning Airport|Chengde|Chengde|CN|13|41.1225|118.0739|0|9186|P|M|1|920395
 CGD|ZGCD|Changde Taohuayuan Airport|Changde|Changde|CN|43|28.9189|111.6400|128|8366|P|M|1|1886539
-CHG|ZYCY|Chaoyang Airport|Shuangta|Shuangta|CN|21|41.5381|120.4350|568|6562|P|M|1|961983
 CIF|ZBCF|Chifeng Yulong Airport|Chifeng|Chifeng|CN|15|42.1597|118.8410|2018|5774|P|M|1|613249
 CIH|ZBCZ|Changzhi Wangcun Airport|Changzhi|Changzhi|CN|14|36.2475|113.1260|0|8530|P|S|1|1214940
 CNI|ZYCH|Changhai Dachangshandao Airport|Dalian|Dalian, 21|CN|21|39.2664|122.6670|80|2625|P|S|1|47849
 CQW|ZUWL|Chongqing Xiannushan Airport|Wulong|Wulong|CN|50|29.4657|107.6937|1747|9186|P|M|1|1837102
 CWJ|ZPCW|Cangyuan Washan Airport|Lincang|Lincang|CN|53|23.2763|99.3732|0|8530|P|M|1|122712
+DAT|ZBDT|Datong Yungang International Airport|Datong|Datong|CN|14|40.0614|113.4805|3442|9843|P|L|1|3283254
 DBC|ZYBA|Baicheng Chang'an Airport|Baicheng|Baicheng|CN|22|45.5053|123.0197|480|8202|P|M|1|560086
 DDG|ZYDD|Dandong Langtou International Airport|Dandong|Dandong|CN|21|40.0255|124.2867|30|8530|P|M|1|1329302
+DDR|ZUDR|Shigatse Tingri Airport|Xigaze|Xigaze|CN|54|28.6046|86.7980|14108|14764|P|M|1|1444
 DIG|ZPDQ|Diqing Shangri-La Airport|Diqing|Diqing|CN|53|27.7936|99.6772|10761|11647|P|M|1|188631
 DLU|ZPDL|Dali Fengyi Airport|Dali|Dali|CN|53|25.6494|100.3190|7050|8202|P|M|1|1018731
 DOY|ZSDY|Dongying Shengli Airport|Dongying|Dongying|CN|37|37.5014|118.7899|15|9186|P|M|1|1521234
@@ -849,9 +919,12 @@ FYN|ZWFY|Fuyun Koktokay Airport|Fuyun|Fuyun|CN|65|46.8042|89.5120|3081|8530|P|M|
 GXH|ZLXH|Gannan Xiahe Airport|Gannan|Gannan|CN|62|34.8190|102.6223|10510|10499|P|M|1|356618
 GYS|ZUGU|Guangyuan Panlong Airport|Guangyuan|Guangyuan|CN|51|32.3903|105.6946|0|8202|P|M|1|879514
 GYU|ZLGY|Guyuan Liupanshan Airport|Guyuan|Guyuan|CN|64|36.0789|106.2169|5727|9186|P|M|1|701297
+HAK|ZJHK|Haikou Meilan International Airport|Haikou|Haikou|CN|46|19.9349|110.4590|75|11811|P|L|1|5016238
 HBQ|ZLHB|Haibei Qilian Airport|Haibei|Haibei|CN|63|38.0081|100.6451|10377|11155|G|S|1|8925
 HCJ|ZGHC|Hechi Jinchengjiang Airport|Hechi|Hechi|CN|45|24.8043|107.7108|2221|7218|P|M|1|330481
 HCZ|ZGCZ|Chenzhou Beihu Airport|Chenzhou|Chenzhou|CN|43|25.7534|112.8454|1071|8530|P|M|1|963668
+HDG|ZBHD|Handan Airport|Handan|Handan|CN|13|36.5248|114.4241|229|8530|P|M|1|4105681
+HGH|ZSHC|Hangzhou Xiaoshan International Airport|Hangzhou|Hangzhou|CN|33|30.2361|120.4289|23|11811|P|L|1|17879089
 HJB|ZWHJ|Hejing Bayinbuluke Airport|Hejing|Hejing|CN|65|42.9764|83.9955|8219|3000|G|S|1|150
 HLH|ZBUL|Ulanhot Yilelite Airport|Ulanhot|Ulanhot|CN|15|46.1953|122.0083|0|5906|G|S|1|265600
 HNG|ZLHN|Hainanzhou Gonghe Airport|Hainan|Hainan|CN|63|36.3367|100.4800|10052|6000|G|M|0|43904
@@ -861,8 +934,10 @@ HQL|ZWTK|Tashikuergan Hongqilafu Airport|Tashikuergan|Tashikuergan|CN|65|37.6613
 HSC|ZGSG|Shaoguan Danxia Airport|Shaoguan|Shaoguan|CN|44|24.9786|113.4210|280|9186|P|M|1|1381599
 HXD|ZLDL|Haixi Delingha Airport|Delingha|Delingha|CN|63|37.1253|97.2687|9843|9843|P|M|1|150
 HYN|ZSLQ|Taizhou Luqiao Airport|Taizhou|Taizhou|CN|33|28.5622|121.4290|0|8202|P|M|1|1917270
+HZA|ZSHZ|Heze Mudan Airport|Heze|Heze|CN|37|35.2130|115.7367|151|8530|P|M|1|4594011
 HZG|ZLHZ|Hanzhong Chenggu Airport|Hanzhong|Hanzhong|CN|61|33.1335|107.2038|0|8202|P|M|1|1373954
 HZH|ZUNP|Liping Airport|Liping|Liping|CN|52|26.3222|109.1499|1620|7218|P|M|1|385977
+IQN|ZLQY|Qingyang Xifeng Airport|Qingyang|Qingyang|CN|62|35.8026|107.5989|0|8530|P|M|1|2340805
 JBK|ZWQT|Qitai Jiangbulake Airport|Qitai|Qitai|CN|65|44.1661|89.5501|0|3000|G|S|1|150
 JDZ|ZSJD|Jingdezhen Luojia Airport|Jingdezhen|Jingdezhen|CN|36|29.3386|117.1760|112|7874|P|M|1|607302
 JGD|ZYJD|Daxing'anling Elunchun Airport|Jiagedaqi|Jiagedaqi|CN|23|50.3714|124.1175|1205|7546|P|M|1|198687
@@ -872,6 +947,7 @@ JJN|ZSQZ|Quanzhou Jinjiang International Airport|Quanzhou|Quanzhou|CN|35|24.7959
 JMJ|ZPJM|Lancang Jingmai Airport|Pu'er|Pu'er|CN|53|22.4177|99.7840|0|8530|P|M|1|374807
 JNG|ZSJG|Jining Da'an Airport|Jining|Jining|CN|37|35.6474|116.7433|171|9186|P|M|1|6123845
 JNH|ZSJX|Jiaxing Nanhu Airport|Xiuzhou|Xiuzhou|CN|33|30.6981|120.6631|15|11155|P|M|1|4036136
+JNZ|ZYJZ|Jinzhou Bay Airport|Jinzhou|Jinzhou|CN|21|40.9360|121.2771|0|8202|P|M|1|3716776
 JSJ|ZYJS|Jiansanjiang Shidi Airport|Jiansanjiang|Jiansanjiang|CN|23|47.1082|132.6579|0|8202|P|M|1|89442
 JUZ|ZSJU|Quzhou Airport|Quzhou|Quzhou|CN|33|28.9661|118.8988|213|6234|P|M|1|1022291
 JXA|ZYJX|Jixi Xingkaihu Airport|Jixi|Jixi|CN|23|45.2930|131.1930|760|7546|P|M|1|1493033
@@ -882,14 +958,18 @@ KJI|ZWKN|Burqin Kanas Airport|Burqin|Burqin|CN|65|48.2223|86.9959|3921|8202|P|M|
 LCX|ZSLO|Liancheng Guanzhishan Airport|Longyan|Longyan|CN|35|25.6759|116.7459|1225|7874|G|M|1|591618
 LDS|ZYLD|Yichun Lindu Airport|Yichun|Yichun, 23|CN|23|47.7521|129.0191|791|7546|P|M|1|468264
 LFQ|ZBLF|Linfen Yaodu Airport|Linfen|Linfen|CN|14|36.1326|111.6412|1483|8530|P|M|1|934493
+LGZ|ZUSH|Shannan Longzi Airport|Shannan|Shannan, 54|CN|54|28.4224|92.3481|12959|3000|G|S|1|150
 LLB|ZULB|Libo Airport|Qiannan|Qiannan|CN|52|25.4525|107.9617|0|7546|P|S|1|1421
 LLF|ZGLG|Yongzhou Lingling Airport|Yongzhou|Yongzhou|CN|43|26.3387|111.6100|340|8530|P|M|1|1262423
 LLV|ZBLL|Luliang Dawu Airport|Luliang|Luliang|CN|61|37.6833|111.1428|0|8530|P|M|1|2949850
 LPF|ZUPS|Liupanshui Yuezhao Airport|Liupanshui|Liupanshui|CN|52|26.6094|104.9790|0|8202|P|M|1|1509170
 LSG|CN-0249|Leshan Airport|Leshan|Leshan|CN|51|29.4386|103.7492|1189|6000|G|M|1|1000506
 LYA|ZHLY|Luoyang Beijiao Airport|Luoyang|Luoyang|CN|41|34.7411|112.3880|840|8202|P|L|1|4400379
+LYI|ZSLY|Linyi Qiyang Airport|Linyi|Linyi|CN|37|35.0529|118.4118|177|10498|P|M|1|6852142
+LZG|ZULA|Langzhong Gucheng Airport|Nanchong|Nanchong|CN|51|31.5019|106.0344|1444|11811|P|M|1|3880583
 LZH|ZGZH|Liuzhou Bailian Airport / Bailian Air Base|Liuzhou|Liuzhou|CN|45|24.2075|109.3910|295|8202|P|M|1|2398344
 LZO|ZULZ|Luzhou Yunlong Airport|Luzhou|Luzhou|CN|51|29.0304|105.4684|0|8858|P|M|1|6701600
+LZY|ZUNZ|Nyingchi Mainling Airport|Nyingchi|Nyingchi|CN|54|29.3033|94.3353|9675|9843|G|M|1|234710
 MDG|ZYMD|Mudanjiang Hailang International Airport|Mudanjiang|Mudanjiang|CN|23|44.5252|129.5686|883|8530|P|M|1|904629
 MIG|ZUMY|Mianyang Nanjiao Airport|Mianyang|Mianyang|CN|51|31.4281|104.7410|7874|7874|P|M|1|2348923
 MXZ|ZGMX|Meizhou Meixian Changgangji International Airport|Meizhou|Meizhou|CN|44|24.2634|116.0979|312|7874|P|S|1|816009
@@ -897,13 +977,13 @@ NBS|ZYBS|Changbaishan Airport|Baishan|Baishan|CN|22|42.0669|127.6022|2874|8530|P
 NGB|ZSNB|Ningbo Lishe International Airport|Ningbo|Ningbo|CN|33|29.8267|121.4620|13|10499|P|L|1|7659862
 NLH|ZPNL|Ninglang Luguhu Airport|Ninglang|Ninglang|CN|53|27.5403|100.7593|10804|11155|P|M|1|89940
 NLT|ZWNL|Xinyuan Nalati Airport|Xinyuan|Xinyuan|CN|65|43.4318|83.3786|3050|7546|P|M|1|282718
+NNY|ZHNY|Nanyang Jiangying Airport|Nanyang|Nanyang|CN|41|32.9827|112.6175|840|9186|G|S|1|2132493
 NTG|ZSNT|Nantong Xingdong International Airport|Nantong|Nantong|CN|32|32.0736|120.9801|16|11155|P|M|1|3783012
 NZH|ZBMZ|Manzhouli Xijiao Airport|Manzhouli|Manzhouli|CN|15|49.5667|117.3300|2231|9186|P|M|1|250357
 NZL|ZBZL|Zhalantun Genghis Khan Airport|Zhalantun|Zhalantun|CN|15|47.8659|122.7687|928|8202|P|M|1|198472
 PZI|ZUZH|Panzhihua Bao'anying Airport|Panzhihua|Panzhihua|CN|51|26.5400|101.7985|1620|9186|P|M|1|803824
 QSZ|ZWSC|Shache Airport|Shache|Shache|CN|65|38.2454|77.0561|4232|9842|P|M|1|744971
 RHT|ZBAR|Alxa Right Banner Badanjilin Airport|Badanjilin|Badanjilin|CN|15|39.2250|101.5460|4659|7874|G|S|1|16798
-RLK|ZBYZ|Bayannur Tianjitai Airport|Bayannur|Bayannur|CN|15|40.9264|107.7409|3400|8530|P|M|1|1760000
 RQA|ZWRQ|Ruoqiang Loulan Airport|Ruoqiang Town|Ruoqiang Town|CN|65|38.9747|88.0083|2916|9186|P|M|1|32874
 SHF|ZWHZ|Shihezi Huayuan Airport|Shihezi|Shihezi|CN|65|44.2421|85.8905|1700|7874|G|S|1|487621
 SQD|ZSSR|Shangrao Sanqingshan Airport|Shangrao|Shangrao|CN|36|28.3797|117.9643|340|7874|P|M|1|1076104
@@ -919,26 +999,29 @@ TSN|ZBTJ|Tianjin Binhai International Airport|Tianjin|Tianjin|CN|12|39.1244|117.
 TWC|ZWTS|Tumxuk Tangwangcheng Airport|Tumxuk|Tumxuk|CN|65|39.8867|79.2334|3566|8530|P|S|1|135727
 TXN|ZSTX|Huangshan Tunxi International Airport|Huangshan|Huangshan|CN|34|29.7333|118.2560|0|8530|P|L|1|1421518
 UCB|ZBUC|Ulanqab Jining Airport|Ulanqab|Ulanqab|CN|15|41.1303|113.1073|0|10499|P|M|1|636182
-UYN|ZLYL|Yulin Yuyang Airport|Yulin|Yulin, 61|CN|61|38.3597|109.5909|3891|9186|P|M|1|82089
+WDS|ZHSY|Shiyan Wudangshan Airport|Shiyan|Shiyan|CN|42|32.5929|110.9063|0|8530|P|M|1|3657010
 WEF|ZSWF|Weifang Nanyuan Airport|Weifang|Weifang|CN|37|36.6467|119.1190|0|8530|P|M|1|11978604
 WEH|ZSWH|Weihai Dashuibo Airport|Weihai|Weihai|CN|37|37.1871|122.2290|145|8530|P|M|1|1741627
 WGN|ZGSY|Shaoyang Wugang Airport|Shaoyang|Shaoyang|CN|43|26.8061|110.6410|1444|8530|P|M|1|771146
 WNH|ZPWS|Wenshan Puzhehei Airport|Wenshan|Wenshan|CN|53|23.5583|104.3255|5217|7874|G|S|1|514404
+WNZ|ZSWZ|Wenzhou Longwan International Airport|Wenzhou|Wenzhou|CN|33|27.9106|120.8535|13|10499|P|L|1|4860432
 WSK|ZUWS|Chongqing Wushan Airport|Wushan|Wushan|CN|50|31.0690|109.7090|0|8530|G|S|1|757250
 WUA|ZBUH|Wuhai Airport|Wuhai|Wuhai|CN|15|39.7934|106.7993|3650|8530|P|M|1|410590
 WUS|ZSWY|Nanping Wuyishan Airport|Wuyishan|Wuyishan|CN|35|27.7019|118.0010|614|7874|G|M|1|363964
 WUX|ZSWX|Sunan Shuofang International Airport|Wuxi|Wuxi|CN|32|31.4970|120.4304|24|10499|P|L|1|29578960
 WUZ|ZGWZ|Wuzhou Xijiang Airport|Tangbu|Tangbu|CN|45|23.4032|111.0933|357|8202|P|M|1|1100119
+WXN|ZUWX|Wanzhou Wuqiao Airport|Wanzhou|Wanzhou|CN|50|30.8017|108.4330|0|7874|G|S|1|3830838
 XAI|ZHXY|Xinyang Minggang Airport|Xinyang|Xinyang|CN|41|32.5408|114.0791|312|8858|P|M|1|2266617
 XFN|ZHXF|Xiangyang Liuji Airport|Xiangyang|Xiangyang|CN|42|32.1522|112.2917|234|8530|P|M|1|2616402
 XIC|ZUXC|Xichang Qingshan Airport|Liangshan|Liangshan|CN|51|27.9891|102.1840|5112|11811|P|M|1|481796
 XNN|ZLXN|Xining Caojiabao International Airport|Haidong|Haidong|CN|63|36.5277|102.0402|7119|12467|P|L|1|3287114
 XUZ|ZSXZ|Xuzhou Guanyin International Airport|Xuzhou|Xuzhou|CN|32|34.0591|117.5553|108|11548|P|M|1|9726951
+YCU|ZBYC|Yuncheng Yanhu International Airport|Yuncheng|Yuncheng|CN|61|35.1178|111.0340|1242|10499|P|L|1|2810231
 YIC|ZSYC|Yichun Mingyueshan Airport|Yichun|Yichun|CN|36|27.8025|114.3062|430|7874|P|M|1|2473757
 YIE|ZBES|Arxan Yi'ershi Airport|Arxan|Arxan|CN|15|47.3106|119.9117|2925|7874|P|M|1|32301
-YIW|ZSYW|Yiwu Airport|Yiwu|Yiwu|CN|33|29.3421|120.0312|262|9843|P|L|1|8808066
 YLX|ZGYL|Yulin Fumian Airport|Yulin|Yulin|CN|45|22.4330|110.1200|328|8530|P|M|1|1616365
 YNJ|ZYYJ|Yanji Chaoyangchuan Airport|Yanji|Yanji|CN|22|42.8828|129.4510|624|8530|P|M|1|1234329
+YNT|ZSYT|Yantai Penglai International Airport|Yantai|Yantai|CN|37|37.6597|120.9781|154|11155|P|L|1|8319114
 YNZ|ZSYN|Yancheng Nanyang International Airport|Yancheng|Yancheng|CN|32|33.4283|120.2054|10|9186|P|L|1|3393879
 YSQ|ZYSQ|Songyuan Chaganhu Airport|Qian Gorlos Mongol|Qian Gorlos Mongol|CN|22|44.9311|124.5521|459|8202|P|M|1|312418
 YTW|ZWYT|Yutian Wanfang Airport|Hotan|Hotan, 65|CN|65|36.8085|81.7827|4731|10499|G|S|1|205351
@@ -982,10 +1065,13 @@ IBE|SKIB|Perales Airport|Ibague|Ibague|CO|TOL|4.4216|-75.1333|2999|5905|P|M|1|86
 IGO|SKIG|Jaime Ortiz Betancourt Airport|Chigorodo|Chigorodo|CO|ANT|7.6776|-76.6832|110|3000|G|S|0|36815
 IPI|SKIP|San Luis Airport|Ipiales|Ipiales|CO|NAR|0.8619|-77.6718|9765|8202|P|M|1|275624
 ISD|SK-367|Santa Barbara Airport|Iscuande|Iscuande|CO|NAR|2.4458|-77.9818|10|3000|G|S|0|6601
+JUO|SKJU|Jurado Airport|Jurado|Jurado|CO|CHO|7.0718|-77.7271|33|3000|G|S|0|2351
 LET|SKLT|Alfredo Vasquez Cobo International Airport|Leticia|Leticia|CO|AMA|-4.1911|-69.9420|277|6168|P|M|1|93277
 LMC|SKNA|La Macarena Airport|La Macarena|La Macarena|CO|MET|2.1757|-73.7867|790|3000|G|S|1|3466
+LPD|SKLP|La Pedrera Airport|La Pedrera|La Pedrera|CO|AMA|-1.3249|-69.5813|590|5643|G|S|1|908
 LPE|SKIM|La Primavera Airport|La Primavera|La Primavera|CO|VID|5.4776|-70.4212|390|3000|G|S|0|9690
 MCJ|SKLM|Jorge Isaac Airport|La Mina-Maicao|La Mina-Maicao|CO|LAG|11.2325|-72.4901|281|4876|P|M|0|118258
+MDE|SKRG|Jose Maria Cordova International Airport|Medellin|Medellin|CO|ANT|6.1645|-75.4231|6955|11286|P|L|1|4434191
 MFS|SKMF|Miraflores Airport|Miraflores|Miraflores|CO|GUV|1.3500|-71.9444|730|3000|G|S|0|5007
 MGN|SKMG|Baracoa Airport|Magangue|Magangue|CO|BOL|9.2847|-74.8461|178|4921|P|M|0|217963
 MMP|SKMP|San Bernardo Airport|Santa Cruz de Mompox|Santa Cruz de Mompox|CO|BOL|9.2583|-74.4384|60|4068|P|S|0|62371
@@ -994,7 +1080,6 @@ MTB|SKML|Montelibano Airport|Montelibano|Montelibano|CO|COR|7.9717|-75.4325|160|
 MZL|SKMZ|La Nubia Airport|Manizales|Manizales|CO|CAL|5.0296|-75.4647|6871|4835|P|M|1|805520
 NCI|SKNC|Necocli Airport|Necocli|Necocli|CO|ANT|8.4544|-76.7793|19|3000|G|S|0|7976
 NPU|SK-021|San Pedro Airport|San Pedro de Uraba|San Pedro de Uraba|CO|ANT|8.2893|-76.3750|420|3000|G|S|0|28281
-NQU|SKNQ|Reyes Murillo Airport|Nuqui|Nuqui|CO|CHO|5.7103|-77.2619|12|3937|P|S|1|2905
 NVA|SKNV|Benito Salas Airport|Neiva|Neiva|CO|HUI|2.9501|-75.2940|1464|5880|P|M|1|520006
 OCV|SKOC|Aguas Claras Airport|Ocana|Ocana|CO|NSA|8.3151|-73.3583|3850|3937|P|M|0|239304
 ORC|SKOE|Orocue Airport|Orocue|Orocue|CO|CAS|4.7904|-71.3482|434|3000|G|S|0|2835
@@ -1003,6 +1088,7 @@ PBE|SKPR|Puerto Berrio Airport|Puerto Berrio|Puerto Berrio|CO|ANT|6.4603|-74.410
 PCC|SK-045|Puerto Rico Airport|Puerto Rico|Puerto Rico|CO|CAQ|1.9167|-75.1667|980|3000|G|S|0|20536
 PCR|SKPC|German Olano Airport|Puerto Carreno|Puerto Carreno|CO|VID|6.1847|-67.4932|177|5907|P|M|1|40221
 PDA|SKPD|Obando Cesar Gaviria Trujillo Airport|Puerto Inirida|Puerto Inirida|CO|GUA|3.8535|-67.9062|460|5910|P|M|1|19227
+PEI|SKPE|Matecana International Airport|Pereira|Pereira|CO|RIS|4.8127|-75.7395|4416|6627|P|M|1|935712
 PLT|SKPL|Plato Airport|Plato|Plato|CO|MAG|9.8000|-74.7833|69|3000|G|S|0|40857
 PPN|SKPP|Guillermo Leon Valencia Airport|Popayan|Popayan|CO|CAU|2.4544|-76.6093|5687|6266|P|M|1|533690
 PSO|SKPS|Antonio Narino Airport|Chachagui|Chachagui|CO|NAR|1.3967|-77.2909|5951|7585|P|M|1|576049
@@ -1072,14 +1158,17 @@ ECN|LCEN|Ercan International Airport|Tymbou|Tymbou|CY|02|35.1531|33.5074|404|104
 LCA|LCLK|Larnaca International Airport|Larnaca|Larnaca|CY|04|34.8751|33.6249|8|9823|P|L|1|370021
 BRQ|LKTB|Brno-Turany Airport|Brno|Brno|CZ|JM|49.1513|16.6940|778|8694|P|M|1|1162955
 JCL|LKCS|Ceske Budejovice South Bohemian Airport|Ceske Budejovice|Ceske Budejovice|CZ|JC|48.9482|14.4283|1417|8202|P|L|1|1225088
+OSR|LKMT|Leos Janacek Airport Ostrava|Mosnov|Mosnov|CZ|MO|49.6963|18.1111|844|11484|P|L|1|3355623
 PED|LKPD|Pardubice Airport|Pardubice|Pardubice|CZ|PA|50.0150|15.7398|741|8203|P|L|1|2014009
 VOD|LKVO|Vodochody Airport|Vodochody|Vodochody|CZ|ST|50.2166|14.3958|919|8203|P|M|0|448625
 AGE|EDWG|Wangerooge Airport|Wangerooge|Wangerooge|DE|NI|53.7825|7.9196|7|2789|P|S|1|47885
 BFE|EDLI|Bielefeld Airport|Bielefeld|Bielefeld|DE|NW|51.9647|8.5444|454|4121|P|M|0|475508
 BRE|EDDW|Bremen Airport|Bremen|Bremen|DE|HB|53.0468|8.7893|14|8642|P|L|1|2978879
+BWE|EDVE|Braunschweig-Wolfsburg Airport|Braunschweig|Braunschweig|DE|NI|52.3192|10.5561|295|7546|P|M|0|674959
 DRS|EDDC|Dresden Airport|Dresden|Dresden|DE|SN|51.1341|13.7678|755|9350|P|L|1|3381612
 DTM|EDLW|Dortmund Airport|Dortmund|Dortmund|DE|NW|51.5183|7.6122|425|6562|P|L|1|5540689
 DUS|EDDL|Dusseldorf Airport|Dusseldorf|Dusseldorf|DE|NW|51.2895|6.7668|147|9842|P|L|1|7440751
+ERF|EDDE|Erfurt-Weimar Airport|Erfurt|Erfurt|DE|TH|50.9783|10.9607|1036|8530|P|L|1|3117930
 FMM|EDJA|Memmingen Allgau Airport|Memmingen|Memmingen|DE|BY|47.9881|10.2382|2077|8629|P|L|1|2833490
 FMO|EDDG|Munster Osnabruck Airport|Greven|Greven|DE|NW|52.1338|7.6885|160|7119|P|L|1|3468605
 FNB|EDBN|Neubrandenburg Trollenhagen Airport|Trollenhagen|Trollenhagen|DE|MV|53.6022|13.3060|228|7522|P|M|0|233057
@@ -1109,10 +1198,13 @@ MRW|EKMB|Lolland Falster Maribo Airport|Rdby|Rdby|DK|85|54.6994|11.4382|16|3937|
 ODE|EKOD|Odense Hans Christian Andersen Airport|Odense|Odense|DK|83|55.4753|10.3272|56|6053|P|L|1|1061176
 RNN|EKRN|Bornholm Airport|Rnne|Rnne|DK|84|55.0633|14.7596|52|6568|P|M|1|41506
 SQW|EKSV|Skive Airport|Skive|Skive|DK|82|56.5502|9.1730|74|3933|P|M|0|78418
+DCF|TDCF|Canefield Airport|Canefield|Canefield|DM|10|15.3367|-61.3921|13|3130|P|M|1|34596
 DOM|TDPD|Douglas-Charles Airport|Marigot|Marigot|DM|02|15.5467|-61.3011|73|6352|P|M|1|24841
 BRX|MDBH|Maria Montez International Airport|Barahona|Barahona|DO|04|18.2515|-71.1204|10|9843|P|M|1|254418
 JBQ|MDJB|La Isabela International Airport|La Isabela|La Isabela|DO|01|18.5725|-69.9856|98|5412|P|M|1|1799605
 LRM|MDLR|Casa De Campo International Airport|La Romana|La Romana|DO|12|18.4522|-68.9111|213|9678|P|L|1|700967
+POP|MDPP|Gregorio Luperon International Airport|Puerto Plata|Puerto Plata|DO|18|19.7579|-70.5700|15|10108|P|M|1|338471
+PUJ|MDPC|Punta Cana International Airport|Punta Cana|Punta Cana|DO|11|18.5671|-68.3646|47|10171|P|L|1|215469
 STI|MDST|Cibao International Airport|Santiago|Santiago, DO|DO|25|19.4041|-70.6044|565|8595|P|L|1|2192276
 AAE|DABB|Annaba Rabah Bitat Airport|Annaba|Annaba|DZ|23|36.8268|7.8133|16|9843|P|L|1|1325357
 BJA|DAAE|SoummamAbane Ramdane Airport|Bejaia|Bejaia|DZ|06|36.7125|5.0699|20|7874|P|L|1|1193940
@@ -1158,6 +1250,7 @@ DBB|HEAL|El Alamein International Airport|El Alamein|El Alamein|EG|MT|30.9243|28
 HMB|HESG|Suhaj International Airport|Suhaj|Suhaj|EG|SHG|26.3425|31.7430|322|9843|P|L|1|1286743
 LXR|HELX|Luxor International Airport|Luxor|Luxor|EG|LX|25.6710|32.7064|276|9843|P|L|1|1687353
 MUH|HEMM|Mersa Matruh International Airport|Marsa Matruh|Marsa Matruh|EG|MT|31.3243|27.2223|75|9843|P|L|1|235053
+PSD|HEPS|Port Said International Airport|Port Said|Port Said|EG|PTS|31.2793|32.2406|10|7707|P|L|1|5400460
 RMF|HEMA|Marsa Alam International Airport|Marsa Alam|Marsa Alam|EG|BA|25.5555|34.5924|213|11253|P|L|1|34740
 SSH|HESH|Sharm El Sheikh International Airport|Sharm El Sheikh|Sharm El Sheikh|EG|JS|27.9773|34.3947|191|10108|P|L|1|115521
 EUN|GMML|Laayoune Hassan I International Airport|El Aaiun|El Aaiun|EH|A|27.1425|-13.2249|207|8861|P|L|1|238512
@@ -1168,7 +1261,6 @@ BJZ|LEBZ|Badajoz Airport|Badajoz|Badajoz|ES|EX|38.8913|-6.8213|609|9350|P|M|1|74
 CQM|LERL|Ciudad Real International Airport|Ciudad Real|Ciudad Real|ES|CM|38.8565|-3.9699|2120|13450|P|M|0|537051
 EAS|LESO|San Sebastian Airport|Hondarribia|Hondarribia|ES|PV|43.3565|-1.7906|16|5755|P|M|1|427704
 GMZ|GCGM|La Gomera Airport|Alajero|Alajero|ES|CN|28.0296|-17.2146|716|4921|P|S|1|7208
-GRX|LEGR|F.G.L. Airport Granada-Jaen Airport|Granada|Granada|ES|AN|37.1887|-3.7774|1860|9514|P|M|1|881010
 IBZ|LEIB|Ibiza Airport|Ibiza|Ibiza|ES|IB|38.8729|1.3731|24|9186|P|L|1|224469
 ILD|LEDA|Lleida-Alguaire Airport|Lleida|Lleida|ES|CT|41.7282|0.5350|1152|8202|G|M|1|416111
 LCG|LECO|A Coruna Airport|Culleredo|Culleredo|ES|GA|43.3021|-8.3773|326|7178|P|M|1|546168
@@ -1179,14 +1271,15 @@ LPA|GCLP|Gran Canaria Airport|Gran Canaria Island|Gran Canaria Island|ES|CN|27.9
 MAH|LEMH|Menorca Airport|Mahon|Mahon|ES|IB|39.8626|4.2187|302|8366|P|L|1|164258
 MLN|GEML|Melilla Airport|Melilla|Melilla|ES|ML|35.2798|-2.9563|156|4701|P|M|1|255123
 ODB|LEBA|Cordoba Airport|Cordoba|Cordoba, ES|ES|AN|37.8420|-4.8489|297|7352|P|M|1|627803
-OVD|LEAS|Asturias Airport|Ranon|Ranon|ES|AS|43.5636|-6.0346|416|7218|P|L|1|1150031
 PMI|LEPA|Palma de Mallorca Airport|Palma de Mallorca|Palma de Mallorca|ES|IB|39.5517|2.7388|27|10728|P|L|1|979760
 PNA|LEPP|Pamplona Airport|Pamplona|Pamplona|ES|NC|42.7700|-1.6463|1504|7241|P|M|1|472858
 RGS|LEBG|Burgos Airport|Burgos|Burgos|ES|CL|42.3576|-3.6208|2962|6890|P|M|0|289052
 RJL|LERJ|Logrono-Agoncillo Airport|Logrono|Logrono|ES|RI|42.4610|-2.3222|1161|7218|P|M|1|334418
+SCQ|LEST|Santiago-Rosalia de Castro Airport|Santiago de Compostela|Santiago de Compostela|ES|GA|42.8963|-8.4151|1213|10499|P|L|1|1164777
 SDR|LEXJ|Seve Ballesteros-Santander Airport|Santander|Santander|ES|CB|43.4271|-3.8200|16|7612|P|M|1|399181
 SLM|LESA|Salamanca Airport|Salamanca|Salamanca|ES|CL|40.9521|-5.5020|2595|8245|P|M|1|434910
 SPC|GCLA|La Palma Airport|Sta Cruz de la Palma|Sta Cruz de la Palma|ES|CN|28.6265|-17.7556|107|7218|P|M|1|80742
+SVQ|LEZL|Seville Airport|Seville|Seville|ES|AN|37.4180|-5.8931|112|11030|P|L|1|2278874
 TEV|LETL|Teruel Airport|Teruel|Teruel|ES|AR|40.4103|-1.2174|3380|9268|P|M|0|66708
 VDE|GCHI|El Hierro Airport|El Hierro Island|El Hierro Island|ES|CN|27.8148|-17.8871|103|4101|P|M|1|11186
 VGO|LEVX|Vigo Airport|Vigo|Vigo|ES|GA|42.2318|-8.6268|856|7874|P|M|1|729522
@@ -1197,7 +1290,9 @@ XRY|LEJR|Jerez Airport|Jerez de la Frontera|Jerez de la Frontera|ES|AN|36.7446|-
 ZAZ|LEZG|Zaragoza Airport|Zaragoza|Zaragoza|ES|AR|41.6662|-1.0415|863|12198|P|L|1|1502826
 AMH|HAAM|Arba Minch Airport|Arba Minch|Arba Minch|ET|SN|6.0394|37.5905|3901|9170|P|M|1|393514
 ASO|HASO|Asosa Airport|Asosa|Asosa|ET|BE|10.0185|34.5863|5100|8218|P|M|1|135475
+AWA|HALA|Hawassa International Airport|Hawassa|Hawassa|ET|XSD|7.1006|38.3965|5450|9843|P|L|1|2857550
 AXU|HAAX|Axum Airport|Axum|Axum|ET|TI|14.1468|38.7728|6959|7874|P|M|1|382148
+BCO|HABC|Jinka Airport|Jinka|Jinka|ET|SN|5.7497|36.5602|4475|8612|P|M|1|134029
 DBM|HADM|Debre Markos Airport|Debre Markos|Debre Markos|ET|AM|10.3215|37.7419|8136|3000|G|S|1|191400
 DEM|HADD|Dembidollo Airport|Dembidollo|Dembidollo|ET|OR|8.5540|34.8580|5200|6168|P|S|1|46390
 DIR|HADR|Aba Tenna Dejazmach Yilma International Airport|Dire Dawa|Dire Dawa|ET|DD|9.6235|41.8550|3827|8791|P|L|1|940753
@@ -1206,7 +1301,6 @@ GDQ|HAGN|Gondar Airport|Azezo|Azezo|ET|AM|12.5199|37.4340|6449|9072|P|M|1|748048
 HIL|HASL|Shilavo Airport|Shilavo|Shilavo|ET|SO|6.0775|44.7637|1296|3000|G|S|1|150
 HUE|HAHU|Humera Airport|Akwi|Akwi|ET|TI|13.8301|36.8824|1930|3000|G|S|1|150
 JIJ|HAJJ|Gerad Wilwal International Airport|Jijiga|Jijiga|ET|SO|9.3319|42.9118|5954|8202|P|L|1|1180072
-JIM|HAJM|Jimma Airport|Jimma|Jimma|ET|OR|7.6661|36.8166|5500|10236|P|M|1|406894
 MQX|HAMK|Mekele Alula Aba Nega Airport|Mekele|Mekele|ET|TI|13.4674|39.5335|7396|11811|P|M|1|674142
 MTF|HAMT|Mizan Teferi Airport|Mizan Teferi|Mizan Teferi|ET|SW|6.9571|35.5547|4396|3000|G|S|1|115849
 SHC|HASR|Shire Inda Selassie Airport|Shire Inda Selassie|Shire Inda Selassie|ET|TI|14.0757|38.2736|6207|3000|G|S|1|97108
@@ -1235,9 +1329,15 @@ TKU|EFTU|Turku Airport|Turku|Turku|FI|19|60.5141|22.2628|161|8202|P|L|1|847761
 TMP|EFTP|Tampere-Pirkkala Airport|Tampere|Tampere|FI|11|61.4141|23.6044|390|8858|P|L|1|1145556
 VRK|EFVR|Varkaus Airport|Varkaus|Varkaus|FI|04|62.1711|27.8686|286|6562|P|M|0|29003
 YLI|EFYL|Ylivieska Airfield|Ylivieska|Ylivieska|FI|14|64.0547|24.7253|252|4921|P|M|0|44961
+KDV|NFKD|Vunisea Airport|Vunisea|Vunisea|FJ|E|-19.0581|178.1570|6|3000|G|S|1|150
+KXF|NFNO|Koro Island Airport|Koro Island|Koro Island|FJ|E|-17.3458|179.4220|358|3000|G|S|1|150
+LKB|NFNK|Lakeba Island Airport|Lakeba Island|Lakeba Island|FJ|E|-18.1992|-178.8170|280|3000|G|S|1|150
 MNF|NFMA|Mana Island Airport|Mana Island|Mana Island|FJ|W|-17.6728|177.0985|0|3000|G|S|1|2743
+NGI|NFNG|Ngau Airport|Ngau|Ngau|FJ|E|-18.1156|179.3400|50|3000|G|S|1|6010
 PTF|NFFO|Malolo Lailai Island Airport|Malolo Lailai Island|Malolo Lailai Island|FJ|W|-17.7784|177.1970|10|3000|G|S|1|3841
 SVU|NFNS|Savusavu Airport|Savusavu|Savusavu|FJ|N|-16.8034|179.3406|17|2833|G|S|1|4951
+VBV|NFVB|Vanua Balavu Airport|Vanua Balavu|Vanua Balavu|FJ|E|-17.2690|-178.9760|76|3000|G|S|1|150
+YAS|NFSW|Yasawa Island Airport|Yasawa Island|Yasawa Island|FJ|W|-16.7589|177.5450|29|1950|G|S|1|150
 PSY|SFAL|Port Stanley Airport|Stanley|Stanley|FK|A|-51.6857|-57.7776|75|3013|P|S|1|1607
 AGF|LFBA|Agen La Garenne airport|Agen|Agen|FR|NAQ|44.1742|0.5931|204|7103|P|M|0|140425
 AJA|LFKJ|Ajaccio Napoleon Bonaparte airport|Ajaccio|Ajaccio|FR|COR|41.9236|8.8029|18|7897|P|M|1|57747
@@ -1250,6 +1350,7 @@ BIQ|LFBZ|Biarritz Pays Basque airport|Biarritz|Biarritz|FR|NAQ|43.4684|-1.5232|2
 BOD|LFBD|BordeauxMerignac Airport|Bordeaux|Bordeaux|FR|NAQ|44.8287|-0.7154|162|10171|P|L|1|1596242
 BOU|LFLD|Bourges airport|Bourges|Bourges|FR|CVL|47.0602|2.3696|529|5085|P|M|0|274401
 BVE|LFSL|Brive Souillac airport|Brive|Brive|FR|NAQ|45.0397|1.4856|1016|6890|P|M|1|210555
+BZR|LFMU|Beziers Vias airport|Beziers|Beziers|FR|OCC|43.3235|3.3539|56|5971|P|M|1|275910
 CCF|LFMK|Carcassonne Salvaza Airport|Carcassonne|Carcassonne|FR|OCC|43.2160|2.3063|433|6726|P|M|1|241149
 CEQ|LFMD|Cannes Mandelieu Airport|Cannes|Cannes|FR|PAC|43.5480|6.9552|13|5052|P|M|0|219093
 CER|LFRC|Cherbourg Manche airport|Cherbourg|Cherbourg|FR|NOR|49.6501|-1.4703|459|8005|P|M|0|92122
@@ -1260,6 +1361,7 @@ CLY|LFKC|Calvi Sainte Catherine Airport|Calvi|Calvi|FR|COR|42.5304|8.7930|209|75
 DCM|LFCK|Castres Mazamet Airport|Castres|Castres|FR|OCC|43.5563|2.2892|788|5988|P|M|1|253990
 DIJ|LFSD|Dijon Longvic airport|Dijon|Dijon|FR|BFC|47.2689|5.0900|726|7874|P|M|0|328858
 DLE|LFGJ|Dole Tavaux Airport|Dole|Dole|FR|BFC|47.0390|5.4276|645|7318|P|M|1|424730
+DOL|LFRG|Deauville Normandie airport|Deauville|Deauville|FR|NOR|49.3652|0.1545|479|8366|P|M|1|570311
 EBU|LFMH|Saint-Etienne-Boutheon Airport|Andrezieux-Boutheon|Andrezieux-Boutheon|FR|ARA|45.5406|4.2964|1325|7546|P|M|0|380623
 EGC|LFBE|Bergerac Dordogne-Perigord airport|Bergerac|Bergerac|FR|NAQ|44.8253|0.5186|171|7234|P|M|1|252582
 ENC|LFSN|Nancy-Essey Airport|Tomblaine|Tomblaine|FR|GES|48.6921|6.2305|751|5249|P|M|0|396499
@@ -1283,6 +1385,7 @@ LYN|LFLY|Lyon Bron Airport|Chassieu|Chassieu|FR|ARA|45.7279|4.9440|659|5971|P|M|
 MCU|LFBK|Montlucon-Gueret Airport|Lepaud|Lepaud|FR|NAQ|46.2226|2.3640|1497|6234|P|M|0|102570
 MEN|LFNB|Mende-Brenoux Airfield|Mende|Mende|FR|OCC|44.5021|3.5328|3362|4265|P|M|0|58886
 MPL|LFMT|Montpellier-Mediterranee Airport|Montpellier|Montpellier|FR|OCC|43.5762|3.9630|17|8530|P|L|1|1415671
+NCE|LFMN|Nice-Cote d'Azur Airport|Nice|Nice|FR|PAC|43.6584|7.2159|12|9721|P|L|1|2109514
 NIT|LFBN|Niort - Marais Poitevin Airport|Niort|Niort|FR|NAQ|46.3135|-0.3945|203|5774|P|M|0|194769
 NVS|LFQG|Nevers-Fourchambault Airport|Marzy|Marzy|FR|BFC|47.0029|3.1131|602|5348|P|M|0|202558
 OBS|LFHO|Aubenas-South Ardeche Airport|Lanas|Lanas|FR|ARA|44.5444|4.3722|923|4675|P|M|0|226325
@@ -1349,6 +1452,7 @@ LSI|EGPB|Sumburgh Airport|Lerwick|Lerwick|GB|SCT|59.8789|-1.2956|20|4915|P|M|1|1
 LYX|EGMD|Lydd London Ashford Airport|Romney Marsh|Romney Marsh|GB|ENG|50.9562|0.9391|13|4938|P|M|0|484128
 MHZ|EGUN|RAF Mildenhall|Bury Saint Edmunds|Bury Saint Edmunds|GB|ENG|52.3619|0.4864|33|9213|P|M|0|478209
 MME|EGNV|Teesside International Airport|Darlington|Darlington|GB|ENG|54.5092|-1.4294|120|7516|P|M|1|713841
+NCL|EGNT|Newcastle International Airport|Newcastle upon Tyne|Newcastle upon Tyne|GB|ENG|55.0380|-1.6896|266|7644|P|L|1|2014557
 NDY|EGES|Sanday Airport|Sanday|Sanday|GB|SCT|59.2503|-2.5767|68|1532|G|S|1|269
 NHT|EGWU|RAF Northolt|Northolt|Northolt|GB|ENG|51.5530|-0.4182|124|5545|P|M|0|3045169
 NQY|EGHQ|Cornwall Airport Newquay|Newquay|Newquay|GB|ENG|50.4406|-4.9954|390|9003|P|M|1|442894
@@ -1367,6 +1471,7 @@ WIC|EGPC|Wick John O'Groats Airport|Wick|Wick|GB|SCT|58.4589|-3.0931|126|6007|P|
 WRT|EGNO|Warton Aerodrome|Warton|Warton|GB|ENG|53.7451|-2.8831|55|7946|P|M|0|449542
 WRY|EGEW|Westray Airport|Westray|Westray|GB|SCT|59.3505|-2.9501|29|1729|G|S|1|151
 CRU|TGPZ|Lauriston Airport|Carriacou Island|Carriacou Island|GD|PA|12.4761|-61.4728|5|2625|P|S|1|488
+GND|TGPY|Maurice Bishop International Airport|Saint George's|Saint George's|GD|GE|12.0040|-61.7853|41|9003|P|L|1|22236
 KUT|UGKO|David the Builder Kutaisi International Airport|Kopitnari|Kopitnari|GE|IM|42.1774|42.4854|223|8202|P|L|1|392424
 SUI|UGSS|Vladislav Ardzinba Sukhum International Airport|Sukhumi|Sukhumi|GE|AB|42.8582|41.1281|53|12012|P|L|1|281713
 TBS|UGTB|Tbilisi International Airport|Tbilisi|Tbilisi|GE|TB|41.6692|44.9547|1624|9843|P|L|1|1777844
@@ -1378,15 +1483,17 @@ OYP|SOOG|Saint-Georges-de-l'Oyapock Airport|Saint-Georges-de-l'Oyapo|Saint-Georg
 ACI|EGJA|Alderney Airport|Saint Anne|Saint Anne|GG|A|49.7061|-2.2147|290|2877|P|M|1|54608
 GCI|EGJB|Guernsey Airport|Saint Peter Port|Saint Peter Port|GG|G|49.4350|-2.6020|336|5194|P|M|1|59692
 DGAH|DGAH|Ho Airport|Ho|Ho|GH|TV|6.5797|0.5325|356|5266|P|M|1|275018
-NYI|DGSN|Sunyani Airport|Sunyani|Sunyani|GH|BO|7.3618|-2.3288|1014|4594|P|M|1|619426
+KMS|DGSI|Prempeh I International Airport|Kumasi|Kumasi|GH|AH|6.7146|-1.5908|942|7612|P|L|1|3715190
 TKD|DGTK|Takoradi Airport|Sekondi-Takoradi|Sekondi-Takoradi|GH|WP|4.8961|-1.7748|21|5745|P|M|1|1160239
 TML|DGLE|Yakubu Tali International Airport|Tamale|Tamale|GH|NP|9.5539|-0.8661|553|7999|P|L|1|776518
 GIB|LXGB|Gibraltar Airport|Gibraltar|Gibraltar|GI|A|36.1517|-5.3498|12|6000|P|L|1|973641
+JEG|BGAA|Aasiaat Airport|Aasiaat|Aasiaat|GL|QK|68.7218|-52.7847|74|2621|G|M|1|4907
 BJL|GBYD|Banjul International Airport|Banjul|Banjul|GM|W|13.3380|-16.6522|95|11811|P|L|1|1772259
+DSD|TFFA|La Desirade Airport|Grande Anse|Grande Anse|GP|A|16.2969|-61.0844|10|1985|P|S|1|4539
+PTP|TFFR|Maryse Conde International Airport|Pointe-a-Pitre|Pointe-a-Pitre|GP|A|16.2654|-61.5328|36|11499|P|L|1|278670
 BSG|FGBT|Bata International Airport|Bata|Bata|GQ|LI|1.9055|9.8057|13|10860|P|L|1|264060
 GEM|FGMY|President Obiang Nguema International Airport|Mengomeyen|Mengomeyen|GQ|WN|1.6764|11.0249|2165|9843|P|M|1|72185
 NBN|FGAN|Annobon Airport|San Antonio de Pale|San Antonio de Pale|GQ|AN|-1.4086|5.6242|82|6177|P|S|1|10768
-SSG|FGSL|Malabo International Airport|Malabo|Malabo|GQ|BN|3.7553|8.7087|76|9647|P|L|1|441959
 AOK|LGKP|Karpathos Airport|Karpathos Island|Karpathos Island|GR|L|35.4214|27.1460|66|7871|P|M|1|6287
 AXD|LGAL|Alexandroupoli Democritus Airport|Alexandroupolis|Alexandroupolis|GR|A|40.8559|25.9563|24|8471|P|M|1|217983
 CFU|LGKR|Corfu Ioannis Kapodistrias International Airport|Kerkyra|Kerkyra|GR|F|39.6014|19.9122|6|7792|P|L|1|435591
@@ -1421,10 +1528,12 @@ AAZ|MGQZ|Quezaltenango Airport|Quezaltenango|Quezaltenango|GT|QZ|14.8656|-91.502
 FRS|MGMM|Mundo Maya International Airport|San Benito|San Benito|GT|PE|16.9137|-89.8661|427|9842|P|M|1|135527
 HUG|MGHT|Huehuetenango Airport|Huehuetenango|Huehuetenango|GT|HU|15.3167|-91.5056|6135|3000|G|S|1|206409
 RER|MGRT|Retalhuleu Airport|Retalhuleu|Retalhuleu|GT|RE|14.5214|-91.6970|656|5065|P|M|1|1056168
+LTM|SYLT|Lethem Airport|Lethem|Lethem|GY|UT|3.3728|-59.7894|351|5985|P|M|1|30764
 OGL|SYEC|Eugene F. Correia International Airport|Ogle|Ogle|GY|DE|6.8059|-58.1077|10|4201|P|M|1|185024
 GJA|MHNJ|La Laguna Airport|Guanaja|Guanaja|HN|IB|16.4454|-85.9066|49|3990|P|M|1|37638
 LCE|MHLC|Goloson International Airport|La Ceiba|La Ceiba|HN|AT|15.7425|-86.8530|39|9875|P|M|1|514424
 RTB|MHRO|Juan Manuel Galvez International Airport|Coxen Hole|Coxen Hole|HN|IB|16.3168|-86.5230|39|7349|P|L|1|277193
+TGU|MHTG|Toncontin Airport|Tegucigalpa|Tegucigalpa|HN|FM|14.0609|-87.2172|3294|6112|P|M|1|1133868
 TJI|MHTJ|Trujillo Airport|Trujillo|Trujillo, HN|HN|CL|15.9266|-85.9386|3|3515|P|M|0|92748
 XPL|MHPR|Palmerola International Airport|Palmerola|Palmerola|HN|CM|14.3824|-87.6212|2061|8064|P|L|1|1732022
 DBV|LDDU|Dubrovnik Ruer Boskovic Airport|Dubrovnik|Dubrovnik|HR|19|42.5622|18.2655|527|10597|P|L|1|224733
@@ -1459,6 +1568,7 @@ BXT|WALC|LNG Badak Airport|Bontang-Borneo Island|Bontang-Borneo Island|ID|KI|0.1
 BXW|WARW|Harun Thohir Airport|Bawean|Bawean|ID|JI|-5.7236|112.6789|93|3000|G|S|0|50612
 CBN|WICD|Cakrabhuwana Airport|Cirebon-Java Island|Cirebon-Java Island|ID|JB|-6.7570|108.5388|89|4131|P|S|0|555373
 CXP|WAHL|Tunggul Wulung Airport|Cilacap|Cilacap|ID|JT|-7.6451|109.0340|69|4593|P|M|1|972209
+DEX|WAVD|Nop Goliat Dekai Airport|Dekai|Dekai|ID|PP|-4.8557|139.4820|198|6398|P|S|1|150
 DHX|WARD|Dhoho International Airport|Kediri|Kediri|ID|JI|-7.7495|111.9468|380|10827|P|M|1|996737
 DJB|WIJJ|Sultan Thaha Airport|Jambi|Jambi|ID|JA|-1.6387|103.6451|82|8537|P|S|1|635101
 DOB|WAPD|Rar Gwamar Airport|Dobo-Warmar Island|Dobo-Warmar Island|ID|MA|-5.7737|134.2092|61|2625|P|S|0|52104
@@ -1478,6 +1588,7 @@ ID-0094|WAQH|Long Rungan Airport|Long Rungan|Long Rungan|ID|KU|3.5989|115.8408|2
 ID-0111|WAJW|Okyap Airstrip|Okyap|Okyap|ID|PP|-4.7434|140.8483|4370|1427|G|S|1|150
 JBB|WARE|Notohadinegoro Airport|Jember|Jember|ID|JI|-8.2425|113.6935|281|5594|P|S|1|298013
 KBU|WAOK|Gusti Syamsir Alam Airport|Stagen|Stagen|ID|KS|-3.2948|116.1638|4|5413|P|S|1|150
+KJT|WICA|Kertajati International Airport|Kertajati|Kertajati|ID|JB|-6.6474|108.1656|134|9843|P|M|1|2043224
 KJX|WITO|Kuala Batu Airport|Blangpidie|Blangpidie|ID|AC|3.7357|96.7901|3|3000|G|S|0|17283
 KLP|WAGF|Seruyan Kuala Pembuang Airport|Seruyan|Seruyan|ID|KT|-3.3761|112.5365|13|3000|G|S|1|150
 KNG|WASK|Utarom Airport|Kaimana|Kaimana|ID|PB|-3.6446|133.6951|19|5249|P|M|1|150
@@ -1513,6 +1624,8 @@ NNX|WAQA|Nunukan Airport|Nunukan-Nunukan Island|Nunukan-Nunukan Island|ID|KU|4.1
 NRE|WAPG|Namrole Airport|Namrole|Namrole|ID|MA|-3.8552|126.7009|31|2953|P|S|0|17158
 NTI|WASB|Stenkol Airport|Bintuni|Bintuni|ID|PB|-2.1026|133.5160|51|1969|P|S|0|24742
 OJU|WAFU|Tanjung Api Airport|Tojo Una-Una|Tojo Una-Una|ID|ST|-0.8654|121.6286|49|6070|P|S|1|150
+OKL|WAJO|Oksibil Airport|Oksibil|Oksibil|ID|PP|-4.9071|140.6277|4315|2854|G|M|1|784
+OKQ|WAKO|Okaba Airport|Okaba|Okaba|ID|PS|-8.0946|139.7233|23|1968|P|S|0|1270
 OTI|WAEW|Pitu Airport|Gotalalamo-Morotai|Gotalalamo-Morotai|ID|MU|2.0460|128.3250|49|7880|P|M|0|43896
 PDO|WIPQ|Pendopo Airport|Talang Gudang-Sumatra|Talang Gudang-Sumatra|ID|SS|-3.2861|103.8800|184|4265|P|M|1|184795
 PGK|WIKK|Depati Amir Airport|Pangkal Pinang|Pangkal Pinang|ID|BB|-2.1622|106.1390|109|7382|P|M|1|327047
@@ -1545,6 +1658,7 @@ TJS|WAGD|Tanjung Harapan Airport|Tanjung Selor-Borneo|Tanjung Selor-Borneo|ID|KU
 TKG|WILL|Radin Inten II International Airport|Bandar Lampung|Bandar Lampung|ID|LA|-5.2468|105.1825|282|9088|P|M|1|1443291
 TLI|WAFL|Sultan Bantilan Airport|Toli Toli-Celebes Island|Toli Toli-Celebes Island|ID|ST|1.1234|120.7937|17|4593|P|S|1|242783
 TMC|WATK|Tambolaka Airport|Radamata|Radamata|ID|NT|-9.4092|119.2426|161|5905|P|S|1|35790
+TMH|WAKT|Tanah Merah Airport|Tanah Merah|Tanah Merah|ID|PS|-6.0967|140.3035|57|6000|G|M|1|150
 TMY|ID-TMY|Tiom Airport|Tiom-Papua Island|Tiom-Papua Island|ID|PP|-3.9256|138.4555|6931|2165|P|S|0|13370
 TRK|WAQQ|Juwata International Airport / Suharnoko Harbani AFB|Tarakan|Tarakan|ID|KU|3.3251|117.5642|23|7382|P|M|1|263152
 TRT|WAFB|Toraja Airport|Toraja|Toraja|ID|SN|-3.1844|119.9191|2884|6562|P|M|1|182859
@@ -1572,20 +1686,29 @@ WAT|EIWF|Waterford Airport|Waterford|Waterford|IE|WD|52.1872|-7.0870|119|4701|P|
 ETM|LLER|Ramon International Airport|Eilat|Eilat|IL|D|29.7270|35.0141|288|11811|P|L|1|125334
 HFA|LLHA|Uri Michaeli Haifa International Airport|Haifa|Haifa|IL|HA|32.8102|35.0437|28|4324|P|M|1|1803187
 IOM|EGNS|Isle of Man Airport|Castletown|Castletown|IM|A|54.0831|-4.6239|52|6923|P|L|1|513450
+AGR|VIAG|Agra Airport / Agra Air Force Station|Agra|Agra|IN|UP|27.1580|77.9610|551|9000|P|M|1|3788773
+AHA|VEAP|Maa Mahamaya Airport|Ambikapur|Ambikapur|IN|CT|22.9875|83.1961|1930|6299|P|M|1|655119
 AJL|VELP|Lengpui Airport|Aizawl|Aizawl|IN|MZ|23.8406|92.6197|1398|8202|P|M|1|447446
+AKD|VAAK|Akola Airport|Akola|Akola|IN|MM|20.6989|77.0569|999|4600|P|M|0|1114682
 AVR|VAAM|Amravati Airport|Amravati|Amravati|IN|MM|20.8146|77.7178|1125|6070|P|M|1|1255512
+AYJ|VEAY|Maharshi Valmiki International Airport|Faizabad|Faizabad|IN|UP|26.7477|82.1637|335|7381|P|M|1|611326
 BDQ|VABO|Vadodara International Airport|Vadodara|Vadodara|IN|GJ|22.3362|73.2263|129|8100|P|L|1|4314582
 BEP|VOBI|Bellary Airport|Bellary|Bellary|IN|KA|15.1628|76.8828|30|3630|P|M|0|1645215
 BHJ|VABJ|Bhuj Airport|Bhuj|Bhuj|IN|GJ|23.2878|69.6702|268|8205|P|M|1|293951
+BHO|VABP|Raja Bhoj International Airport|Bhopal|Bhopal|IN|MP|23.2875|77.3374|1711|9022|P|L|1|4295488
 BHU|VABV|Bhavnagar Airport|Bhavnagar|Bhavnagar|IN|GJ|21.7522|72.1852|44|6300|P|M|1|871772
 BKB|VIBK|Nal Airport|Bikaner|Bikaner|IN|RJ|28.0706|73.2072|750|8960|P|M|0|833031
 CDP|VOCP|Kadapa Airport|Kadapa|Kadapa|IN|AP|14.5132|78.7692|430|6562|P|M|1|944092
 CJB|VOCB|Coimbatore International Airport|Coimbatore|Coimbatore|IN|TN|11.0300|77.0434|1324|8480|P|L|1|10271621
+CNN|VOKN|Kannur International Airport|Kannur|Kannur|IN|KL|11.9163|75.5450|330|10007|P|L|1|4530093
 DBR|VEDH|Darbhanga Airport|Darbhanga|Darbhanga|IN|BR|26.1928|85.9169|156|9000|P|M|1|1634772
+DED|VIDN|Dehradun Jolly Grant Airport|Dehradun|Dehradun|IN|UT|30.1892|78.1767|1831|7000|P|M|1|1674434
+DGH|VEDO|Deoghar Airport|Deoghar|Deoghar|IN|JH|24.4468|86.7050|361|2398|P|S|1|297951
 DHM|VIGG|Kangra Airport|Kangra|Kangra|IN|HP|32.1649|76.2630|2525|4620|P|M|1|345509
 DIB|VEMN|Dibrugarh Airport|Dibrugarh|Dibrugarh|IN|AS|27.4839|95.0169|362|6000|P|M|1|741375
 DIU|VADU|Diu Airport|Diu|Diu|IN|DH|20.7142|70.9219|31|5980|P|S|1|120384
 DMU|VEMR|Dimapur Airport|Dimapur|Dimapur|IN|NL|25.8839|93.7711|487|7513|P|M|1|462994
+GAY|VEGY|Gaya Airport|Gaya|Gaya|IN|BR|24.7443|84.9512|380|7500|P|M|1|1779482
 GBI|VOGB|Kalaburagi Airport|Kalaburagi|Kalaburagi|IN|KA|17.3082|76.9652|1571|10417|P|S|1|696482
 GDB|VAGD|Gondia Airport|Gondia|Gondia|IN|MM|21.5268|80.2903|987|7500|P|M|1|550874
 GOI|VOGO|Goa Dabolim International Airport|Vasco da Gama|Vasco da Gama|IN|GA|15.3801|73.8333|150|11345|P|L|1|1230838
@@ -1594,26 +1717,30 @@ GWL|VIGR|Gwalior Airport|Gwalior|Gwalior|IN|MP|26.2933|78.2278|617|9000|P|M|1|24
 HBX|VOHB|Hubballi Airport|Hubballi|Hubballi|IN|KA|15.3611|75.0821|2171|5479|P|M|1|1842313
 HDO|VIDX|Hindon Airport / Hindon Air Force Station|Ghaziabad|Ghaziabad|IN|UP|28.7077|77.3589|700|9000|P|S|1|3418713
 HGI|VEHO|Itanagar Donyi Polo Hollongi Airport|Hollongi|Hollongi|IN|AR|26.9668|93.6388|328|7546|P|M|1|166922
+HJR|VEKO|Khajuraho Airport|Khajuraho|Khajuraho|IN|MP|24.8172|79.9186|728|7460|P|M|1|986986
+HSR|VAHS|Rajkot International Airport|Rajkot|Rajkot|IN|GJ|22.3788|71.0394|647|9974|P|L|1|3192862
 HSS|VIHR|Maharaja Agrasen International Airport|Hisar|Hisar|IN|HR|29.1861|75.7414|700|10236|P|L|1|3984472
 HWR|VIHX|Halwara International Airport|Halwara|Halwara|IN|PB|30.7485|75.6298|790|10007|P|L|1|4876723
-IMF|VEIM|Bir Tikendrajit International Airport|Imphal|Imphal|IN|MN|24.7600|93.8967|2540|9009|P|L|1|1099313
+ISK|VAOZ|Nashik International Airport|Nashik|Nashik|IN|MM|20.1191|73.9129|1900|9843|P|L|1|4473856
 IXA|VEAT|Agartala - Maharaja Bir Bikram Airport|Agartala|Agartala|IN|TR|23.8870|91.2404|46|7500|P|M|1|1974985
-IXE|VOML|Mangaluru International Airport|Mangaluru|Mangaluru|IN|KA|12.9547|74.8868|337|8035|P|L|1|2346959
+IXB|VEBD|Bagdogra Airport|Siliguri|Siliguri|IN|WB|26.6812|88.3286|412|9035|P|L|1|2608987
+IXD|VEAB|Prayagraj Airport|Allahabad|Allahabad|IN|UP|25.4401|81.7339|322|8110|P|M|1|1384996
 IXG|VOBM|Belagavi Airport|Belgaum|Belgaum|IN|KA|15.8593|74.6183|2487|7546|P|M|1|943275
 IXH|VEKR|Kailashahar Airport|Kailashahar|Kailashahar|IN|TR|24.3087|92.0077|79|3300|P|M|0|129662
-IXI|VELR|Lilabari North Lakhimpur Airport|Lilabari|Lilabari|IN|AS|27.2957|94.0973|330|7500|P|M|1|187951
 IXJ|VIJU|Jammu Airport|Jammu|Jammu|IN|JK|32.6888|74.8382|996|6700|P|M|1|1138159
 IXK|VAKS|Keshod Airport|Keshod|Keshod|IN|GJ|21.3171|70.2704|167|4500|P|M|1|871540
+IXL|VILH|Leh Kushok Bakula Rimpochee Airport|Leh|Leh|IN|LA|34.1359|77.5465|10682|9040|P|M|1|52276
 IXM|VOMD|Madurai Airport|Madurai|Madurai|IN|TN|9.8345|78.0934|459|5990|P|M|1|3840763
 IXS|VEKU|Silchar Airport|Silchar|Silchar|IN|AS|24.9129|92.9787|352|5993|P|M|1|305217
 IXW|VEJS|Sonari Airport|Jamshedpur|Jamshedpur|IN|JH|22.8137|86.1690|475|4010|P|M|0|2558820
 IXX|VOBR|Bidar Airport / Bidar Air Force Station|Bidar|Bidar|IN|KA|17.9081|77.4871|2178|6955|P|M|0|522043
-IXY|VAKE|Kandla Airport|Kandla|Kandla|IN|GJ|23.1127|70.1003|96|4997|P|M|1|487204
 JGA|VAJM|Jamnagar Airport|Jamnagar|Jamnagar|IN|GJ|22.4655|70.0126|69|8242|P|M|1|849033
 JGB|VEJR|Jagdalpur Airport|Jagdalpur|Jagdalpur|IN|CT|19.0743|82.0368|1822|3000|G|S|1|151837
 JLG|VAJL|Jalgaon Airport|Jalgaon|Jalgaon|IN|MM|20.9627|75.6275|818|5577|P|S|1|912670
 JRG|VEJH|Jharsuguda Airport|Jharsuguda|Jharsuguda|IN|OR|21.9135|84.0504|751|7844|P|S|1|291373
+JRH|VEJT|Jorhat Airport|Jorhat|Jorhat|IN|AS|26.7305|94.1754|311|9000|P|M|1|443475
 JSA|VIJR|Jaisalmer Airport|Jaisalmer|Jaisalmer|IN|RJ|26.8887|70.8650|751|9000|P|M|1|67604
+KBK|VEKI|Kushinagar International Airport|Kushinagar|Kushinagar|IN|UP|26.7765|83.8892|266|10500|P|M|0|696545
 KJB|VOKU|Kurnool Airport|Orvakal|Orvakal|IN|AP|15.7163|78.1692|920|6562|P|M|1|1229770
 KLH|VAKP|Kolhapur Airport|Kolhapur|Kolhapur|IN|MM|16.6647|74.2894|1996|6332|P|M|1|2155422
 KNU|VECX|Kanpur Airport|Kanpur|Kanpur|IN|UP|26.4043|80.4101|410|9000|P|M|1|3514761
@@ -1632,15 +1759,20 @@ PGH|VIPT|Pantnagar Airport|Pantnagar|Pantnagar|IN|UP|29.0334|79.4737|769|4500|P|
 PNQ|VAPO|Pune International Airport|Pune|Pune|IN|MM|18.5821|73.9197|1942|10000|P|L|1|9149991
 PNY|VOPC|Pondicherry Airport|Puducherry|Puducherry|IN|PY|11.9680|79.8120|134|4921|P|M|1|2135043
 PUT|VOPN|Sri Sathya Sai Airport|Puttaparthi|Puttaparthi|IN|AP|14.1493|77.7911|1558|7315|P|M|0|692610
+RDP|VEDG|Kazi Nazrul Islam Airport|Durgapur|Durgapur|IN|WB|23.6225|87.2430|300|9186|P|M|1|4074490
+REW|VERW|Rewa Airport, Chorhata, REWA|Rewa|Rewa|IN|MP|24.5034|81.2203|1000|4593|P|M|1|972896
 RJA|VORY|Rajahmundry Airport|Madhurapudi|Madhurapudi|IN|AP|17.1058|81.8132|151|10384|P|M|1|1693735
 RQY|VOSH|Rashtrakavi Kuvempu Airport|Shimoga|Shimoga|IN|KA|13.8580|75.6189|2017|6000|G|M|0|1379498
 RRK|VERK|Rourkela Airport|Rourkela|Rourkela|IN|OR|22.2566|84.8152|659|5987|P|M|0|1018238
+SXR|VISR|Srinagar International Airport|Srinagar|Srinagar|IN|JK|33.9871|74.7742|5429|12090|P|L|1|2828263
 SXV|VOSM|Salem Airport|Salem|Salem|IN|TN|11.7833|78.0656|1008|5925|P|M|0|1510350
 TCR|VOTK|Tuticorin Airport|Vagaikulam|Vagaikulam|IN|TN|8.7242|78.0258|129|4434|P|S|1|1115893
 TEZ|VETZ|Tezpur Airport|Tezpur|Tezpur|IN|AS|26.7091|92.7847|240|9010|P|M|1|392170
 TIR|VOTP|Tirupati International Airport|Tirupati|Tirupati|IN|AP|13.6320|79.5399|350|12500|P|L|1|3933343
 UDR|VAUD|Maharana Pratap Airport|Udaipur|Udaipur|IN|RJ|24.6177|73.8961|1684|7484|P|M|1|1141855
 UKE|VEUK|Utkela Airport|Bhawanipatna|Bhawanipatna|IN|OR|20.0978|83.1833|685|3000|P|M|1|374585
+VNS|VEBN|Lal Bahadur Shastri International Airport|Varanasi|Varanasi|IN|UP|25.4522|82.8625|266|9006|P|L|1|4423287
+VSV|VISV|Shravasti Airport|Shravasti|Shravasti|IN|UP|27.4997|82.0329|366|5019|P|S|1|69907
 ISU|ORSJ|Jalal Talabani International Airport|Sulaymaniyah|Sulaymaniyah|IQ|SW|35.5605|45.3151|2494|11481|P|M|1|1185224
 KIK|ORKK|Kirkuk International Airport|Kirkuk|Kirkuk|IQ|TS|35.4695|44.3489|1061|9809|P|L|1|2408725
 NJF|ORNI|Al Najaf International Airport|Najaf|Najaf|IQ|NA|31.9911|44.4050|103|9842|P|L|1|2945983
@@ -1713,6 +1845,7 @@ BRI|LIBD|Bari Karol Wojtya International Airport|Bari|Bari|IT|75|41.1389|16.7606
 BZO|LIPB|Bolzano Airport|Bolzano|Bolzano|IT|32|46.4592|11.3261|789|5708|P|M|1|336236
 CIY|LICB|Comiso Airport|Comiso|Comiso|IT|82|36.9958|14.6089|756|8070|P|M|1|529906
 CRV|LIBC|Crotone Sant'Anna Pythagoras Airport|Isola di Capo Rizzuto|Isola di Capo Rizzuto|IT|78|38.9972|17.0802|522|6562|P|M|1|241934
+CTA|LICC|Catania-Fontanarossa Airport|Catania|Catania|IT|82|37.4668|15.0664|39|7989|P|L|1|1953537
 EBA|LIRJ|Marina di Campo Airport|Campo nell'Elba|Campo nell'Elba|IT|52|42.7609|10.2398|31|3114|P|M|1|88229
 FLR|LIRQ|Florence Airport, Peretola|Firenze|Firenze|IT|52|43.8086|11.2028|142|5118|P|L|1|1869078
 FOG|LIBF|Foggia Gino Lisa Airport|Foggia|Foggia|IT|75|41.4336|15.5346|265|5692|P|M|1|608756
@@ -1757,8 +1890,11 @@ IWJ|RJOW|Iwami Airport|Masuda|Masuda|JP|32|34.6764|131.7900|184|6562|P|M|1|42107
 IWK|RJOI|Iwakuni Kintaikyo Airport|Iwakuni|Iwakuni|JP|35|34.1463|132.2472|7|8000|P|M|1|1029649
 IZO|RJOC|Izumo Enmusubi Airport|Izumo|Izumo|JP|32|35.4136|132.8900|15|6562|P|M|1|380466
 KCZ|RJOK|Kochi Ryoma Airport|Nankoku|Nankoku|JP|39|33.5452|133.6702|42|8203|P|L|1|1300769
+KIJ|RJSN|Niigata Airport|Niigata|Niigata|JP|15|37.9542|139.1122|29|8200|P|L|1|3151441
 KMI|RJFM|Miyazaki Airport|Miyazaki|Miyazaki|JP|45|31.8772|131.4490|20|8200|P|L|1|1142733
 KMJ|RJFT|Kumamoto Airport|Kumamoto|Kumamoto|JP|43|32.8373|130.8550|642|9840|P|L|1|2511494
+KMQ|RJNK|Komatsu Airport / JASDF Komatsu Air Base|Kanazawa|Kanazawa|JP|17|36.3934|136.4069|36|8876|P|L|1|2153569
+KOJ|RJFK|Kagoshima Airport|Kagoshima|Kagoshima|JP|46|31.8034|130.7190|906|9840|P|L|1|1715891
 KTD|RORK|Kitadaito Airport|Kitadaitojima|Kitadaitojima|JP|47|25.9447|131.3270|80|4921|P|M|1|1092
 KUH|RJCK|Kushiro Airport|Kushiro|Kushiro|JP|01|43.0410|144.1930|327|8202|P|M|1|228757
 KUM|RJFC|Yakushima Airport|Yakushima|Yakushima|JP|46|30.3856|130.6590|124|4921|P|M|1|27703
@@ -1766,6 +1902,8 @@ MBE|RJEB|Monbetsu Airport|Monbetsu|Monbetsu|JP|01|44.3039|143.4040|80|6562|P|M|1
 MMB|RJCM|Memanbetsu Airport|Ozora|Ozora|JP|01|43.8806|144.1640|135|8202|P|M|1|176710
 MMJ|RJAF|Shinshu-Matsumoto Airport|Matsumoto|Matsumoto|JP|20|36.1668|137.9230|2182|6560|P|M|1|1858237
 MYE|RJTQ|Miyakejima Airport|Miyakejima|Miyakejima|JP|13|34.0736|139.5600|67|4350|P|M|1|9691
+MYJ|RJOM|Matsuyama Airport|Matsuyama|Matsuyama|JP|38|33.8269|132.7001|25|8200|P|L|1|2564386
+NGO|RJGG|Chubu Centrair International Airport|Tokoname|Tokoname|JP|23|34.8584|136.8050|15|11483|P|L|1|7433723
 NGS|RJFU|Nagasaki Airport|Nagasaki|Nagasaki|JP|42|32.9169|129.9140|15|9840|P|L|1|1587136
 NKM|RJNA|Nagoya Airport / JASDF Komaki Air Base|Nagoya|Nagoya|JP|23|35.2558|136.9241|52|8990|P|M|1|3935603
 NTQ|RJNW|Noto Satoyama Airport|Wajima|Wajima|JP|17|37.2931|136.9620|718|6562|P|M|1|290785
@@ -1775,7 +1913,6 @@ OIR|RJEO|Okushiri Airport|Okushiri Island|Okushiri Island|JP|01|42.0717|139.4330
 OIT|RJFO|Oita Airport|Oita|Oita|JP|44|33.4794|131.7370|19|9840|P|M|1|538795
 OKE|RJKB|Okinoerabu Airport|Wadomari|Wadomari|JP|46|27.4316|128.7056|101|4430|P|M|1|14307
 OKJ|RJOB|Okayama Momotaro Airport|Okayama|Okayama|JP|33|34.7569|133.8550|806|9843|P|L|1|2604871
-QGU|RJNG|Gifu Airport|Gifu|Gifu|JP|21|35.3941|136.8700|128|8860|P|M|0|1187128
 RIS|RJER|Rishiri Airport|Rishiri|Rishiri|JP|01|45.2420|141.1860|112|5906|P|M|1|21009
 RJAN|RJAN|Niijima Airport|Niijima Village|Niijima Village|JP|13|34.3694|139.2690|92|2625|G|S|1|2036
 RJTF|RJTF|Chofu Airport|Chofu|Chofu|JP|13|35.6717|139.5280|141|2625|P|M|1|14040564
@@ -1785,7 +1922,6 @@ TAK|RJOT|Takamatsu Airport|Takamatsu|Takamatsu|JP|37|34.2150|134.0155|607|8200|P
 TJH|RJBT|Konotori Tajima Airport|Toyooka|Toyooka|JP|28|35.5128|134.7870|584|3937|P|M|1|380106
 TKN|RJKN|Tokunoshima Airport|Amagi|Amagi|JP|46|27.8364|128.8814|17|6561|P|M|1|34899
 TKS|RJOS|Tokushima Awaodori Airport / JMSDF Tokushima Air Base|Tokushima|Tokushima|JP|36|34.1326|134.6078|26|6560|P|L|1|2671961
-TNE|RJFG|New Tanegashima Airport|Tanegashima|Tanegashima|JP|46|30.6051|130.9910|768|6544|P|M|1|44556
 TOY|RJNT|Toyama Kitokito Airport|Toyama|Toyama|JP|16|36.6484|137.1874|95|6562|P|M|1|1174112
 TRA|RORT|Tarama Airport|Tarama|Tarama|JP|47|24.6538|124.6755|36|4921|P|M|1|17675
 TSJ|RJDT|Tsushima Airport|Tsushima|Tsushima|JP|42|34.2849|129.3310|213|6234|P|M|1|50438
@@ -1800,7 +1936,7 @@ KIS|HKKI|Kisumu International Airport|Kisumu|Kisumu|KE|42|-0.0861|34.7289|3734|1
 KTL|HKKT|Kitale Airport|Kitale|Kitale|KE|26|0.9720|34.9586|6070|4757|P|M|0|305456
 LAU|HKLU|Manda Airport|Lamu|Lamu|KE|05|-2.2524|40.9129|20|6561|P|M|1|66908
 LKG|HKLK|Lokichogio Airport|Lokichogio|Lokichogio|KE|23|4.2041|34.3482|2074|6195|P|M|0|34610
-MYD|HKML|Malindi International Airport|Malindi|Malindi|KE|03|-3.2293|40.1017|80|4600|G|M|1|179809
+MBA|HKMO|Moi International Airport|Mombasa|Mombasa|KE|01|-4.0348|39.5942|200|10991|P|L|1|2040419
 NUU|HKNK|Nakuru Lanet Airport|Nakuru|Nakuru|KE|32|-0.2984|36.1592|6234|5607|P|M|0|677135
 NYK|HKNL|Nanyuki Civil Airport|Gathiuru|Gathiuru|KE|19|-0.0624|37.0413|6250|3900|P|M|1|579408
 BSZ|UCFM|Manas International Airport|Bishkek|Bishkek|KG|C|43.0613|74.4776|2058|13780|P|L|1|1195034
@@ -1815,10 +1951,11 @@ KG-0018|UAFS|Kyzyl-Kiya Airport|Kyzyl-Kiya|Kyzyl-Kiya|KG|B|40.2717|72.0471|2928|
 OSS|UCFO|Osh International Airport|Osh|Osh|KG|O|40.6090|72.7933|2927|10538|P|L|1|1041950
 UA30|UCFB|Batken Airport|Batken|Batken|KG|B|40.0429|70.8378|3602|5905|P|M|1|432371
 UAFZ|UAFZ|Kazarman Airport|Kazarman|Kazarman|KG|J|41.4103|74.0444|4298|3000|G|S|1|10219
+BBM|VDBG|Battambang Airport|Battambang|Battambang|KH|2|13.0956|103.2240|59|5250|P|M|1|243941
 DSY|VDDS|Dara Sakor International Airport|Ta Noun|Ta Noun|KH|9|10.9142|103.2267|60|10498|P|L|1|137092
 KOS|VDSV|Sihanouk International Airport|Preah Sihanouk|Preah Sihanouk|KH|18|10.5706|103.6321|33|8202|P|L|1|350203
+KTI|VDTI|Techo International Airport|Phnom Penh|Phnom Penh|KH|8|11.3600|104.9213|20|13123|P|L|1|3635272
 RBE|VDRK|Ratanakiri Airport|Ratanakiri|Ratanakiri|KH|16|13.7300|106.9870|0|3937|G|M|0|64825
-SAI|VDSA|Siem Reap-Angkor International Airport|Siem Reap|Siem Reap|KH|17|13.3697|104.2238|191|11827|P|L|1|497905
 AAK|NGUK|Aranuka Airport|Buariki|Buariki|KI|G|0.1853|173.6370|6|3000|G|S|1|738
 BBG|NGTU|Butaritari Airport|Butaritari|Butaritari|KI|G|3.0858|172.8110|5|3000|G|S|1|3020
 AJN|FMCV|Ouani Airport|Ouani|Ouani|KM|A|-12.1310|44.4300|62|4429|P|M|1|166035
@@ -1826,12 +1963,12 @@ NWA|FMCI|Moheli Bandar Es Eslam Airport|Fomboni|Fomboni|KM|M|-12.2981|43.7665|46
 NEV|TKPN|Vance W. Amory International Airport|Charlestown|Charlestown, KN|KN|A|17.2057|-62.5899|14|3996|P|M|1|7423
 WOS|ZKWS|Wonsan Kalma Airport|Wonsan|Wonsan|KP|07|39.1652|127.4879|7|11482|P|M|1|1349856
 CJJ|RKTU|Cheongju International Airport/Cheongju Air Base (K-59/G-513)|Cheongju|Cheongju|KR|43|36.7156|127.5003|191|9000|P|L|1|8054993
-CJU|RKPC|Jeju International Airport|Jeju City|Jeju City|KR|49|33.5121|126.4925|118|10433|P|L|1|930149
 HIN|RKPS|Sacheon Airport / Sacheon Air Base|Sacheon|Sacheon|KR|48|35.0886|128.0717|25|9000|P|M|1|619996
 KAG|RKNN|Gangneung Airport (K-18)|Gangneung|Gangneung|KR|42|37.7536|128.9439|35|9000|P|M|0|164706
 KPO|RKTH|Pohang Airport (G-815/K-3)|Pohang|Pohang|KR|47|35.9880|129.4204|70|7000|P|M|1|674359
 KUV|RKJK|Gunsan Airport / Gunsan Air Base|Gunsan|Gunsan|KR|45|35.9038|126.6160|29|9000|P|M|1|1047587
 KWJ|RKJJ|Gwangju Airport|Gwangju|Gwangju|KR|29|35.1232|126.8054|39|9300|P|M|1|1664924
+MWX|RKJB|Muan International Airport|Muan|Muan|KR|46|34.9914|126.3828|35|9186|P|L|1|1423496
 RSU|RKJY|Yeosu Airport|Yeosu|Yeosu|KR|46|34.8423|127.6170|53|6890|P|M|1|700485
 SWU|RKSW|Suwon Airport|Suwon|Suwon|KR|41|37.2394|127.0070|88|9000|P|M|0|3743564
 TAE|RKTN|Daegu International Airport|Daegu|Daegu|KR|27|35.8944|128.6570|116|9039|P|L|1|4485661
@@ -1857,6 +1994,7 @@ LXG|VLLN|Luang Namtha Airport|Luang Namtha|Luang Namtha|LA|LM|20.9670|101.4000|1
 ODY|VLOS|Oudomsay Airport|Oudomsay|Oudomsay|LA|OU|20.6827|101.9940|1804|3000|G|S|1|21372
 VTE|VLVT|Wattay International Airport|Vientiane|Vientiane|LA|VT|17.9851|102.5667|564|9843|P|L|1|1048959
 XKH|VLXK|Xieng Khouang Airport|Xieng Khouang|Xieng Khouang|LA|XI|19.4500|103.1580|3445|8555|P|S|1|33506
+SLU|TLPC|George F. L. Charles Airport|Castries|Castries|LC|02|14.0202|-60.9929|22|5735|P|M|1|67277
 UVF|TLPL|Hewanorra International Airport|Vieux Fort|Vieux Fort|LC|11|13.7332|-60.9526|14|9003|P|L|1|81010
 ACJ|VCCA|Anuradhapura Airport|Anuradhapura|Anuradhapura|LK|7|8.3015|80.4285|324|4876|P|M|0|106138
 ADP|VCCG|Ampara Airport|Ampara|Ampara|LK|5|7.3367|81.6239|150|3600|P|M|0|139845
@@ -1873,6 +2011,7 @@ MSU|FXMM|Moshoeshoe I International Airport|Maseru|Maseru|LS|A|-29.4563|27.5545|
 PLQ|EYPA|Palanga International Airport|Palanga|Palanga|LT|KL|55.9732|21.0939|33|7480|P|L|1|368066
 SQQ|EYSA|Siauliai International Airport|Siauliai|Siauliai|LT|SA|55.8939|23.3950|443|11483|P|M|0|118081
 VNO|EYVI|Vilnius International Airport|Vilnius|Vilnius|LT|VL|54.6341|25.2858|648|8251|P|L|1|1509728
+LUX|ELLX|Luxembourg-Findel International Airport|Luxembourg|Luxembourg|LU|L|49.6268|6.2121|1234|13123|P|L|1|2917010
 RIX|EVRA|Riga International Airport|Riga|Riga|LV|062|56.9208|23.9707|36|10499|P|L|1|1386382
 BCQ|LY-BCQ|Brak Airport|Brak|Brak|LY|SH|27.6530|14.2720|1056|6000|G|M|0|42287
 LAQ|HLLQ|Al Abraq International Airport|Al Albraq|Al Albraq|LY|JA|32.7890|21.9549|2157|11824|P|L|1|399963
@@ -1882,6 +2021,7 @@ AHU|GMTA|Cherif Al Idrissi Airport|Al Hoceima|Al Hoceima|MA|01|35.1771|-3.8395|9
 BEM|GMMD|Beni Mellal Airport|Oulad Yaich|Oulad Yaich|MA|05|32.4019|-6.3159|1694|8169|P|L|1|1131398
 ERH|GMFK|Moulay Ali Cherif Airport|Errachidia|Errachidia|MA|08|31.9475|-4.3983|3428|10499|P|M|1|294529
 ESU|GMMI|Essaouira-Mogador Airport|Essaouira|Essaouira|MA|07|31.3975|-9.6817|384|8553|P|M|1|110362
+FEZ|GMFF|Fes Saiss International Airport|Saiss|Saiss|MA|03|33.9273|-4.9780|1900|10499|P|L|1|2684037
 MEK|GMFM|Bassatine Airport|Meknes|Meknes|MA|03|33.8791|-5.5151|1890|9252|P|M|0|595885
 NDR|GMMW|Nador Al Aaroui International Airport|Al Aaroui|Al Aaroui|MA|02|34.9888|-3.0282|574|9842|P|L|1|741364
 OUD|GMFO|Oujda Angads Airport|Ahl Angad|Ahl Angad|MA|02|34.7896|-1.9260|1535|9843|P|L|1|1376185
@@ -1952,7 +2092,7 @@ MFM|VMMC|Macau International Airport|Nossa Senhora do Carmo|Nossa Senhora do Car
 ROP|PGRO|Rota International Airport|Rota Island|Rota Island|MP|A|14.1733|145.2411|607|6000|P|L|1|13277
 SPN|PGSN|Saipan International Airport|I Fadang|I Fadang|MP|A|15.1194|145.7288|215|8700|P|M|1|42986
 TIQ|PGWT|Francisco Manglona Borja / Tinian International Airport|Tinian Island|Tinian Island|MP|A|14.9992|145.6194|271|8600|P|M|1|25584
-MLA|LMML|Malta International Airport|Valletta|Valletta|MT|25|35.8459|14.4915|300|10991|P|L|1|574125
+MNI|TRPG|John A. Osborne Airport|Gerald's Park|Gerald's Park|MS|SP|16.7918|-62.1932|550|1968|P|L|1|36139
 DRV|VRMD|Dharavandhoo Airport|Baa Atoll|Baa Atoll|MV|20|5.1561|73.1302|6|3901|P|S|1|3192
 FMT|VRQF|Faresmaathoda Airport|Faresmaathodaa|Faresmaathodaa|MV|28|0.1926|73.1968|0|3000|G|S|1|677
 FND|VRCF|Funadhoo Airport|Funadhoo|Funadhoo|MV|24|6.1624|73.2875|0|3000|G|S|1|1858
@@ -1964,6 +2104,7 @@ TMF|VRNT|Thimarafushi Airport|Thimarafushi|Thimarafushi|MV|08|2.2110|73.1533|6|3
 VAM|VRMV|Villa International Airport Maamigili|Maamigili|Maamigili|MV|00|3.4718|72.8326|6|5905|P|M|1|3257
 BLZ|FWCL|Chileka International Airport|Blantyre|Blantyre|MW|BL|-15.6772|34.9723|2555|7628|P|L|1|1337337
 KGJ|FWKA|Karonga Airport|Karonga|Karonga|MW|KR|-9.9536|33.8933|1765|4200|P|M|0|199517
+AGU|MMAS|Aguascalientes International Airport|Aguascalientes|Aguascalientes|MX|AGU|21.6996|-102.3184|6112|9843|P|L|1|2077973
 BJX|MMLO|Guanajuato International Airport|Silao|Silao|MX|GUA|20.9927|-101.4803|5956|11483|P|L|1|3796934
 CEN|MMCN|Ciudad Obregon International Airport|Ciudad Obregon|Ciudad Obregon|MX|SON|27.3926|-109.8330|243|7546|P|M|1|735010
 CJS|MMCS|Abraham Gonzalez International Airport|Ciudad Juarez|Ciudad Juarez|MX|CHH|31.6367|-106.4285|3904|8858|P|L|1|1272701
@@ -2007,7 +2148,6 @@ TGZ|MMTG|Angel Albino Corzo International Airport|Tuxtla Gutierrez|Tuxtla Gutier
 TPQ|MMEP|Amado Nervo National Airport|Tepic|Tepic|MX|NAY|21.4198|-104.8425|3020|10171|P|M|1|544652
 TQO|MMTL|Felipe Carrillo Puerto International Airport Tulum|Tulum|Tulum|MX|ROO|20.1721|-87.6603|66|12139|P|L|1|305962
 UPN|MMPN|Uruapan - Licenciado y General Ignacio Lopez Rayon International Airport|Uruapan|Uruapan|MX|MIC|19.3967|-102.0390|5258|7874|P|M|1|1056911
-ZCL|MMZC|General Leobardo C. Ruiz International Airport|Zacatecas|Zacatecas|MX|ZAC|22.8949|-102.6872|7141|9843|P|M|1|712585
 ZIH|MMZH|Ixtapa-Zihuatanejo International Airport|Ixtapa|Ixtapa|MX|GRO|17.6018|-101.4606|26|8222|P|L|1|437284
 ZLO|MMZO|Playa de Oro International Airport|Manzanillo|Manzanillo|MX|COL|19.1448|-104.5590|30|7218|P|M|1|353032
 AOR|WMKA|Sultan Abdul Halim Airport|Alor Satar|Alor Satar|MY|02|6.1897|100.3980|15|9005|P|M|1|850852
@@ -2017,7 +2157,6 @@ BTU|WBGB|Bintulu Airport|Bintulu|Bintulu|MY|13|3.1239|113.0200|74|9006|P|M|1|215
 IPH|WMKI|Sultan Azlan Shah Airport|Ipoh|Ipoh|MY|08|4.5673|101.0916|130|5900|P|L|1|2635974
 JHB|WMKJ|Senai International Airport|Johor Bahru|Johor Bahru|MY|01|1.6413|103.6700|135|12467|P|L|1|5245473
 KBR|WMKC|Sultan Ismail Petra Airport|Kota Baharu|Kota Baharu|MY|03|6.1669|102.2930|16|7874|P|M|1|1234798
-KTE|WMKE|Kerteh Airport|Kerteh|Kerteh|MY|11|4.5372|103.4270|18|4446|P|M|0|149540
 KUA|WMKD|Kuantan Airport|Kuantan|Kuantan|MY|06|3.7754|103.2090|58|9200|P|M|1|783744
 KUD|WBKT|Kudat Airport|Kudat|Kudat|MY|12|6.9241|116.8371|10|3000|G|S|1|28646
 LBP|MY-LBP|Long Banga Airport|Long Banga|Long Banga|MY|13|3.2021|115.4018|750|3000|G|S|1|150
@@ -2032,9 +2171,11 @@ MKZ|WMKM|Malacca International Airport|Malacca|Malacca|MY|04|2.2656|102.2528|35|
 MUR|WBGM|Marudi Airport|Marudi|Marudi|MY|13|4.1787|114.3303|103|3274|P|M|1|170863
 MZV|WBMU|Mulu Airport|Mulu|Mulu|MY|13|4.0483|114.8050|80|4921|P|M|1|25547
 ODN|WBGI|Long Seridan Airport|Long Seridan|Long Seridan|MY|13|3.9761|115.0673|607|3000|G|S|1|150
+PEN|WMKP|Penang International Airport|Penang|Penang|MY|07|5.2963|100.2762|11|10997|P|L|1|3461687
 SBW|WBGS|Sibu Airport|Sibu|Sibu|MY|13|2.2616|111.9850|122|9036|P|M|1|367809
 SDK|WBKS|Sandakan Airport|Sandakan|Sandakan|MY|12|5.9009|118.0590|46|8202|P|M|1|462402
 SZB|WMSA|Sultan Abdul Aziz Shah International Airport|Subang|Subang|MY|10|3.1306|101.5490|90|12401|P|L|1|11878052
+TGG|WMKN|Sultan Mahmud Airport|Kuala Terengganu|Kuala Terengganu|MY|11|5.3826|103.1030|21|11417|P|M|1|570256
 TMG|WBKM|Tomanggong Airport|Tomanggong|Tomanggong|MY|12|5.4026|118.6576|26|2198|G|S|1|150
 TOD|WMBT|Tioman Airport|Tioman Island|Tioman Island|MY|06|2.8182|104.1600|15|3255|P|M|1|22930
 MNC|FQNC|Nacala International Airport|Nacala|Nacala|MZ|N|-14.4882|40.7122|410|10171|P|M|1|336367
@@ -2051,9 +2192,18 @@ LUD|FYLZ|Luderitz Airport|Luderitz|Luderitz|NA|KA|-26.6874|15.2429|457|6004|P|M|
 MPA|FYKM|Katima Mulilo Airport|Mpacha|Mpacha|NA|CA|-17.6343|24.1767|3144|7520|P|M|1|52496
 OMD|FYOG|Oranjemund Airport|Oranjemund|Oranjemund|NA|KA|-28.5853|16.4464|14|5252|P|M|1|12771
 OND|FYOA|Ondangwa Airport|Ondangwa|Ondangwa|NA|ON|-17.8782|15.9526|3599|9800|P|M|1|118022
+BMY|NWWC|Ile Art - Waala Airport|Waala|Waala|NC|02|-19.7205|163.6611|306|1969|P|S|1|890
+ILP|NWWE|Ile des Pins Airport|Ile des Pins|Ile des Pins|NC|03|-22.5889|167.4560|315|3608|P|M|1|2325
+KNQ|NWWD|Kone Airport|Kone|Kone|NC|02|-21.0536|164.8388|23|3281|P|M|1|16574
+LIF|NWWL|Lifou Airport|Lifou|Lifou|NC|01|-20.7746|167.2393|92|3609|P|M|1|8222
+MEE|NWWR|Mare Airport|Mare|Mare|NC|01|-21.4824|168.0385|141|3281|P|M|1|6508
+TGJ|NWWA|Tiga Airport|Tiga|Tiga|NC|01|-21.0964|167.8038|128|6000|G|M|1|2938
+TOU|NWWU|Touho Airport|Touho|Touho|NC|02|-20.7901|165.2595|10|3609|P|M|1|14299
+UVE|NWWV|Ouvea Airport|Ouvea|Ouvea|NC|01|-20.6409|166.5730|23|3609|P|M|1|4150
 MFQ|DRRM|Maradi Airport|Maradi|Maradi|NE|4|13.5025|7.1268|1240|6070|P|M|0|458148
 THZ|DRRT|Tahoua Airport|Tahoua|Tahoua|NE|5|14.8757|5.2654|1266|7053|P|M|0|207929
 ZND|DRZR|Zinder Airport|Zinder|Zinder|NE|7|13.7790|8.9838|1516|5988|P|M|1|430225
+AKR|DNAK|Akure Airport|Akure|Akure|NG|ON|7.2467|5.3010|1100|9195|P|M|1|3314514
 BCU|DNBC|Sir Abubakar Tafawa Balewa Bauchi State International Airport|Bauchi|Bauchi|NG|BA|10.4828|9.7440|1965|11154|P|L|1|1521799
 BNI|DNBE|Benin Airport|Benin|Benin|NG|ED|6.3170|5.5995|258|7870|P|M|1|1778758
 CBQ|DNCA|Margaret Ekpo International Airport|Calabar|Calabar|NG|CR|4.9760|8.3472|210|8040|P|M|1|697377
@@ -2062,6 +2212,7 @@ DNBY|DNBY|Bayelsa International Airport|Yenagoa|Yenagoa|NG|BY|4.9576|6.2033|67|1
 ENU|DNEN|Akanu Ibiam International Airport|Enegu|Enegu|NG|EN|6.4737|7.5605|466|7879|P|L|1|2884086
 IBA|DNIB|Ibadan Airport|Ibadan|Ibadan|NG|OY|7.3625|3.9783|725|7875|P|M|1|5389344
 JOS|DNJO|Yakubu Gowon Airport|Jos|Jos|NG|PL|9.6398|8.8691|4232|9845|P|M|1|967253
+KAD|DNKA|Kaduna International Airport|Kaduna|Kaduna|NG|KD|10.6960|7.3201|2073|9843|P|L|1|2427221
 MDI|DNMK|Makurdi Airport|Makurdi|Makurdi|NG|BE|7.7039|8.6139|371|9830|P|M|1|867644
 MXJ|DNMN|Minna Airport|Minna|Minna|NG|NI|9.6522|6.4623|834|11153|P|M|0|445496
 NG-0005|DNBK|Sir Ahmadu Bello International Airport|Birinin Kebbi|Birinin Kebbi|NG|KE|12.4790|4.3691|775|10171|P|L|1|663855
@@ -2074,6 +2225,7 @@ BEF|MNBL|Bluefields Airport|Bluefields|Bluefields|NI|AS|11.9910|-83.7741|20|6625
 PUZ|MNPC|Puerto Cabezas Airport|Puerto Cabezas|Puerto Cabezas|NI|AN|14.0472|-83.3867|52|8130|P|M|1|34890
 RNI|MNCI|Corn Island Airport|Corn Island|Corn Island|NI|AS|12.1748|-83.0594|1|6234|P|S|1|7332
 ENS|EHTW|Twente Airport|Enschede|Enschede|NL|OV|52.2758|6.8892|114|9801|P|M|0|538290
+GRQ|EHGG|Groningen Airport Eelde|Groningen|Groningen|NL|DR|53.1191|6.5777|17|8202|P|L|1|2795524
 RTM|EHRD|Rotterdam The Hague Airport|Rotterdam|Rotterdam|NL|ZH|51.9569|4.4372|-15|7218|P|L|1|5947766
 ALF|ENAT|Alta Airport|Alta|Alta|NO|56|69.9761|23.3717|9|7165|P|M|1|14639
 ANX|ENAN|Andya Airport, Andenes|Andenes|Andenes|NO|18|69.2952|16.1394|43|8097|P|M|1|9088
@@ -2116,10 +2268,21 @@ SVJ|ENSH|Svolvr Airport, Helle|Svolvr|Svolvr|NO|18|68.2433|14.6692|27|3104|P|M|1
 TRF|ENTO|Sandefjord Airport, Torp|Sandefjord|Sandefjord|NO|39|59.1867|10.2586|286|9216|P|L|1|911760
 VAW|ENSS|Vard Airport, Svartnes|Vard|Vard|NO|56|70.3554|31.0449|42|3707|P|M|1|2224
 VDS|ENVD|Vads Airport|Vads|Vads|NO|56|70.0653|29.8447|127|3278|P|M|1|11547
+BHP|VNBJ|Bhojpur Airport|Bhojpur|Bhojpur|NP|P1|27.1474|87.0508|4000|3000|G|S|0|5013
+BHR|VNBP|Bharatpur Airport|Bharatpur|Bharatpur|NP|P3|27.6781|84.4294|600|3799|P|S|1|231502
+BIR|VNVT|Biratnagar Airport|Biratnagar|Biratnagar|NP|P1|26.4815|87.2640|236|4937|P|M|1|1130086
+BWA|VNBW|Gautam Buddha International Airport|Siddharthanagar|Siddharthanagar|NP|P5|27.5046|83.4104|358|9843|P|L|1|1020910
+DHI|VNDH|Dhangarhi Airport|Dhangarhi|Dhangarhi|NP|P7|28.7553|80.5834|690|5000|G|S|0|243335
+DOP|VNDP|Dolpa Airport|Dolpa|Dolpa|NP|P6|28.9857|82.8187|8200|3000|G|S|1|150
 JKR|VNJP|Janakpur Airport|Janakpur|Janakpur|NP|P2|26.7088|85.9224|256|3300|P|M|1|546180
+JUM|VNJL|Jumla Airport|Jumla|Jumla|NP|P6|29.2742|82.1933|7700|2165|P|S|1|9073
+KEP|VNNG|Nepalgunj Airport|Nepalgunj|Nepalgunj|NP|P5|28.1036|81.6670|540|4935|P|M|1|539574
 KTM|VNKT|Tribhuvan International Airport|Kathmandu|Kathmandu|NP|P3|27.6966|85.3591|4390|10991|P|L|1|3062834
+SIH|VNDT|Silgadi Doti Airport|Silgadi Doti|Silgadi Doti|NP|P7|29.2622|80.9360|2100|3000|G|S|1|52982
 SYH|VNSB|Syangboche Airport|Namche Bazaar|Namche Bazaar|NP|P1|27.8112|86.7124|12400|3000|G|S|0|1897
 TMI|VNTR|Tumling Tar Airport|Tumling Tar|Tumling Tar|NP|P1|27.3150|87.1933|1700|4000|G|S|1|20167
+TPU|VNTP|Tikapur Airport|Tikapur|Tikapur|NP|P7|28.5219|81.1230|522|3000|G|S|0|35768
+VNSL|VNSL|Rukum Salle Airport|Musikot|Musikot|NP|P6|28.6362|82.4502|5184|3000|G|S|1|150
 ALR|NZLX|Alexandra Aerodrome|Alexandra|Alexandra|NZ|OTA|-45.2105|169.3711|752|3937|G|M|0|5800
 AMZ|NZAR|Ardmore Airport|Manurewa|Manurewa|NZ|AUK|-37.0297|174.9730|111|4630|P|M|0|335940
 ASG|NZAS|Ashburton Airport|Ashburton|Ashburton|NZ|CAN|-43.9033|171.7970|302|4554|G|S|0|15860
@@ -2174,6 +2337,7 @@ CHM|SPEO|FAP Lieutenant Jaime Andres de Montreuil Morales Airport|Chimbote|Chimb
 CIX|SPHI|Capitan FAP Jose A. Quinones Gonzalez International Airport|Chiclayo|Chiclayo|PE|LAM|-6.7892|-79.8283|97|8266|P|L|1|1114273
 CJA|SPJR|Mayor General FAP Armando Revoredo Iglesias Airport|Cajamarca|Cajamarca|PE|CAJ|-7.1392|-78.4894|8781|8201|P|M|1|260659
 HUU|SPNC|Alferez Fap David Figueroa Fernandini Airport|Huanuco|Huanuco|PE|HUC|-9.8788|-76.2048|6070|8202|P|M|1|415038
+IBP|SPBR|Iberia Airport|Iberia|Iberia|PE|MDD|-11.4116|-69.4887|750|4429|P|M|0|9114
 ILQ|SPLO|General Jorge Fernandez Maldon Airport|Ilo|Ilo|PE|MOQ|-17.6950|-71.3440|72|8202|P|M|1|108339
 JAE|SPJE|Shumba Airport|Jaen|Jaen|PE|CAJ|-5.5925|-78.7740|2477|7874|P|M|1|141671
 JAU|SPJJ|Francisco Carle Airport|Jauja|Jauja|PE|JUN|-11.7831|-75.4734|11034|9220|P|M|1|802316
@@ -2185,6 +2349,7 @@ PIO|SPSO|Captain Renan Elias Olivera International Airport|Pisco|Pisco|PE|ICA|-1
 PTL|PE-0023|Walter Braedt Segu Airport|Mancora|Mancora|PE|TUM|-4.0869|-81.0258|30|3000|G|S|0|13887
 RIJ|SPJA|Juan Simons Vela Airport|Rioja|Rioja|PE|SAM|-6.0679|-77.1600|2707|6168|P|M|0|66408
 RIM|SPLN|San Nicolas Airport|Rodriguez de Mendoza|Rodriguez de Mendoza|PE|AMA|-6.3923|-77.5012|5082|5915|P|S|0|1825
+SYC|SPSY|Shiringayoc Airport|Shiringayoc|Shiringayoc|PE|MDD|-11.8980|-69.0625|856|3000|G|S|0|780
 TBP|SPME|Captain Pedro Canga Rodriguez International Airport|Tumbes|Tumbes|PE|TUM|-3.5521|-80.3811|115|8202|P|M|1|237197
 TCQ|SPTN|Coronel FAP Carlos Ciriani Santa Rosa International Airport|Tacna|Tacna|PE|TAC|-18.0533|-70.2758|1538|8202|P|M|1|334457
 TGI|SPGM|Tingo Maria Airport|Tingo Maria|Tingo Maria|PE|HUC|-9.2897|-76.0051|2146|6890|G|S|0|51801
@@ -2210,20 +2375,45 @@ TUB|NTAT|Tubuai Airport|Mataura|Mataura|PF|A|-23.3654|-149.5240|7|4921|P|M|1|913
 UAH|NTMU|Ua Huka Airport|Ua Huka|Ua Huka|PF|A|-8.9362|-139.5541|160|2477|P|S|1|150
 UAP|NTMP|Ua Pou Airport|Ua Pou|Ua Pou|PF|A|-9.3517|-140.0780|16|2723|P|S|1|150
 ATN|AYNX|Namatanai Airport|Namatanai|Namatanai|PG|NIK|-3.6695|152.4380|150|3494|G|S|0|1258
+AUJ|AYAT|Ambunti Airport|Ambunti|Ambunti|PG|ESW|-4.2157|142.8232|50|2461|G|S|0|2073
+AYU|AYAY|Aiyura Airport|Aiyura Valley|Aiyura Valley|PG|EHG|-6.3381|145.9042|5355|4200|G|S|0|3513
+BOT|AYET|Bosset Airport|Bosset|Bosset|PG|WPD|-7.2373|141.1063|80|2297|G|S|1|150
 BUA|AYBK|Buka Airport|Buka Island|Buka Island|PG|NSB|-5.4223|154.6727|11|5125|P|M|1|150
+BUL|AYBU|Bulolo Airport|Bulolo|Bulolo|PG|MPL|-7.2163|146.6495|2240|4373|G|S|0|10112
+CMU|AYCH|Chimbu Airport|Kundiawa|Kundiawa|PG|CPK|-6.0243|144.9710|4974|3330|P|M|1|11188
 DOI|AYDO|Doini Airport|Castori Islets|Castori Islets|PG|MBA|-10.7009|150.7218|31|2051|G|S|0|413
 EFG|AYEF|Efogi Airport|Efogi|Efogi|PG|CPM|-9.1538|147.6598|3900|1598|G|S|0|367
+FIN|AYFI|Finschhafen Airport|Buki|Buki|PG|MPL|-6.6218|147.8541|60|3000|G|S|0|809
+GMI|AYGT|Gasmata Island Airport|Gasmata Island|Gasmata Island|PG|WBK|-6.2711|150.3310|23|3000|G|S|1|150
+IHU|PG-IHU|Ihu Airport|Ihu|Ihu|PG|GPK|-7.8976|145.3960|70|2648|G|S|0|408
+KDR|AYKC|Kandrian Airport|Kandrian|Kandrian|PG|WBK|-6.1922|149.5478|280|3000|G|S|0|1014
 KKD|AYKO|Kokoda Airport|Kokoda|Kokoda|PG|NPP|-8.8847|147.7310|1240|2805|G|S|0|2699
 KMA|AYKM|Kerema Airport|Kerema|Kerema|PG|GPK|-7.9636|145.7710|10|3044|P|M|1|9672
+KRI|AYKK|Kikori Airport|Kikori|Kikori|PG|GPK|-7.4244|144.2501|50|3000|G|S|1|150
+LMY|AYLM|Lake Murray Airport|Lake Murray|Lake Murray|PG|WPD|-7.0099|141.4940|52|3000|G|S|1|150
 LNG|AYLS|Lese Airport|Lese|Lese|PG|GPK|-8.2799|146.2765|40|2520|G|S|0|1053
 LNV|AYKY|Londolovit Airport|Londolovit|Londolovit|PG|NIK|-3.0436|152.6290|167|3937|G|S|1|1644
 LSA|AYKA|Losuia Airport|Losuia|Losuia|PG|MBA|-8.5058|151.0810|27|5348|G|S|1|150
+MDU|AYMN|Mendi Airport|Mendi|Mendi|PG|SHM|-6.1477|143.6570|5680|4411|P|M|1|31302
+MHY|AYEH|Morehead Airport|Morehead|Morehead|PG|WPD|-8.7141|141.6444|100|4298|G|S|0|2246
 MRM|AYMA|Manari Airport|Manari|Manari|PG|CPM|-9.1908|147.6219|2630|3000|G|S|0|304
+OBX|AYOB|Obo Airport|Obo|Obo|PG|WPD|-7.5906|141.3243|29|1969|G|S|1|150
 OLQ|AYOV|Olsobip Airport|Olsobip|Olsobip|PG|WPD|-5.3897|141.5153|1500|2018|G|S|0|1179
+OPU|AYBM|Balimo Airport|Balimo|Balimo|PG|WPD|-8.0500|142.9330|51|6000|G|M|1|150
+PNP|AYGR|Girua Airport|Popondetta|Popondetta|PG|NPP|-8.8045|148.3090|311|5485|P|M|1|27179
+POM|AYPY|Port Moresby Jacksons International Airport|Port Moresby|Port Moresby|PG|NCD|-9.4434|147.2200|146|9022|P|L|1|288732
 RAW|RAW|Arawa Airport|Arawa|Arawa|PG|NSB|-6.2206|155.5714|20|3000|G|S|0|28994
 SQT|AYCS|China Strait Airstrip|Samarai Island|Samarai Island|PG|MBA|-10.5628|150.6907|10|3000|G|S|0|1051
+TAJ|PG-ATP|Tadji Airport|Aitape|Aitape|PG|SAN|-3.1982|142.4310|33|3000|G|S|0|5547
 TEO|AYTY|Terapo Airport|Terapo Mission|Terapo Mission|PG|GPK|-8.1697|146.1944|15|2756|G|S|0|1798
+TFI|AYTU|Tufi Airport|Tufi|Tufi|PG|NPP|-9.0760|149.3198|85|2887|G|S|1|150
+TIZ|AYTA|Tari Airport|Tari|Tari|PG|HLA|-5.8450|142.9480|5500|5197|G|S|1|7663
+TPI|AYTI|Tapini Airport|Tapini|Tapini|PG|CPM|-8.3567|146.9892|3100|3000|G|S|1|150
+UBI|AYUI|Buin Airport|Buin|Buin|PG|NSB|-6.7292|155.6833|230|1640|G|S|0|574
+UNG|AYKI|Kiunga Airport|Kiunga|Kiunga|PG|WPD|-6.1257|141.2820|88|3691|G|S|1|11536
 UUU|UUU|Manumu Airport|Manumu|Manumu|PG|CPM|-9.0746|147.5735|1800|3000|G|S|0|552
+VAI|AYVN|Vanimo Airport|Vanimo|Vanimo|PG|SAN|-2.6926|141.3028|10|5775|P|M|1|42888
+WBM|AYWD|Wapenamanda Airport|Wapenamanda|Wapenamanda|PG|EPW|-5.6353|143.8922|5889|5052|P|M|1|11437
 WKN|AYWQ|Wakunai Airport|Wakunai|Wakunai|PG|NSB|-5.8603|155.2223|20|3000|G|S|0|448
 WUG|AYWU|Wau Airport|Wau|Wau, PG|PG|MPL|-7.3456|146.7186|3600|3000|G|S|0|10478
 BAG|RPUB|Loakan Airport|Baguio|Baguio|PH|BAG|16.3750|120.6199|4251|5912|P|M|0|1090670
@@ -2231,6 +2421,8 @@ BCD|RPVB|Bacolod-Silay International Airport|Bacolod City|Bacolod City|PH|NEC|10
 BPH|RPMF|Bislig Airport|Bislig|Bislig|PH|SUR|8.1951|126.3210|12|3937|P|M|0|388021
 BQA|RPUR|Dr. Juan C. Angara Airport|Baler|Baler|PH|AUR|15.7293|121.5000|108|3937|P|M|0|218020
 BXU|RPME|Bancasi Airport|Butuan|Butuan|PH|BTC|8.9515|125.4788|141|6877|P|M|1|1098441
+CBO|RPMC|Cotabato (Awang) Airport|Datu Odin Sinsuat|Datu Odin Sinsuat|PH|MDN|7.1648|124.2099|189|6234|P|M|1|2951283
+CGY|RPMY|Laguindingan International Airport|Laguindingan|Laguindingan|PH|MSR|8.6122|124.4565|190|6890|P|L|1|3674872
 CRK|RPLC|Clark International Airport / Clark Air Base|Mabalacat|Mabalacat|PH|PAM|15.1860|120.5600|484|10499|P|L|1|10097211
 CRM|RPVF|Catarman National Airport|Catarman|Catarman|PH|NSA|12.5016|124.6353|6|4429|P|M|1|275198
 CYP|RPVC|Calbayog Airport|Calbayog City|Calbayog City|PH|WSA|12.0726|124.5451|12|4843|P|M|1|284742
@@ -2241,6 +2433,7 @@ DTE|RPUD|Daet Airport|Daet|Daet|PH|CAN|14.1292|122.9800|10|3773|P|M|0|391415
 ENI|RPEN|El Nido Airport|El Nido|El Nido|PH|PLW|11.2024|119.4161|0|3280|P|S|1|63329
 GES|RPMR|General Santos International Airport|General Santos|General Santos|PH|SCO|6.0572|125.0962|505|10587|P|L|1|2999428
 IAO|RPNS|Siargao Airport|Del Carmen|Del Carmen|PH|SUN|9.8591|126.0140|10|4167|P|S|1|23328
+ILO|RPVI|Iloilo International Airport|Cabatuan|Cabatuan|PH|ILI|10.8330|122.4934|27|8202|P|L|1|1688908
 JOL|RPMJ|Jolo Airport|Jolo|Jolo|PH|SLU|6.0537|121.0110|118|4144|P|M|1|287048
 KLO|RPVK|Kalibo International Airport|Kalibo|Kalibo|PH|AKL|11.6794|122.3760|14|7175|P|L|1|607436
 LAO|RPLI|Laoag International Airport|Laoag City|Laoag City|PH|ILN|18.1751|120.5310|25|9120|P|L|1|841266
@@ -2270,8 +2463,8 @@ GIL|OPGT|Gilgit Airport|Gilgit|Gilgit|PK|GB|35.9188|74.3336|4796|5400|P|M|1|2470
 GWD|OPGW|New Gwadar International Airport|Gurandani|Gurandani|PK|BA|25.2967|62.4988|61|12000|P|L|1|119798
 HDD|OPKD|Hyderabad Airport|Hyderabad|Hyderabad, PK|PK|SD|25.3181|68.3661|130|6998|P|S|1|2228147
 KDD|OPKH|Khuzdar Airport|Khuzdar|Khuzdar|PK|BA|27.7906|66.6473|4012|6001|G|S|1|218112
-KDU|OPSD|Skardu International Airport|Skardu|Skardu|PK|GB|35.3387|75.5386|7316|11995|P|L|1|335380
 LHE|OPLA|Allama Iqbal International Airport|Lahore|Lahore|PK|PB|31.5216|74.4036|712|11024|P|L|1|15786288
+LYP|OPFA|Faisalabad International Airport|Faisalabad|Faisalabad|PK|PB|31.3649|72.9953|591|9324|P|L|1|12772853
 MFG|OPMF|Muzaffarabad Airport|Muzaffarabad|Muzaffarabad|PK|JK|34.3388|73.5089|2691|3000|P|S|1|695786
 MJD|OPMJ|Moenjodaro Airport|Moenjodaro|Moenjodaro|PK|SD|27.3352|68.1431|154|6512|P|M|0|1060689
 PEW|OPPS|Bacha Khan International Airport|Peshawar|Peshawar|PK|KP|33.9939|71.5146|1158|9000|P|L|1|7198328
@@ -2281,10 +2474,10 @@ RYK|OPRK|Shaikh Zaid Airport|Rahim Yar Khan|Rahim Yar Khan|PK|PB|28.3839|70.2796
 SDT|OPSS|Saidu Sharif Airport|Saidu Sharif|Saidu Sharif|PK|KP|34.8136|72.3528|3183|5745|P|M|0|627982
 SKT|OPST|Sialkot International Airport|Sialkot|Sialkot|PK|PB|32.5359|74.3646|837|11811|P|L|1|5284524
 SYW|OPSN|Sehwan Sharif Airport|Sehwan Sharif|Sehwan Sharif|PK|SD|26.4731|67.7172|121|6562|P|M|0|345752
+WNS|OPNH|Shaheed Benazirabad Airport|Nawabashah|Nawabashah|PK|SD|26.2194|68.3901|95|8999|P|M|1|1818546
 BZG|EPBY|Ignacy Jan Paderewski Bydgoszcz Airport|Bydgoszcz|Bydgoszcz|PL|KP|53.0968|17.9777|235|8202|P|M|1|965727
 IEG|EPZG|Zielona Gora-Babimost Airport|Nowe Kramsko|Nowe Kramsko|PL|LB|52.1385|15.7986|194|8202|P|M|1|395898
 KRK|EPKK|Krakow John Paul II International Airport|Balice|Balice|PL|MA|50.0777|19.7848|791|8366|P|L|1|3267449
-KTW|EPKT|Katowice Wojciech Korfanty International Airport|Katowice|Katowice|PL|SL|50.4760|19.0807|995|10499|P|L|1|3505718
 LCJ|EPLL|odz Wadysaw Reymont Airport|odz|odz|PL|LD|51.7219|19.3981|604|8202|P|L|1|2196247
 LUZ|EPLB|Lublin Airport|Lublin|Lublin|PL|LU|51.2402|22.7135|633|8268|P|L|1|1296234
 POZ|EPPO|Poznan-awica Airport|Poznan|Poznan|PL|WP|52.4216|16.8234|308|8215|P|L|1|1980036
@@ -2292,9 +2485,12 @@ RDO|EPRA|Warsaw Radom Airport|Radom|Radom|PL|MZ|51.3894|21.2147|610|8202|P|M|1|4
 RZE|EPRZ|Rzeszow-Jasionka Airport|Jasionka|Jasionka|PL|PK|50.1098|22.0242|693|10498|P|L|1|1951002
 SZY|EPSY|Olsztyn-Mazury Airport|Szymany|Szymany|PL|WN|53.4819|20.9377|463|8202|P|M|1|478574
 SZZ|EPSC|Solidarity SzczecinGoleniow Airport|Szczecin|Szczecin|PL|ZP|53.5847|14.9022|154|8202|P|L|1|1684138
+WRO|EPWR|Copernicus Wrocaw Airport|Wrocaw|Wrocaw|PL|DS|51.1037|16.8821|404|8212|P|L|1|3521827
 MQC|LFVM|Miquelon Airport|Miquelon|Miquelon|PM|ML|47.0955|-56.3803|10|3280|P|S|1|1129
 ARE|TJAB|Antonio Nery Juarbe Pol Airport|Arecibo|Arecibo|PR|A|18.4508|-66.6758|23|3975|P|M|0|136756
 BQN|TJBQ|Rafael Hernandez International Airport|Aguadilla|Aguadilla|PR|A|18.4949|-67.1294|237|11702|P|M|1|112854
+CPX|TJCP|Benjamin Rivera Noriega Airport|Culebra|Culebra|PR|A|18.3130|-65.3039|49|2600|P|M|1|58946
+MAZ|TJMZ|Eugenio Maria De Hostos Airport|Mayaguez|Mayaguez|PR|A|18.2557|-67.1485|28|4998|P|M|1|173708
 PSE|TJPS|Mercedita International Airport|Ponce|Ponce|PR|A|18.0083|-66.5630|29|6904|P|M|1|330279
 BGC|LPBG|Braganca Airport|Braganca|Braganca|PT|04|41.8578|-6.7071|2241|5600|P|M|1|224968
 BYJ|LPBJ|Beja Airport / Airbase|Beja|Beja|PT|02|38.0789|-7.9324|636|11319|P|M|0|96256
@@ -2317,15 +2513,18 @@ RUN|FMEE|Roland Garros Airport|Sainte-Marie|Sainte-Marie|RE|SD|-20.8901|55.5189|
 ARW|LRAR|Arad International Airport|Arad|Arad|RO|AR|46.1761|21.2643|352|6562|P|M|1|459365
 BAY|LRBM|Maramures International Airport|Tautii-Magheraus|Tautii-Magheraus|RO|MM|47.6584|23.4644|605|7054|P|M|1|764376
 BBU|LRBS|Bucharest Baneasa Aurel Vlaicu International Airport|Bucharest|Bucharest|RO|B|44.5031|26.1029|297|10499|P|L|1|4290405
-CLJ|LRCL|Avram Iancu Cluj International Airport|Cluj-Napoca|Cluj-Napoca|RO|CJ|46.7860|23.6857|1039|6693|P|L|1|1691929
+BCM|LRBC|Bacau George Enescu International Airport|Bacau|Bacau|RO|BC|46.5219|26.9103|607|8203|P|L|1|2175128
 CND|LRCK|Mihail Kogalniceanu International Airport|Constanta|Constanta|RO|CT|44.3622|28.4883|353|11483|P|L|1|1491490
+CRA|LRCV|Craiova International Airport|Craiova|Craiova|RO|DJ|44.3181|23.8886|626|8203|P|L|1|2445600
 CSB|LRCS|Caransebes Airport|Caransebes|Caransebes|RO|CS|45.4201|22.2525|866|6562|P|M|0|216290
 GHV|LRBV|Brasov-Ghimbav International Airport|Brasov|Brasov|RO|BV|45.7056|25.5229|1740|9252|P|L|1|1932974
 IAS|LRIA|Iasi International Airport|Iasi|Iasi|RO|IS|47.1796|27.6214|411|7874|P|L|1|1733826
+OMR|LROD|Oradea International Airport|Oradea|Oradea|RO|BH|47.0253|21.9025|465|8267|P|L|1|1254849
 SBZ|LRSB|Sibiu International Airport|Sibiu|Sibiu|RO|SB|45.7858|24.0867|1496|8629|P|L|1|1609051
 SCV|LRSV|Suceava Stefan cel Mare International Airport|Suceava|Suceava|RO|SV|47.6875|26.3541|1375|8070|P|L|1|2306542
 SUJ|LRSM|Satu Mare International Airport|Satu Mare|Satu Mare|RO|SM|47.7033|22.8857|405|8160|P|M|1|633753
 TCE|LRTC|Tulcea Danube Delta Airport|Mihail Kogalniceanu|Mihail Kogalniceanu|RO|TL|45.0625|28.7143|200|6517|P|M|0|350800
+TGM|LRTM|Targu Mures Transilvania International Airport|Recea|Recea|RO|MS|46.4677|24.4125|963|6562|P|M|1|562759
 TSR|LRTR|Timisoara Traian Vuia International Airport|Timisoara|Timisoara|RO|TM|45.8099|21.3379|348|11483|P|L|1|1700137
 INI|LYNI|Nis Constantine the Great Airport|Nis|Nis|RS|20|43.3365|21.8562|648|8202|P|L|1|983620
 KVO|LYKV|Morava Airport|Kraljevo|Kraljevo|RS|18|43.8175|20.5867|686|7431|P|M|1|336986
@@ -2340,6 +2539,7 @@ BGN|UESG|Belaya Gora Airport|Belaya Gora|Belaya Gora|RU|SA|68.5562|146.2278|118|
 BQG|UHNB|Bogorodskoye Airport|Bogorodskoye|Bogorodskoye|RU|KHA|52.3810|140.4494|150|4593|P|S|1|3824
 BVJ|USDB|Bovanenkovo Airport|Bovanenkovo|Bovanenkovo|RU|YAN|70.3153|68.3336|24|8698|P|M|1|150
 BWO|UWSB|Balakovo Airport|Balakovo|Balakovo|RU|SAR|51.8583|47.7456|95|7710|P|M|1|331853
+CEK|USCC|Kurchatov Chelyabinsk International Airport|Chelyabinsk|Chelyabinsk|RU|CHE|55.3031|61.5049|769|10499|P|L|1|2380723
 CSH|ULAS|Solovki Airport|Solovetsky Islands|Solovetsky Islands|RU|ARK|65.0300|35.7306|60|4920|P|S|1|919
 CSY|UWKS|Cheboksary Airport|Cheboksary|Cheboksary|RU|CU|56.0903|47.3473|558|8241|P|M|1|833165
 CYX|UESS|Cherskiy Airport|Cherskiy|Cherskiy|RU|SA|68.7406|161.3380|20|5577|P|M|1|3707
@@ -2353,6 +2553,7 @@ GRV|URMG|Akhmat Kadyrov Grozny International Airport|Grozny|Grozny|RU|CE|43.3881
 GYG|UEMM|Magan Airport|Magan|Magan|RU|SA|62.1035|129.5453|577|4265|P|M|0|29732
 IAA|UOII|Igarka Airport|Igarka|Igarka|RU|KYA|67.4372|86.6219|82|8202|P|M|1|8047
 IAR|UUDL|Golden Ring Yaroslavl International Airport|Tunoshna|Tunoshna|RU|YAR|57.5607|40.1574|287|9870|P|L|1|1261525
+IGT|URMS|Magas Airport|Sunzha|Sunzha|RU|IN|43.3233|45.0126|1165|9842|P|M|1|452731
 IJK|USII|Izhevsk Airport|Izhevsk|Izhevsk|RU|UD|56.8345|53.4622|531|8202|P|M|1|1100780
 INA|UUYI|Inta Airport|Inta|Inta|RU|KO|66.0556|60.1109|184|6000|G|M|0|34055
 IWA|UUBI|Ivanovo South Airport|Ivanovo|Ivanovo|RU|IVA|56.9394|40.9408|410|8202|P|M|1|745106
@@ -2365,6 +2566,7 @@ KLF|UUBC|Grabtsevo Airport|Kaluga|Kaluga|RU|KLU|54.5500|36.3667|656|6885|P|M|0|7
 KMW|UUBA|Kostroma Sokerkino Airport|Kostroma|Kostroma|RU|KOS|57.7969|41.0194|446|5577|P|M|1|402637
 KRO|USUU|Kurgan Airport|Kurgan|Kurgan|RU|KGN|55.4753|65.4156|240|8530|P|M|1|406673
 KSZ|ULKK|Kotlas Airport|Kotlas|Kotlas|RU|ARK|61.2358|46.6975|184|4757|P|M|1|132691
+KUF|UWWW|Kurumoch International Airport|Samara|Samara|RU|SAM|53.5049|50.1643|477|9846|P|L|1|2930511
 KVK|RU-10046|Kirovsk-Apatity Airport|Apatity|Apatity|RU|MUR|67.4629|33.5853|515|8202|P|S|1|69547
 KVR|UHWK|Kavalerovo Airport|Kavalerovo|Kavalerovo|RU|PRI|44.2726|135.0290|730|4265|P|S|0|22921
 KXD|USHK|Kondinskoye Airport|Kondinskoye|Kondinskoye|RU|KHM|59.6551|67.4300|131|3000|G|S|0|4166
@@ -2428,6 +2630,7 @@ VHV|UENI|Verkhnevilyuisk Airport|Verkhnevilyuisk|Verkhnevilyuisk|RU|SA|63.4581|1
 VKT|UUYW|Vorkuta Airport|Vorkuta|Vorkuta|RU|KO|67.4886|63.9931|604|7218|P|M|1|109865
 VKV|ULAH|Vaskovo Airport|Arkhangelsk|Arkhangelsk|RU|ARK|64.4417|40.4217|82|7875|P|M|0|203321
 GYI|HRYG|Gisenyi Airport|Gisenyi|Gisenyi|RW|04|-1.6772|29.2589|5082|3330|P|M|0|109541
+KGL|HRYR|Kigali International Airport|Kigali|Kigali|RW|01|-1.9686|30.1395|4859|11483|P|L|1|2190161
 KME|HRZA|Kamembe Airport|Kamembe|Kamembe|RW|04|-2.4622|28.9079|5192|4921|P|M|1|979522
 AE-0001|OEBT|Batha Airport|Batha|Batha|SA|04|24.2147|51.4499|257|3000|G|S|1|150
 AJF|OESK|Al-Jawf International Airport|Al-Jawf|Al-Jawf|SA|12|29.7833|40.1009|2261|12011|P|L|1|136847
@@ -2446,9 +2649,19 @@ TIF|OETF|Taif International Airport|Taif|Taif|SA|02|21.4847|40.5441|4848|12254|P
 TUI|OETR|Turaif Domestic Airport|Turaif|Turaif|SA|08|31.6922|38.7315|2803|9843|P|M|1|106833
 URY|OEGT|Gurayat Domestic Airport|Gurayat|Gurayat|SA|12|31.4124|37.2789|1672|10007|P|M|1|100375
 YNB|OEYN|Prince Abdulmohsen Bin Abdulaziz International Airport|Yanbu|Yanbu|SA|03|24.1442|38.0634|26|10532|P|L|1|227399
+AKS|AGGA|Gwaunaru'u Airport|Auki|Auki|SB|ML|-8.7026|160.6820|5|3100|G|S|1|5419
 BAS|AGGE|Ballalae Airport|Ballalae|Ballalae|SB|WE|-6.9907|155.8867|5|5413|G|S|1|176
 BNY|AGGB|Bellona/Anua Airport|Anua|Anua|SB|RB|-11.3022|159.7983|60|2187|G|S|1|150
-MHM|AGOB|Manaoba Airport|Manaoba|Manaoba|SB|ML|-8.3250|160.8005|14|3000|G|S|1|150
+CHY|AGGC|Choiseul Bay Airport|Choiseul Bay|Choiseul Bay|SB|CH|-6.7119|156.3961|0|2164|G|S|1|1053
+GTA|AGOK|Gatokae Aerodrome|Gatokae|Gatokae|SB|WE|-8.7384|158.2028|70|1936|G|S|1|150
+GZO|AGGN|Nusatupe Airport|Gizo|Gizo|SB|WE|-8.0978|156.8640|13|2871|G|S|1|6583
+KGE|AGKG|Kaghau Airport|Kagau Island|Kagau Island|SB|CH|-7.3305|157.5850|30|2428|G|S|1|150
+MNY|AGGO|Mono Airport|Stirling Island|Stirling Island|SB|WE|-7.4169|155.5650|35|3281|G|S|1|150
+NNB|AGGT|Santa Ana Airport|Santa Ana Island|Santa Ana Island|SB|MK|-10.8480|162.4541|3|2655|G|S|1|150
+RBV|AGRM|Ramata Airport|Ramata|Ramata|SB|WE|-8.1681|157.6430|0|2500|G|S|1|150
+RUS|AGGU|Marau Airport|Marau|Marau|SB|GU|-9.8617|160.8250|3|2001|G|S|1|150
+VAO|AGGV|Suavanao Airport|Suavanao|Suavanao|SB|IS|-7.5856|158.7310|20|2789|G|S|1|150
+XYA|AGGY|Yandina Airport|Yandina|Yandina|SB|CE|-9.0928|159.2184|60|3000|G|S|1|150
 PRI|FSPP|Praslin Island Airport|Praslin Island|Praslin Island|SC|14|-4.3193|55.6916|10|4318|P|M|1|15870
 ELF|HSFS|El Fasher Airport|El Fasher|El Fasher|SD|02|13.6149|25.3246|2393|9744|P|M|1|302774
 MWE|HSMN|Merowe Airport|Merowe|Merowe|SD|01|18.4433|31.8433|897|13186|P|M|0|29827
@@ -2511,11 +2724,13 @@ ZIG|GOGG|Ziguinchor Airport|Ziguinchor|Ziguinchor|SN|ZG|12.5556|-16.2833|75|5069
 BBO|HCMI|Berbera Airport|Berbera|Berbera|SO|WO|10.3850|44.9367|30|13582|P|M|1|227021
 BLW|HCMN|Beledweyne Airport|Beledweyne|Beledweyne|SO|HI|4.7670|45.2388|559|7218|G|S|1|55410
 GGR|HCGR|Garowe Airport|Garowe|Garowe|SO|NU|8.4585|48.5681|1465|6562|P|S|1|57300
+AGI|SMWA|Wageningen Airstrip|Wageningen|Wageningen|SR|NI|5.8413|-56.6732|6|3000|G|S|1|19522
 DRJ|SMDA|Drietabbetje Airport|Drietabbetje|Drietabbetje|SR|SI|4.1114|-54.6728|236|3000|G|S|1|5013
 EAX|SMEG|Eduard Alexander Gummels Airport|Kwatta|Kwatta|SR|PM|5.8638|-55.1895|49|3934|P|S|1|255497
 MOJ|SMMO|Moengo Airstrip|Moengo|Moengo|SR|MA|5.6076|-54.4003|49|3000|G|S|1|7721
 SMGH|SMGH|Godo Holo Airstrip|Pikienkondre of Miranda|Pikienkondre of Miranda|SR|SI|4.0583|-54.7861|280|3000|G|S|1|150
 PCP|FPPR|Principe Airport|Sao Tome & Principe|Sao Tome & Principe|ST|P|1.6612|7.4111|591|4331|P|M|1|1156
+SAL|MSLP|El Salvador International Airport Saint Oscar Arnulfo Romero y Galdamez|San Salvador|San Salvador|SV|PA|13.4445|-89.0558|101|10500|P|L|1|2885635
 ALP|OSAP|Aleppo International Airport|Aleppo|Aleppo|SY|HL|36.1813|37.2269|1276|9547|P|L|1|4244209
 DAM|OSDI|Damascus International Airport|Damascus|Damascus|SY|DI|33.4115|36.5156|2020|11811|P|L|1|4105488
 KAC|OSKL|Qamishli International Airport|Qamishli|Qamishli|SY|HA|37.0206|41.1914|1480|11860|P|M|1|636304
@@ -2527,6 +2742,7 @@ NCA|MBNC|North Caicos Airport|North Caicos|North Caicos|TC|NC|21.9161|-71.9430|1
 SLX|MBSY|Salt Cay Airport|Salt Cay|Salt Cay|TC|SL|21.3330|-71.2000|3|3000|G|S|1|383
 XSC|MBSC|South Caicos Airport|South Caicos|South Caicos|TC|SC|21.5157|-71.5285|6|6335|P|M|1|1484
 NDJ|FTTJ|N'Djamena International Airport|N'Djamena|N'Djamena|TD|ND|12.1337|15.0340|968|9186|P|L|1|1773467
+LFW|DXXX|LomeTokoin International Airport|Lome|Lome|TG|M|6.1656|1.2545|72|9847|P|L|1|2824126
 BFV|VTUO|Buri Ram Airport|Buriram|Buriram|TH|31|15.2295|103.2530|590|6890|P|M|1|100944
 BTZ|VTSY|Betong International Airport|Betong|Betong|TH|95|5.7900|101.1500|785|5906|P|M|0|142913
 CEI|VTCT|Mae Fah Luang - Chiang Rai International Airport|Chiang Rai|Chiang Rai|TH|57|19.9523|99.8829|1280|9843|P|L|1|246123
@@ -2541,7 +2757,6 @@ KOP|VTUW|Nakhon Phanom Airport|Nakhon Phanom|Nakhon Phanom|TH|48|17.3838|104.643
 LOE|VTUL|Loei Airport|Loei|Loei|TH|42|17.4391|101.7220|860|6890|P|M|1|75240
 LPT|VTCL|Lampang Airport|Lampang|Lampang|TH|52|18.2709|99.5042|811|6465|P|M|1|205834
 MAQ|VTPM|Mae Sot Airport|Myawaddy|Myawaddy|TH|63|16.6999|98.5451|690|4921|P|M|1|195138
-NAW|VTSC|Narathiwat Airport|Narathiwat|Narathiwat|TH|96|6.5199|101.7430|16|8202|P|M|1|273548
 NNT|VTCN|Nan Airport|Nan|Nan|TH|55|18.8079|100.7830|685|6562|P|M|1|59214
 NST|VTSF|Nakhon Si Thammarat Airport|Nakhon Si Thammarat|Nakhon Si Thammarat|TH|80|8.5396|99.9447|13|6890|P|M|1|143013
 PHY|VTPB|Phetchabun Airport|Lom Sak|Lom Sak|TH|67|16.6760|101.1950|450|6890|P|M|1|139293
@@ -2575,6 +2790,7 @@ TOE|DTTZ|Tozeur Nefta International Airport|Tozeur|Tozeur|TN|72|33.9397|8.1106|2
 HPA|NFTL|Lifuka Island Airport|Lifuka|Lifuka|TO|02|-19.7770|-174.3410|31|3937|P|M|1|3610
 ADF|LTCP|Adyaman Airport|Adyaman|Adyaman|TR|02|37.7314|38.4689|2216|8153|P|M|1|506089
 AJI|LTCO|Agr Airport|Agr|Agr|TR|04|39.6556|43.0257|5462|9843|P|M|1|344565
+AOE|LTBY|Hasan Polatkan Airport|Eskisehir|Eskisehir|TR|26|39.8116|30.5193|2588|8261|P|L|1|3544328
 ASR|LTAU|Kayseri Erkilet International Airport|Kayseri|Kayseri|TR|38|38.7704|35.4954|3463|9841|P|L|1|1979005
 BAL|LTCJ|Batman Airport|Batman|Batman|TR|72|37.9290|41.1166|1822|10000|P|M|1|771482
 BDM|LTBG|Bandrma Airport|Bandrma|Bandrma|TR|10|40.3180|27.9777|170|9875|P|M|0|220940
@@ -2582,19 +2798,21 @@ BGG|LTCU|Bingol Airport|Bingol|Bingol|TR|12|38.8601|40.5945|3506|7546|P|M|1|2944
 BJV|LTFE|Milas Bodrum International Airport|Bodrum|Bodrum|TR|48|37.2493|27.6640|21|9843|P|L|1|1006175
 BZI|LTBF|Balkesir Airport|Balkesir|Balkesir|TR|10|39.6193|27.9260|340|9810|P|M|1|420196
 CKZ|LTBH|Canakkale Airport|Canakkale|Canakkale|TR|17|40.1377|26.4268|23|7710|P|M|1|219758
+DIY|LTCC|Diyarbakr Airport|Diyarbakr|Diyarbakr|TR|21|37.8939|40.2010|2251|11644|P|M|1|1918399
 DLM|LTBS|Dalaman International Airport|Dalaman|Dalaman|TR|48|36.7131|28.7925|20|9842|P|L|1|566675
 DNZ|LTAY|Cardak Airport|Denizli|Denizli|TR|20|37.7856|29.7013|2795|9842|P|M|1|448706
 EDO|LTFD|Balkesir Koca Seyit Airport|Edremit|Edremit|TR|10|39.5525|27.0102|50|9842|P|L|1|944661
 ERC|LTCD|Erzincan Airport|Erzincan|Erzincan|TR|24|39.7102|39.5270|3783|9843|P|M|1|330750
 ERZ|LTCE|Erzurum International Airport|Erzurum|Erzurum|TR|25|39.9565|41.1702|5763|12500|P|M|1|925089
 EZS|LTCA|Elazg Airport|Elazg|Elazg|TR|23|38.5980|39.2835|2927|9843|P|M|1|705513
-GNY|LTCS|Sanlurfa GAP Airport|Sanlurfa|Sanlurfa|TR|63|37.4457|38.8956|2708|13123|P|L|1|1368222
 GZP|LTFG|Gazipasa-Alanya Airport|Gazipasa|Gazipasa|TR|07|36.2988|32.2970|92|7710|P|M|1|505652
+GZT|LTAJ|Gaziantep Oguzeli International Airport|Gaziantep|Gaziantep|TR|27|36.9472|37.4787|2315|9842|P|L|1|3252780
 IGL|LTBL|Cigli Airbase|Cigli|Cigli|TR|35|38.5130|27.0101|16|9821|P|M|0|812532
 ISE|LTFC|Suleyman Demirel International Airport|Isparta|Isparta|TR|32|37.8554|30.3684|2835|9843|P|M|1|403829
 KCM|LTCN|Kahramanmaras Airport|Kahramanmaras|Kahramanmaras|TR|46|37.5388|36.9535|1723|7546|P|M|1|648836
 KFS|LTAL|Kastamonu Airport|Kastamonu|Kastamonu|TR|37|41.3142|33.7958|3520|7382|P|M|1|281980
 KSY|LTCF|Kars Airport|Kars|Kars|TR|36|40.5622|43.1150|5889|11483|P|M|1|231574
+KYA|LTAN|Konya Airport|Konya|Konya|TR|42|37.9790|32.5619|3392|10990|P|L|1|2206276
 MLX|LTAT|Malatya Erhac Airport|Malatya|Malatya|TR|44|38.4353|38.0910|2828|10990|P|M|1|709190
 MQM|LTCR|Mardin Airport|Mardin|Mardin|TR|47|37.2233|40.6317|1729|8204|P|M|1|747471
 MSR|LTCK|Mus Airport|Mus|Mus|TR|49|38.7478|41.6612|4157|11649|P|M|1|392485
@@ -2605,7 +2823,6 @@ OGU|LTCB|OrduGiresun Airport|Ordu|Ordu|TR|52|40.9669|38.0860|11|9848|P|M|1|74793
 ONQ|LTAS|Zonguldak Caycuma Airport|Zonguldak|Zonguldak|TR|67|41.5064|32.0886|44|6991|P|M|1|557256
 RZV|LTFO|RizeArtvin Airport|Rize|Rize|TR|53|41.1798|40.8488|16|9843|P|M|1|206500
 SAW|LTFJ|Istanbul Sabiha Gokcen International Airport|Pendik|Pendik|TR|34|40.8986|29.3092|312|11614|P|L|1|16036653
-SXZ|LTCL|Siirt Airport|Siirt|Siirt|TR|56|37.9789|41.8404|2001|5905|P|M|0|235628
 SZF|LTFH|Samsun-Carsamba Airport|Samsun|Samsun|TR|55|41.2540|36.5675|18|9843|P|M|1|675354
 TJK|LTAW|Tokat Airport|Tokat|Tokat|TR|60|40.3247|36.3906|1859|8858|P|M|1|412104
 TZX|LTCG|Trabzon International Airport|Trabzon|Trabzon|TR|61|40.9951|39.7897|104|8661|P|M|1|660457
@@ -2632,8 +2849,10 @@ SHY|HTSY|Shinyanga Airport|Shinyanga|Shinyanga|TZ|22|-3.6093|33.5035|3800|6785|G
 TGT|HTTG|Tanga Airport|Tanga|Tanga|TZ|25|-5.0924|39.0712|129|4160|P|M|1|496311
 TKQ|HTKA|Kigoma Airport|Kigoma|Kigoma|TZ|08|-4.8862|29.6709|2700|5797|G|S|1|249210
 CKC|UKKE|Cherkasy International Airport|Cherkasy|Cherkasy|UA|71|49.4156|31.9953|375|8180|P|M|0|688227
+CWC|UKLN|Chernivtsi International Airport|Chernivtsi|Chernivtsi|UA|77|48.2593|25.9808|826|7270|P|M|0|592206
 ERD|UKDB|Berdyansk Airport|Berdyansk|Berdyansk|UA|23|46.8150|36.7581|171|8202|P|M|0|312495
 HMJ|UKLH|Khmelnytskyi Airport|Khmelnytskyi|Khmelnytskyi|UA|68|49.3597|26.9334|1150|7219|P|M|0|570705
+HRK|UKHH|Kharkiv International Airport|Kharkiv|Kharkiv|UA|A|49.9269|36.2908|508|7285|P|M|0|4011494
 IEV|UKKK|Igor Sikorsky Kyiv International Airport (Zhuliany)|Kyiv|Kyiv|UA|30|50.4019|30.4519|587|7579|P|M|0|4450360
 IFO|UKLI|Ivano-Frankivsk International Airport|Ivano-Frankivsk|Ivano-Frankivsk|UA|26|48.8842|24.6861|919|8226|P|M|0|683522
 KHE|UKOH|Kherson International Airport|Kherson|Kherson|UA|65|46.6758|32.5064|148|8202|P|M|0|514905
@@ -2647,24 +2866,27 @@ RWN|UKLR|Rivne International Airport|Rivne|Rivne|UA|19|50.6071|26.1416|755|8615|
 UDJ|UKLU|Uzhhorod International Airport|Uzhhorod|Uzhhorod|UA|21|48.6343|22.2634|383|6686|P|M|0|492833
 VIN|UKWW|Vinnytsia/Gavyryshivka International Airport|Vinnitsa|Vinnitsa|UA|05|49.2425|28.6138|961|8175|P|M|0|824206
 ZTR|UKKV|Zhytomyr Airport|Zhytomyr|Zhytomyr|UA|18|50.2706|28.7386|0|6000|G|M|0|932271
-KHX|UG-0002|Savannah Airstrip|Kihihi|Kihihi|UG|W|-0.7165|29.6997|3600|6004|G|M|1|518166
 RUA|HUAR|Arua Airport|Arua|Arua|UG|N|3.0492|30.9117|3951|5600|P|M|1|308916
 SRT|HUSO|Soroti Airport|Soroti|Soroti|UG|E|1.7277|33.6228|3697|6100|P|M|1|256108
 ULU|HUGU|Gulu Airport|Gulu|Gulu|UG|N|2.8056|32.2718|3510|10314|P|M|1|318591
 ABE|KABE|Lehigh Valley International Airport|Allentown|Allentown|US|PA|40.6518|-75.4428|393|7599|P|M|1|854284
 ABI|KABI|Abilene Regional Airport|Abilene|Abilene|US|TX|32.4113|-99.6819|1791|7208|P|M|1|189402
+ABL|PAFM|Ambler Airport|Ambler|Ambler|US|AK|67.1055|-157.8553|334|4000|G|M|1|150
 ABR|KABR|Aberdeen Regional Airport|Aberdeen|Aberdeen, US|US|SD|45.4491|-98.4218|1302|6901|P|M|1|38833
 ABY|KABY|Southwest Georgia Regional Airport|Albany|Albany, GA|US|GA|31.5329|-84.1962|197|6601|P|M|1|178028
 ACK|KACK|Nantucket Memorial Airport|Nantucket|Nantucket|US|MA|41.2531|-70.0602|47|6303|P|M|1|100769
 ACT|KACT|Waco Regional Airport|Waco|Waco|US|TX|31.6113|-97.2305|516|7107|P|M|1|244616
-ACV|KACV|California Redwood Coast-Humboldt County Airport|Arcata|Arcata|US|CA|40.9781|-124.1090|221|6046|P|M|1|68718
 ADT|KADH|Ada Regional Airport|Ada|Ada|US|OK|34.8052|-96.6720|1016|6203|P|M|0|47086
+AET|PFAL|Allakaket Airport|Allakaket|Allakaket|US|AK|66.5518|-152.6220|441|4000|G|S|1|150
 AEX|KAEX|Alexandria International Airport|Alexandria|Alexandria, LA|US|LA|31.3258|-92.5467|89|9352|P|M|1|148098
 AGS|KAGS|Augusta Regional At Bush Field|Augusta|Augusta|US|GA|33.3699|-81.9645|144|8001|P|M|1|251195
 AHN|KAHN|Athens Ben Epps Airport|Athens|Athens|US|GA|33.9488|-83.3256|808|6122|P|M|0|206721
 AIA|KAIA|Alliance Municipal Airport|Alliance|Alliance|US|NE|42.0525|-102.8040|3931|9203|P|M|1|12015
+AIN|PAWI|Wainwright Airport|Wainwright|Wainwright|US|AK|70.6380|-159.9950|41|4494|G|M|1|580
 AKB|PAAK|Atka Airport|Atka|Atka|US|AK|52.2203|-174.2060|57|4500|P|S|1|150
 AKI|PFAK|Akiak Airport|Akiak|Akiak|US|AK|60.9026|-161.2311|30|3200|G|S|1|429
+AKK|PAKH|Akhiok Airport|Akhiok|Akhiok|US|AK|56.9387|-154.1830|44|3120|G|S|1|150
+AKN|PAKN|King Salmon Airport|King Salmon|King Salmon|US|AK|58.6778|-156.6520|73|8901|P|M|1|164
 ALB|KALB|Albany International Airport|Albany|Albany|US|NY|42.7483|-73.8017|285|8500|P|L|1|1022478
 ALI|KALI|Alice International Airport|Alice|Alice|US|TX|27.7409|-98.0269|178|5997|P|M|0|69281
 ALM|KALM|Alamogordo White Sands Regional Airport|Alamogordo|Alamogordo|US|NM|32.8378|-105.9931|4200|9207|P|M|0|32188
@@ -2673,19 +2895,22 @@ ALW|KALW|Walla Walla Regional Airport|Walla Walla|Walla Walla|US|WA|46.0949|-118
 AMA|KAMA|Rick Husband Amarillo International Airport|Amarillo|Amarillo|US|TX|35.2179|-101.7064|3607|13502|P|M|1|281407
 ANB|KANB|Anniston Regional Airport|Anniston|Anniston|US|AL|33.5882|-85.8581|612|7002|P|M|0|113299
 AND|KAND|Anderson Regional Airport|Anderson|Anderson|US|SC|34.4946|-82.7094|782|6002|P|M|0|137771
+ANV|PANV|Anvik Airport|Anvik|Anvik|US|AK|62.6467|-160.1910|291|4000|G|M|1|150
 AOO|KAOO|Altoona Blair County Airport|Altoona|Altoona|US|PA|40.2964|-78.3200|1503|5465|P|M|1|97775
 APN|KAPN|Alpena County Regional Airport|Alpena|Alpena|US|MI|45.0781|-83.5603|690|9001|P|M|1|28767
+AQY|AQY|Girdwood-Alyeska Airport|Girdwood|Girdwood|US|AK|60.9688|-149.1198|150|2088|G|S|0|782
 ARA|KARA|Acadiana Regional Airport|New Iberia|New Iberia|US|LA|30.0378|-91.8839|24|8002|P|M|0|81560
+ARC|PARC|Arctic Village Airport|Arctic Village|Arctic Village|US|AK|68.1147|-145.5790|2092|4500|G|M|1|150
 ART|KART|Watertown International Airport|Watertown|Watertown|US|NY|43.9919|-76.0217|325|7001|P|M|1|121031
 ASE|KASE|Aspen-Pitkin County Airport (Sardy Field)|Aspen|Aspen|US|CO|39.2232|-106.8690|7820|8006|P|M|1|37451
 AST|KAST|Astoria Regional Airport|Astoria|Astoria|US|OR|46.1580|-123.8790|15|5794|P|M|0|35640
+ATK|PATQ|Atqasuk Edward Burnell Sr Memorial Airport|Atqasuk|Atqasuk|US|AK|70.4670|-157.4360|96|4370|G|M|1|150
 ATT|4A2|Atmautluak Airport|Atmautluak|Atmautluak|US|AK|60.8667|-162.2730|17|3000|G|S|1|410
 ATW|KATW|Appleton International Airport|Appleton|Appleton|US|WI|44.2585|-88.5190|918|8003|P|M|1|275450
 ATY|KATY|Watertown Regional Airport|Watertown|Watertown, SD|US|SD|44.9140|-97.1547|1749|6898|P|M|1|57851
 AUG|KAUG|Augusta State Airport|Augusta|Augusta, ME|US|ME|44.3206|-69.7973|352|5002|P|M|1|183313
 AUK|PAUK|Alakanuk Airport|Alakanuk|Alakanuk|US|AK|62.6827|-164.7225|10|4000|G|S|1|327
 AUS|KAUS|Austin Bergstrom International Airport|Austin|Austin|US|TX|30.1975|-97.6620|542|12250|P|L|1|1767566
-AVL|KAVL|Asheville Regional Airport|Asheville|Asheville|US|NC|35.4355|-82.5419|2165|8002|P|M|1|260278
 AVP|KAVP|Wilkes-Barre/Scranton International Airport|Wilkes-Barre|Wilkes-Barre|US|PA|41.3371|-75.7242|962|7502|P|M|1|450738
 AXN|KAXN|Chandler Field|Alexandria|Alexandria, MN|US|MN|45.8663|-95.3947|1425|5099|P|M|0|78722
 AZA|KIWA|Mesa Gateway Airport|Mesa|Mesa|US|AZ|33.3078|-111.6550|1382|10401|P|M|1|774564
@@ -2705,12 +2930,14 @@ BHB|KBHB|Hancock County-Bar Harbor Airport|Bar Harbor|Bar Harbor|US|ME|44.4500|-
 BHM|KBHM|Birmingham-Shuttlesworth International Airport|Birmingham|Birmingham, US|US|AL|33.5629|-86.7507|650|12007|P|L|1|1208187
 BIH|KBIH|Eastern Sierra Regional Airport|Bishop|Bishop|US|CA|37.3731|-118.3640|4124|7498|P|M|1|11866
 BJI|KBJI|Bemidji Regional Airport|Bemidji|Bemidji|US|MN|47.5094|-94.9337|1391|7004|P|M|0|27131
+BKC|PABL|Buckland Airport|Buckland|Buckland|US|AK|65.9816|-161.1490|31|3200|G|S|1|150
 BKE|KBKE|Baker City Municipal Airport|Baker City|Baker City|US|OR|44.8373|-117.8090|3373|5084|P|M|0|20158
 BKG|KBBG|Branson Airport|Branson|Branson|US|MO|36.5321|-93.2005|1302|7140|P|M|1|73771
 BKH|PHBK|Barking Sands Airport|Kekaha|Kekaha|US|HI|22.0228|-159.7850|23|6002|P|M|0|8331
 BKW|KBKW|Raleigh County Memorial Airport|Beaver|Beaver|US|WV|37.7873|-81.1242|2504|6750|P|M|1|88226
 BLF|KBLF|Mercer County Airport|Bluefield|Bluefield|US|WV|37.2958|-81.2077|2857|4743|P|M|0|68133
 BLH|KBLH|Blythe Airport|Blythe|Blythe|US|CA|33.6192|-114.7170|399|6543|P|M|0|28873
+BMG|KBMG|Monroe County Airport|Bloomington|Bloomington, IN|US|IN|39.1460|-86.6167|846|6500|P|M|0|105258
 BMI|KBMI|Central Illinois Regional Airport at Bloomington-Normal|Bloomington|Bloomington|US|IL|40.4771|-88.9159|871|8000|P|M|1|234511
 BNO|KBNO|Burns Municipal Airport|Burns|Burns|US|OR|43.5905|-118.9552|4148|5101|P|M|0|4954
 BPI|KBPI|Miley Memorial Field|Big Piney|Big Piney|US|WY|42.5851|-110.1110|6990|6803|P|M|0|4769
@@ -2719,8 +2946,10 @@ BQK|KBQK|Brunswick Golden Isles Airport|Brunswick|Brunswick|US|GA|31.2588|-81.46
 BRD|KBRD|Brainerd Lakes Regional Airport|Brainerd|Brainerd|US|MN|46.4029|-94.1297|1232|7100|P|M|1|72588
 BRL|KBRL|Southeast Iowa Regional Airport|Burlington|Burlington, IA|US|IA|40.7832|-91.1255|698|6102|P|M|1|123669
 BRO|KBRO|Brownsville South Padre Island International Airport|Brownsville|Brownsville|US|TX|25.9072|-97.4252|22|7399|P|M|1|461635
+BTI|PABA|Barter Island Long Range Radar Station Airport|Barter Island|Barter Island|US|AK|70.1340|-143.5820|2|4500|G|M|1|150
 BTM|KBTM|Bert Mooney Airport|Butte|Butte|US|MT|45.9548|-112.4970|5550|9000|P|M|1|56894
 BTR|KBTR|Baton Rouge Metropolitan Airport|Baton Rouge|Baton Rouge|US|LA|30.5332|-91.1496|70|7500|P|M|1|414158
+BTT|PABT|Bettles Airport|Bettles|Bettles|US|AK|66.9139|-151.5290|647|5190|G|S|1|150
 BTV|KBTV|Patrick Leahy Burlington International Airport|Burlington|Burlington|US|VT|44.4719|-73.1533|335|8319|P|M|1|163672
 BUF|KBUF|Buffalo Niagara International Airport|Buffalo|Buffalo|US|NY|42.9405|-78.7322|728|8829|P|L|1|1799353
 BUR|KBUR|Hollywood Burbank/Bob Hope Airport|Burbank|Burbank|US|CA|34.2028|-118.3581|778|6886|P|L|1|3299735
@@ -2747,13 +2976,17 @@ CHA|KCHA|Chattanooga Metropolitan Airport (Lovell Field)|Chattanooga|Chattanooga
 CHO|KCHO|Charlottesville Albemarle Airport|Charlottesville|Charlottesville|US|VA|38.1386|-78.4529|639|6801|P|M|1|110723
 CHU|PACH|Chuathbaluk Airport|Chuathbaluk|Chuathbaluk|US|AK|61.5791|-159.2160|244|3401|G|S|1|150
 CID|KCID|The Eastern Iowa Airport|Cedar Rapids|Cedar Rapids|US|IA|41.8847|-91.7108|869|8600|G|M|1|342862
+CIK|PACI|Chalkyitsik Airport|Chalkyitsik|Chalkyitsik|US|AK|66.6450|-143.7400|544|4000|G|S|1|150
 CKB|KCKB|North Central West Virginia Airport|Bridgeport|Bridgeport|US|WV|39.2966|-80.2281|1217|7800|P|M|1|82560
 CKD|PACJ|Crooked Creek Airport|Crooked Creek|Crooked Creek|US|AK|61.8703|-158.1376|178|1997|G|S|1|150
 CKX|CKX|Chicken Airport|Chicken|Chicken|US|AK|64.0665|-141.9513|1640|2500|G|S|1|150
 CLD|KCRQ|McClellan-Palomar Airport|Carlsbad|Carlsbad|US|CA|33.1283|-117.2800|331|4897|P|M|1|491863
+CLE|KCLE|Cleveland Hopkins International Airport|Cleveland|Cleveland|US|OH|41.4117|-81.8498|791|9953|P|L|1|2132193
 CLL|KCLL|Easterwood Field|College Station|College Station|US|TX|30.5886|-96.3638|320|7000|P|M|1|205630
 CLM|KCLM|William R Fairchild International Airport|Port Angeles|Port Angeles|US|WA|48.1202|-123.5000|291|6347|P|M|0|126409
 CLP|PFCL|Clarks Point Airport|Clarks Point|Clarks Point|US|AK|58.8337|-158.5290|80|3200|G|S|1|150
+CLT|KCLT|Charlotte Douglas International Airport|Charlotte|Charlotte|US|NC|35.2140|-80.9431|748|10000|P|L|1|1658189
+CMH|KCMH|John Glenn Columbus International Airport|Columbus|Columbus|US|OH|39.9980|-82.8919|815|10114|P|L|1|2063777
 CMI|KCMI|University of Illinois Willard Airport|Savoy|Savoy|US|IL|40.0398|-88.2762|755|8101|P|M|1|238136
 CMX|KCMX|Houghton County Memorial Airport|Hancock|Hancock|US|MI|47.1684|-88.4891|1095|6501|P|M|1|26339
 CNM|KCNM|Cavern City Air Terminal|Carlsbad|Carlsbad, NM|US|NM|32.3375|-104.2630|3295|7854|P|M|1|38606
@@ -2770,7 +3003,6 @@ CSG|KCSG|Columbus Airport|Columbus|Columbus, GA|US|GA|32.5164|-84.9396|397|6997|
 CSV|KCSV|Crossville Memorial Airport Whitson Field|Crossville|Crossville|US|TN|35.9513|-85.0850|1881|5423|P|M|0|54377
 CTB|KCTB|Cut Bank International Airport|Cut Bank|Cut Bank|US|MT|48.6087|-112.3782|3854|5300|P|M|0|14083
 CVN|KCVN|Clovis Municipal Airport|Clovis|Clovis|US|NM|34.4266|-103.0788|4216|7200|P|M|1|84174
-CVO|KCVO|Corvallis Municipal Airport|Corvallis|Corvallis|US|OR|44.4972|-123.2900|250|5900|P|M|0|93830
 CWA|KCWA|Central Wisconsin Airport|Mosinee|Mosinee|US|WI|44.7774|-89.6702|1277|7723|P|M|1|137820
 CYS|KCYS|Cheyenne Regional Jerry Olson Field|Cheyenne|Cheyenne|US|WY|41.1557|-104.8120|6159|9270|P|M|1|137272
 CYT|PACY|Yakataga Airport|Yakataga|Yakataga|US|AK|60.0810|-142.4945|12|4350|G|S|1|150
@@ -2790,24 +3022,30 @@ DJT|KDJT|President Donald J. Trump International Airport|West Palm Beach|West Pa
 DLH|KDLH|Duluth International Airport|Duluth|Duluth|US|MN|46.8419|-92.1987|1428|10591|P|M|1|152686
 DLS|KDLS|Columbia Gorge Regional Airport|Dallesport|Dallesport|US|OR|45.6210|-121.1708|247|5097|P|M|0|26986
 DMN|KDMN|Deming Municipal Airport|Deming|Deming|US|NM|32.2623|-107.7210|4314|8018|P|M|0|16086
+DRG|PADE|Deering Airport|Deering|Deering|US|AK|66.0689|-162.7669|21|3320|G|M|1|150
 DRI|KDRI|Beauregard Regional Airport|DeRidder|DeRidder|US|LA|30.8317|-93.3399|202|5494|P|M|0|48797
 DRO|KDRO|Durango La Plata County Airport|Durango|Durango, US|US|CO|37.1515|-107.7540|6685|9201|P|M|1|40035
 DRT|KDRT|Del Rio International Airport|Del Rio|Del Rio|US|TX|29.3742|-100.9270|1002|6300|P|M|0|172627
 DUA|KDUA|Durant Regional Airport - Eaker Field|Durant|Durant|US|OK|33.9397|-96.3951|699|6800|P|M|0|73000
 DUJ|KDUJ|DuBois Regional Airport|Dubois|Dubois|US|PA|41.1783|-78.8987|1817|5503|P|M|1|78103
 DVL|KDVL|Devils Lake Regional Airport|Devils Lake|Devils Lake|US|ND|48.1155|-98.9088|1456|6400|P|M|1|19632
+EAA|PAEG|Eagle Airport|Eagle|Eagle, AK|US|AK|64.7780|-141.1505|908|3600|G|S|1|150
 EAT|KEAT|Pangborn Memorial Airport|Wenatchee|Wenatchee|US|WA|47.3989|-120.2070|1249|7000|P|M|1|107643
 EAU|KEAU|Chippewa Valley Regional Airport|Eau Claire|Eau Claire|US|WI|44.8658|-91.4843|913|8101|P|M|1|159872
 ECP|KECP|Northwest Florida Beaches International Airport|Panama City Beach|Panama City Beach|US|FL|30.3571|-85.7954|69|10000|P|M|1|188531
 EED|KEED|Needles Airport|Needles|Needles|US|CA|34.7663|-114.6230|983|5005|P|M|0|15896
+EEK|PAEE|Eek Airport|Eek|Eek|US|AK|60.2132|-162.0440|12|3243|G|S|1|150
 EEN|KEEN|Dillant Hopkins Airport|Keene|Keene|US|NH|42.8984|-72.2708|488|6201|P|M|0|118681
 EGE|KEGE|Eagle County Regional Airport|Eagle|Eagle|US|CO|39.6426|-106.9180|6548|9000|P|M|1|48916
+EGX|PAII|Egegik Airport|Egegik|Egegik|US|AK|58.1844|-157.3749|92|5600|G|M|1|150
 EKA|KEKA|Murray Field|Eureka|Eureka|US|CA|40.8034|-124.1130|7|3011|P|M|0|56996
 EKN|KEKN|Elkins-Randolph County Regional Airport|Elkins|Elkins|US|WV|38.8898|-79.8577|1987|4544|P|M|0|17917
 ELD|KELD|South Arkansas Regional Airport at Goodwin Field|El Dorado|El Dorado|US|AR|33.2210|-92.8133|277|6601|P|M|1|94781
+ELI|PFEL|Elim Airport|Elim|Elim|US|AK|64.6147|-162.2720|162|3401|G|S|1|150
 ELM|KELM|Elmira Corning Regional Airport|Elmira|Elmira|US|NY|42.1599|-76.8916|954|8001|P|M|1|119640
 ELY|KELY|Ely Airport Yelland Field|Ely|Ely, NV|US|NV|39.2997|-114.8420|6259|6017|P|M|0|5282
 EMK|PAEM|Emmonak Airport|Emmonak|Emmonak|US|AK|62.7861|-164.4910|13|4601|G|M|1|1299
+ENA|PAEN|Kenai Municipal Airport|Kenai|Kenai|US|AK|60.5709|-151.2452|99|7855|P|M|1|22558
 ENV|KENV|Wendover Airport|Wendover|Wendover|US|UT|40.7187|-114.0310|4237|10002|P|M|0|5988
 ERI|KERI|Erie International Tom Ridge Field|Erie|Erie|US|PA|42.0831|-80.1739|732|8420|P|M|1|156995
 ESC|KESC|Delta County Airport|Escanaba|Escanaba|US|MI|45.7232|-87.0886|609|6498|P|M|1|29907
@@ -2834,6 +3072,9 @@ FSM|KFSM|Fort Smith Regional Airport|Fort Smith|Fort Smith|US|AR|35.3366|-94.367
 FST|KFST|Fort Stockton Pecos County Airport|Fort Stockton|Fort Stockton|US|TX|30.9157|-102.9160|3011|7508|P|M|0|15119
 FTW|KFTW|Fort Worth Meacham International Airport|Fort Worth|Fort Worth|US|TX|32.8199|-97.3608|710|7502|P|M|1|983156
 FWA|KFWA|Fort Wayne International Airport|Fort Wayne|Fort Wayne|US|IN|40.9789|-85.1945|814|11981|P|M|1|496421
+FYU|PFYU|Fort Yukon Airport|Fort Yukon|Fort Yukon|US|AK|66.5717|-145.2500|433|5000|G|M|1|570
+GAL|PAGA|Edward G. Pitka Sr Airport|Galena|Galena|US|AK|64.7362|-156.9370|153|6000|P|M|1|150
+GAM|PAGM|Gambell Airport|Gambell|Gambell|US|AK|63.7677|-171.7333|27|4500|P|M|1|700
 GCC|KGCC|Northeast Wyoming Regional Airport|Gillette|Gillette|US|WY|44.3489|-105.5390|4365|7501|P|M|1|40167
 GCN|KGCN|Grand Canyon National Park Airport|Grand Canyon - Tusayan|Grand Canyon - Tusayan|US|AZ|35.9524|-112.1470|6609|8999|P|M|1|11148
 GDV|KGDV|Dawson Community Airport|Glendive|Glendive|US|MT|47.1377|-104.8069|2458|5704|P|M|1|9185
@@ -2860,6 +3101,7 @@ GUS|KGUS|Grissom Air Reserve Base|Peru|Peru|US|IN|40.6481|-86.1521|812|12501|P|M
 GUY|KGUY|Guymon Municipal Airport|Guymon|Guymon|US|OK|36.6851|-101.5080|3123|5904|P|M|0|25464
 GWO|KGWO|GreenwoodLeflore Airport|Greenwood|Greenwood|US|MS|33.4950|-90.0882|162|6501|P|M|0|53632
 HBG|KHBG|Hattiesburg Bobby L Chain Municipal Airport|Hattiesburg|Hattiesburg|US|MS|31.2648|-89.2528|151|6094|P|M|0|43849
+HCR|PAHC|Holy Cross Airport|Holy Cross|Holy Cross|US|AK|62.1883|-159.7750|70|4000|G|M|1|150
 HDN|KHDN|Yampa Valley Airport|Hayden|Hayden|US|CO|40.4812|-107.2180|6606|10000|P|M|1|25961
 HGR|KHGR|Hagerstown Regional Richard A Henson Field|Hagerstown|Hagerstown|US|MD|39.7088|-77.7280|703|7000|P|M|1|214372
 HHH|KHXD|Hilton Head Airport|Hilton Head Island|Hilton Head Island|US|SC|32.2244|-80.6975|19|5000|P|M|1|110483
@@ -2874,8 +3116,10 @@ HOB|KHOB|Lea County Regional Airport|Hobbs|Hobbs|US|NM|32.6875|-103.2170|3661|80
 HOM|PAHO|Homer Airport|Homer|Homer|US|AK|59.6445|-151.4792|84|6701|P|M|1|10442
 HON|KHON|Huron Regional Airport|Huron|Huron|US|SD|44.3852|-98.2285|1289|7201|P|M|0|34712
 HOT|KHOT|Memorial Field Airport|Hot Springs|Hot Springs|US|AR|34.4788|-93.0963|540|6595|P|M|1|178139
+HPB|PAHP|Hooper Bay Airport|Hooper Bay|Hooper Bay|US|AK|61.5239|-166.1470|13|3300|P|S|1|1114
 HQM|KHQM|Bowerman Airport|Hoquiam|Hoquiam|US|WA|46.9712|-123.9370|18|5000|P|M|0|49159
 HRO|KHRO|Boone County Airport|Harrison|Harrison|US|AR|36.2615|-93.1547|1365|6161|P|M|1|51128
+HSL|PAHL|Huslia Airport|Huslia|Huslia|US|AK|65.6979|-156.3510|220|4000|G|M|1|150
 HST|KHST|Homestead Air Reserve Base|Homestead|Homestead|US|FL|25.4886|-80.3836|5|11201|P|M|0|191060
 HSV|KHSV|Huntsville International Airport|Huntsville|Huntsville|US|AL|34.6362|-86.7744|629|12600|P|M|1|397702
 HTS|KHTS|Tri-State Airport / Milton J. Ferguson Field|Huntington|Huntington|US|WV|38.3667|-82.5580|828|7017|P|M|1|514984
@@ -2891,6 +3135,7 @@ HYS|KHYS|Hays Regional Airport|Hays|Hays|US|KS|38.8445|-99.2731|1999|6501|P|M|1|
 IAN|PAIK|Bob Baker Memorial Airport|Kiana|Kiana|US|AK|66.9761|-160.4390|166|4000|G|M|1|345
 ICT|KICT|Wichita Dwight D. Eisenhower National Airport|Wichita|Wichita|US|KS|37.6503|-97.4286|1333|10302|P|M|1|621768
 IFP|KIFP|Laughlin Bullhead International Airport|Bullhead City|Bullhead City|US|AZ|35.1547|-114.5593|701|8501|P|M|0|45853
+IGG|PAIG|Igiugig Airport|Igiugig|Igiugig|US|AK|59.3240|-155.9020|90|3000|G|S|1|150
 IGM|KIGM|Kingman Airport|Kingman|Kingman|US|AZ|35.2595|-113.9380|3449|6827|P|M|0|32304
 IKK|KIKK|Greater Kankakee Airport|Kankakee|Kankakee|US|IL|41.0714|-87.8463|630|5981|P|M|0|405347
 IKO|PAKO|Nikolski Air Station|Nikolski|Nikolski|US|AK|52.9416|-168.8495|77|3512|G|S|1|150
@@ -2902,7 +3147,9 @@ INL|KINL|Falls International Airport|International Falls|International Falls|US|
 INT|KINT|Smith Reynolds Airport|Winston Salem|Winston Salem|US|NC|36.1337|-80.2220|969|6655|P|M|0|164634
 INW|KINW|Winslow Lindbergh Regional Airport|Winslow|Winslow|US|AZ|35.0219|-110.7230|4941|7499|P|M|0|19845
 IPT|KIPT|Williamsport Regional Airport|Williamsport|Williamsport|US|PA|41.2421|-76.9224|529|6825|P|M|1|192751
+IRC|PACR|Circle City (New) Airport|Circle|Circle|US|AK|65.8277|-144.0762|613|2979|G|S|1|150
 IRK|KIRK|Kirksville Regional Airport|Kirksville|Kirksville|US|MO|40.0935|-92.5449|966|6005|P|M|1|57460
+ITH|KITH|Ithaca Tompkins Regional Airport|Ithaca|Ithaca|US|NY|42.4910|-76.4584|1099|6977|P|M|1|115846
 ITO|PHTO|Hilo International Airport|Hilo|Hilo|US|HI|19.7214|-155.0454|38|9800|P|M|1|75548
 IWD|KIWD|Gogebic Iron County Airport|Ironwood|Ironwood|US|MI|46.5253|-90.1316|1230|6502|P|S|1|10773
 JAC|KJAC|Jackson Hole Airport|Jackson|Jackson, WY|US|WY|43.6073|-110.7380|6451|6300|P|M|1|32108
@@ -2916,29 +3163,41 @@ JMS|KJMS|Jamestown Regional Airport|Jamestown|Jamestown, ND|US|ND|46.9297|-98.67
 JST|KJST|John Murtha Johnstown Cambria County Airport|Johnstown|Johnstown|US|PA|40.3161|-78.8339|2284|7004|P|M|1|147461
 JXN|KJXN|Jackson County Airport/Reynolds Field|Jackson|Jackson, MI|US|MI|42.2605|-84.4630|1001|5351|P|M|0|72880
 KAE|KAE|Kake Seaplane Base|Kake|Kake|US|AK|56.9730|-133.9460|0|10000|W|W|1|452
+KAL|PAKV|Kaltag Airport|Kaltag|Kaltag|US|AK|64.3186|-158.7420|181|3986|G|S|1|150
 KAWO|KAWO|Arlington Municipal Airport|Arlington|Arlington|US|WA|48.1614|-122.1584|142|5332|P|M|1|336087
 KBC|Z91|Birch Creek Airport|Birch Creek|Birch Creek|US|AK|66.2740|-145.8240|450|4000|G|S|1|150
 KCG|PAJC|Chignik Airport|Chignik|Chignik|US|AK|56.3115|-158.3730|18|2600|G|S|1|150
+KCQ|A79|Chignik Lake Airport|Chignik Lake|Chignik Lake|US|AK|56.2550|-158.7750|50|2800|G|S|1|150
 KCVX|KCVX|Charlevoix Municipal Airport|Charlevoix|Charlevoix, US|US|MI|45.3048|-85.2748|669|4549|P|S|1|8936
 KEB|KEB|Nanwalek Airport|Nanwalek|Nanwalek|US|AK|59.3521|-151.9250|27|1850|G|S|1|197
+KEK|KEK|Ekwok Airport|Ekwok|Ekwok|US|AK|59.3568|-157.4710|135|3300|G|S|0|150
+KFP|PAKF|False Pass Airport|False Pass|False Pass|US|AK|54.8475|-163.4072|20|2100|G|S|1|150
 KGK|PAJZ|Koliganek Airport|Koliganek|Koliganek|US|AK|59.7266|-157.2590|269|3300|G|S|1|150
-KGX|PAGX|Grayling Airport|Grayling|Grayling|US|AK|62.8952|-160.0663|99|4000|G|S|1|150
+KKA|PAKK|Koyuk Alfred Adams Airport|Koyuk|Koyuk|US|AK|64.9395|-161.1540|154|3002|G|S|1|150
+KKH|PADY|Kongiganak Airport|Kongiganak|Kongiganak|US|AK|59.9608|-162.8810|30|2400|G|S|1|150
 KKI|PFZK|Akiachak Airport|Akiachak|Akiachak|US|AK|60.9138|-161.4933|23|1649|G|S|1|726
 KLG|PALG|Kalskag Airport|Kalskag|Kalskag|US|AK|61.5363|-160.3410|55|3198|G|S|1|150
+KLN|PALB|Larsen Bay Airport|Larsen Bay|Larsen Bay|US|AK|57.5352|-153.9765|87|2690|G|S|1|150
 KLW|PAKW|Klawock Airport|Klawock|Klawock|US|AK|55.5792|-133.0760|80|5000|P|M|1|1370
 KMO|PAMB|Manokotak Airport|Manokotak|Manokotak|US|AK|58.9321|-158.9019|107|3300|G|S|1|150
 KNK|PFKK|Kokhanok Airport|Kokhanok|Kokhanok|US|AK|59.4332|-154.8022|115|3300|G|S|1|150
 KNW|PANW|New Stuyahok Airport|New Stuyahok|New Stuyahok|US|AK|59.4518|-157.3738|364|3281|G|S|1|337
 KOA|PHKO|Ellison Onizuka Kona International Airport at Keahole|Kailua-Kona|Kailua-Kona|US|HI|19.7388|-156.0456|47|11000|P|L|1|68885
+KOT|PFKO|Kotlik Airport|Kotlik|Kotlik|US|AK|63.0306|-163.5330|15|4400|G|S|1|539
 KOZ|4K5|Ouzinkie Airport|Ouzinkie|Ouzinkie|US|AK|57.9421|-152.4643|55|3300|G|S|1|952
 KPCW|KPCW|Erie-Ottawa International Airport|Port Clinton|Port Clinton|US|OH|41.5156|-82.8683|590|5646|P|M|1|161489
 KPN|PAKI|Kipnuk Airport|Kipnuk|Kipnuk|US|AK|59.9318|-164.0282|11|3200|G|S|1|553
+KPV|PAPE|Perryville Airport|Perryville|Perryville|US|AK|55.9065|-159.1609|29|3300|G|S|1|150
 KQA|PAUT|Akutan Airport|Akutan|Akutan|US|AK|54.1446|-165.6043|133|4500|P|S|1|743
 KSJX|KSJX|Beaver Island Airport|Beaver Island|Beaver Island|US|MI|45.6923|-85.5666|669|4299|P|S|1|150
+KSM|PASM|St Mary's Airport|St Mary's|St Mary's|US|AK|62.0605|-163.3020|312|5997|G|S|1|577
 KTN|PAKT|Ketchikan International Airport|Ketchikan|Ketchikan|US|AK|55.3556|-131.7140|89|7500|P|M|1|8275
+KTS|PFKT|Brevig Mission Airport|Brevig Mission|Brevig Mission|US|AK|65.3318|-166.4678|38|2990|G|S|1|150
 KUK|PFKA|Kasigluk Airport|Kasigluk|Kasigluk|US|AK|60.8727|-162.5247|48|3000|G|S|1|363
 KVC|PAVC|King Cove Airport|King Cove|King Cove|US|AK|55.1163|-162.2660|155|3500|G|S|1|594
+KVL|PAVL|Kivalina Airport|Kivalina|Kivalina|US|AK|67.7346|-164.5599|13|3000|G|S|1|150
 KWK|PAGG|Kwigillingok Airport|Kwigillingok|Kwigillingok|US|AK|59.8765|-163.1690|18|1835|G|S|1|150
+KWN|PAQH|Quinhagak Airport|Quinhagak|Quinhagak|US|AK|59.7551|-161.8450|42|4000|G|S|1|632
 KWT|PFKW|Kwethluk Airport|Kwethluk|Kwethluk|US|AK|60.7903|-161.4440|25|3199|G|S|1|835
 KYK|PAKY|Karluk Airport|Karluk|Karluk|US|AK|57.5659|-154.4538|137|2000|G|S|1|150
 KYU|PFKU|Koyukuk Airport|Koyukuk|Koyukuk|US|AK|64.8761|-157.7270|149|4000|G|S|1|150
@@ -2962,6 +3221,7 @@ LGU|KLGU|Logan-Cache Airport|Logan|Logan|US|UT|41.7912|-111.8520|4457|9020|P|M|0
 LIH|PHLI|Lihue Airport|Lihue|Lihue|US|HI|21.9744|-159.3371|153|6500|P|L|1|93696
 LIT|KLIT|Bill & Hillary Clinton National Airport/Adams Field|Little Rock|Little Rock|US|AR|34.7292|-92.2236|262|8273|P|M|1|650555
 LJN|KLBX|Texas Gulf Coast Regional Airport|Angleton|Angleton|US|TX|29.1086|-95.4621|25|7000|P|M|0|266075
+LMA|PAMH|Minchumina Airport|Minchumina|Minchumina|US|AK|63.8860|-152.3020|678|4184|G|S|1|150
 LMT|KLMT|Crater Lake-Klamath Regional Airport|Klamath Falls|Klamath Falls|US|OR|42.1561|-121.7330|4095|10302|P|M|0|48196
 LND|KLND|Hunt Field|Lander|Lander|US|WY|42.8152|-108.7300|5586|5000|P|M|0|7980
 LNK|KLNK|Lincoln Airport|Lincoln|Lincoln|US|NE|40.8449|-96.7618|1219|12901|P|M|1|329438
@@ -2995,6 +3255,7 @@ MEI|KMEI|Key Field / Meridian Regional Airport|Meridian|Meridian|US|MS|32.3326|-
 MFD|KMFD|Mansfield Lahm Regional Airport|Mansfield|Mansfield|US|OH|40.8214|-82.5166|1297|9001|P|M|0|107257
 MFE|KMFE|McAllen Miller International Airport|McAllen|McAllen|US|TX|26.1761|-98.2380|107|7120|P|M|1|764168
 MFH|K67L|Mesquite Airport|Mesquite|Mesquite|US|NV|36.8331|-114.0559|1978|5100|P|M|0|26560
+MFR|KMFR|Rogue Valley International-Medford Airport|Medford|Medford|US|OR|42.3742|-122.8730|1335|8800|P|M|1|220237
 MGE|KMGE|Dobbins Air Reserve Base|Marietta|Marietta|US|GA|33.9154|-84.5163|1068|10002|P|M|0|427683
 MGM|KMGM|Montgomery Regional (Dannelly Field) Airport|Montgomery|Montgomery|US|AL|32.3006|-86.3940|221|9020|P|M|1|292046
 MGW|KMGW|Morgantown Municipal Airport Walter L. (Bill) Hart Field|Morgantown|Morgantown|US|WV|39.6433|-79.9176|1248|5199|P|M|1|178502
@@ -3003,10 +3264,13 @@ MIE|KMIE|Delaware County Johnson Field|Muncie|Muncie|US|IN|40.2423|-85.3959|937|
 MKE|KMKE|General Mitchell International Airport|Milwaukee|Milwaukee|US|WI|42.9472|-87.8966|723|9990|P|L|1|2776974
 MKK|PHMK|Molokai Airport|Kaunakakai|Kaunakakai|US|HI|21.1529|-157.0960|454|4494|P|M|1|45210
 MKL|KMKL|McKellar-Sipes Regional Airport|Jackson|Jackson, TN|US|TN|35.5999|-88.9156|434|6005|P|M|1|188592
+MLB|KMLB|Melbourne Orlando International Airport|Melbourne|Melbourne, US|US|FL|28.1020|-80.6411|33|10181|P|M|1|331803
 MLC|KMLC|Mc Alester Regional Airport|Mc Alester|Mc Alester|US|OK|34.8824|-95.7835|770|5602|P|M|0|38117
 MLI|KMLI|Quad City International Airport|Moline|Moline|US|IL|41.4485|-90.5075|590|10002|P|M|1|427031
+MLL|PADM|Marshall Don Hunter Sr Airport|Marshall|Marshall|US|AK|61.8643|-162.0260|103|3200|G|S|1|150
 MLS|KMLS|Miles City Airport - Frank Wiley Field|Miles City|Miles City|US|MT|46.4273|-105.8854|2630|5764|P|M|0|13176
 MLU|KMLU|Monroe Regional Airport|Monroe|Monroe|US|LA|32.5109|-92.0377|79|7504|P|M|1|179552
+MLY|PAML|Manley Hot Springs Airport|Manley Hot Springs|Manley Hot Springs|US|AK|64.9919|-150.6441|270|3400|G|S|1|150
 MMH|KMMH|Mammoth Yosemite Airport|Mammoth Lakes|Mammoth Lakes|US|CA|37.6254|-118.8431|7135|7000|P|M|1|10334
 MNT|51Z|Minto Al Wright Airport|Minto|Minto|US|AK|65.1480|-149.3687|460|2000|G|S|1|150
 MOB|KMOB|Mobile Regional Airport|Mobile|Mobile|US|AL|30.6912|-88.2428|219|8502|P|M|1|311227
@@ -3030,8 +3294,15 @@ MWH|KMWH|Grant County International Airport|Moses Lake|Moses Lake|US|WA|47.2077|
 MYK|MYK|May Creek Airport|May Creek|May Creek|US|AK|61.3357|-142.6870|1650|2700|G|S|1|150
 MYL|KMYL|McCall Municipal Airport|McCall|McCall|US|ID|44.8888|-116.1011|5024|6101|P|M|1|4334
 MYR|KMYR|Myrtle Beach International Airport|Myrtle Beach|Myrtle Beach|US|SC|33.6797|-78.9283|25|9503|P|L|1|270515
+MYU|PAMY|Mekoryuk Airport|Mekoryuk|Mekoryuk|US|AK|60.3723|-166.2698|48|3070|G|M|1|150
+MYV|KMYV|Yuba County Airport|Marysville|Marysville|US|CA|39.0978|-121.5700|64|6007|P|M|0|229581
 NCN|PFCB|Chenega Bay Airport|Chenega|Chenega|US|AK|60.0776|-147.9947|72|3000|G|S|1|150
+NIB|PAFS|Nikolai Airport|Nikolai|Nikolai|US|AK|63.0179|-154.3604|441|4003|G|S|1|150
+NIN|NIN|Ninilchik Airport|Ninilchik|Ninilchik|US|AK|60.0202|-151.5890|276|2400|G|S|0|806
+NLG|PAOU|Nelson Lagoon Airport|Nelson Lagoon|Nelson Lagoon|US|AK|56.0075|-161.1600|14|4003|G|S|1|150
 NME|PAGT|Nightmute Airport|Nightmute|Nightmute|US|AK|60.4691|-164.7041|4|3200|G|S|1|150
+NUI|PAQT|Nuiqsut Airport|Nuiqsut|Nuiqsut|US|AK|70.2100|-151.0060|38|4343|G|M|1|150
+NUL|PANU|Nulato Airport|Nulato|Nulato|US|AK|64.7293|-158.0740|399|4011|G|S|1|150
 NUQ|KNUQ|Moffett Federal Airfield|Mountain View|Mountain View|US|CA|37.4161|-122.0490|32|9197|P|M|0|271249
 OAJ|KOAJ|Albert J Ellis Airport|Richlands|Richlands|US|NC|34.8292|-77.6121|94|7100|P|M|1|135228
 OAK|KOAK|Oakland San Francisco Bay Airport|Oakland|Oakland|US|CA|37.7201|-122.2212|9|10520|P|L|1|2403792
@@ -3044,6 +3315,7 @@ OGG|PHOG|Kahului International Airport|Kahului|Kahului|US|HI|20.8963|-156.4318|5
 OGS|KOGS|Ogdensburg International Airport|Ogdensburg|Ogdensburg|US|NY|44.6819|-75.4655|297|6400|P|M|1|99504
 OKC|KOKC|OKC Will Rogers World Airport|Oklahoma City|Oklahoma City|US|OK|35.3934|-97.5982|1295|9802|P|L|1|1419588
 OLF|KOLF|L M Clayton Airport|Wolf Point|Wolf Point|US|MT|48.0945|-105.5750|1986|5091|P|M|1|5057
+OLH|OLH|Old Harbor Airport|Old Harbor|Old Harbor|US|AK|57.2181|-153.2700|55|2750|G|S|1|150
 OLS|KOLS|Nogales International Airport|Nogales|Nogales, US|US|AZ|31.4177|-110.8480|3955|7200|P|M|0|150208
 OLU|KOLU|Columbus Municipal Airport|Columbus|Columbus, NE|US|NE|41.4481|-97.3402|1447|6801|P|M|0|34473
 OMA|KOMA|Eppley Airfield|Omaha|Omaha|US|NE|41.3032|-95.8941|984|9502|P|L|1|901117
@@ -3053,6 +3325,7 @@ ONT|KONT|Ontario International Airport|Ontario|Ontario|US|CA|34.0560|-117.6010|9
 OOK|PAOO|Toksook Bay Airport|Toksook Bay|Toksook Bay|US|AK|60.5414|-165.0870|59|3200|G|S|1|352
 ORH|KORH|Worcester Regional Airport|Worcester|Worcester|US|MA|42.2673|-71.8757|1009|7001|P|M|1|838219
 ORI|ORI|Port Lions Airport|Port Lions|Port Lions|US|AK|57.8849|-152.8477|52|2200|G|S|1|652
+ORV|PFNO|Robert (Bob) Curtis Memorial Airport|Noorvik|Noorvik|US|AK|66.8179|-161.0190|55|4000|G|S|1|441
 OSH|KOSH|Wittman Regional Airport|Oshkosh|Oshkosh|US|WI|43.9844|-88.5570|808|8002|P|M|0|129842
 OTH|KOTH|Southwest Oregon Regional Airport|North Bend|North Bend|US|OR|43.4171|-124.2460|17|5980|P|M|1|102397
 OTM|KOTM|Ottumwa Regional Airport|Ottumwa|Ottumwa|US|IA|41.1064|-92.4498|845|6001|P|M|0|52592
@@ -3062,15 +3335,22 @@ OZR|KOZR|Cairns AAF (Fort Rucker) Air Field|Fort Rucker|Fort Rucker|US|AL|31.275
 PAE|KPAE|Seattle Paine Field International Airport|Everett|Everett|US|WA|47.9063|-122.2820|606|9010|P|M|1|664714
 PAH|KPAH|Barkley Regional Airport|Paducah|Paducah|US|KY|37.0608|-88.7738|410|6499|P|M|1|153261
 PAO|KPAO|Palo Alto Airport|Palo Alto|Palo Alto|US|CA|37.4611|-122.1150|4|2441|P|M|0|257220
+PAQ|PAAQ|Warren 'Bud' Woods Palmer Municipal Airport|Palmer|Palmer|US|AK|61.5949|-149.0890|242|6006|P|M|0|29027
 PDB|4K0|Pedro Bay Airport|Pedro Bay|Pedro Bay|US|AK|59.7969|-154.1300|45|3002|G|S|1|150
 PDT|KPDT|Eastern Oregon Regional Airport at Pendleton|Pendleton|Pendleton|US|OR|45.6951|-118.8410|1497|6301|P|M|1|78162
+PDX|KPDX|Portland International Airport|Portland|Portland|US|OR|45.5887|-122.5980|31|11000|P|L|1|2180896
 PGA|KPGA|Page Municipal Airport|Page|Page|US|AZ|36.9242|-111.4477|4316|5950|P|M|1|15662
+PGM|PGM|Port Graham Airport|Port Graham|Port Graham|US|AK|59.3484|-151.8300|93|1975|G|S|1|263
 PGV|KPGV|Pitt-Greenville Airport|Greenville|Greenville, NC|US|NC|35.6355|-77.3843|26|7175|P|M|1|188956
+PHL|KPHL|Philadelphia International Airport|Philadelphia|Philadelphia|US|PA|39.8719|-75.2411|36|12000|P|L|1|6191834
+PHO|PAPO|Point Hope Airport|Point Hope|Point Hope|US|AK|68.3488|-166.7990|12|4000|P|S|1|609
 PIA|KPIA|General Wayne A. Downing Peoria International Airport|Peoria|Peoria|US|IL|40.6638|-89.6926|660|10104|P|M|1|432029
 PIB|KPIB|Hattiesburg Laurel Regional Airport|Moselle|Moselle|US|MS|31.4671|-89.3371|298|6503|P|M|1|86506
 PIE|KPIE|St. Petersburg Clearwater International Airport|Pinellas Park|Pinellas Park|US|FL|27.9102|-82.6874|11|9730|P|L|1|1429416
 PIH|KPIH|Pocatello Regional Airport|Pocatello|Pocatello|US|ID|42.9098|-112.5960|4452|9059|P|M|1|114028
+PIP|PAPN|Pilot Point Airport|Pilot Point|Pilot Point|US|AK|57.5804|-157.5720|57|3280|G|S|1|150
 PIR|KPIR|Pierre Regional Airport|Pierre|Pierre|US|SD|44.3827|-100.2860|1744|6900|P|M|1|21562
+PIZ|PPIZ|Point Lay LRRS Airport|Point Lay|Point Lay|US|AK|69.7329|-163.0050|22|3519|G|M|1|150
 PKA|PAPK|Napaskiak Airport|Napaskiak|Napaskiak|US|AK|60.7029|-161.7780|24|3000|G|S|1|860
 PKB|KPKB|Mid Ohio Valley Regional Airport|Parkersburg|Parkersburg|US|WV|39.3451|-81.4392|858|7240|P|M|1|122243
 PLN|KPLN|Pellston Regional Airport of Emmet County Airport|Pellston|Pellston|US|MI|45.5709|-84.7967|721|6513|P|M|1|25255
@@ -3084,6 +3364,7 @@ PRX|KPRX|Cox Field|Paris|Paris, US|US|TX|33.6366|-95.4508|547|6002|P|M|0|76007
 PSC|KPSC|Tri Cities Airport|Pasco|Pasco|US|WA|46.2647|-119.1190|410|7707|P|M|1|466951
 PSG|PAPG|Petersburg James A Johnson Airport|Petersburg|Petersburg|US|AK|56.8017|-132.9450|111|6400|P|M|1|2994
 PSP|KPSP|Palm Springs International Airport|Palm Springs|Palm Springs|US|CA|33.8297|-116.5070|477|10000|P|L|1|845751
+PTA|PALJ|Port Alsworth Airport|Port Alsworth|Port Alsworth|US|AK|60.2017|-154.3259|280|3000|G|S|1|150
 PTK|KPTK|Oakland County International Airport|Pontiac|Pontiac|US|MI|42.6655|-83.4201|980|6521|P|M|0|250241
 PTU|PAPM|Platinum Airport|Platinum|Platinum|US|AK|59.0177|-161.8279|15|5000|G|M|1|150
 PUB|KPUB|Pueblo Memorial Airport|Pueblo|Pueblo|US|CO|38.2891|-104.4970|4726|10498|P|M|1|141179
@@ -3093,8 +3374,10 @@ PVU|KPVU|Provo Municipal Airport|Provo|Provo|US|UT|40.2189|-111.7224|4497|8603|P
 PWM|KPWM|Portland International Jetport|Portland|Portland, ME|US|ME|43.6462|-70.3093|76|7200|P|L|1|887770
 PWY|KPNA|Ralph Wenz Field|Pinedale|Pinedale|US|WY|42.7955|-109.8070|7102|8900|P|M|0|2579
 RBL|KRBL|Red Bluff Municipal Airport|Red Bluff|Red Bluff|US|CA|40.1507|-122.2520|352|5431|P|M|0|76634
+RBY|PARY|Ruby Airport|Ruby|Ruby|US|AK|64.7272|-155.4700|658|4000|G|M|1|150
 RDD|KRDD|Redding Municipal Airport|Redding|Redding|US|CA|40.5090|-122.2930|505|7003|P|M|1|146870
 RDM|KRDM|Roberts Field|Redmond|Redmond|US|OR|44.2541|-121.1500|3080|7038|P|M|1|150888
+RDV|RDV|Red Devil Airport|Red Devil|Red Devil|US|AK|61.7881|-157.3500|174|4820|G|S|1|150
 RFD|KRFD|Chicago Rockford International Airport|Chicago|Chicago, IL|US|IL|42.1954|-89.0972|742|10002|P|M|1|535547
 RHI|KRHI|Rhinelander Oneida County Airport|Rhinelander|Rhinelander|US|WI|45.6312|-89.4675|1624|6800|P|M|1|34448
 RIC|KRIC|Richmond International Airport|Richmond|Richmond|US|VA|37.5052|-77.3197|167|9003|P|L|1|883131
@@ -3103,7 +3386,7 @@ RIV|KRIV|March Air Reserve Base|Riverside|Riverside|US|CA|33.8807|-117.2590|1536
 RIW|KRIW|Central Wyoming Regional Airport|Riverton|Riverton|US|WY|43.0642|-108.4600|5525|8204|P|M|1|17605
 RKD|KRKD|Knox County Regional Airport|Rockland|Rockland|US|ME|44.0601|-69.0992|56|5412|P|M|1|72421
 RMG|KRMG|Richard B Russell Airport|Rome|Rome, US|US|GA|34.3506|-85.1580|644|7010|P|M|0|119311
-RNO|KRNO|Reno Tahoe International Airport|Reno|Reno|US|NV|39.4991|-119.7680|4415|11001|P|L|1|650029
+RMP|PFMP|Rampart Airport|Rampart|Rampart|US|AK|65.5079|-150.1410|302|3520|G|S|1|150
 ROA|KROA|RoanokeBlacksburg Regional Airport|Roanoke|Roanoke|US|VA|37.3255|-79.9754|1175|6800|P|M|1|243831
 ROC|KROC|Frederick Douglass Greater Rochester International Airport|Rochester|Rochester|US|NY|43.1189|-77.6724|559|8001|P|L|1|791359
 ROW|KROW|Roswell Air Center Airport|Roswell|Roswell|US|NM|33.3016|-104.5310|3671|13000|P|M|1|58769
@@ -3127,8 +3410,11 @@ SBY|KSBY|Salisbury Ocean City Wicomico Regional Airport|Salisbury|Salisbury|US|M
 SCE|KUNV|State College Regional Airport|State College|State College|US|PA|40.8494|-77.8485|1239|6701|P|M|1|152049
 SCH|KSCH|Schenectady County Airport|Schenectady|Schenectady|US|NY|42.8525|-73.9289|378|7001|P|M|0|108342
 SCK|KSCK|Stockton Metropolitan Airport|Stockton|Stockton|US|CA|37.8933|-121.2381|33|10245|P|M|1|601174
+SCM|PACM|Scammon Bay Airport|Scammon Bay|Scammon Bay|US|AK|61.8447|-165.5752|14|3001|G|S|1|557
 SDF|KSDF|Louisville Muhammad Ali International Airport|Louisville|Louisville|US|KY|38.1706|-85.7351|501|11887|P|L|1|1472182
+SDP|PASD|Sand Point Airport|Sand Point|Sand Point|US|AK|55.3139|-160.5221|21|4000|P|M|1|1064
 SDY|KSDY|Sidney - Richland Regional Airport|Sidney|Sidney, MT|US|MT|47.7051|-104.1944|1985|5705|P|M|1|15113
+SEA|KSEA|SeattleTacoma International Airport|Seattle|Seattle|US|WA|47.4479|-122.3103|433|11901|P|L|1|2506015
 SGU|KSGU|St George Regional Airport|St George|St George|US|UT|37.0364|-113.5103|2941|9300|P|M|1|130837
 SGY|PAGY|Skagway Airport|Skagway|Skagway|US|AK|59.4603|-135.3167|44|3550|P|S|1|1004
 SHD|KSHD|Shenandoah Valley Regional Airport|Weyers Cave|Weyers Cave|US|VA|38.2638|-78.8964|1201|6002|P|M|1|141051
@@ -3143,6 +3429,7 @@ SLN|KSLN|Salina Municipal Airport|Salina|Salina|US|KS|38.7910|-97.6522|1288|1230
 SLQ|PASL|Sleetmute Airport|Sleetmute|Sleetmute|US|AK|61.7005|-157.1660|190|3100|G|S|1|150
 SME|KSME|Lake Cumberland Regional Airport|Somerset|Somerset|US|KY|37.0534|-84.6159|927|5801|P|M|0|43536
 SMF|KSMF|Sacramento International Airport|Sacramento|Sacramento|US|CA|38.6954|-121.5910|27|8605|P|L|1|2290964
+SMK|PAMK|St Michael Airport|St Michael|St Michael|US|AK|63.4901|-162.1100|98|4001|G|S|1|158
 SMN|KSMN|Lemhi County Airport|Salmon|Salmon|US|ID|45.1222|-113.8820|4043|5510|P|M|1|4079
 SMO|KSMO|Santa Monica Municipal Airport|Santa Monica|Santa Monica|US|CA|34.0158|-118.4510|170|3500|P|M|0|452290
 SMX|KSMX|Santa Maria Public Airport Captain G Allan Hancock Field|Santa Maria|Santa Maria, US|US|CA|34.8989|-120.4570|261|8004|P|M|1|208671
@@ -3161,11 +3448,13 @@ STP|KSTP|Saint Paul Downtown Holman Field|Saint Paul|Saint Paul|US|MN|44.9348|-9
 STS|KSTS|Charles M. Schulz Sonoma County Airport|Santa Rosa|Santa Rosa, US|US|CA|38.5090|-122.8130|128|6000|P|M|1|325348
 SUN|KSUN|Friedman Memorial Airport|Hailey|Hailey|US|ID|43.5044|-114.2960|5318|7550|P|M|1|19692
 SUX|KSUX|Sioux Gateway Airport / Brigadier General Bud Day Field|Sioux City|Sioux City|US|IA|42.3976|-96.3822|1098|9002|P|M|1|162847
+SVA|PASA|Savoonga Airport|Savoonga|Savoonga|US|AK|63.6864|-170.4930|53|4400|G|M|1|692
 SVC|KSVC|Grant County Airport|Silver City|Silver City|US|NM|32.6367|-108.1547|5446|6803|P|M|1|22527
 SVS|SVS|Stevens Village Airport|Stevens Village|Stevens Village|US|AK|66.0167|-149.0568|328|4000|G|S|1|150
+SWD|PAWD|Seward Airport|Seward|Seward|US|AK|60.1305|-149.4186|22|4249|P|M|0|4422
 SWO|KSWO|Stillwater Regional Airport|Stillwater|Stillwater|US|OK|36.1621|-97.0856|1000|7401|P|M|1|129933
 SXQ|PASX|Soldotna Airport|Soldotna|Soldotna|US|AK|60.4749|-151.0385|113|5001|P|M|0|9425
-SYR|KSYR|Syracuse Hancock International Airport|Syracuse|Syracuse|US|NY|43.1112|-76.1063|421|9013|P|L|1|686777
+TAL|PATA|Ralph M Calhoun Memorial Airport|Tanana|Tanana|US|AK|65.1744|-152.1090|236|4400|G|S|1|150
 TBN|KTBN|Waynesville-St. Robert Regional Airport-Forney Field|Fort Leonard Wood|Fort Leonard Wood|US|MO|37.7416|-92.1407|1159|6037|P|M|1|102427
 TCC|KTCC|Tucumcari Municipal Airport|Tucumcari|Tucumcari|US|NM|35.1828|-103.6030|4065|7104|P|M|0|6181
 TCS|KTCS|Truth or Consequences Municipal Airport|Truth or Consequences|Truth or Consequences|US|NM|33.2369|-107.2720|4853|7202|P|M|0|7931
@@ -3173,8 +3462,13 @@ TCT|PPCT|Takotna Airport|Takotna|Takotna|US|AK|62.9932|-156.0290|825|3300|G|S|1|
 TEB|KTEB|Teterboro Airport|Teterboro|Teterboro|US|NJ|40.8501|-74.0608|9|6997|P|M|1|5489830
 TEX|KTEX|Telluride Regional Airport|Telluride|Telluride|US|CO|37.9538|-107.9080|9070|7111|P|M|1|11612
 TIW|KTIW|Tacoma Narrows Airport|Tacoma|Tacoma|US|WA|47.2674|-122.5773|294|5002|P|M|1|684752
+TKA|PATK|Talkeetna Airport|Talkeetna|Talkeetna|US|AK|62.3205|-150.0940|358|3500|P|M|0|2707
 TKJ|PFTO|Tok Junction Airport|Tok|Tok|US|AK|63.3295|-142.9540|1639|2509|P|S|1|1119
 TLA|PATE|Teller Airport|Teller|Teller|US|AK|65.2404|-166.3390|294|2983|G|S|1|150
+TLT|TLT|Tuluksak Airport|Tuluksak|Tuluksak|US|AK|61.0870|-160.9228|30|3300|G|S|1|150
+TNC|PATC|Tin City Long Range Radar Station Airport|Tin City|Tin City|US|AK|65.5631|-167.9220|271|4702|G|S|1|150
+TNK|4KA|Tununak Airport|Tununak|Tununak|US|AK|60.5696|-165.2466|14|1778|G|S|1|164
+TOG|PATG|Togiak Airport|Togiak Village|Togiak Village|US|AK|59.0528|-160.3970|21|4400|G|S|1|493
 TOI|KTOI|Troy Municipal Airport at N Kenneth Campbell Field|Troy|Troy|US|AL|31.8604|-86.0121|398|6197|P|M|0|48052
 TOL|KTOL|Eugene F. Kranz Toledo Express Airport|Toledo|Toledo|US|OH|41.5868|-83.8078|683|10600|P|M|1|287516
 TPL|KTPL|Draughon Miller Central Texas Regional Airport|Temple|Temple|US|TX|31.1525|-97.4078|682|7000|P|M|0|117646
@@ -3192,6 +3486,7 @@ TYR|KTYR|Tyler Pounds Regional Airport|Tyler|Tyler|US|TX|32.3541|-95.4024|544|83
 TYS|KTYS|McGhee Tyson Airport|Knoxville|Knoxville|US|TN|35.8110|-83.9940|981|10000|P|L|1|686621
 UIN|KUIN|Quincy Regional Airport Baldwin Field|Quincy|Quincy|US|IL|39.9427|-91.1946|768|7098|P|M|1|112102
 UKI|KUKI|Ukiah Municipal Airport|Ukiah|Ukiah|US|CA|39.1260|-123.2010|614|4423|P|M|0|56231
+UNK|PAUN|Unalakleet Airport|Unalakleet|Unalakleet|US|AK|63.8884|-160.7990|27|5900|P|M|1|737
 UOX|KUOX|University Oxford Airport|Oxford|Oxford|US|MS|34.3843|-89.5368|452|5600|P|M|0|44880
 USA|KJQF|Concord-Padgett Regional Airport|Concord|Concord, NC|US|NC|35.3878|-80.7091|705|7402|P|M|1|425519
 VAK|PAVA|Chevak Airport|Chevak|Chevak|US|AK|61.5409|-165.6005|75|3220|G|S|1|1048
@@ -3210,16 +3505,21 @@ WBQ|PAWB|Beaver Airport|Beaver|Beaver, AK|US|AK|66.3622|-147.4070|359|3934|G|S|1
 WHD|4Z7|Hyder Seaplane Base|Hyder|Hyder|US|AK|55.9033|-130.0100|0|10000|W|W|1|150
 WJF|KWJF|General William J Fox Airfield|Lancaster|Lancaster|US|CA|34.7411|-118.2190|2351|7201|P|M|0|148343
 WKK|5A8|Aleknagik / New Airport|Aleknagik|Aleknagik|US|AK|59.2826|-158.6180|66|2030|G|M|1|351
+WLK|PASK|Selawik Airport|Selawik|Selawik|US|AK|66.6001|-159.9860|17|3002|G|S|1|710
 WMC|KWMC|Winnemucca Municipal Airport|Winnemucca|Winnemucca|US|NV|40.8966|-117.8060|4308|7000|P|M|0|11522
 WMH|KBPK|Ozark Regional Airport|Mountain Home|Mountain Home|US|AR|36.3689|-92.4705|928|5000|P|M|0|58627
+WMO|PAWM|White Mountain Airport|White Mountain|White Mountain|US|AK|64.6892|-163.4130|267|3000|G|S|1|150
 WNA|PANA|Napakiak Airport|Napakiak|Napakiak|US|AK|60.6903|-161.9790|17|3248|G|S|1|587
+WOW|PAUO|Willow Airport|Willow|Willow|US|AK|61.7542|-150.0520|221|4400|G|S|0|2429
 WRG|PAWG|Wrangell Airport|Wrangell|Wrangell|US|AK|56.4843|-132.3700|49|6000|P|M|1|2410
 WRL|KWRL|Worland Municipal Airport|Worland|Worland|US|WY|43.9657|-107.9510|4227|7000|P|M|0|9107
 WSN|PFWS|South Naknek Number 2 Airport|South Naknek|South Naknek|US|AK|58.7024|-157.0054|162|3314|G|S|1|229
+WTK|PAWN|Noatak Airport|Noatak|Noatak|US|AK|67.5612|-162.9805|88|3992|G|S|1|471
 WTL|A61|Tuntutuliak Airport|Tuntutuliak|Tuntutuliak|US|AK|60.3512|-162.6545|16|3005|G|S|1|150
 WWA|PAWS|Wasilla Airport|Wasilla|Wasilla|US|AK|61.5717|-149.5400|354|3700|P|M|0|36846
 WWD|KWWD|Cape May County Airport|Wildwood|Wildwood|US|NJ|39.0085|-74.9083|23|5252|P|M|0|114402
 WWR|KWWR|West Woodward Airport|Woodward|Woodward|US|OK|36.4380|-99.5227|2189|5502|P|M|0|26366
+WWT|PAEW|Mertarvik Airport|Mertarvik|Mertarvik|US|AK|60.8104|-164.4995|346|3300|G|S|1|150
 WYS|KWYS|Yellowstone Airport|West Yellowstone|West Yellowstone|US|MT|44.6884|-111.1180|6649|8400|P|M|1|3729
 XNA|KXNA|Northwest Arkansas National Airport|Fayetteville|Fayetteville|US|AR|36.2819|-94.3068|1287|8801|P|M|1|375383
 YKM|KYKM|Yakima Air Terminal McAllister Field|Yakima|Yakima|US|WA|46.5682|-120.5440|1099|7604|P|M|1|192233
@@ -3241,16 +3541,20 @@ NVI|UZSA|Navoi International Airport|Navoi|Navoi|UZ|NW|40.1176|65.1727|1140|1312
 OMN|UZTZ|Zomin Airport|Zomin|Zomin|UZ|JI|40.0140|68.4110|1760|3937|P|M|1|367148
 TMJ|UZST|Termez Airport|Termez|Termez|UZ|SU|37.2873|67.3119|1027|9843|P|M|1|199613
 UGC|UZNU|Urgench International Airport|Urgench|Urgench|UZ|XO|41.5827|60.6434|320|11065|P|L|1|470516
+CIW|TVSC|Canouan Airport|Canouan|Canouan|VC|06|12.6990|-61.3424|11|5900|P|M|1|3576
 MQS|TVSM|Mustique Airport|Lovell|Lovell|VC|06|12.8879|-61.1802|8|3255|P|M|1|6085
+SVD|TVSA|Argyle International Airport|Kingstown|Kingstown|VC|04|13.1597|-61.1488|136|9000|P|L|1|66866
 UNI|TVSU|Union Island International Airport|Union Island|Union Island|VC|06|12.6001|-61.4119|16|2467|P|M|1|3347
 AAO|SVAN|Anaco Airport|Anaco|Anaco|VE|B|9.4302|-64.4707|721|4134|P|M|0|176504
 AGV|SVAC|Oswaldo Guevara Mujica Airport|Acarigua|Acarigua|VE|P|9.5534|-69.2379|640|5990|P|M|0|356954
 BNS|SVBI|Barinas Airport|Barinas|Barinas|VE|E|8.6150|-70.2142|615|6560|P|M|1|907857
+CAJ|SVCN|Canaima Airport|Canaima|Canaima|VE|F|6.2320|-62.8548|1450|7070|P|M|1|18591
 CBL|SVCB|General Tomas de Heres Airport|Ciudad Bolivar|Ciudad Bolivar|VE|F|8.1222|-63.5370|197|5527|P|M|0|390206
 CLZ|SVCL|Calabozo Airport|Guarico|Guarico|VE|J|8.9247|-67.4171|328|4790|P|M|0|164294
 CUM|SVCU|Antonio Jose de Sucre Airport|Cumana|Cumana|VE|R|10.4503|-64.1305|14|10171|P|M|1|389057
 CUP|SVCP|General Francisco Bermudez Airport|Carupano|Carupano|VE|R|10.6600|-63.2617|33|6611|P|M|1|222158
 CZE|SVCR|Jose Leonardo Chirinos Airport|Coro|Coro|VE|I|11.4149|-69.6809|52|6761|P|M|1|289634
+EOR|SVED|El Dorado Airport|Bolivar|Bolivar|VE|F|6.7157|-61.6388|318|4000|P|M|0|60079
 GDO|SVGD|Guasdualito Airport|Guasdualito|Guasdualito|VE|C|7.2108|-70.7564|427|6792|P|M|0|71875
 GUQ|SVGU|Guanare Airport|Guanare|Guanare|VE|P|9.0269|-69.7552|606|5905|P|M|0|202124
 LRV|SVRS|Los Roques Airport|Gran Roque Island|Gran Roque Island|VE|W|11.9469|-66.6683|17|2756|P|S|1|1471
@@ -3271,6 +3575,7 @@ VLN|SVVA|Arturo Michelena International Airport|Valencia|Valencia|VE|G|10.1497|-
 VLV|SVVL|Dr. Antonio Nicolas Briceno Airport|Valera|Valera|VE|T|9.3405|-70.5841|2060|6791|P|M|1|657034
 VIJ|TUPW|Virgin Gorda Airport|Spanish Town|Spanish Town|VG|A|18.4466|-64.4279|9|3100|G|M|1|5521
 STT|TIST|Cyril E. King Airport|Charlotte Amalie|Charlotte Amalie|VI|ST|18.3371|-64.9773|23|7000|P|L|1|131394
+STX|TISX|Henry E. Rohlsen Airport|Christiansted|Christiansted|VI|SC|17.7014|-64.8026|74|10002|P|M|1|39396
 BMV|VVBM|Buon Ma Thuot Airport|Buon Ma Thuot|Buon Ma Thuot|VN|CH|12.6683|108.1200|1729|9843|P|M|1|784275
 CAH|VVCM|Ca Mau Airport|Ca Mau City|Ca Mau City|VN|SW|9.1777|105.1778|6|4921|P|M|1|775748
 DIN|VVDB|Dien Bien Phu Airport|Dien Bien Phu|Dien Bien Phu|VN|NW|21.3975|103.0080|1611|7874|P|M|1|315703
@@ -3286,11 +3591,19 @@ VCA|VVCT|Can Tho International Airport|Can Tho|Can Tho|VN|SW|10.0834|105.7094|9|
 VCS|VVCS|Con Dao Airport|Con Dao|Con Dao|VN|SE|8.7318|106.6330|20|6004|P|M|1|19912
 VDH|VVDH|Dong Hoi Airport|Dong Hoi|Dong Hoi|VN|NC|17.5150|106.5906|59|7874|P|M|1|491804
 CCV|NVSF|Craig Cove Airport|Craig Cove|Craig Cove|VU|MAP|-16.2650|167.9240|69|2674|P|S|1|150
+FTA|NVVF|Futuna Airport|Futuna Island|Futuna Island, VU|VU|TAE|-19.5164|170.2320|95|2297|G|S|1|150
 LNB|NVSM|Lamen Bay Airport|Lamen Bay|Lamen Bay|VU|SEE|-16.5842|168.1590|7|2789|G|S|1|150
+LNE|NVSO|Lonorore Airport|Lonorore|Lonorore|VU|PAM|-15.8656|168.1720|43|2175|G|S|1|150
 LOD|NVSG|Longana Airport|Longana|Longana|VU|PAM|-15.3067|167.9670|167|2887|G|S|1|150
-PBJ|NVSI|Tavie Airport|Paama Island|Paama Island|VU|MAP|-16.4320|168.2355|69|1968|G|S|1|150
+LPM|NVSL|Lamap Airport|Lamap|Lamap|VU|MAP|-16.4611|167.8293|7|3000|G|S|1|150
+NUS|NVSP|Norsup Airport|Norsup|Norsup|VU|MAP|-16.0797|167.4010|23|2972|P|S|1|3276
+OLJ|NVSZ|North West Santo Airport|Olpoi|Olpoi|VU|SAM|-14.8817|166.5580|50|2362|G|S|1|150
+SLH|NVSC|Sola Airport|Sola|Sola|VU|TOB|-13.8517|167.5370|7|2723|G|S|1|1171
 SSR|NVSH|Sara Airport|Pentecost Island|Pentecost Island|VU|PAM|-15.4708|168.1520|493|1969|G|S|1|150
 TGH|NVST|Tongoa Airport|Tongoa Island|Tongoa Island|VU|SEE|-16.8911|168.5510|443|2329|G|S|1|150
+VLS|NVSV|Valesdir Airport|Epi Island|Epi Island|VU|SEE|-16.7961|168.1770|10|2625|G|S|1|150
+WLH|NVSW|Walaha Airport|Walaha|Walaha|VU|PAM|-15.4120|167.6910|151|2379|G|S|1|150
+FUT|NLWF|Pointe Vele Airport|Futuna Island|Futuna Island|WF|A|-14.3116|-178.0665|20|3609|G|S|1|719
 PRN|BKPR|Pristina Adem Jashari International Airport|Prishtina|Prishtina|XK|01|42.5728|21.0358|1789|9974|P|L|1|1606670
 AAY|OYGD|Al Ghaydah International Airport|Al Ghaydah|Al Ghaydah|YE|MR|16.1933|52.1742|134|8858|P|M|1|10948
 GXF|OYSY|Seiyun Hadhramaut International Airport|Seiyun|Seiyun|YE|HD|15.9659|48.7881|2097|9843|P|L|1|17395
@@ -3328,6 +3641,7 @@ ULD|FAUL|Prince Mangosuthu Buthelezi Airport|Ulundi|Ulundi|ZA|NL|-28.3206|31.416
 UTW|FAQT|Queenstown Airport|Queenstown|Queenstown|ZA|EC|-31.9202|26.8822|3637|3937|P|M|0|278642
 ZEC|FASC|Secunda Airport|Secunda|Secunda|ZA|MP|-26.5241|29.1701|5250|3609|P|M|0|649472
 CGJ|FLKE|Kasompe Airport|Chingola|Chingola|ZM|08|-12.5728|27.8939|4636|4698|P|M|0|310733
+KIW|FLSO|Southdowns Airport|Kitwe|Kitwe|ZM|08|-12.9005|28.1499|4145|6562|P|M|0|352257
 LVI|FLHN|Harry Mwanga Nkumbula International Airport|Livingstone|Livingstone|ZM|07|-17.8215|25.8196|3302|9843|P|L|1|223612
 MFU|FLMF|Mfuwe International Airport|Mfuwe|Mfuwe|ZM|03|-13.2589|31.9366|1853|7349|P|L|1|350025
 NLA|FLSK|Simon Mwansa Kapwepwe International Airport|Ndola|Ndola|ZM|08|-12.9651|28.5156|4308|11483|P|L|1|1636544

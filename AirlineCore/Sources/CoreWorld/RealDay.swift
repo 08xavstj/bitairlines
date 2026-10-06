@@ -74,4 +74,11 @@ extension World {
         startRealWeekGoalIfNeeded()
         keepSpecialJobsOpen()
     }
+
+    /// The game-midnight part (OperationsDaily.swift): the refresh above, and the running event's jobs topped up.
+    mutating func dailyRealCalendar() {
+        guard ops.realDay > 0 else { return }
+        refreshRealCalendar()
+        topUpSeasonJobs()
+    }
 }

@@ -36,6 +36,10 @@ extension World {
         if let problem = jobProblem(jobID: jobID, aircraftID: aircraftID) { throw problem }
         guard let j = ops.jobs.firstIndex(where: { $0.id == jobID }), let i = aircraftIndex(aircraftID) else { throw WorldError.jobUnavailable }
         ops.jobs[j].aircraftID = aircraftID
+        // A dispatch or seasonal job sat on the board by real time: its deadline starts when it is taken.
+        if ops.jobs[j].isSpecial {
+            ops.jobs[j].deadlineMinute = max(ops.jobs[j].deadlineMinute, clock.minute + Tuning.specialJobDeadlineMinutes)
+        }
         if let rid = aircraft[i].routeID, routeIndex(rid) != nil {
             aircraft[i].returnRouteID = rid
             let others = aircraft[i].otherRouteIDs
@@ -141,6 +145,8 @@ extension World {
         if ops.jobsDone.count > Tuning.jobRecordsKept { ops.jobsDone.removeFirst(ops.jobsDone.count - Tuning.jobRecordsKept) }
         addNews(onTime ? .jobDone : .jobLate, subject: job.to, amount: onTime ? job.pay : job.pay / 2)
         ops.jobs.remove(at: j)
+        // A daily dispatch earns its stamp and a seasonal job counts towards its livery, late or not (DailyDispatch.swift).
+        noteSpecialJobDone(job)
         aircraft[i].status = .idle
         endJob(aircraftIndex: i)
         return true

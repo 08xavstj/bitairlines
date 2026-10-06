@@ -3,26 +3,26 @@
 Copy for App Store Connect. Character limits in brackets. Plain words, no hype, no em dashes.
 
 ## Name [30]
-Bit Airlines: Pixel Tycoon
+Pixel Props
 
 ## Subtitle [30]
-Fly bush planes, build routes
+Pixel Airline Tycoon
 
 ## Promotional text [170] (can be changed any time without a new build)
-No forced ads. Never pay-to-win. Start with one bush plane in the Arctic and grow it into an airline that flies the world.
+No forced ads. Never pay-to-win. Start with one small propeller plane anywhere in the world and grow it into a global airline.
 
 ## Keywords [100, comma separated, no spaces, no words already in the name or subtitle]
-airline,manager,pilot,aviation,arctic,idle,simulator,airport,cargo,retro,sim,cessna,floatplane,8bit
+airline,manager,pilot,aviation,idle,simulator,airport,cargo,retro,sim,plane,floatplane,8bit,travel
 
-(Check "cessna" against the trademark decision in docs/app-store.md before using it.)
+(The name and subtitle are searched too, so words already in them are left out here.)
 
 ## Description [4000]
-Start a small airline in a remote corner of the world with one used bush plane. Fly people, mail and freight to towns that
-have no road, and grow into a carrier with jets at the big hubs.
+Start a small airline anywhere in the world with one used propeller plane. Fly people, mail and freight between islands,
+jungle strips and towns with no road, and grow into a carrier with jets at the big hubs.
 
 No forced ads. Never pay-to-win. Everything in the game is earned by flying.
 
-- Real places: more than 2,400 real airports, from gravel strips in the Arctic to the world's biggest hubs.
+- Real places: about 1,300 real airports, from island and jungle strips to the world's biggest hubs, spread so the map stays clean.
 - Routes that fly themselves: set a route and a schedule once and your aircraft keep flying it. The game stops only when
   something needs you.
 - Your airline, your look: draw your own pixel logo, pick your colours and paint scheme, and see them on every aircraft.
@@ -32,15 +32,15 @@ No forced ads. Never pay-to-win. Everything in the game is earned by flying.
 - Rare finds: now and then a low-hours aircraft, a classic in a historic paint scheme, or a project plane turns up for sale.
 - See what each route earns: profit, costs and how full the seats are, for the last seven days.
 - Your saves follow you: iCloud keeps your airlines on all your devices.
-- Real weather, short winter days at northern strips, lakes that freeze, and fuel that changes price.
+- Real weather, short winter days at far-north strips, lakes that freeze, and fuel that changes price.
 
-Bit Airlines works offline. No account needed.
+Pixel Props works offline. No account needed.
 
 ## What's new (first release)
 First release.
 
 ## Screenshots (first three matter most; landscape, iPhone 6.9" and 6.5")
-1. "Start a bush airline in the Arctic": the map around Inuvik with a route flying.
+1. "One small plane, the whole world": the map around a Caribbean start with a route flying.
 2. "Routes that fly themselves": the map zoomed out with several routes and aircraft in the air.
 3. "Your logo on every plane": the logo studio next to the livery preview.
 4. "Medevac, mail and charters": the Jobs screen.

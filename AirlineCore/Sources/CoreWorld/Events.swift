@@ -101,7 +101,9 @@ extension World {
             if nearA || nearB { pax *= event.passengerFactor }
             if nearB { cargo *= event.cargoFactor }
         }
-        return (pax, cargo)
+        // The seasonal event on the real calendar, if one is running (SeasonalEvents.swift).
+        let season = seasonFactors(from: a, to: b)
+        return (pax * season.passengers, cargo * season.cargo)
     }
 
     /// Says yes to an offer: pay, and earn the reputation.

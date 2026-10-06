@@ -4,10 +4,9 @@
 enum AirportRows_EUE {
     static let rows = #"""
 KFZ|LAKU|Kukes International Airport|Kukes|Kukes|AL|07|42.0358|20.4160|1120|7211|P|M|0|127251
-SJJ|LQSA|Sarajevo International Airport|Sarajevo|Sarajevo|BA|BIH|43.8246|18.3315|1708|8666|P|L|1|1158459
+OMO|LQMO|Mostar International Airport|Mostar|Mostar|BA|BIH|43.2825|17.8461|156|7874|P|L|1|419669
 SOF|LBSF|Sofia Airport|Sofia|Sofia|BG|22|42.6964|23.4177|1742|11811|P|L|1|1909923
 MSQ|UMMS|Minsk National Airport|Minsk|Minsk|BY|MI|53.8881|28.0400|670|12139|P|L|1|3017757
-OSR|LKMT|Leos Janacek Airport Ostrava|Mosnov|Mosnov|CZ|MO|49.6963|18.1111|844|11484|P|L|1|3355623
 PRG|LKPR|Vaclav Havel Airport Prague|Prague|Prague|CZ|PR|50.1009|14.2599|1247|12189|P|L|1|3959377
 ZAG|LDZA|Zagreb Franjo Tuman International Airport|Velika Gorica|Velika Gorica|HR|01|45.7429|16.0688|353|10669|P|L|1|1443619
 BUD|LHBP|Budapest Liszt Ferenc International Airport|Budapest|Budapest|HU|BU|47.4302|19.2624|495|12162|P|L|1|9142148
@@ -15,17 +14,12 @@ KUN|EYKA|Kaunas International Airport|Kaunas|Kaunas|LT|KU|54.9640|24.0858|256|10
 LPX|EVLA|Liepaja International Airport|Liepaja|Liepaja|LV|112|56.5175|21.0969|16|6568|P|L|0|154820
 RMO|LUKK|Chisinau International Airport|Chisinau|Chisinau|MD|CU|46.9277|28.9317|399|11778|P|L|1|2096241
 GDN|EPGD|Gdansk Lech Waesa Airport|Gdansk|Gdansk|PL|PM|54.3776|18.4662|489|9186|P|L|1|2585792
+KTW|EPKT|Katowice Wojciech Korfanty International Airport|Katowice|Katowice|PL|SL|50.4760|19.0807|995|10499|P|L|1|3505718
 WAW|EPWA|Warsaw Chopin Airport|Warsaw|Warsaw|PL|MZ|52.1657|20.9671|362|12106|P|L|1|5057212
-WRO|EPWR|Copernicus Wrocaw Airport|Wrocaw|Wrocaw|PL|DS|51.1037|16.8821|404|8212|P|L|1|3521827
-BCM|LRBC|Bacau George Enescu International Airport|Bacau|Bacau|RO|BC|46.5219|26.9103|607|8203|P|L|1|2175128
-CRA|LRCV|Craiova International Airport|Craiova|Craiova|RO|DJ|44.3181|23.8886|626|8203|P|L|1|2445600
-OMR|LROD|Oradea International Airport|Oradea|Oradea|RO|BH|47.0253|21.9025|465|8267|P|L|1|1254849
+CLJ|LRCL|Avram Iancu Cluj International Airport|Cluj-Napoca|Cluj-Napoca|RO|CJ|46.7860|23.6857|1039|6693|P|L|1|1691929
 OTP|LROP|Bucharest Henri Coanda International Airport|Otopeni|Otopeni|RO|IF|44.5718|26.1033|314|11484|P|L|1|3393371
-TGM|LRTM|Targu Mures Transilvania International Airport|Recea|Recea|RO|MS|46.4677|24.4125|963|6562|P|M|1|562759
 BEG|LYBE|Belgrade Nikola Tesla Airport|Belgrade|Belgrade|RS|00|44.8184|20.3091|335|11483|P|L|1|2973094
-CWC|UKLN|Chernivtsi International Airport|Chernivtsi|Chernivtsi|UA|77|48.2593|25.9808|826|7270|P|M|0|592206
 DNK|UKDD|Dnipro International Airport|Dnipro|Dnipro|UA|12|48.3572|35.1006|481|9320|P|M|0|1869669
-HRK|UKHH|Kharkiv International Airport|Kharkiv|Kharkiv|UA|A|49.9269|36.2908|508|7285|P|M|0|4011494
 KBP|UKBB|Boryspil International Airport|Boryspil|Boryspil|UA|32|50.3450|30.8947|427|13123|P|L|0|5512042
 LWO|UKLL|Lviv International Airport|Lviv|Lviv|UA|46|49.8125|23.9561|1071|10843|P|L|0|2298279
 SIP|UKFF|Simferopol International Airport|Simferopol|Simferopol|UA|43|45.0522|33.9751|639|12142|P|L|0|2421550

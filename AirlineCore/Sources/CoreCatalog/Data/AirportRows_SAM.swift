@@ -3,56 +3,44 @@
 
 enum AirportRows_SAM {
     static let rows = #"""
-ARR|SAVR|D. Casimiro Szlapelis Airport|Alto Rio Senguerr|Alto Rio Senguerr|AR|U|-45.0136|-70.8122|2286|4593|G|S|0|1700
 BHI|SAZB|Comandante Espora Airport|Bahia Blanca|Bahia Blanca|AR|B|-38.7250|-62.1693|246|7907|P|M|1|418448
 COC|SAAC|Comodoro Pierrestegui Airport|Concordia|Concordia|AR|E|-31.2969|-57.9966|112|5249|P|M|0|158927
 COR|SACO|Ingeniero Aeronautico Ambrosio L.V. Taravella International Airport|Cordoba|Cordoba|AR|X|-31.3123|-64.2083|1604|10499|P|L|1|2885385
 CRD|SAVC|General Enrique Mosconi International Airport|Comodoro Rivadavia|Comodoro Rivadavia|AR|U|-45.7869|-67.4634|189|9219|P|L|1|199410
 CRR|SANW|Ceres Airport|Ceres|Ceres|AR|S|-29.8723|-61.9279|285|4429|G|S|0|19008
-CVI|AR-0007|Caleta Olivia Airport|Caleta Olivia|Caleta Olivia|AR|Z|-46.3743|-67.5941|37|3000|G|S|0|22169
 EZE|SAEZ|Ezeiza International Airport - Ministro Pistarini|Buenos Aires|Buenos Aires|AR|B|-34.8222|-58.5358|67|10827|P|L|1|7352162
 FTE|SAWC|El Calafate - Commander Armando Tola International Airport|El Calafate|El Calafate|AR|Z|-50.2803|-72.0534|669|8366|P|M|1|22844
 GGS|SAWR|Gobernador Gregores Airport|Gobernador Gregores|Gobernador Gregores|AR|Z|-48.7831|-70.1500|356|4921|G|S|1|5343
 IRJ|SANL|Capitan V A Almonacid Airport|La Rioja|La Rioja|AR|F|-29.3816|-66.7958|1437|9383|P|M|1|238997
 LGS|SAMM|Comodoro D.R. Salomon Airport|Malargue|Malargue|AR|M|-35.4936|-69.5743|4685|8694|P|M|0|27355
-LHS|SAVH|Las Heras Airport|Las Heras|Las Heras|AR|Z|-46.5385|-68.9653|1082|4593|P|M|1|34391
 LLS|SATK|Alferez Armando Rodriguez Airport|Las Lomitas|Las Lomitas|AR|P|-24.7214|-60.5488|426|3000|G|S|0|14302
 LUQ|SAOU|Brigadier Mayor D Cesar Raul Ojeda Airport|San Luis|San Luis|AR|D|-33.2732|-66.3564|2328|9678|P|M|1|193366
 MDQ|SAZM|Astor Piazzola International Airport|Mar del Plata|Mar del Plata|AR|B|-37.9342|-57.5733|72|7218|P|M|1|682050
 MQD|SAVQ|Maquinchao Airport|Maquinchao|Maquinchao|AR|R|-41.2431|-68.7078|2912|3773|G|S|0|2926
 NQN|SAZN|Presidente Peron International Airport|Neuquen|Neuquen|AR|Q|-38.9490|-68.1557|895|8432|P|L|1|662571
 OES|SAVN|Antoine de Saint Exupery Airport|San Antonio Oeste|San Antonio Oeste|AR|R|-40.7512|-65.0343|85|5905|P|S|1|16966
-OLN|SAVM|Lago Musters Airport|Sarmiento|Sarmiento|AR|U|-45.5752|-69.0770|889|3219|G|S|0|6533
 OVR|SAZF|Olavarria Airport|Olavarria|Olavarria|AR|B|-36.8900|-60.2166|551|7218|P|S|0|124113
-PMQ|SAWP|Perito Moreno Jalil Hamer Airport|Perito Moreno|Perito Moreno|AR|Z|-46.5379|-70.9787|1410|5577|P|M|1|8755
-PUD|SAWD|Puerto Deseado Airport|Puerto Deseado|Puerto Deseado|AR|Z|-47.7353|-65.9041|268|4921|P|M|1|16747
 REL|SAVT|Almirante Marco Andres Zar Airport|Rawson|Rawson|AR|U|-43.2105|-65.2703|141|8399|P|M|1|125619
 RES|SARE|Resistencia International Airport|Resistencia|Resistencia|AR|H|-27.4499|-59.0561|173|9088|P|L|1|810173
-RGA|SAWE|Gobernador Ramon Trejo Noel International Airport|Rio Grande|Rio Grande, AR|AR|V|-53.7777|-67.7494|65|6562|P|M|1|53646
 RGL|SAWG|Piloto Civil Norberto Fernandez International Airport|Rio Gallegos|Rio Gallegos|AR|Z|-51.6088|-69.3089|61|9022|P|L|1|95796
 ROS|SAAR|Rosario Islas Malvinas International Airport|Rosario|Rosario|AR|S|-32.9036|-60.7850|85|9842|P|L|1|2080110
-ROY|SAWM|Rio Mayo Airport|Rio Mayo|Rio Mayo|AR|U|-45.7039|-70.2456|1784|4921|G|S|0|2939
 RSA|SAZR|Santa Rosa Airport|Santa Rosa|Santa Rosa, AR|AR|L|-36.5883|-64.2757|630|7546|P|M|1|150688
 RYO|SAWT|28 de Noviembre Airport|Rio Turbio|Rio Turbio|AR|Z|-51.6050|-72.2203|909|6340|P|S|1|9630
 RZA|SAWU|Santa Cruz Airport|Puerto Santa Cruz|Puerto Santa Cruz|AR|Z|-50.0165|-68.5792|364|6561|P|M|0|14668
 TUC|SANT|Teniente Benjamin Matienzo International Airport|San Miguel de Tucuman|San Miguel de Tucuman|AR|T|-26.8374|-65.1042|1493|11483|P|L|1|870673
 UAQ|SANU|Domingo Faustino Sarmiento Airport|San Juan|San Juan, AR|AR|J|-31.5715|-68.4182|1958|8071|P|M|1|532780
-ULA|SAWJ|Capitan D Daniel Vazquez Airport|San Julian|San Julian|AR|Z|-49.3068|-67.8026|203|6562|P|M|0|6143
 USH|SAWH|Ushuaia - Malvinas Argentinas International Airport|Ushuaia|Ushuaia|AR|V|-54.8433|-68.2958|102|9186|P|M|1|56214
 BJO|SLBJ|Bermejo Airport|Bermejo|Bermejo|BO|T|-22.7733|-64.3129|1249|4921|P|M|0|67379
 CIJ|SLCO|Capitan Anibal Arab Airport|Cobija|Cobija|BO|N|-11.0391|-68.7828|889|6562|P|M|1|87177
-GYA|SLGM|Guayaramerin Airport|Guayaramerin|Guayaramerin|BO|B|-10.8886|-65.3810|456|5767|P|M|1|75087
 LPB|SLLP|El Alto International Airport|La Paz|La Paz|BO|L|-16.5103|-68.1894|13355|13123|P|L|1|2281937
 PSZ|SLPS|Capitan Av. Salvador Ogaya G. airport|Puerto Suarez|Puerto Suarez|BO|S|-18.9753|-57.8206|440|6562|P|M|1|35733
 PUR|SLPR|Puerto Rico Airport|Puerto Rico|Puerto Rico, BO|BO|N|-11.1077|-67.5512|597|3000|G|S|1|150
-RBQ|SLRQ|Rurrenabaque Airport|Rurrenabaque|Rurrenabaque|BO|B|-14.4279|-67.4968|676|4921|P|S|1|19125
 RIB|SLRI|Capitan Av. Selin Zeitun Lopez Airport|Riberalta|Riberalta|BO|B|-11.0094|-66.0755|462|5906|G|M|1|97762
-SBL|SLSA|Santa Ana Del Yacuma Airport|Santa Ana del Yacuma|Santa Ana del Yacuma|BO|B|-13.7622|-65.4352|472|5013|P|M|0|12783
 SRE|SLAL|Alcantari International Airport|Sucre|Sucre|BO|H|-19.2468|-65.1496|10184|11811|P|L|1|304547
 TDD|SLTR|Teniente Av. Jorge Henrich Arauz Airport|Trinidad|Trinidad, BO|BO|B|-14.8187|-64.9180|509|7874|P|M|1|94313
 VVI|SLVR|Viru Viru International Airport|Santa Cruz|Santa Cruz|BO|S|-17.6448|-63.1354|1224|11483|P|L|1|2109782
 AAI|BR-2149|Arraias Airport|Arraias|Arraias|BR|TO|-13.0252|-46.8841|1923|4921|P|S|0|37175
-AQM|SJOG|Ariquemes Airport|Ariquemes|Ariquemes|BR|RO|-9.8804|-63.0471|466|4285|P|S|0|105319
+AJU|SBAR|Aracaju - Santa Maria Airport|Aracaju|Aracaju|BR|SE|-10.9839|-37.0729|23|7218|P|M|1|1942035
 ARU|SBAU|Aracatuba Airport|Aracatuba|Aracatuba|BR|SP|-21.1415|-50.4246|1358|6955|P|M|1|695024
 ATM|SBHT|Altamira Interstate Airport|Altamira|Altamira|BR|PA|-3.2531|-52.2539|368|6572|P|M|1|222529
 BAZ|SWBC|Barcelos Airport|Barcelos|Barcelos|BR|AM|-0.9812|-62.9186|112|3937|P|S|1|27638
@@ -72,36 +60,27 @@ CMC|SNWC|Camocim - Pinto Martins Airport|Camocim|Camocim|BR|CE|-2.8956|-40.8593|
 CNF|SBCF|Tancredo Neves International Airport|Belo Horizonte|Belo Horizonte|BR|MG|-19.6357|-43.9669|2721|11811|P|L|1|7864806
 CQA|SWEK|Canarana Airport|Canarana|Canarana|BR|MT|-13.5765|-52.2683|1306|2247|G|S|0|25848
 CQS|SWCQ|Costa Marques Airport|Costa Marques|Costa Marques|BR|RO|-12.4211|-64.2516|623|4905|P|S|0|12627
-CSS|SSCL|Cassilandia Airport|Cassilandia|Cassilandia|BR|MS|-19.1469|-51.6769|1568|2953|P|S|0|31083
 CWB|SBCT|Curitiba-Afonso Pena International Airport|Curitiba|Curitiba|BR|PR|-25.5285|-49.1758|2988|7277|P|L|1|4420939
-CZS|SBCZ|Cruzeiro do Sul Airport|Cruzeiro Do Sul|Cruzeiro Do Sul|BR|AC|-7.5999|-72.7695|637|7874|P|M|1|152482
 ERM|SSER|Erechim Airport|Erechim|Erechim|BR|RS|-27.6636|-52.2715|2498|4199|P|S|0|76360
 ERN|SWEI|Eirunepe Airport|Eirunepe|Eirunepe|BR|AM|-6.6395|-69.8797|400|7546|P|S|0|35700
-FBA|SWOB|Fonte Boa Airport|Fonte Boa|Fonte Boa|BR|AM|-2.5326|-66.0832|207|4167|P|S|0|16060
 FEJ|SNOU|Feijo Airport|Feijo|Feijo|BR|AC|-8.1412|-70.3408|551|3937|P|S|0|28237
 FEN|SBFN|Fernando de Noronha Airport|Fernando de Noronha|Fernando de Noronha|BR|PE|-3.8545|-32.4230|193|6053|P|M|1|6179
-FLN|SBFL|Hercilio Luz International Airport|Florianopolis|Florianopolis|BR|SC|-27.6703|-48.5525|16|7874|P|L|1|2121304
 FOR|SBFZ|Pinto Martins International Airport|Fortaleza|Fortaleza|BR|CE|-3.7758|-38.5322|83|9039|P|L|1|4840498
 GIG|SBGL|Rio de Janeiro Galeao Tom Jobim International Airport|Rio De Janeiro|Rio De Janeiro|BR|RJ|-22.8100|-43.2506|28|13123|P|L|1|15221814
 GRU|SBGR|Sao Paulo/GuarulhosGovernor Andre Franco Montoro International Airport|Sao Paulo|Sao Paulo|BR|SP|-23.4313|-46.4700|2461|12139|P|L|1|30666598
-GYN|SBGO|Santa Genoveva International Airport|Goiania|Goiania|BR|GO|-16.6320|-49.2207|2450|7500|P|L|1|3762817
-HUW|SWHT|Humaita Airport|Humaita|Humaita|BR|AM|-7.5321|-63.0721|230|4987|P|S|0|56144
 IMP|SBIZ|Prefeito Renato Moreira Airport|Imperatriz|Imperatriz|BR|MA|-5.5313|-47.4600|430|5899|P|M|1|744252
-IPG|SWII|Ipiranga Airport|Santo Antonio do Ica|Santo Antonio do Ica|BR|AM|-2.9401|-69.6943|220|4921|P|S|0|518
 IRE|SNIC|Irece Airport|Irece|Irece|BR|BA|-11.3399|-41.8470|2561|4593|P|S|0|268412
-IRZ|SWTP|Tapuruquara Airport|Santa Isabel do Rio|Santa Isabel do Rio|BR|AM|-0.3786|-64.9926|141|3937|G|S|1|25865
 JBS|SSSB|Sao Borja Airport|Sao Borja|Sao Borja|BR|RS|-28.6549|-56.0346|262|4921|P|S|0|74833
 JCR|SBEK|Jacareacanga Airport|Jacareacanga|Jacareacanga|BR|PA|-6.2332|-57.7769|295|5249|P|M|0|24042
 JDO|SBJU|Orlando Bezerra de Menezes Airport|Juazeiro do Norte|Juazeiro do Norte|BR|CE|-7.2193|-39.2691|1342|6365|P|S|1|627424
 JIA|SWJN|Juina Airport|Juina|Juina|BR|MT|-11.4194|-58.7017|1083|5249|P|S|0|48560
+JJG|SBJA|Humberto Ghizzo Bortoluzzi Regional Airport|Jaguaruna|Jaguaruna|BR|SC|-28.6753|-49.0596|120|8199|P|S|1|183238
 LAZ|SBLP|Bom Jesus da Lapa Airport|Bom Jesus da Lapa|Bom Jesus da Lapa|BR|BA|-13.2621|-43.4081|1454|3973|P|M|0|356698
-LBR|SWLB|Labrea Airport|Labrea|Labrea|BR|AM|-7.2790|-64.7695|243|3937|P|S|1|46882
 LCB|SWBG|Andre Antonio Maggi Airport|Pontes e Lacerda|Pontes e Lacerda|BR|MT|-15.1934|-59.3848|870|4921|P|S|0|48681
 MAO|SBEG|Eduardo Gomes International Airport|Manaus|Manaus|BR|AM|-3.0386|-60.0497|264|8858|P|L|1|2645330
 MBK|SWXM|Orlando Villas Boas Regional Airport|Matupa|Matupa|BR|MT|-10.1704|-54.9540|886|6096|P|S|0|92786
 MBZ|SWMW|Maues Airport|Maues|Maues|BR|AM|-3.3722|-57.7248|69|3937|P|S|0|60534
 MCP|SBMQ|Macapa - Alberto Alcolumbre International Airport|Macapa|Macapa|BR|AP|0.0507|-51.0722|56|6890|P|M|1|773397
-MCZ|SBMO|Zumbi dos Palmares International Airport|Maceio|Maceio|BR|AL|-9.5126|-35.7918|387|8537|P|L|1|3411484
 MGF|SBMG|Regional de Maringa - Silvio Name Junior Airport|Maringa|Maringa|BR|PR|-23.4761|-52.0162|1801|7783|P|M|1|1144205
 MNX|SBMY|Manicore Airport|Manicore|Manicore|BR|AM|-5.8114|-61.2783|174|4199|P|M|1|57405
 MOC|SBMK|Mario Ribeiro Airport|Montes Claros|Montes Claros|BR|MG|-16.7069|-43.8189|2191|6890|P|M|1|688707
@@ -109,7 +88,6 @@ NAT|SBSG|Rio Grande do Norte/Sao Goncalo do AmaranteGovernador Aluizio Alves Int
 NPR|SJNP|Novo Progresso Airport|Novo Progresso|Novo Progresso|BR|PA|-7.1258|-55.4008|794|3445|P|S|0|25766
 OAL|SSKW|Cacoal Airport|Cacoal|Cacoal|BR|RO|-11.4960|-61.4508|778|6890|P|S|1|92075
 OLC|SDCG|Senadora Eunice Micheles Airport|Sao Paulo De Olivenca|Sao Paulo De Olivenca|BR|AM|-3.4691|-68.9211|335|3937|P|S|0|40073
-PAV|SBUF|Paulo Afonso Airport|Paulo Afonso|Paulo Afonso|BR|BA|-9.4009|-38.2506|883|5906|P|M|1|590231
 PMG|SBPP|Ponta Pora Airport|Ponta Pora|Ponta Pora|BR|MS|-22.5496|-55.7026|2156|6562|P|M|1|205482
 PMW|SBPJ|Brigadeiro Lysias Rodrigues Airport|Palmas|Palmas|BR|TO|-10.2915|-48.3570|774|8202|P|M|1|414603
 PNZ|SBPL|Senador Nilo Coelho Airport|Petrolina|Petrolina|BR|PE|-9.3624|-40.5691|1263|9055|P|M|1|841171
@@ -119,51 +97,42 @@ RAO|SBRP|Leite Lopes Airport|Ribeirao Preto|Ribeirao Preto|BR|SP|-21.1343|-47.77
 RBR|SBRB|Rio Branco-Placido de Castro International Airport|Rio Branco|Rio Branco|BR|AC|-9.8690|-67.8940|633|7080|P|L|1|556631
 REC|SBRF|Recife/Guararapes - Gilberto Freyre International Airport|Recife|Recife|BR|PE|-8.1275|-34.9230|33|9865|P|L|1|5155894
 RIG|SJRG|Rio Grande Regional Airport|Rio Grande|Rio Grande|BR|RS|-32.0831|-52.1672|27|4921|P|S|0|103283
+RVD|SWLC|General Leite de Castro Airport|Rio Verde|Rio Verde|BR|GO|-17.8347|-50.9561|2464|4921|P|S|0|279986
 SJL|SBUA|Sao Gabriel da Cachoeira Airport|Sao Gabriel da Cachoeira|Sao Gabriel da Cachoeira|BR|AM|-0.1484|-66.9855|249|8530|P|M|1|51795
 SLZ|SBSL|Marechal Cunha Machado International Airport|Sao Luis|Sao Luis|BR|MA|-2.5864|-44.2350|178|7828|P|L|1|2553066
 SMT|SBSO|Adolino Bedin Regional Airport|Sorriso|Sorriso|BR|MT|-12.4792|-55.6723|1266|5577|P|S|1|124665
 SSA|SBSV|Deputado Luiz Eduardo Magalhaes International Airport|Salvador|Salvador|BR|BA|-12.9086|-38.3225|64|9859|P|L|1|5241739
-SSO|SNLO|Sao Lourenco Airport|Sao Lourenco|Sao Lourenco|BR|MG|-22.0909|-45.0445|2871|3510|P|S|0|141494
 STM|SBSN|Santarem - Maestro Wilson Fonseca International Airport|Santarem|Santarem|BR|PA|-2.4224|-54.7931|198|7874|P|M|1|442751
 TBT|SBTT|Tabatinga International Airport|Tabatinga|Tabatinga|BR|AM|-4.2557|-69.9358|263|7054|P|M|1|101137
 TFF|SBTF|Tefe Airport|Tefe|Tefe|BR|AM|-3.3829|-64.7241|186|7218|P|M|1|111226
 TFL|SNTO|Juscelino Kubitscheck Airport|Teofilo Otoni|Teofilo Otoni|BR|MG|-17.8923|-41.5136|1575|3904|P|S|0|203339
 THE|SBTE|Senador Petronio Portela Airport|Teresina|Teresina|BR|PI|-5.0602|-42.8237|219|7218|P|M|1|1592425
-TRQ|SBTK|Tarauaca Airport|Tarauaca|Tarauaca|BR|AC|-8.1555|-70.7830|646|3707|P|M|0|50340
 TUR|SBTU|Tucurui Airport|Tucurui|Tucurui|BR|PA|-3.7860|-49.7203|830|6562|P|M|1|283995
 UDI|SBUL|Ten. Cel. Aviador Cesar Bombonato Airport|Uberlandia|Uberlandia|BR|MG|-18.8836|-48.2259|3094|6398|P|M|1|1078801
 VDC|SBVC|Glauber de Andrade Rocha Airport|Vitoria da Conquista|Vitoria da Conquista|BR|BA|-14.9079|-40.9148|2940|6890|P|M|1|768443
 VIX|SBVT|Eurico de Aguiar Salles International Airport|Vitoria|Vitoria|BR|ES|-20.2580|-40.2850|34|6752|P|L|1|2755543
-ZMD|ZMD|Sena Madureira Airport|Sena Madureira|Sena Madureira|BR|AC|-9.1160|-68.6108|540|3000|G|S|0|29149
 ANF|SCFA|Andres Sabella Galvez International Airport|Antofagasta|Antofagasta|CL|AN|-23.4453|-70.4452|455|9186|P|L|1|418917
 BBA|SCBA|Balmaceda Airport|Balmaceda|Balmaceda|CL|AI|-45.9160|-71.6895|1722|8205|P|M|1|9094
-CCH|SCCC|Chile Chico Airport|Chile Chico|Chile Chico|CL|AI|-46.5831|-71.6863|1070|3937|P|M|0|5454
 CCP|SCIE|Carriel Sur International Airport|Concepcion|Concepcion|CL|BI|-36.7724|-73.0628|26|8530|P|L|1|1602794
 CPO|SCAT|Desierto de Atacama Airport|Copiapo|Copiapo|CL|AT|-27.2612|-70.7792|670|7218|P|M|1|158328
-GXQ|SCCY|Teniente Vidal Airport|Coyhaique|Coyhaique|CL|AI|-45.5942|-72.1061|1020|5072|P|M|0|40634
 IPC|SCIP|Mataveri International Airport|Isla De Pascua|Isla De Pascua|CL|VS|-27.1654|-109.4210|227|10827|P|L|1|7322
 IQQ|SCDA|Diego Aracena International Airport|Iquique|Iquique|CL|TA|-20.5363|-70.1814|155|10991|P|L|1|373315
-LGR|SCHR|Cochrane Airport|Cochrane|Cochrane, CL|CL|AI|-47.2436|-72.5881|643|3346|P|M|0|3529
 LSC|SCSE|La Florida Airport|La Serena-Coquimbo|La Serena-Coquimbo|CL|CO|-29.9162|-71.1995|481|6358|P|M|1|390072
 PMC|SCTE|El Tepual International Airport|Puerto Montt|Puerto Montt|CL|LL|-41.4431|-73.0941|294|8694|P|L|1|430330
 PUQ|SCCI|President Carlos Ibanez International Airport|Punta Arenas|Punta Arenas|CL|MA|-53.0026|-70.8546|139|9154|P|L|1|114411
 SCL|SCEL|Comodoro Arturo Merino Benitez International Airport|Santiago|Santiago|CL|RM|-33.3930|-70.7858|1555|12303|P|L|1|9531380
-WPA|SCAS|Cabo Juan Roman Airfield|Puerto Aysen|Puerto Aysen|CL|AI|-45.3992|-72.6703|30|4167|P|S|0|14996
-WPR|SCFM|Captain Fuentes Martinez Airport|Porvenir|Porvenir|CL|MA|-53.2537|-70.3192|104|8202|P|M|0|9828
+WAP|SCAP|Alto Palena Airport|Palena|Palena|CL|LL|-43.6115|-71.8055|794|2874|P|S|0|1773
 ZPC|SCPC|Pucon Airport|Pucon|Pucon|CL|AR|-39.2928|-71.9159|853|5576|P|S|1|33302
 ADZ|SKSP|Gustavo Rojas Pinilla International Airport|San Andres|San Andres|CO|SAP|12.5836|-81.7112|19|7808|P|L|1|58398
 BAQ|SKBQ|Ernesto Cortissoz International Airport|Barranquilla|Barranquilla|CO|ATL|10.8896|-74.7808|98|9842|P|L|1|2441644
 BOG|SKBO|El Dorado International Airport|Bogota|Bogota|CO|DC|4.7016|-74.1469|8361|12467|P|L|1|11228719
 CLO|SKCL|Alfonso Bonilla Aragon International Airport|Cali|Cali|CO|VAC|3.5427|-76.3819|3162|9842|P|L|1|3607238
 CUC|SKCC|Camilo Daza International Airport|Cucuta|Cucuta|CO|NSA|7.9276|-72.5115|1096|7700|P|M|1|906242
-JUO|SKJU|Jurado Airport|Jurado|Jurado|CO|CHO|7.0718|-77.7271|33|3000|G|S|0|2351
 LCR|CO-LCR|Virgilio Barco Vargas (La Chorrera) Airport|La Chorrera|La Chorrera|CO|AMA|-1.4564|-72.8011|564|3000|G|S|1|593
-LPD|SKLP|La Pedrera Airport|La Pedrera|La Pedrera|CO|AMA|-1.3249|-69.5813|590|5643|G|S|1|908
 LQM|SKLG|Caucaya Airport|Puerto Leguizamo|Puerto Leguizamo|CO|PUT|-0.1823|-74.7708|573|3937|P|S|1|20582
-MDE|SKRG|Jose Maria Cordova International Airport|Medellin|Medellin|CO|ANT|6.1645|-75.4231|6955|11286|P|L|1|4434191
 MTR|SKMR|Los Garzones Airport|Monteria|Monteria|CO|COR|8.8237|-75.8258|41|7539|P|M|1|885604
 MVP|SKMU|Fabio Alberto Leon Bentley Airport|Mitu|Mitu|CO|VAU|1.2537|-70.2339|680|5889|P|M|1|29850
-PEI|SKPE|Matecana International Airport|Pereira|Pereira|CO|RIS|4.8127|-75.7395|4416|6627|P|M|1|935712
+NQU|SKNQ|Reyes Murillo Airport|Nuqui|Nuqui|CO|CHO|5.7103|-77.2619|12|3937|P|S|1|2905
 SJE|SKSJ|Jorge E. Gonzalez Torres Airport|San Jose Del Guaviare|San Jose Del Guaviare|CO|GUV|2.5797|-72.6394|605|4897|P|M|1|88062
 SQE|SK-120|San Luis De Palenque Airport|San Luis De Palenque|San Luis De Palenque|CO|CAS|5.4002|-71.7001|551|3000|G|S|0|9580
 GPS|SEGS|Seymour Galapagos Ecological Airport|Isla Baltra|Isla Baltra|EC|W|-0.4538|-90.2659|207|7877|P|M|1|13199
@@ -173,11 +142,9 @@ MPN|EGYP|Mount Pleasant Airport / RAF Mount Pleasant|Mount Pleasant|Mount Pleasa
 CAY|SOCA|Cayenne Felix Eboue Airport|Matoury|Matoury|GF|CY|4.8200|-52.3613|26|10486|P|L|1|155011
 GEO|SYCJ|Cheddi Jagan International Airport|Georgetown|Georgetown|GY|DE|6.4985|-58.2541|95|11023|P|L|1|217768
 KAI|SYKA|Kaieteur Airport|Kaieteur Falls|Kaieteur Falls|GY|PT|5.1773|-59.4890|1520|2018|P|M|1|4200
-LTM|SYLT|Lethem Airport|Lethem|Lethem|GY|UT|3.3728|-59.7894|351|5985|P|M|1|30764
 AOP|SPAS|Alferez FAP Alfredo Vladimir Sara Bauer Airport|Andoas|Andoas|PE|LOR|-2.7961|-76.4666|728|6749|P|S|0|624
 AQP|SPQU|Rodriguez Ballon International Airport|Arequipa|Arequipa|PE|ARE|-16.3408|-71.5695|8405|9777|P|L|1|1682811
 CUZ|SPZO|Alejandro Velasco Astete International Airport|Cusco|Cusco|PE|CUS|-13.5357|-71.9388|10860|11146|P|L|1|887464
-IBP|SPBR|Iberia Airport|Iberia|Iberia|PE|MDD|-11.4116|-69.4887|750|4429|P|M|0|9114
 IQT|SPQT|Coronel FAP Francisco Secada Vignetta International Airport|Iquitos|Iquitos|PE|LOR|-3.7847|-73.3088|306|8202|P|L|1|540957
 LIM|SPJC|Jorge Chavez International Airport|Lima|Lima|PE|LIM|-12.0219|-77.1143|113|11506|P|L|1|10529442
 MZA|SPMF|Mayor PNP Nancy Flores Paucar Airport|Mazamari|Mazamari|PE|JUN|-11.3254|-74.5356|2247|5775|P|S|0|44365
@@ -185,19 +152,15 @@ PCL|SPCL|Cap FAP David Abenzur Rengifo International Airport|Pucallpa|Pucallpa|P
 PEM|SPTU|Padre Aldamiz International Airport|Puerto Maldonado|Puerto Maldonado|PE|MDD|-12.6136|-69.2286|659|11482|P|M|1|128871
 PIU|SPUR|PAF Captain Guillermo Concha Iberico International Airport|Piura|Piura|PE|PIU|-5.2058|-80.6164|120|8202|P|M|1|1262169
 SJA|SPJN|San Juan de Marcona Airport|San Juan de Marcona|San Juan de Marcona|PE|ICA|-15.3575|-75.1350|144|6562|G|S|0|13805
-SYC|SPSY|Shiringayoc Airport|Shiringayoc|Shiringayoc|PE|MDD|-11.8980|-69.0625|856|3000|G|S|0|780
 TPP|SPST|Cadete FAP Guillermo Del Castillo Paredes Airport|Tarapoto|Tarapoto|PE|SAM|-6.5087|-76.3732|869|8530|P|M|1|103392
 TRU|SPRU|Capitan FAP Carlos Martinez de Pinillos International Airport|Trujillo|Trujillo|PE|LAL|-8.0824|-79.1088|106|9920|P|L|1|1445612
 AGT|SGES|Guarani International Airport|Ciudad del Este|Ciudad del Este|PY|10|-25.4572|-54.8395|846|11154|P|L|1|665422
 ASU|SGAS|Silvio Pettirossi International Airport|Asuncion|Asuncion|PY|11|-25.2402|-57.5192|292|10997|P|L|1|2970637
-AGI|SMWA|Wageningen Airstrip|Wageningen|Wageningen|SR|NI|5.8413|-56.6732|6|3000|G|S|1|19522
 PBM|SMJP|Johan Adolf Pengel International Airport|Paramaribo|Paramaribo|SR|PR|5.4528|-55.1878|59|11417|P|L|1|285771
 PDP|SULS|Capitan Corbeta CA Curbelo International Airport|Punta del Este|Punta del Este|UY|MA|-34.8551|-55.0943|95|6998|P|M|1|185554
 BLA|SVBC|General Jose Antonio Anzoategui International Airport|Barcelona|Barcelona, VE|VE|B|10.1111|-64.6922|30|9842|P|L|1|1560707
 BRM|SVBM|Jacinto Lara International Airport|Barquisimeto|Barquisimeto|VE|K|10.0427|-69.3586|2042|9350|P|L|1|2356760
-CAJ|SVCN|Canaima Airport|Canaima|Canaima|VE|F|6.2320|-62.8548|1450|7070|P|M|1|18591
 CCS|SVMI|Maiquetia Simon Bolivar International Airport|Maiquetia|Maiquetia|VE|X|10.6022|-66.9912|234|11483|P|L|1|6162263
-EOR|SVED|El Dorado Airport|Bolivar|Bolivar|VE|F|6.7157|-61.6388|318|4000|P|M|0|60079
 MAR|SVMC|La Chinita International Airport|Maracaibo|Maracaibo|VE|V|10.5575|-71.7293|239|9843|P|L|1|3320604
 PYH|SVPA|Cacique Aramare Airport|Puerto Ayacucho|Puerto Ayacucho|VE|Z|5.6200|-67.6061|245|8272|P|M|0|106555
 PZO|SVPR|General Manuel Carlos Piar International Airport|Guyana City|Guyana City|VE|F|8.2885|-62.7604|472|6726|P|L|1|1274391

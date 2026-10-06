@@ -63,6 +63,9 @@ public struct Operations: Sendable, Codable {
     public var unlockedLiveries: [String] = []
     public var logbook = Logbook()
 
+    /// Rewards earned by watching an ad, for their caps, and the sponsor boost in hand (Rewards.swift).
+    public var rewards = RewardState()
+
     public init() {}
 
     public init(mode: GameMode, seed: UInt64) {
@@ -109,6 +112,7 @@ public struct Operations: Sendable, Codable {
         season = try c.decodeIfPresent(SeasonBook.self, forKey: .season) ?? SeasonBook()
         unlockedLiveries = try c.decodeIfPresent([String].self, forKey: .unlockedLiveries) ?? []
         logbook = try c.decodeIfPresent(Logbook.self, forKey: .logbook) ?? Logbook()
+        rewards = try c.decodeIfPresent(RewardState.self, forKey: .rewards) ?? RewardState()
     }
 }
 

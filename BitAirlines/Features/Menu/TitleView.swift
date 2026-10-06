@@ -18,9 +18,9 @@ struct TitleView: View {
             Sky(reduceMotion: reduceMotion)
             HStack(alignment: .center, spacing: 24) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("BIT").pixelFont(48).foregroundStyle(Theme.textPrimary)
-                    Text("AIRLINES").pixelFont(32).foregroundStyle(Theme.accent)
-                    Text("Grow a bush airline into a world carrier.").pixelFont(10.667).foregroundStyle(Theme.textMuted).padding(.top, 6)
+                    Text("PIXEL").pixelFont(48).foregroundStyle(Theme.textPrimary)
+                    Text("PROPS").pixelFont(32).foregroundStyle(Theme.accent)
+                    Text("Grow one small plane into a world airline.").pixelFont(10.667).foregroundStyle(Theme.textMuted).padding(.top, 6)
                 }
                 Spacer(minLength: 0)
                 VStack(spacing: 12) {

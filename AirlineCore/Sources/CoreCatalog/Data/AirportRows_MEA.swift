@@ -42,15 +42,13 @@ ULH|OEAO|Al-Ula International Airport|Al-Ula|Al-Ula|SA|03|26.4836|38.1170|2050|1
 WAE|OEWD|Wadi Al Dawasir Domestic Airport|Wadi Al Dawasir|Wadi Al Dawasir|SA|01|20.5043|45.1996|2062|10007|P|M|1|24097
 DEZ|OSDZ|Deir ez-Zor Airport|Deir ez-Zor|Deir ez-Zor|SY|DY|35.2854|40.1760|700|9843|P|M|0|381085
 ADB|LTBJ|Adnan Menderes International Airport|Gaziemir|Gaziemir|TR|35|38.2924|27.1570|412|10630|P|L|1|5380600
-AOE|LTBY|Hasan Polatkan Airport|Eskisehir|Eskisehir|TR|26|39.8116|30.5193|2588|8261|P|L|1|3544328
 AYT|LTAI|Antalya International Airport|Antalya|Antalya|TR|07|36.8987|30.8005|177|11155|P|L|1|2677075
 COV|LTDB|Cukurova International Airport|Tarsus|Tarsus|TR|33|36.8915|35.0712|35|11482|P|L|1|4114745
-DIY|LTCC|Diyarbakr Airport|Diyarbakr|Diyarbakr|TR|21|37.8939|40.2010|2251|11644|P|M|1|1918399
 ESB|LTAC|Esenboga International Airport|Ankara|Ankara|TR|06|40.1281|32.9951|3125|12303|P|L|1|5937573
-GZT|LTAJ|Gaziantep Oguzeli International Airport|Gaziantep|Gaziantep|TR|27|36.9472|37.4787|2315|9842|P|L|1|3252780
+GNY|LTCS|Sanlurfa GAP Airport|Sanlurfa|Sanlurfa|TR|63|37.4457|38.8956|2708|13123|P|L|1|1368222
 IST|LTFM|Istanbul Airport|Istanbul|Istanbul|TR|34|41.2749|28.7321|325|13451|P|L|1|14274488
-KYA|LTAN|Konya Airport|Konya|Konya|TR|42|37.9790|32.5619|3392|10990|P|L|1|2206276
 NOP|LTCM|Sinop Airport|Sinop|Sinop, TR|TR|57|42.0183|35.0718|20|6482|P|M|1|127536
+SXZ|LTCL|Siirt Airport|Siirt|Siirt|TR|56|37.9789|41.8404|2001|5905|P|M|0|235628
 VAS|LTAR|Sivas Nuri Demirag Airport|Sivas|Sivas|TR|58|39.8138|36.9035|5239|12503|P|M|1|341086
 ADE|OYAA|Aden International Airport|Aden|Aden|YE|AD|12.8296|45.0300|7|10171|P|L|1|1295460
 AXK|OYAT|Ataq Airport|Ataq|Ataq|YE|SH|14.5513|46.8262|3735|9482|P|M|0|43215
