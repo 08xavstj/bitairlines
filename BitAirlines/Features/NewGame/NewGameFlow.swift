@@ -18,9 +18,16 @@ struct NewGameFlow: View {
     let onCancel: () -> Void
     let onStart: (World, Int) -> Void
 
-    @State private var step = 0
+    @State private var step: Int
     @State private var draft = NewGameDraft()
     @State private var problem: String?
+
+    init(store: SaveStore, onCancel: @escaping () -> Void, onStart: @escaping (World, Int) -> Void, initialStep: Int = 0) {
+        self.store = store
+        self.onCancel = onCancel
+        self.onStart = onStart
+        _step = State(initialValue: min(max(initialStep, 0), Self.titles.count - 1))
+    }
 
     private static let titles = ["Region", "Base", "Airline", "Look", "Aircraft"]
 

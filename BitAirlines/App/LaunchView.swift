@@ -4,7 +4,15 @@ import SwiftUI
 struct LaunchView: View {
     @Environment(AppSettings.self) private var settings
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    @State private var showSplash = true
+    @State private var showSplash = LaunchView.splashWanted
+
+    private static var splashWanted: Bool {
+        #if DEBUG
+        return !Demo.skipSplash
+        #else
+        return true
+        #endif
+    }
 
     var body: some View {
         ZStack {

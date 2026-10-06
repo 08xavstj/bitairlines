@@ -25,12 +25,17 @@ for f in ci-out/*.log; do
   } > "$TMP/$(basename "$f")"
 done
 
+if [ -d ci-out/shots ]; then
+  mkdir -p "$TMP/shots"
+  cp ci-out/shots/*.png "$TMP/shots/" 2>/dev/null || true
+fi
+
 git config user.name "ci-logs"
 git config user.email "ci-logs@users.noreply.github.com"
 git checkout --orphan ci-logs-publish
 git rm -rf --quiet .
 git clean -fdxq
-cp "$TMP"/* .
+cp -R "$TMP"/. .
 git add -A
 git commit --quiet -m "CI logs for $SHA"
 git push --force origin "HEAD:$BRANCH"

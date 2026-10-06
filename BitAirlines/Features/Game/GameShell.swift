@@ -35,8 +35,14 @@ enum GameSection: String, CaseIterable, Identifiable {
 struct GameShell: View {
     let session: GameSession
     let onExit: () -> Void
-    @State private var section: GameSection = .map
+    @State private var section: GameSection
     @State private var confirmExit = false
+
+    init(session: GameSession, onExit: @escaping () -> Void, initialSection: GameSection = .map) {
+        self.session = session
+        self.onExit = onExit
+        _section = State(initialValue: initialSection)
+    }
 
     var body: some View {
         VStack(spacing: 0) {
