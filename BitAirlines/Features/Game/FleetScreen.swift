@@ -63,6 +63,8 @@ struct FleetScreen: View {
         .sheet(item: Binding(get: { openID.map { SheetID(id: $0) } }, set: { openID = $0?.id })) { sheet in
             AircraftSheet(session: session, aircraftID: sheet.id)
         }
+        // A stopping issue is drawn under any sheet: close the sheet so the player sees it.
+        .onChange(of: session.world.isPausedByIssue) { _, now in if now { openID = nil } }
     }
 
     private static var startOnPilots: Bool {

@@ -66,6 +66,8 @@ struct PilotsView: View {
         .sheet(item: Binding(get: { training.map { SheetID(id: $0) } }, set: { training = $0?.id })) { sheet in
             TrainingSheet(session: session, pilotID: sheet.id)
         }
+        // A stopping issue is drawn under any sheet: close the sheet so the player sees it.
+        .onChange(of: session.world.isPausedByIssue) { _, now in if now { training = nil } }
     }
 
     private func status(_ pilot: Pilot, world: World, now: Int) -> String {

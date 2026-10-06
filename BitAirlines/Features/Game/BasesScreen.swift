@@ -44,6 +44,8 @@ struct BasesScreen: View {
         .sheet(item: Binding(get: { building.map { CodeSheet(id: $0) } }, set: { building = $0?.id })) { sheet in
             BuildSheet(session: session, code: sheet.id)
         }
+        // A stopping issue is drawn under any sheet: close the sheet so the player sees it.
+        .onChange(of: session.world.isPausedByIssue) { _, now in if now { building = nil } }
     }
 }
 

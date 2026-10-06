@@ -44,6 +44,8 @@ struct JobsScreen: View {
         .sheet(item: Binding(get: { picking.map { SheetID(id: $0) } }, set: { picking = $0?.id })) { sheet in
             JobAssignSheet(session: session, jobID: sheet.id)
         }
+        // A stopping issue is drawn under any sheet: close the sheet so the player sees it.
+        .onChange(of: session.world.isPausedByIssue) { _, now in if now { picking = nil } }
     }
 }
 
