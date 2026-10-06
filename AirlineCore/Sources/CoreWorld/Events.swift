@@ -58,7 +58,8 @@ extension World {
         }
     }
 
-    mutating func startEvent(_ kind: EventKind, at place: String) {
+    /// Starts an event of a kind around an airport (the weekly roll does this; public for screenshots and tests).
+    public mutating func startEvent(_ kind: EventKind, at place: String) {
         let id = ops.nextEventID
         ops.nextEventID += 1
         let day = GameClock.minutesPerDay
