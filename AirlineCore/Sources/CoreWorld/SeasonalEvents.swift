@@ -39,10 +39,14 @@ public struct SeasonBook: Sendable, Hashable, Codable {
     public var endDay = 0
     /// Event jobs flown during the active event.
     public var jobsDone = 0
+    /// The last event that ended and its jobs flown, so a job taken while it ran still counts when it lands after the end.
+    /// Missing from older saves.
+    public var ended: SeasonKind?
+    public var endedJobsDone = 0
 
     public init() {}
 
-    enum CodingKeys: String, CodingKey { case active, startDay, endDay, jobsDone }
+    enum CodingKeys: String, CodingKey { case active, startDay, endDay, jobsDone, ended, endedJobsDone }
 
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -50,6 +54,8 @@ public struct SeasonBook: Sendable, Hashable, Codable {
         startDay = try c.decodeIfPresent(Int.self, forKey: .startDay) ?? 0
         endDay = try c.decodeIfPresent(Int.self, forKey: .endDay) ?? 0
         jobsDone = try c.decodeIfPresent(Int.self, forKey: .jobsDone) ?? 0
+        ended = try c.decodeIfPresent(SeasonKind.self, forKey: .ended)
+        endedJobsDone = try c.decodeIfPresent(Int.self, forKey: .endedJobsDone) ?? 0
     }
 }
 
@@ -75,6 +81,8 @@ extension Tuning {
     static let seasonJobPayBoost = 1.2
     /// Event jobs to fly for the event's livery.
     public static let seasonJobsForLivery = 3
+    /// Tries at making a flyable event job each time the board is topped up.
+    static let seasonJobTries = 8
 
     public static func seasonLift(_ kind: SeasonKind) -> SeasonLift {
         switch kind {
@@ -181,14 +189,23 @@ extension World {
         }
     }
 
-    /// Switches events on and off by the stored real day. When one ends its untaken jobs go; when one starts it says so in
-    /// the news (subject "season:<kind>", amount the days it runs) and puts its first jobs on the board.
+    /// Switches events on and off by the stored real day. When one ends its untaken jobs go (the ones being flown still count
+    /// when they land); when one starts it says so in the news (subject "season:<kind>", amount the days it runs) and puts its
+    /// first jobs on the board.
     mutating func refreshSeason() {
         let window = SeasonalEvents.active(onRealDay: ops.realDay)
         guard window?.kind != ops.season.active || (window?.startDay ?? 0) != ops.season.startDay else { return }
         let kept = ops.jobs.filter { $0.season == nil || $0.isTaken }
         ops.jobs = kept
+        let before = ops.season
         ops.season = SeasonBook()
+        if let kind = before.active {
+            ops.season.ended = kind
+            ops.season.endedJobsDone = before.jobsDone
+        } else {
+            ops.season.ended = before.ended
+            ops.season.endedJobsDone = before.endedJobsDone
+        }
         guard let window else { return }
         ops.season.active = window.kind
         ops.season.startDay = window.startDay
@@ -198,15 +215,17 @@ extension World {
     }
 
     /// Keeps `Tuning.seasonJobsOpen` event jobs on offer while an event runs. Run when it starts and at every game midnight.
+    /// Event jobs never expire by game time, so only jobs some aircraft in the fleet can fly this month go on the board
+    /// (an unflyable one would sit in its slot until the event ends).
     mutating func topUpSeasonJobs() {
         guard let kind = ops.season.active else { return }
         refreshJobArea()
         let kinds = Tuning.seasonJobKinds(kind)
         var tries = 0
-        while ops.jobs.filter({ $0.season == kind && !$0.isTaken }).count < Tuning.seasonJobsOpen && tries < 4 {
+        while ops.jobs.filter({ $0.season == kind && !$0.isTaken }).count < Tuning.seasonJobsOpen && tries < Tuning.seasonJobTries {
             tries += 1
             let jobKind = ops.rng.pick(kinds)
-            guard var job = makeJob(kind: jobKind) else { continue }
+            guard var job = makeJob(kind: jobKind), jobCanBeFlown(job) else { continue }
             job.season = kind
             job.pay = Int((Double(job.pay) * Tuning.seasonJobPayBoost).rounded())
             ops.jobs.append(job)
@@ -214,11 +233,20 @@ extension World {
         keepSpecialJobsOpen()
     }
 
-    /// An event job landed. The third during the event earns its livery (news subject "seasonlivery:<kind>").
+    /// An event job landed. The third earns the event's livery (news subject "seasonlivery:<kind>"). A job taken while the
+    /// event ran counts for it even when it lands after the end.
     mutating func countSeasonJob(_ kind: SeasonKind) {
-        guard ops.season.active == kind else { return }
-        ops.season.jobsDone += 1
-        if ops.season.jobsDone >= Tuning.seasonJobsForLivery, unlockLivery(UnlockableLiveries.seasonCode(kind)) {
+        let done: Int
+        if ops.season.active == kind {
+            ops.season.jobsDone += 1
+            done = ops.season.jobsDone
+        } else if ops.season.ended == kind {
+            ops.season.endedJobsDone += 1
+            done = ops.season.endedJobsDone
+        } else {
+            return
+        }
+        if done >= Tuning.seasonJobsForLivery, unlockLivery(UnlockableLiveries.seasonCode(kind)) {
             addNews(.milestone, subject: "seasonlivery:\(kind.rawValue)", amount: 0)
         }
     }

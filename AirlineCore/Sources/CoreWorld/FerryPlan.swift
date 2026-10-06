@@ -135,8 +135,9 @@ extension World {
         while true {
             // Relax every usable airport within one hop of the current one. From a neighbour list (nearest first) the first one
             // out of reach ends the list; the plain scan looks at every airport.
-            let listed: Int? = useTable ? (current >= 0 ? current : startIndex) : nil
-            let near = listed.map { FerryGrid.neighbours[$0] } ?? FerryGrid.everyIndex
+            let from: Int? = current >= 0 ? current : startIndex
+            let listed: Int? = useTable ? from : nil
+            let near: [Int] = listed.map { FerryGrid.neighbours[$0] } ?? FerryGrid.everyIndex
             for k in near {
                 let c2 = FerryGrid.chord2(point, points[k])
                 if c2 > maxChord2 {

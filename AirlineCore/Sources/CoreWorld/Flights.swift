@@ -95,17 +95,9 @@ extension World {
         let leg = route.legs[l]
         guard let a = AirportCatalog.airport(leg.from), let b = AirportCatalog.airport(leg.to) else { aircraft[i].status = .idle; return }
 
-        // Weather: wait at the gate until the airport reopens.
-        if let until = closureEnd(of: leg.from) ?? closureEnd(of: leg.to) {
-            aircraft[i].status = .boarding(until: until)
-            return
-        }
-
-        // Frozen lake: a floatplane waits for the thaw.
-        let cap = Capability(type: type, kits: aircraft[i].kits)
-        let month = clock.date.month
-        if !canUse(cap, at: a, month: month) || !canUse(cap, at: b, month: month) {
-            aircraft[i].status = .boarding(until: firstOfNextMonth())
+        // The take-off gate, first part: weather at either end, a frozen lake this month. Wait at the gate.
+        if let wait = airportHold(from: a, to: b, cap: Capability(type: type, kits: aircraft[i].kits)) {
+            aircraft[i].status = .boarding(until: wait)
             return
         }
 
@@ -120,29 +112,10 @@ extension World {
             return
         }
 
-        // Crew day: no more flying today, resume early tomorrow.
+        // The take-off gate, second part: the crew day, daylight at unlit strips, today's slots at a busy airport, a pilot.
         let blockMinutes = max(1, Int((type.blockHours(km: leg.distanceKm) * 60).rounded()))
-        let dayLimit = Int(Tuning.maxBlockHoursPerDay(level: type.level) * 60)
-        let tomorrowMorning = (clock.dayIndex + 1) * GameClock.minutesPerDay + 6 * 60
-        if aircraft[i].blockMinutesToday > 0 && aircraft[i].blockMinutesToday + blockMinutes > dayLimit {
-            aircraft[i].status = .boarding(until: tomorrowMorning)
-            return
-        }
-
-        // Daylight at unlit strips, and the day's slots at busy airports.
-        if let wait = darkHold(from: a, to: b, blockMinutes: blockMinutes) {
+        if let wait = crewHold(i, type: type, from: a, to: b, blockMinutes: blockMinutes) {
             aircraft[i].status = .boarding(until: wait)
-            return
-        }
-        if outOfSlots(at: a) {
-            aircraft[i].status = .boarding(until: tomorrowMorning)
-            return
-        }
-
-        // Pilots: someone rated and fit to fly.
-        if !crewReady(i) {
-            aircraft[i].status = .boarding(until: crewBackMinute(i) ?? clock.minute + GameClock.minutesPerDay)
-            addNews(.noCrew, subject: aircraft[i].registration, amount: aircraft[i].id)
             return
         }
 
