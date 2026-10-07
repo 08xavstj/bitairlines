@@ -26,16 +26,42 @@ enum FleetText {
     }
 
     static func routeName(_ plane: Aircraft, in world: World) -> String {
+        routeName(plane, in: world, names: routeNamesByID(world))
+    }
+
+    /// The same with the route names looked up in `names` (`routeNamesByID`, built once for a whole list).
+    static func routeName(_ plane: Aircraft, in world: World, names: [Int: String]) -> String {
         if let jobID = plane.jobID, let job = world.ops.jobs.first(where: { $0.id == jobID }) {
             return "On a job: \(Words.name(job.kind).lowercased()) to \(Place.name(job.to))"
         }
-        let names = routeNames(plane, in: world)
-        return names.isEmpty ? "No route" : names.joined(separator: ", ")
+        let flown = plane.allRouteIDs.compactMap { names[$0] }
+        return flown.isEmpty ? "No route" : flown.joined(separator: ", ")
     }
 
     /// The names of every route the aircraft flies, the current one first.
     static func routeNames(_ plane: Aircraft, in world: World) -> [String] {
         plane.allRouteIDs.compactMap { id in world.routes.first { $0.id == id }?.name }
+    }
+
+    /// Every route's name by id (if an id were ever repeated, the first wins, as with `first(where:)`).
+    static func routeNamesByID(_ world: World) -> [Int: String] {
+        Dictionary(world.routes.map { ($0.id, $0.name) }, uniquingKeysWith: { first, _ in first })
+    }
+
+    /// Why the aircraft cannot be sold or traded in right now, in the player's words, or nil when it can. The same checks, in the
+    /// same order, as World.sell and World.tradeInProblem.
+    static func sellBlock(_ plane: Aircraft) -> String? {
+        if !plane.isDelivered { return "It can be sold or traded in once it has arrived." }
+        if plane.routeID != nil { return "Take it off its route first, then it can be sold or traded in." }
+        if plane.jobID != nil { return "It is flying a job. It can be sold or traded in once the job is done." }
+        switch plane.status {
+        case .flying(let until):
+            return "It is in the air to \(Place.name(plane.flight?.to ?? plane.location)). It can be sold or traded in after it lands at \(Format.time(GameClock(minute: until)))."
+        case .grounded:
+            return "It is grounded. Decide what to do about it in the Inbox first."
+        case .idle, .boarding, .maintenance, .onOrder:
+            return nil
+        }
     }
 }
 
@@ -46,7 +72,7 @@ struct FleetScreen: View {
 
     var body: some View {
         let world = session.world
-        Page {
+        Page(lazy: true) {
             // The Fleet sub-tab above already names the screen, so this row only counts and switches.
             HStack {
                 let pilots = world.ops.pilots.count
@@ -77,24 +103,26 @@ struct FleetScreen: View {
 
     @ViewBuilder private func aircraftList(_ world: World) -> some View {
             if world.aircraft.isEmpty { EmptyNote("You have no aircraft yet. Open the Hangar on the left to buy your first one.") }
+            let routeNames = FleetText.routeNamesByID(world)
             ForEach(world.aircraft) { plane in
                 if let type = plane.type {
                     let status = FleetText.status(plane, in: world)
                     Button { openID = plane.id } label: {
                         HStack(alignment: .top, spacing: 12) {
-                            AircraftSpriteView(family: type.family, branding: plane.livery?.branding ?? world.airline.branding, pixel: 2).frame(width: 130)
+                            AircraftSpriteView(family: type.family, branding: plane.livery?.branding ?? world.airline.branding, pixel: 2, maxWidth: 130)
+                                .frame(width: 130)
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(plane.registration).pixelFont(13.333).foregroundStyle(Theme.accent)
                                 Text(type.displayName.uppercased()).pixelFont(10.667).foregroundStyle(Theme.textPrimary)
                                     .fixedSize(horizontal: false, vertical: true)
                                 Text(status.text).pixelFont(10.667).foregroundStyle(status.color)
                                     .fixedSize(horizontal: false, vertical: true)
-                                Text("Route: \(FleetText.routeName(plane, in: world))").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                                Text("Route: \(FleetText.routeName(plane, in: world, names: routeNames))").pixelFont(10.667).foregroundStyle(Theme.textMuted)
                                     .fixedSize(horizontal: false, vertical: true)
                             }
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            StatBar(label: "Condition", value: plane.condition, color: plane.condition < 50 ? Theme.bad : Theme.good).frame(width: 170)
+                            CompactMeter(label: "Condition", value: plane.condition, color: plane.condition < 50 ? Theme.bad : Theme.good).frame(width: 140)
                         }
                         .padding(12)
                         .background(PixelPanel())
@@ -163,13 +191,13 @@ struct AircraftSheet: View {
                         SectionTitle("Sell")
                         Card {
                             VStack(alignment: .leading, spacing: 8) {
-                                if let reason = sellBlock(plane) {
+                                if let reason = FleetText.sellBlock(plane) {
                                     Text(reason).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                                 }
                                 HStack(spacing: 8) {
                                     Button { confirmSell = true } label: { HangarButtonText("Sell for \(Format.dollars(world.saleValue(of: plane)))") }
                                         .buttonStyle(.smallDanger)
-                                        .disabled(sellBlock(plane) != nil)
+                                        .disabled(FleetText.sellBlock(plane) != nil)
                                     TradeInButton(session: session, plane: plane)
                                 }
                             }
@@ -189,13 +217,6 @@ struct AircraftSheet: View {
             if session.perform(sound: .coin, { _ = try $0.sell(aircraftID: aircraftID) }) { dismiss() }
         }
         .sheet(isPresented: $editingLivery) { LiverySheet(session: session, aircraftID: aircraftID) }
-    }
-
-    /// Why the aircraft cannot be sold right now, in the player's words, or nil when it can.
-    private func sellBlock(_ plane: Aircraft) -> String? {
-        if !plane.isDelivered { return "It can be sold once it has arrived." }
-        if plane.routeID != nil { return "Take it off its route first, then it can be sold." }
-        return nil
     }
 }
 

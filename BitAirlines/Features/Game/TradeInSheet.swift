@@ -9,10 +9,19 @@ struct TradeInButton: View {
     @State private var showing = false
 
     var body: some View {
-        Button { showing = true } label: { HangarButtonText("Trade in") }
-            .buttonStyle(.small)
-            .disabled(session.world.tradeInProblem(aircraftID: plane.id) != nil)
-            .sheet(isPresented: $showing) { TradeInSheet(session: session, aircraftID: plane.id) }
+        let problem = session.world.tradeInProblem(aircraftID: plane.id)
+        // The Sell card says why above both buttons (FleetText.sellBlock: the same checks); say it here too when that line is empty.
+        let unexplained = problem != nil && FleetText.sellBlock(plane) == nil
+        VStack(alignment: .leading, spacing: 4) {
+            Button { showing = true } label: { HangarButtonText("Trade in") }
+                .buttonStyle(.small)
+                .disabled(problem != nil)
+                .accessibilityHint(problem.map { FleetText.sellBlock(plane) ?? Messages.describe($0) } ?? "Trade it in towards a bigger aircraft.")
+            if unexplained, let problem {
+                Text(Messages.describe(problem)).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .sheet(isPresented: $showing) { TradeInSheet(session: session, aircraftID: plane.id) }
     }
 }
 
