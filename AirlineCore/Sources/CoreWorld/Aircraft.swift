@@ -33,6 +33,9 @@ public struct Flight: Sendable, Hashable, Codable {
     public var cost: Int
     /// A repositioning flight carries nothing and earns nothing.
     public var isFerry: Bool
+    /// The route this leg is flown for, so the landing is booked to it even if the aircraft was moved to another route in the
+    /// air. Nil on older saves, jobs and ferries (the aircraft's route at landing is used instead).
+    public var routeIDStore: Int? = nil
 }
 
 public struct Aircraft: Sendable, Hashable, Codable, Identifiable {

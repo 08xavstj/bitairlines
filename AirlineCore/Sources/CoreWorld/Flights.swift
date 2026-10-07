@@ -147,7 +147,7 @@ extension World {
         let cost = flightCost + Double(passengers) * passengerCost(from: a, to: b, service: route.service) + Double(cargo) * Tuning.cargoHandlingPerKg
 
         aircraft[i].flight = Flight(from: leg.from, to: leg.to, departedMinute: clock.minute, distanceKm: leg.distanceKm, passengers: passengers, cargoKg: cargo,
-                                    revenue: Int(revenue.rounded()), cost: Int(cost.rounded()), isFerry: false)
+                                    revenue: Int(revenue.rounded()), cost: Int(cost.rounded()), isFerry: false, routeIDStore: route.id)
         aircraft[i].legIndex = l
         aircraft[i].blockMinutesToday += blockMinutes
         aircraft[i].status = .flying(until: clock.minute + blockMinutes)
@@ -267,7 +267,8 @@ extension World {
             airline.stats.cargoKg += flight.cargoKg
             airline.stats.flights += 1
             var service = ServiceLevel.standard
-            if let rid = aircraft[i].routeID, let r = routeIndex(rid), let l = routes[r].firstLeg(from: flight.from), routes[r].legs[l].to == flight.to {
+            // Booked to the route the leg was flown for: moving the aircraft to another route in the air does not lose the flight.
+            if let rid = flight.routeIDStore ?? aircraft[i].routeID, let r = routeIndex(rid), let l = routes[r].firstLeg(from: flight.from), routes[r].legs[l].to == flight.to {
                 service = routes[r].service
                 routes[r].flights += 1
                 routes[r].revenueThisMonth += flight.revenue
