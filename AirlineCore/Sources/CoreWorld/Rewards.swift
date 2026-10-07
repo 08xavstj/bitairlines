@@ -17,7 +17,7 @@ public enum RewardKind: String, Sendable, Hashable, Codable, CaseIterable {
     case sponsorBoost
     /// An aircraft in the hangar (a check, a repair or a restoration) comes out now. `target` is the aircraft id.
     case instantCheck
-    /// This week's goal bonus, paid again once the goal is met.
+    /// This week's goal bonus, paid again once the goal is met (or last week's, until this week's is met).
     case doubleGoalBonus
     /// While overdrawn: a sponsor pays a week of the airline's fixed costs. `target`, if given, is the overdraft issue id.
     case overdraftSponsor
@@ -156,6 +156,8 @@ extension World {
     /// What this reward would give now, or nil when it is not on offer (capped, nothing to apply it to, sandbox, game over).
     /// `target` narrows it to one aircraft, issue, job or listing (or is the away profit, for awayDouble).
     public func rewardOffer(_ kind: RewardKind, realDay: Int, target: Int? = nil) -> RewardOffer? {
+        // The latest real day this game has seen counts (RealDay.swift): a clock set back opens no cap again.
+        let realDay = rewardDay(realDay)
         guard !ops.mode.unlimitedMoney, !isBankrupt else { return nil }
         var left: Int?
         if let cap = Tuning.rewardDailyCap(kind) {
@@ -182,8 +184,8 @@ extension World {
             guard let i = hangarAircraftIndex(target), case .maintenance(let until) = aircraft[i].status else { return nil }
             offer.days = (until - clock.minute + GameClock.minutesPerDay - 1) / GameClock.minutesPerDay
         case .doubleGoalBonus:
-            guard let goal = ops.weeklyGoal, goal.done, log.goalWeek != goal.week else { return nil }
-            offer.cash = goal.reward
+            guard let paid = goalToDouble, log.goalWeek != paid.week else { return nil }
+            offer.cash = paid.reward
         case .overdraftSponsor:
             guard let k = overdraftIssueIndex(), target == nil || issues[k].id == target,
                   !log.overdraftIssueIDs.contains(issues[k].id) else { return nil }
@@ -197,7 +199,7 @@ extension World {
         case .doubleJobPay:
             let doubled = log.doubledJobIDs
             let found = ops.jobs.first { candidate in
-                guard !doubled.contains(candidate.id) else { return false }
+                guard isOnOffer(candidate), !doubled.contains(candidate.id) else { return false }
                 return target == nil || candidate.id == target
             }
             guard let found else { return nil }

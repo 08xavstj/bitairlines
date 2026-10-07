@@ -41,7 +41,7 @@ enum Messages {
         case .notHired: return "Nobody has that job."
         case .cannotBuildHere: return "That cannot be done here."
         case .kitDoesNotFit: return "That kit is not made for this aircraft."
-        case .jobUnavailable: return "That job is no longer on offer."
+        case .jobUnavailable: return "That job is not on offer to you: it is gone, or you hold no slots at its pickup."
         case .notEnoughRoom: return "This aircraft has too few seats or too small a hold for the job."
         case .routesDoNotMeet: return "That route does not touch any airport this aircraft already flies to."
         case .tooManyRoutes: return "An aircraft can fly at most \(World.maxRoutesPerAircraft) routes."
@@ -84,7 +84,7 @@ enum Messages {
 
     static func detail(_ issue: Issue, in world: World) -> String {
         switch issue.kind {
-        case .breakdown: return "It cannot fly until it is repaired. A faster repair costs more."
+        case .breakdown: return "It cannot fly until it is repaired, and the breakdown cost some reputation. A faster repair costs more."
         case .overdraft:
             let limit = Format.compactMoney(Tuning.overdraftLimit)
             let left = world.overdraftDaysLeft ?? Tuning.daysOverdrawnBeforeBankruptcy

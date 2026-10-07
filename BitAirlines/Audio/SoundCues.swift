@@ -33,9 +33,11 @@ enum SoundCues {
     }
 
     /// The sound for one news line. A milestone is a celebration, except an aircraft giving up its job or its empty flight
-    /// ("jobgone:" and "ferrygone:" subjects), which is something to look at.
+    /// ("jobgone:" and "ferrygone:" subjects) or a new medevac offer ("medevac:"), which are something to look at.
     static func cue(for item: NewsItem) -> SoundEffect? {
-        if item.kind == .milestone && (item.subject.hasPrefix("ferrygone:") || item.subject.hasPrefix("jobgone:")) { return .notice }
+        if item.kind == .milestone && (item.subject.hasPrefix("ferrygone:") || item.subject.hasPrefix("jobgone:") || item.subject.hasPrefix("medevac:")) {
+            return .notice
+        }
         return cue(for: item.kind)
     }
 

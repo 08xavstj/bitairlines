@@ -111,9 +111,9 @@ enum Tutorial {
         case .secondRoute:
             return "Give the new aircraft its own route. Towns with no road to them pay best. Check the forecast before you open it: a green number means profit."
         case .jobs:
-            return "Jobs are one-off flights: medevac, mail and charters. They pay well and have a deadline. Open Routes, then Jobs, and send an aircraft. It leaves its route for the job and goes back by itself afterwards."
+            return "Jobs are one-off flights: medevac, mail and charters. They pay well and have a deadline. Open Routes, then Jobs, and send an aircraft. It leaves its route for the job and goes back by itself afterwards. Jobs flown on time also raise your reputation."
         case .level:
-            return "Your certificate level is on the Money screen. Earn enough and keep a good reputation to buy the next one: it opens bigger aircraft and bigger airports."
+            return "Your certificate level is on the Money screen. Earn enough and build reputation (fly on time, take jobs, run campaigns) to buy the next one: it opens bigger aircraft and bigger airports."
         }
     }
 

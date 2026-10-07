@@ -9,6 +9,8 @@ extension World {
     /// Gives the reward and counts it against today's cap. Throws when it is not on offer (see `rewardOffer`) or a
     /// reward that needs a `target` has none.
     public mutating func grantReward(_ kind: RewardKind, realDay: Int, target: Int? = nil) throws {
+        // The latest real day this game has seen counts (RealDay.swift): a clock set back opens no cap again.
+        let realDay = rewardDay(realDay)
         if kind.needsTarget && target == nil { throw WorldError.invalidChoice }
         guard let offer = rewardOffer(kind, realDay: realDay, target: target) else { throw WorldError.invalidChoice }
         switch kind {
@@ -20,7 +22,7 @@ extension World {
         case .instantCheck:
             try finishHangarNow(target)
         case .doubleGoalBonus:
-            let week = ops.weeklyGoal?.week
+            let week = goalToDouble?.week
             payRewardCash(offer.cash)
             ops.rewards.goalWeek = week
         case .overdraftSponsor:
@@ -114,7 +116,8 @@ extension World {
         guard let k = breakdownIssueIndex(target), case .breakdown(let planeID) = issues[k].kind,
               let option = issues[k].options.first(where: { $0.choice == .flyInMechanic }) else { throw WorldError.invalidChoice }
         let until = clock.minute + option.days * GameClock.minutesPerDay
-        if let i = aircraftIndex(planeID) { aircraft[i].status = .maintenance(until: until) }
+        // Only an aircraft still grounded by the breakdown goes into the hangar (never one already flying again).
+        if let i = aircraftIndex(planeID), case .grounded = aircraft[i].status { aircraft[i].status = .maintenance(until: until) }
         issues.remove(at: k)
     }
 

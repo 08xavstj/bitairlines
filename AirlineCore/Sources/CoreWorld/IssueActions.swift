@@ -76,7 +76,10 @@ extension World {
             airline.cash -= option.costUSD
             airline.stats.expenses += option.costUSD
             today.flightCosts += option.costUSD
-            if let i = aircraftIndex(planeID) { aircraft[i].status = .maintenance(until: clock.minute + option.days * GameClock.minutesPerDay) }
+            // Only an aircraft still grounded by the breakdown goes into the hangar (never one already flying again).
+            if let i = aircraftIndex(planeID), case .grounded = aircraft[i].status {
+                aircraft[i].status = .maintenance(until: clock.minute + option.days * GameClock.minutesPerDay)
+            }
         case .overdraft:
             // Put aside (.acknowledge), the notice goes and the clock runs; the days keep counting and it comes back near the end.
             if choice == .emergencyLoan {

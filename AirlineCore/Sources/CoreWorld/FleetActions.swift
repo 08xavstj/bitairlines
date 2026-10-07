@@ -96,20 +96,28 @@ extension World {
         return plane.purchasePrice > 0 ? min(offer, plane.purchasePrice) : offer
     }
 
+    /// Why the aircraft cannot be sold right now (nil if it can): the checks `sell` makes, in order.
+    public func sellProblem(aircraftID: Int) -> WorldError? {
+        guard let plane = aircraft.first(where: { $0.id == aircraftID }) else { return .unknownAircraft(aircraftID) }
+        guard plane.isDelivered else { return .notDelivered }
+        guard plane.routeID == nil else { return .aircraftHasRoute }
+        guard plane.jobID == nil else { return .aircraftBusy }
+        if case .flying = plane.status { return .aircraftBusy }
+        if case .grounded = plane.status { return .aircraftBusy }
+        return nil
+    }
+
     /// Sells an aircraft that has no route. Returns the price.
     @discardableResult
     public mutating func sell(aircraftID: Int) throws -> Int {
+        if let problem = sellProblem(aircraftID: aircraftID) { throw problem }
         guard let i = aircraftIndex(aircraftID) else { throw WorldError.unknownAircraft(aircraftID) }
         let plane = aircraft[i]
-        guard plane.isDelivered else { throw WorldError.notDelivered }
-        guard plane.routeID == nil else { throw WorldError.aircraftHasRoute }
-        guard plane.jobID == nil else { throw WorldError.aircraftBusy }
-        if case .flying = plane.status { throw WorldError.aircraftBusy }
-        if case .grounded = plane.status { throw WorldError.aircraftBusy }
         let price = saleValue(of: plane)
         airline.cash += price
         aircraft.remove(at: i)
         addNews(.aircraftSold, subject: plane.registration, amount: price)
+        settleOverdraft()
         return price
     }
 
@@ -165,6 +173,7 @@ extension World {
         airline.loans.append(Loan(id: takeLoanID(), remaining: amount, annualRate: annualRate, monthlyPrincipal: max(1, amount / months), monthsLeft: months))
         airline.cash += amount
         addNews(.loan, subject: "taken", amount: amount)
+        settleOverdraft()
     }
 
     public mutating func repayLoan(id: Int) throws {
@@ -174,5 +183,6 @@ extension World {
         airline.cash -= owed
         airline.loans.remove(at: i)
         addNews(.loan, subject: "repaid", amount: owed)
+        settleOverdraft()
     }
 }

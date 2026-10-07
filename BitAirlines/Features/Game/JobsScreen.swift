@@ -11,7 +11,9 @@ struct JobsScreen: View {
 
     var body: some View {
         let world = session.world
-        let open = world.ops.jobs.filter { !$0.isTaken }
+        // Offers that ran out (the board is cleared at midnight) or leave from an airport where the airline holds no slots
+        // are neither counted nor shown.
+        let open = world.jobsOnOffer
         let taken = world.ops.jobs.filter { $0.isTaken }
         let choices = PlaneChoiceCache.shared.jobChoices(world: world)
         let shown = onlyFlyable ? open.filter { job in choices[job.id]?.contains(where: \.canDo) ?? false } : open
@@ -26,7 +28,7 @@ struct JobsScreen: View {
                             if !job.loaded {
                                 Button("Drop job") { session.perform { try $0.dropJob(jobID: job.id) } }
                                     .buttonStyle(.smallDanger)
-                                    .accessibilityHint("The aircraft goes back to its route. Costs a little reputation.")
+                                    .accessibilityHint("The aircraft goes back to its route. An ordinary job costs a little reputation; today's dispatch and event jobs go back on the board.")
                             }
                             JobMapButton(session: session, job: job)
                         }
@@ -65,7 +67,7 @@ struct JobsScreen: View {
                     RewardButton(session: session, kind: .doubleJobPay, target: job.id)
                 }
             }
-            Text("A job takes an aircraft off its route until it is done; then it goes back by itself. Late jobs pay half.")
+            Text("A job takes an aircraft off its route until it is done; then it goes back by itself. Late jobs pay half. On time: reputation +\(Tuning.reputationPerJobOnTime). Late: reputation -\(Tuning.reputationPerLateJob).")
                 .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
             // The news sits under the jobs, so the jobs are the first thing on the screen.
             if !world.ops.events.isEmpty || !world.ops.offers.isEmpty { EventsCard(session: session) }
@@ -172,7 +174,7 @@ struct EventsCard: View {
                 }
                 ForEach(world.ops.offers) { offer in
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("Sponsor the \(Words.name(offer.kind).lowercased()) at \(Place.name(offer.airport)) for \(Format.compactMoney(offer.costUSD)): people remember who helped.")
+                        Text("Sponsor the \(Words.name(offer.kind).lowercased()) at \(Place.name(offer.airport)) for \(Format.compactMoney(offer.costUSD)): reputation +\(Int(offer.reputation)).")
                             .pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
                         HStack(spacing: 8) {
                             Button("Sponsor it") { session.perform(sound: .coin) { try $0.acceptOffer(id: offer.id) } }.buttonStyle(.smallProminent)

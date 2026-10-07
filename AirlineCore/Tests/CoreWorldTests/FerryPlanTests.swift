@@ -79,6 +79,8 @@ import CoreCatalog
         let yev = try Fixtures.airport("YEV")
         let yeg = try Fixtures.airport("YEG")
         #expect(yev.distanceKm(to: yeg) > Double(range), "Edmonton is out of the Caravan's direct range from Inuvik")
+        // Edmonton is a busy airport: a job may only leave it with a slot there.
+        w.ops.slots.append(SlotHolding(airport: "YEG", daily: 2))
         w.ops.jobs.append(Self.job(w, from: "YEG", to: "YMM"))
         let problem = w.jobProblem(jobID: 9_001, aircraftID: plane)
         #expect(problem == nil)
@@ -105,6 +107,8 @@ import CoreCatalog
         let plane = w.aircraft[0].id
         // Hawaii: the leg between the islands is short, but no chain of stops a Caravan can fly reaches it from the Arctic.
         #expect(w.ferryPlan(aircraftID: plane, toAny: ["HNL"]) == nil)
+        // Honolulu is a busy airport: hold a slot there so the answer is about range, not slots.
+        w.ops.slots.append(SlotHolding(airport: "HNL", daily: 2))
         w.ops.jobs.append(Self.job(w, from: "HNL", to: "MUE"))
         let problem = w.jobProblem(jobID: 9_001, aircraftID: plane)
         guard case .some(.outOfRange) = problem else {
