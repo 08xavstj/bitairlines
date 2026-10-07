@@ -7,7 +7,8 @@ extension Messages {
     static func news(_ item: NewsItem, in world: World) -> String {
         switch item.kind {
         case .routeOpened: return "New route opened: \(item.subject)."
-        case .aircraftDelivered: return "\(item.subject) has arrived at \(Place.name(world.airline.home))."
+        // Not always at home: an aircraft that cannot use the home airport is delivered to the nearest one of the network that it can.
+        case .aircraftDelivered: return "\(item.subject) has been delivered."
         case .aircraftSold: return "\(item.subject) was sold for \(Format.dollars(item.amount))."
         case .certificate: return "You now hold certificate level \(item.amount)."
         case .breakdown: return "\(item.subject) broke down on the ground."

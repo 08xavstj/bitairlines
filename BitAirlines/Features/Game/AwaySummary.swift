@@ -19,6 +19,10 @@ struct AwaySummary: View {
                     if report.cashChange > 0 {
                         RewardButton(session: session, kind: .awayDouble, target: report.cashChange, once: true)
                     }
+                    ForEach(report.heldBreakdowns, id: \.self) { registration in
+                        Text("\(registration) broke down while you were away and is waiting for a repair.").pixelFont(10.667).foregroundStyle(Theme.bad)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                     if report.stoppedForIssue {
                         Text("Something needs you, so the clock stopped early.").pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
                     }

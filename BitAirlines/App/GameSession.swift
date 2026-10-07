@@ -190,10 +190,18 @@ final class GameSession {
         let minutes = AwayReport.gameMinutes(forRealSeconds: realSeconds)
         guard minutes >= AwayReport.minGameMinutes, !live.isBankrupt, !live.isPausedByIssue else { return }
         let before = live.airline.stats, cash = live.airline.cash, start = live.clock.minute
+        let issuesBefore = Set(live.issues.map(\.id))
         let result = live.advanceAway(byMinutes: minutes)
         let after = live.airline.stats
+        // Breakdowns that came up during the break and wait for the player (advanceAway lets the rest of the fleet fly on).
+        let fleet = live.aircraft
+        let held = live.issues.filter { !issuesBefore.contains($0.id) }.compactMap { issue -> String? in
+            guard case .breakdown(let planeID) = issue.kind else { return nil }
+            return fleet.first { $0.id == planeID }?.registration
+        }
         away = AwayReport(gameMinutes: live.clock.minute - start, flights: after.flights - before.flights, passengers: after.passengers - before.passengers,
-                          revenue: after.revenue - before.revenue, cashChange: live.airline.cash - cash, stoppedForIssue: result == .pausedForIssue)
+                          revenue: after.revenue - before.revenue, cashChange: live.airline.cash - cash, stoppedForIssue: result == .pausedForIssue,
+                          heldBreakdowns: held)
         unsaved = true
         publish()
         lastTick = Date()
@@ -215,8 +223,9 @@ final class GameSession {
         pendingSave?.cancel()
         pendingSave = nil
         unsaved = false
-        // Written on the save queue: encoding a big airline never holds up the screen.
-        store.saveInBackground(live, slot: slot, toCloud: toCloud) { [weak self] in self?.notice = "Could not save the game." }
+        // Written on the save queue: encoding a big airline never holds up the screen. The save says whether the clock ran, so
+        // Continue knows whether to move the game on (SaveStore.clockRunning).
+        store.saveInBackground(live, slot: slot, toCloud: toCloud, clockRunning: speed != .paused) { [weak self] in self?.notice = "Could not save the game." }
         lastSave = Date()
         GameCenter.shared.report(live, now: toCloud)
         if let state = live.ops.scenario, let medal = state.medal { ScenarioRecords.record(medal, for: state.id) }

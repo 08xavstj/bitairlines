@@ -21,6 +21,13 @@ enum RouteAttention: Int, Comparable {
         return .fine
     }
 
+    /// Every route's attention, worked out once per redraw of the Routes screen (the summary, the order and the rows share it).
+    static func table(_ world: World) -> [Int: RouteAttention] {
+        var table: [Int: RouteAttention] = [:]
+        for route in world.routes { table[route.id] = of(route, in: world) }
+        return table
+    }
+
     /// Whether the routes summary counts it as one to look at. An aircraft away on a job is not.
     var wantsALook: Bool { self != .fine && self != .onJob }
 
@@ -49,10 +56,11 @@ enum RouteAttention: Int, Comparable {
 enum RouteSort: Int {
     case attention, profit, name
 
-    func sorted(_ routes: [Route], in world: World) -> [Route] {
+    /// `attention` is `RouteAttention.table(world)` when the caller has it already.
+    func sorted(_ routes: [Route], in world: World, attention: [Int: RouteAttention]? = nil) -> [Route] {
         switch self {
         case .attention:
-            let keyed = routes.map { (route: $0, attention: RouteAttention.of($0, in: world), profit: RouteList.profitPerDay($0)) }
+            let keyed = routes.map { (route: $0, attention: attention?[$0.id] ?? RouteAttention.of($0, in: world), profit: RouteList.profitPerDay($0)) }
             return keyed.sorted { a, b in
                 if a.attention != b.attention { return a.attention < b.attention }
                 if a.profit != b.profit { return a.profit < b.profit }
@@ -79,10 +87,12 @@ enum RouteList {
 /// The line over the list: what all routes made, and how many want a look.
 struct RoutesSummary: View {
     let world: World
+    /// `RouteAttention.table(world)` when the screen has it already.
+    var table: [Int: RouteAttention]? = nil
 
     var body: some View {
         let total = world.routes.reduce(0) { $0 + RouteList.profitPerDay($1) }
-        let attention = world.routes.filter { RouteAttention.of($0, in: world).wantsALook }.count
+        let attention = world.routes.filter { (table?[$0.id] ?? RouteAttention.of($0, in: world)).wantsALook }.count
         Card {
             HStack(alignment: .firstTextBaseline, spacing: 12) {
                 VStack(alignment: .leading, spacing: 4) {
@@ -103,10 +113,12 @@ struct RoutesSummary: View {
 struct RouteRow: View {
     let world: World
     let route: Route
+    /// From `RouteAttention.table(world)` when the screen has it already.
+    var known: RouteAttention? = nil
     let onOpen: () -> Void
 
     var body: some View {
-        let attention = RouteAttention.of(route, in: world)
+        let attention = known ?? RouteAttention.of(route, in: world)
         let perDay = RouteList.profitPerDay(route)
         let hasFlown = route.last7Days.flights > 0 || route.last7Days.cost > 0
         Button(action: onOpen) {

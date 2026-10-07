@@ -21,9 +21,9 @@ enum GrowthWords {
     /// The confirm text for selling a route.
     static func sellRoute(price: Int) -> String {
         if price > 0 {
-            return "A local operator takes over the route and pays \(Format.dollars(price)): about \(Tuning.routeSaleDays) days of its profit over the last week. Its aircraft are parked and free for other work."
+            return "A local operator takes over the route, keeps flying it, and pays \(Format.dollars(price)): \(Tuning.routeSaleDays) days of its profit since it opened, less for a route younger than a year. Its aircraft are parked and free for other work."
         }
-        return "It has not made money over the last week, so a local operator takes it over for nothing. Its aircraft are parked and free for other work."
+        return "A route younger than \(Tuning.routeSaleMinimumDays) days, or one that has not made money since it opened, goes to a local operator for nothing. They keep flying it. Its aircraft are parked and free for other work."
     }
 
     /// What leaving an airport does, one line per part.

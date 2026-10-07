@@ -100,21 +100,18 @@ struct GameShell: View {
                      onLeave: { afterMenu = { confirmExit = true }; showMenu = false })
         }
         .sheet(isPresented: $showSettings) { SettingsSheet() }
-        // A decision is drawn over the game, so close the menu sheets that would hide it.
-        .onChange(of: needsDecision) { _, now in
-            if now {
-                showMenu = false
-                showSettings = false
-            }
+        // A decision is drawn over the game, so close the menu sheets that would hide it. The away summary and the perk choice
+        // cover the speed buttons, so the clock waits while they are up. A watcher reads the world, so this body does not.
+        .background {
+            DecisionWatcher(session: session,
+                            onDecision: { now in
+                                if now {
+                                    showMenu = false
+                                    showSettings = false
+                                }
+                            },
+                            onCoversClock: { covered in holdClock(covered) })
         }
-        // The away summary and the perk choice cover the speed buttons, so the clock waits while they are up.
-        .onChange(of: coversClock, initial: true) { _, now in holdClock(now) }
-    }
-
-    /// True while a card that covers the speed buttons is up: the away summary or the perk choice.
-    /// (A stopping issue already stops the clock in GameSession.)
-    private var coversClock: Bool {
-        session.away != nil || !session.world.ops.perkChoices.isEmpty
     }
 
     /// Pauses the clock when a card covers the speed buttons, and goes back to the old speed when it closes.
@@ -127,12 +124,6 @@ struct GameShell: View {
             heldSpeed = nil
             session.setSpeed(speed)
         }
-    }
-
-    /// True while something on top of the game waits for the player: a stopping issue, a perk to pick, or the end of the game.
-    private var needsDecision: Bool {
-        let world = session.world
-        return world.isBankrupt || world.isPausedByIssue || !world.ops.perkChoices.isEmpty
     }
 
     /// Opens the map when another screen asks it to show some airports.
@@ -152,6 +143,27 @@ struct GameShell: View {
         case .inbox: InboxScreen(session: session)
         case .airline: AirlineScreen(session: session)
         }
+    }
+}
+
+/// Watches the world for what needs the shell's attention, so the shell's own body does not read the world (it would be built
+/// again on every clock tick). Draws nothing.
+struct DecisionWatcher: View {
+    let session: GameSession
+    /// Called when something starts or stops waiting for the player: a stopping issue, a perk to pick, or the end of the game.
+    let onDecision: (Bool) -> Void
+    /// Called when a card that covers the speed buttons comes up or goes: the away summary or the perk choice. (A stopping
+    /// issue already stops the clock in GameSession.)
+    let onCoversClock: (Bool) -> Void
+
+    var body: some View {
+        let world = session.world
+        let needs = world.isBankrupt || world.isPausedByIssue || !world.ops.perkChoices.isEmpty
+        let covers = session.away != nil || !world.ops.perkChoices.isEmpty
+        Color.clear.frame(width: 0, height: 0)
+            .onChange(of: needs) { _, now in onDecision(now) }
+            .onChange(of: covers, initial: true) { _, now in onCoversClock(now) }
+            .accessibilityHidden(true)
     }
 }
 

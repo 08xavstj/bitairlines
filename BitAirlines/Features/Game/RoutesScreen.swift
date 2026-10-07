@@ -50,13 +50,15 @@ struct RoutesScreen: View {
             if world.routes.isEmpty {
                 Card { Text("No routes yet. Open one of the suggested routes above, or go to the Map, tap New route and tap the airports in the order you want to fly them. Then assign an aircraft from Fleet.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true) }
             } else {
-                RoutesSummary(world: world)
+                // Worked out once for the summary, the order and the rows (each is a few forecasts per route).
+                let attention = RouteAttention.table(world)
+                RoutesSummary(world: world, table: attention)
                 if world.routes.count > 1 {
                     PixelChoice(options: [(label: "To look at", value: RouteSort.attention), (label: "Most profit", value: RouteSort.profit), (label: "Name", value: RouteSort.name)],
                                 selection: $sort)
                 }
-                ForEach(sort.sorted(world.routes, in: world)) { route in
-                    RouteRow(world: world, route: route) { open = route.id }
+                ForEach(sort.sorted(world.routes, in: world, attention: attention)) { route in
+                    RouteRow(world: world, route: route, known: attention[route.id]) { open = route.id }
                 }
                 Text("Tap a route to change its schedule, fare and aircraft.").pixelFont(10.667).foregroundStyle(Theme.textMuted)
                     .fixedSize(horizontal: false, vertical: true)

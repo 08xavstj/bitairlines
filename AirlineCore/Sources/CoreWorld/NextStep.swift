@@ -9,7 +9,7 @@ public enum NextStep: Sendable, Hashable {
     case assignAircraft(aircraftID: Int)
     /// Two or more aircraft share the only route.
     case openSecondRoute
-    /// A used aircraft in the hangar fits the home airport and the bank can pay for it now.
+    /// A used aircraft in the hangar can be delivered (home, or the nearest network airport that takes it) and the bank can pay for it now.
     case buyAircraft(typeID: String, price: Int)
     /// The aircraft to save for. `days` is nil while the airline is not making money (no date can be given).
     case saveForAircraft(typeID: String, price: Int, days: Int?)
@@ -63,13 +63,13 @@ extension World {
     }
 
     /// The used aircraft to buy now (the most seats the bank can pay for) or else the cheapest to save for.
-    /// Only types of the airline's level that can use the home airport (by the game mode's rules, as buying checks), and no barn
-    /// finds (they need restoring first).
+    /// Only types of the airline's level that can be delivered (to the home airport, or the nearest airport of the network that
+    /// can take them, by the game mode's rules, as buying checks), and no barn finds (they need restoring first).
     func aircraftStep() -> NextStep? {
         guard AirportCatalog.airport(airline.home) != nil else { return nil }
         var offers: [(listing: UsedListing, seats: Int)] = []
         for listing in market.listings where listing.rare != .barnFind {
-            guard let type = AircraftCatalog.type(listing.typeID), type.level <= airline.level, homeProblem(type) == nil else { continue }
+            guard let type = AircraftCatalog.type(listing.typeID), type.level <= airline.level, deliveryProblem(type) == nil else { continue }
             offers.append((listing: listing, seats: type.seats))
         }
         offers.sort { a, b in a.listing.price != b.listing.price ? a.listing.price < b.listing.price : a.listing.id < b.listing.id }

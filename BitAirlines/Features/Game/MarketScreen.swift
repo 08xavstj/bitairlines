@@ -113,6 +113,7 @@ struct UsedCard: View {
                     }
                     FitSummary(fit: fit)
                     HangarDeliveryLine(delivery: delivery)
+                    if !locked { HangarCrewLine(world: world, type: type) }
                     if listing.rare != nil { RewardButton(session: session, kind: .holdRareFind, target: listing.id) }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -145,6 +146,7 @@ struct NewCard: View {
                         .fixedSize(horizontal: false, vertical: true)
                     FitSummary(fit: fit)
                     HangarDeliveryLine(delivery: delivery)
+                    if !locked { HangarCrewLine(world: world, type: type) }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 HangarPriceColumn(priceText: Format.compactMoney(type.priceUSD), price: type.priceUSD, cash: world.airline.cash,
@@ -209,6 +211,20 @@ struct HangarDeliveryLine: View {
             Text(blocked).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
         } else if let elsewhere = delivery.elsewhere {
             Text(elsewhere).pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
+        }
+    }
+}
+
+/// Under a card's details: about what hiring its pilots costs on top of the price (World.crewHireEstimate: automatic hiring
+/// on, spare pilots rated on the type go first). Nothing when no one would be hired.
+struct HangarCrewLine: View {
+    let world: World
+    let type: AircraftType
+    var body: some View {
+        let crew = world.crewHireEstimate(for: type)
+        if crew.pilots > 0 {
+            Text("Plus about \(Format.compactMoney(crew.fee)) to hire \(crew.pilots) pilot\(crew.pilots == 1 ? "" : "s") when it arrives.")
+                .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
         }
     }
 }

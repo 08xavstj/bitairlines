@@ -15,7 +15,7 @@ struct RouteProfitLine: View {
                 if let hint = RouteProfitLine.hint(for: week) {
                     Text(hint).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
                 }
-                Text("Since opened: \(Format.signedMoney(route.profitSinceOpened)). Costs are the flights and the aircraft. Head office is not included.")
+                Text("Since opened: \(Format.signedMoney(route.profitSinceOpened)). Costs are the flights and the aircraft, with its pilots' salaries and heavy checks. Head office is not included.")
                     .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
             }
         }

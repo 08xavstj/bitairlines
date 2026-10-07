@@ -115,19 +115,26 @@ extension World {
 
     /// The route where one more of these aircraft adds the most profit a day, if any adds some. `leaving` is the route it comes
     /// from (nil for a parked aircraft, see Staff.planFleet).
+    /// The cheap checks and the forecasts come first; the search for an empty flight there (assignProblem) runs only for the
+    /// candidates, best first, so a big network does not search a way to every route.
     func bestRouteForSpare(_ i: Int, type: AircraftType, leaving routeID: Int?) -> (id: Int, gain: Double)? {
-        var best: (id: Int, gain: Double)?
-        for route in routes where route.id != routeID && assignProblem(aircraftID: aircraft[i].id, routeID: route.id) == nil {
+        var candidates: [(id: Int, gain: Double)] = []
+        for route in routes where route.id != routeID {
             // Only routes flown by the same kind of aircraft, or by none, so a schedule is never worked out for a mix.
             if let other = routeType(route), other.id != type.id { continue }
+            // Part of assignProblem, without the search: the route's airports and legs suit it.
+            if fitProblem(type: type, route: route, kits: aircraft[i].kits) != nil { continue }
             let now = route.aircraftIDs.count
             let with = forecast(route: route, type: type, aircraftCount: now + 1, suggestedSchedule: true)
             guard with.isViable else { continue }
             let without = now == 0 ? 0 : forecast(route: route, type: type, aircraftCount: now, suggestedSchedule: true).profitPerDay
             let gain = with.profitPerDay - without
-            if gain > Tuning.spareMoveMinGainPerDay, gain > (best?.gain ?? 0) { best = (route.id, gain) }
+            if gain > Tuning.spareMoveMinGainPerDay { candidates.append((id: route.id, gain: gain)) }
         }
-        return best
+        // Best gain first, a tie to the lower route id (routes are kept in id order), so the answer is the one the plain
+        // route-by-route search gives.
+        let ranked = candidates.sorted { $0.gain != $1.gain ? $0.gain > $1.gain : $0.id < $1.id }
+        return ranked.first { assignProblem(aircraftID: aircraft[i].id, routeID: $0.id) == nil }
     }
 
     /// The type flying the route: its first aircraft's.

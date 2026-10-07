@@ -19,7 +19,7 @@ struct CoachStrip: View {
             let wanted = Tutorial.step(world: session.world, speed: session.speed, seen: coach.seen, jobsEarly: coach.jobsEarly)
             VStack(spacing: 0) { strip }
                 // A strip under the top bar: the largest text sizes would make it taller than the screen, so it stops one step up.
-                .environment(\.pixelStep, min(pixelStep, 1))
+                .environment(\.pixelStep, min(pixelStep, TopBar.maxStep))
                 .onChange(of: wanted, initial: true) { _, _ in coach.update(world: session.world, speed: session.speed) }
                 .onChange(of: coach.step) { old, new in stepChanged(from: old, to: new) }
                 .task {

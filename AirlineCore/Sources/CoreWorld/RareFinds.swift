@@ -57,17 +57,13 @@ extension World {
     }
 
     /// Puts one rare find of this kind on the market for `Tuning.rareFindDays` and adds a news item.
-    /// Only types the airline may fly now, and that can land at the home airport (where it is delivered), are offered.
+    /// Only types the airline may fly now, and that can be delivered (to the home airport, or the nearest airport of the network
+    /// that can use them: `deliveryProblem`, the check buying makes), are offered.
     /// Returns the listing id, or nil when no type fits.
     @discardableResult
     mutating func addRareFind(_ kind: RareFind) -> Int? {
         let flyable = AircraftCatalog.available(atLevel: airline.level)
-        let pool: [AircraftType]
-        if let home = AirportCatalog.airport(airline.home) {
-            pool = flyable.filter { canUse(type: $0, at: home) }
-        } else {
-            pool = flyable
-        }
+        let pool = flyable.filter { deliveryProblem($0) == nil }
         guard !pool.isEmpty else { return nil }
         var preferred = pool
         switch kind {

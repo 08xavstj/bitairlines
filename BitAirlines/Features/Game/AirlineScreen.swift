@@ -67,7 +67,7 @@ struct AirlineScreen: View {
 
     static func explain(_ policy: PausePolicy) -> String {
         switch policy {
-        case .never: return "Never stops. Problems wait in your Inbox, and a broken aircraft stays grounded until you act."
+        case .never: return "Never stops, except when money runs out. Problems wait in your Inbox, and a broken aircraft stays grounded until you act."
         case .critical: return "Stops for breakdowns and for running out of money. Deliveries and weather go to the Inbox."
         case .all: return "Stops for everything, including deliveries and weather."
         }

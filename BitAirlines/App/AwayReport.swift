@@ -10,6 +10,8 @@ struct AwayReport: Equatable {
     let cashChange: Int
     /// The catch-up stopped early because something needs the player.
     let stoppedForIssue: Bool
+    /// Registrations of aircraft that broke down during the break and still wait for a repair (the rest of the fleet kept flying).
+    var heldBreakdowns: [String] = []
 
     /// Each real minute away moves the game on this many minutes: one game hour, a 24th of 1x. So 10 real minutes away fly
     /// 10 game hours, and 24 real minutes fly a whole game day.

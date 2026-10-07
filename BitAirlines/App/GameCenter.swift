@@ -63,7 +63,8 @@ final class GameCenter {
         // Sandbox money is unlimited, so its games stay off the leaderboards.
         guard world.ops.mode != .sandbox else { return }
         lastReport = Date()
-        let revenue = min(world.airline.stats.revenue, Int(Int32.max))
+        // Game Center scores are 64-bit: a big airline's lifetime revenue is not capped (check the board's range in App Store Connect).
+        let revenue = world.airline.stats.revenue
         GKLeaderboard.submitScore(revenue, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [Board.revenue]) { _ in }
         GKLeaderboard.submitScore(world.aircraft.count, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [Board.fleet]) { _ in }
         GKLeaderboard.submitScore(world.ops.goalsCompleted, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [Board.goals]) { _ in }

@@ -11,6 +11,7 @@ struct TitleView: View {
     @State private var showCredits = false
     @State private var showSettings = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         ZStack {
@@ -25,6 +26,13 @@ struct TitleView: View {
                 Spacer(minLength: 0)
                 VStack(spacing: 12) {
                     if !saves.isEmpty { Button("Continue") { showContinue = true }.buttonStyle(PrimaryButtonStyle()) }
+                    // Airlines in iCloud that found no free slot here (SaveSync: SyncReport.notBroughtIn).
+                    let waiting = store.lastSync.notBroughtIn.count
+                    if waiting > 0 {
+                        Text(waiting == 1 ? "One more airline is in iCloud. Delete one here to bring it in."
+                                          : "\(waiting) more airlines are in iCloud. Delete some here to bring them in.")
+                            .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                    }
                     Button("New airline") { onNew() }.buttonStyle(saves.isEmpty ? AnyButtonStyle(PrimaryButtonStyle()) : AnyButtonStyle(SecondaryButtonStyle()))
                     HStack(spacing: 10) {
                         Button("Settings") { showSettings = true }.buttonStyle(SecondaryButtonStyle())
@@ -43,6 +51,8 @@ struct TitleView: View {
             // A game played on another device arrives through iCloud; show it once it is here.
             store.syncWithCloud { saves = store.summaries() }
         }
+        // RootView syncs with iCloud on every return to the front; read the saves again too.
+        .onChange(of: scenePhase) { _, phase in if phase == .active { saves = store.summaries() } }
         .sheet(isPresented: $showContinue) { ContinueSheet(store: store, saves: $saves) { slot in showContinue = false; onContinue(slot) } }
         .sheet(isPresented: $showCredits) { CreditsView() }
         .sheet(isPresented: $showSettings) { SettingsSheet() }
@@ -107,11 +117,16 @@ struct ContinueSheet: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(saves) { save in
+                        // A newer copy in iCloud needs a newer version of the game: playing this one would fork it (RootView refuses too).
+                        let needsUpdate = !store.lastSync.needsUpdate.isEmpty && store.lastSync.needsUpdate.contains(store.gameID(slot: save.slot))
                         Card {
                             HStack(spacing: 12) {
                                 VStack(alignment: .leading, spacing: 3) {
                                     Text(save.airlineName.uppercased()).pixelFont(13.333).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
-                                    if let date = save.date {
+                                    if needsUpdate {
+                                        Text("Needs a newer version of Pixel Props: a newer copy of this airline is in iCloud.").pixelFont(10.667).foregroundStyle(Theme.gold)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                    } else if let date = save.date {
                                         Text("\(Format.date(date)) - \(Format.compactMoney(save.cash)) - \(save.aircraft) aircraft - level \(save.level)")
                                             .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                                     } else {
@@ -121,7 +136,7 @@ struct ContinueSheet: View {
                                 }
                                 Spacer(minLength: 8)
                                 Button("Delete") { deleting = save }.buttonStyle(.smallDanger)
-                                if !save.broken { Button("Play") { onPick(save.slot) }.buttonStyle(.smallProminent) }
+                                if !save.broken && !needsUpdate { Button("Play") { onPick(save.slot) }.buttonStyle(.smallProminent) }
                             }
                         }
                     }
@@ -131,12 +146,20 @@ struct ContinueSheet: View {
         }
         .padding(16)
         .screenBackground()
-        .pixelConfirm("Delete \(deleting?.airlineName ?? "this airline")?", message: "The save is gone for good from this device, and from iCloud if saves are kept there.", confirm: "Delete",
+        .pixelConfirm("Delete \(deleting?.airlineName ?? "this airline")?", message: deleteMessage, confirm: "Delete",
                       destructive: true, isPresented: Binding(get: { deleting != nil }, set: { if !$0 { deleting = nil } })) {
             if let save = deleting { store.delete(slot: save.slot) }
             deleting = nil
             saves = store.summaries()
         }
+    }
+
+    /// With iCloud saves off, the copy there goes the next time they are kept there (SaveStore remembers the deletion).
+    private var deleteMessage: String {
+        if store.cloud?.enabled == false {
+            return "The save is gone for good from this device. It will be removed from iCloud the next time saves are kept there."
+        }
+        return "The save is gone for good from this device, and from iCloud if saves are kept there."
     }
 }
 

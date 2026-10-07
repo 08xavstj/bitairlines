@@ -256,6 +256,14 @@ struct RoutePlannerPanel: View {
                 }
             }
             if let notice = session.notice { Text(notice).pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true) }
+            // A busy airport where the airline holds no slot: nothing can leave there until some are bought (the forecast below
+            // counts what they cost at its schedule).
+            if stops.count >= 2, problem == nil {
+                ForEach(world.slotNeeds(stops: stops, frequency: 1).filter(\.noneHeld), id: \.airport) { need in
+                    Text("No slots at \(Place.name(need.airport)) yet: no flight can leave there until you buy some in Bases.")
+                        .pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
+                }
+            }
             if stops.count >= 2, let check { PlannerFleetNote(world: world, stops: $stops, check: check) }
             if stops.count >= 2, problem == nil { ForecastList(session: session, stops: stops) }
         }

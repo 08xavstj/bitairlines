@@ -81,7 +81,8 @@ public struct RouteDay: Sendable, Hashable, Codable {
     public var revenue: Int
     /// Direct cost of the legs flown: fuel, crew, maintenance, landing, navigation, handling. Includes empty flights to reach the route.
     public var flightCost: Int
-    /// The fixed daily cost (admin, insurance) of the aircraft assigned to the route. Head office is not included.
+    /// The daily cost of the aircraft assigned to the route: its fixed cost (admin, insurance), its pilots' salaries and its heavy
+    /// checks spread over the days (`World.aircraftDayCost`). Head office is not included.
     public var aircraftCost: Int
     public var passengers: Int
     /// Seats flown: the seats of every aircraft that flew a leg, once per leg.

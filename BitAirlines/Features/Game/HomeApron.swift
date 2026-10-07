@@ -24,7 +24,8 @@ struct HomeApron: View {
         }
         let rolling = world.aircraft.first { if case .flying = $0.status { return $0.flight?.from == home } else { return false } }
         let rollImage = rolling.flatMap { plane in plane.type.flatMap { Livery.image(family: $0.family, branding: plane.livery?.branding ?? world.airline.branding) } }
-        TimelineView(.animation(minimumInterval: reduceMotion ? 10 : 1.0 / 12.0)) { timeline in
+        // The apron stands still while the game is paused, so a paused game does not keep the phone busy.
+        TimelineView(.animation(minimumInterval: reduceMotion ? 10 : 1.0 / 12.0, paused: session.speed == .paused)) { timeline in
             let t = reduceMotion ? 0 : timeline.date.timeIntervalSinceReferenceDate
             Canvas { context, size in
                 ApronPainter(size: size, t: t, code: world.airline.code, hasHangar: base?.has(.hangar) == true, hasDepot: base?.has(.fuelDepot) == true,
