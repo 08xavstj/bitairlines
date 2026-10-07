@@ -46,6 +46,13 @@ jobs:
           set -o pipefail
           bash tools/check-core-purity.sh AirlineCore/Sources 2>&1 | tee ci-out/purity.log
 
+      - name: App style
+        id: style
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          bash tools/check-app-style.sh BitAirlines 2>&1 | tee ci-out/style.log
+
       - name: Core tests
         id: core
         continue-on-error: true
@@ -57,11 +64,11 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
-          bash tools/ci_publish_logs.sh "purity=${{ steps.purity.outcome }}" "core_tests=${{ steps.core.outcome }}"
+          bash tools/ci_publish_logs.sh "purity=${{ steps.purity.outcome }}" "style=${{ steps.style.outcome }}" "core_tests=${{ steps.core.outcome }}"
 
       - name: Fail if any step failed
         if: always()
         run: |
-          for o in "${{ steps.purity.outcome }}" "${{ steps.core.outcome }}"; do
+          for o in "${{ steps.purity.outcome }}" "${{ steps.style.outcome }}" "${{ steps.core.outcome }}"; do
             [ "$o" = "success" ] || { echo "a step did not succeed: $o"; exit 1; }
           done

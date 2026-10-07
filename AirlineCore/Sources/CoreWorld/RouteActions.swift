@@ -53,6 +53,7 @@ extension World {
                             openedDay: clock.dayIndex, flights: 0, revenueThisMonth: 0, costThisMonth: 0, revenueLastMonth: 0, costLastMonth: 0))
         shareMarkets(pairs: routePairs(routes[routes.count - 1]))
         addNews(.routeOpened, subject: routes[routes.count - 1].name, amount: id)
+        refreshConnections()
         return id
     }
 
@@ -96,6 +97,7 @@ extension World {
         routes.removeAll { $0.id == id }
         refreshAutoFrequency(routeIDs: others)
         shareMarkets(pairs: pairs)
+        refreshConnections()
     }
 
     public mutating func setFare(routeID: Int, multiplier: Double) throws {

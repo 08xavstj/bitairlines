@@ -86,6 +86,7 @@ extension World {
         handOver(sold)
         airline.cash += price
         addNews(.growth, subject: "sold:" + name, amount: price)
+        refreshConnections()
         settleOverdraft()
         return price
     }

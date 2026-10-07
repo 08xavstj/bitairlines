@@ -23,6 +23,8 @@ public struct RouteForecast: Sendable, Hashable, Identifiable {
     public var problem: WorldError?
     /// The heavy checks spread over the days (already in `costPerDay`).
     public var heavyCheckPerDay: Double = 0
+    /// Daily slots the airline would have to buy at busy stops before the route can fly (SlotNeeds.swift), counted in the investment.
+    public var slotCost: Int = 0
 
     public var id: String { typeID }
     public var isViable: Bool { problem == nil && profitPerDay > 0 }
@@ -61,7 +63,15 @@ extension World {
             empty.problem = problem
             return empty
         }
-        return forecast(on: route, type: type, frequency: frequency, aircraftCount: aircraftCount)
+        var result = forecast(on: route, type: type, frequency: frequency, aircraftCount: aircraftCount)
+        // An open route already counts in slotsScheduled; a new one must still buy its slots.
+        let slots = slotCost(stops: stops, frequency: result.frequency)
+        if slots > 0 {
+            result.slotCost = slots
+            result.investment += slots
+            result.paybackYears = result.profitPerDay > 0 ? Double(result.investment) / (result.profitPerDay * 365.0) : nil
+        }
+        return result
     }
 
     /// The same for a route that exists, using its own fare and (unless `suggestedSchedule`) its own schedule, with `aircraftCount` aircraft of this type on it.

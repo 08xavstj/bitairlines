@@ -117,6 +117,7 @@ extension World {
         for i in aircraft.indices where aircraft[i].allRouteIDs.contains(where: { rid in routes.first { $0.id == rid }?.stops.contains(code) == true }) {
             leaveRouteIfItNoLongerFits(i)
         }
+        refreshConnections()
     }
 
     /// What all bases cost per day.

@@ -28,6 +28,7 @@ final class MapState {
             planning = true
             stops = demoStops
         }
+        if Demo.screen == "airport" { selected = home }
         #endif
     }
 

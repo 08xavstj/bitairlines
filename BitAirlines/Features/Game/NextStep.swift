@@ -24,7 +24,7 @@ enum NextStepWords {
             if let days { return "Level \(level) fee affordable \(inDays(days))" }
             return "Level \(level) needs \(Format.compactMoney(fee)) for the fee"
         case .levelNeedsReputation(let level, let reputation):
-            return "Level \(level) needs reputation \(reputation)"
+            return "Level \(level) needs reputation \(reputation). " + ReputationWords.shortHint
         case .levelNeedsRevenue(let level, let revenue, let days):
             let base = "Level \(level) needs \(Format.compactMoney(revenue)) more revenue"
             if let days, days > 0 { return base + ", about \(days) day\(days == 1 ? "" : "s")" }

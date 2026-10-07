@@ -59,7 +59,7 @@ extension World {
             IssueOption(choice: .waitForParts, costUSD: 0, days: 7),
         ])
         aircraft[i].status = .grounded(issue: id)
-        airline.reputation = max(0, airline.reputation - 0.8)
+        airline.reputation = max(0, airline.reputation - Tuning.reputationPerBreakdown)
         addNews(.breakdown, subject: aircraft[i].registration, amount: aircraft[i].id)
         settleBreakdown(issueID: id)
     }

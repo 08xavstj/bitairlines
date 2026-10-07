@@ -56,6 +56,13 @@ enum RouteIdeaWords {
         return "About \(Format.perDay(idea.profitPerDay)) with \(GrowthWords.article(name)) \(name)\(buy)."
     }
 
+    /// "Needs 2 daily slots at Vancouver, $300K in Bases. Without them the aircraft waits at the gate."
+    static func slots(_ idea: RouteIdea) -> String {
+        let places = idea.slotNeeds.map { Place.name($0.airport) }.joined(separator: " and ")
+        let n = idea.slotsNeeded
+        return "Needs \(n) daily slot\(n == 1 ? "" : "s") at \(places), \(Format.compactMoney(idea.slotCost)) in Bases. Without them the aircraft waits at the gate."
+    }
+
     /// The distance and why the route is worth a look.
     static func reason(_ idea: RouteIdea) -> String {
         let why: String
@@ -134,6 +141,9 @@ struct RouteIdeaRow: View {
                 Text(RouteIdeaWords.route(idea)).pixelFont(13.333).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
                 Text(RouteIdeaWords.profit(idea)).pixelFont(10.667).foregroundStyle(Theme.good).fixedSize(horizontal: false, vertical: true)
                 Text(RouteIdeaWords.reason(idea)).pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                if idea.slotsNeeded > 0 {
+                    Text(RouteIdeaWords.slots(idea)).pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
+                }
                 if !idea.typeOwned {
                     Text(GrowthWords.buyHint(idea.typeID)).pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
                 }

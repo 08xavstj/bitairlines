@@ -119,6 +119,10 @@ struct MoneyScreen: View {
                             valueText: "\(Format.compactMoney(world.airline.stats.revenue)) of \(Format.compactMoney(next.lifetimeRevenue))")
                     StatBar(label: "Reputation", value: min(world.airline.reputation, next.reputation), maximum: next.reputation, color: Theme.gold,
                             valueText: "\(Int(world.airline.reputation)) of \(Int(next.reputation))")
+                    if let blocked = ReputationWords.blockedLine(world) {
+                        Text(blocked + " " + ReputationWords.shortHint + " More on the Airline screen.")
+                            .pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                    }
                     Button("Buy level \(next.level) for \(Format.compactMoney(next.fee))") { session.perform { try $0.upgradeCertificate() } }.buttonStyle(.smallProminent).disabled(!world.canUpgradeCertificate)
                     if Progression.meets(next, airline: world.airline) && world.airline.cash < next.fee {
                         Text("You qualify. You need \(Format.dollars(next.fee - max(0, world.airline.cash))) more to buy it.")
@@ -146,7 +150,7 @@ struct MoneyScreen: View {
         case 4: return "Regional jets: big turboprops, jets and cities of up to 5 million."
         case 5: return "Mainline: narrowbody airliners and nearly every city."
         case 6: return "Widebody: long-haul airliners and the biggest hubs."
-        default: return "Global carrier: jumbo jets everywhere."
+        default: return "Global carrier: the 777-9 new from the factory, and the jumbo jets."
         }
     }
 }
