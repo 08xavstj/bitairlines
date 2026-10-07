@@ -52,9 +52,10 @@ enum CalendarWords {
 
     static func days(_ n: Int) -> String { n == 1 ? "1 day" : "\(n) days" }
 
-    /// A news line for the real-calendar milestones, and for a job an aircraft gave back by itself (nil for other milestones).
-    /// Subjects are set in Core: "stamp:<total>", "stampreward:<livery code>", "season:<kind>", "seasonlivery:<kind>",
-    /// "realgoal:<kind>:<airport>", "jobgone:<registration>:<airport>" (amount a JobGiveUpReason).
+    /// A news line for the real-calendar milestones, for a job an aircraft gave back by itself and for a medevac put on the
+    /// board (nil for other milestones). Subjects are set in Core: "stamp:<total>", "stampreward:<livery code>",
+    /// "season:<kind>", "seasonlivery:<kind>", "realgoal:<kind>:<airport>", "jobgone:<registration>:<airport>" (amount a
+    /// JobGiveUpReason), "medevac:<from>:<to>" (amount the pay).
     static func news(_ item: NewsItem) -> String? {
         let parts = item.subject.split(separator: ":", omittingEmptySubsequences: false).map(String.init)
         guard let head = parts.first, parts.count > 1 else { return nil }
@@ -81,6 +82,10 @@ enum CalendarWords {
         case "jobgone":
             guard parts.count > 2 else { return nil }
             return "\(parts[1]) gave up its job to \(Place.name(parts[2])): " + jobGoneReason(JobGiveUpReason(rawValue: item.amount))
+        case "medevac":
+            guard parts.count > 2 else { return nil }
+            return "Medevac on the Jobs board: \(Place.name(parts[1])) to \(Place.name(parts[2])), pays \(Format.dollars(item.amount)). "
+                + "The offer ends in \(Tuning.medevacOfferHours) game hours."
         default:
             return nil
         }
@@ -90,6 +95,7 @@ enum CalendarWords {
         switch reason {
         case .noSlots: return "you hold no slots at the pickup any more."
         case .noFuel: return "no fuel stop is close enough for the trip any more."
+        case .noWayThere: return "no chain of stops gets it to the pickup from where it is."
         case .cannotUseAirport, .none: return "it can no longer use one of the job's airports."
         }
     }

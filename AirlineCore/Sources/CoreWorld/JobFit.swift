@@ -13,6 +13,8 @@ public enum JobGiveUpReason: Int, Sendable, Hashable, CaseIterable {
     case noSlots = 1
     /// Realism: no fuel for the trip any more (a fuel depot went).
     case noFuel = 2
+    /// No chain of stops it can fly reaches the pickup from where it is (it is held somewhere it was not when it took the job).
+    case noWayThere = 3
 }
 
 extension World {

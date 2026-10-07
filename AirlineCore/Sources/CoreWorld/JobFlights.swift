@@ -23,11 +23,11 @@ extension World {
         if !canUse(cap, at: to, month: month) { return .aircraftCannotUse(airport: to.code) }
         let km = from.distanceKm(to: to)
         if !type.canFly(km: km) { return .outOfRange(km: Int(km)) }
-        // Getting to the pickup may take stops on the way (FerryPlan.swift); it fails only when no chain of stops reaches it.
-        if let problem = positioningProblem(aircraftIndex: i, toAny: [from.code]) { return problem }
         // A slot airport where the airline holds no slots: no aircraft could ever leave it, so the job is not on offer to this
         // airline (makeJob no longer offers such jobs; this catches slots sold after the offer).
         if !canDepartOnJob(from: from) { return .jobUnavailable }
+        // Getting to the pickup may take stops on the way (FerryPlan.swift); it fails only when no chain of stops reaches it.
+        if let problem = positioningProblem(aircraftIndex: i, toAny: [from.code]) { return problem }
         // Realism: fuel from the last stop before the pickup, through the job and back (JobFit.swift).
         if let dry = jobTripFuelProblem(aircraftIndex: i, type: type, from: from, to: to) { return dry }
         return nil
@@ -66,13 +66,13 @@ extension World {
             return
         }
         ops.jobs.remove(at: j)
-        airline.reputation = max(0, airline.reputation - 0.3)
+        airline.reputation = max(0, airline.reputation - Tuning.reputationPerDroppedJob)
     }
 
     /// The departure step for an aircraft on a job: fly to the pickup, or load and go.
-    /// Before loading, the same checks as a route departure (depart() in Flights.swift): weather, frozen lakes this month, the
-    /// check when worn, the crew day, daylight, slots, pilots and the breakdown roll. A heavy check waits until the job is done.
-    /// Waiting can make the job late; it then pays half (landOnJob).
+    /// Before loading it goes through the same take-off gate as a route leg (Flights.swift): weather, a frozen lake this month,
+    /// the check when worn, the crew day, daylight, the day's slots, a pilot, then the breakdown roll. A heavy check waits
+    /// until the job is done. Waiting can make the job late; it then pays half (landOnJob).
     mutating func departOnJob(_ i: Int, jobID: Int) {
         guard let j = ops.jobs.firstIndex(where: { $0.id == jobID }), let type = aircraft[i].type,
               let from = AirportCatalog.airport(ops.jobs[j].from), let to = AirportCatalog.airport(ops.jobs[j].to) else {
@@ -87,48 +87,24 @@ extension World {
             return
         }
         if aircraft[i].location != job.from {
-            // Fly empty towards the pickup, one hop at a time: on landing at a stop on the way this runs again.
-            if !startFerry(index: i, to: job.from) {
-                ops.jobs[j].aircraftID = nil
-                endJob(aircraftIndex: i)
-            }
+            // Fly empty towards the pickup, one hop at a time: on landing at a stop on the way this runs again. When no chain
+            // of stops reaches the pickup from here, the job goes back and the news says so.
+            if !startFerry(index: i, to: job.from) { giveUpJob(aircraftIndex: i, jobIndex: j, reason: .noWayThere) }
             return
         }
-        if let until = closureEnd(of: job.from) ?? closureEnd(of: job.to) {
-            aircraft[i].status = .boarding(until: until)
-            return
-        }
-        // Frozen lake this month: a floatplane waits for the thaw (checked again on the first of next month). Airports it can
-        // never use were handled above.
-        let cap = Capability(type: type, kits: aircraft[i].kits)
-        let month = clock.date.month
-        if !canUse(cap, at: from, month: month) || !canUse(cap, at: to, month: month) {
-            aircraft[i].status = .boarding(until: firstOfNextMonth())
+        // The take-off gate, first part: weather at either end, a frozen lake this month (a floatplane waits for the thaw,
+        // checked again on the first of next month). Airports it can never use were handled above.
+        if let wait = airportHold(from: from, to: to, cap: Capability(type: type, kits: aircraft[i].kits)) {
+            aircraft[i].status = .boarding(until: wait)
             return
         }
         // Scheduled check when worn (HeavyChecks.swift).
         if startCheckIfWorn(i) { return }
-        // Crew day: no more flying today, resume early tomorrow.
+        // The gate, second part: the crew day, daylight at unlit strips, the day's slots at the pickup, a pilot.
         let km = from.distanceKm(to: to)
         let blockMinutes = max(1, Int((type.blockHours(km: km) * 60).rounded()))
-        let dayLimit = Int(Tuning.maxBlockHoursPerDay(level: type.level) * 60)
-        let tomorrowMorning = (clock.dayIndex + 1) * GameClock.minutesPerDay + 6 * 60
-        if aircraft[i].blockMinutesToday > 0 && aircraft[i].blockMinutesToday + blockMinutes > dayLimit {
-            aircraft[i].status = .boarding(until: tomorrowMorning)
-            return
-        }
-        // Daylight at unlit strips, and the day's slots at busy airports.
-        if let wait = darkHold(from: from, to: to, blockMinutes: blockMinutes) {
+        if let wait = crewHold(i, type: type, from: from, to: to, blockMinutes: blockMinutes) {
             aircraft[i].status = .boarding(until: wait)
-            return
-        }
-        if outOfSlots(at: from) {
-            aircraft[i].status = .boarding(until: tomorrowMorning)
-            return
-        }
-        if !crewReady(i) {
-            aircraft[i].status = .boarding(until: crewBackMinute(i) ?? clock.minute + GameClock.minutesPerDay)
-            addNews(.noCrew, subject: aircraft[i].registration, amount: aircraft[i].id)
             return
         }
         // Failure on the ground, drawn from the added systems' stream (ops.rng) and always drawn, like depart().
@@ -156,7 +132,9 @@ extension World {
         airline.stats.passengers += job.passengers
         airline.stats.cargoKg += job.cargoKg
         airline.stats.flights += 1
-        airline.reputation = min(100, max(0, airline.reputation + (onTime ? 0.3 * reputationFactor : -0.5)))
+        // On time earns a little (Reputation.swift sets the numbers); late costs more than that.
+        let change = onTime ? Tuning.reputationPerJobOnTime * reputationFactor : -Tuning.reputationPerLateJob
+        airline.reputation = min(100, max(0, airline.reputation + change))
         ops.jobsDone.append(JobRecord(kind: job.kind, to: job.to, cargoKg: job.cargoKg, onTime: onTime, day: clock.dayIndex))
         if ops.jobsDone.count > Tuning.jobRecordsKept { ops.jobsDone.removeFirst(ops.jobsDone.count - Tuning.jobRecordsKept) }
         addNews(onTime ? .jobDone : .jobLate, subject: job.to, amount: onTime ? job.pay : job.pay / 2)

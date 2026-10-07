@@ -64,8 +64,9 @@ extension Tuning {
     /// A job area with fewer airports than this in the countries the airline holds permits for also takes the airports within
     /// reach across the border, so a home near a border (Punta Arenas) still gets jobs and a daily dispatch.
     static let jobAreaMinimumAirports = 3
-    /// A medevac stays on offer this many game hours, and must land within the flight time plus this many more hours.
-    static let medevacOfferHours = 12
+    /// A medevac stays on offer this many game hours, and must land within the flight time plus this many more hours
+    /// (counted from first light when the pickup is an unlit strip in the dark). The news says when one is posted.
+    public static let medevacOfferHours = 12
     static let medevacSlackHours = 2
 }
 
@@ -118,7 +119,11 @@ extension World {
         guard open < jobBoardSize, ops.jobArea.count >= 2 else { return }
         let count = min(jobBoardSize - open, ops.rng.int(1...3))
         for _ in 0..<count {
-            if let job = makeJob(kind: pickJobKind()) { ops.jobs.append(job) }
+            guard let job = makeJob(kind: pickJobKind()) else { continue }
+            ops.jobs.append(job)
+            // The best-paid board job and the shortest offer: the news says one is up (subject "medevac:<from>:<to>", amount
+            // the pay; the app writes the line, CalendarWords.swift).
+            if job.kind == .medevac { addNews(.milestone, subject: "medevac:\(job.from):\(job.to)", amount: job.pay) }
         }
     }
 
@@ -170,12 +175,12 @@ extension World {
         var passengers = 0
         var cargo = 0
         switch kind {
-        case .medevac: passengers = 2
+        case .medevac: passengers = min(seats, 2)
         case .mail: cargo = min(hold, ops.rng.int(80...400))
         case .fuelDrums: cargo = min(hold, ops.rng.int(300...1200))
         case .crewChange: passengers = min(seats, ops.rng.int(4...12))
         case .lodgeCharter: passengers = min(seats, ops.rng.int(2...6)); cargo = min(hold, 150)
-        case .survey: passengers = 2; cargo = min(hold, 200)
+        case .survey: passengers = min(seats, 2); cargo = min(hold, 200)
         case .freight: cargo = min(hold, ops.rng.int(400...2500))
         case .evacuation: passengers = seats
         case .filmCrew: passengers = min(seats, ops.rng.int(4...8)); cargo = min(hold, 400)
@@ -191,7 +196,11 @@ extension World {
         case .mail: deadlineHours = 48
         default: deadlineHours = Double(ops.rng.int(48...120))
         }
-        let deadline = clock.minute + Int(deadlineHours * 60)
+        var deadline = clock.minute + Int(deadlineHours * 60)
+        // A medevac from an unlit strip in the dark cannot leave before first light (Capability.swift), so its clock starts then.
+        if kind == .medevac, let firstLight = darkHold(from: from, to: to, blockMinutes: Int(hoursToFly * 60)) {
+            deadline = max(deadline, firstLight + Int((hoursToFly + Double(Tuning.medevacSlackHours)) * 60))
+        }
         let offerMinutes = kind == .medevac ? Tuning.medevacOfferHours * 60 : 3 * GameClock.minutesPerDay
         let expires = min(deadline - Int(hoursToFly * 60), clock.minute + offerMinutes)
         guard expires > clock.minute else { return nil }

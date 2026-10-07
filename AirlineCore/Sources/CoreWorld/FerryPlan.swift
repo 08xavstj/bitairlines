@@ -30,11 +30,13 @@ extension World {
     /// Where the aircraft will next be on the ground: where it is landing if it is in the air, else where it is.
     public func nextGround(of plane: Aircraft) -> String { plane.flight?.to ?? plane.location }
 
-    /// The empty flight that gets this aircraft from where it will next be on the ground to the first reachable of `goals`
-    /// (nil if none can be reached, even with stops). Empty hops when it is already at one of them.
+    /// The empty flight that gets this aircraft from where it will next be on the ground to one of `goals` (nil if none can be
+    /// reached, even with stops). Empty hops when it is already at one of them. This is the flight startFerry really flies
+    /// (`positioningPlan` in Positioning.swift: goals it can use this month first, the nearest first), so what the app shows
+    /// before an assignment is what happens after it.
     public func ferryPlan(aircraftID: Int, toAny goals: [String]) -> FerryPlan? {
         guard let i = aircraftIndex(aircraftID) else { return nil }
-        return ferryPlan(aircraftIndex: i, from: nextGround(of: aircraft[i]), toAny: goals)
+        return positioningPlan(aircraftIndex: i, from: nextGround(of: aircraft[i]), toAny: goals)
     }
 
     /// The airports an empty flight from `from` to `to` lands at (the last is `to`), or nil if this aircraft cannot get there.
@@ -218,20 +220,25 @@ extension World {
         return true
     }
 
-    /// The empty flight that gets aircraft `i` from where it will next be on the ground to the first reachable of `goals`, and why
-    /// not when there is none. One search answers both: the problem is nil when it can get there (the plan has no hops when it is
-    /// there already).
+    /// The empty flight that gets aircraft `i` from where it will next be on the ground to one of `goals` (the flight startFerry
+    /// flies, see `ferryPlan(aircraftID:toAny:)`), and why not when there is none. One search answers both: the problem is nil
+    /// when it can get there (the plan has no hops when it is there already).
+    /// The cheap checks come first: an aircraft that cannot take off where it stands (floats on a runway) is told so before any
+    /// search, the same reason startFerry gives up for.
     func positioning(aircraftIndex i: Int, toAny goals: [String]) -> (plan: FerryPlan?, problem: WorldError?) {
         let start = nextGround(of: aircraft[i])
-        let plan = ferryPlan(aircraftIndex: i, from: start, toAny: goals)
-        if goals.contains(start) || plan != nil { return (plan, nil) }
-        guard let a = AirportCatalog.airport(start), let first = goals.first, let b = AirportCatalog.airport(first) else { return (nil, .outOfRange(km: 0)) }
+        if goals.contains(start) { return (FerryPlan(from: start, hops: [], km: 0, hours: 0), nil) }
+        guard let a = AirportCatalog.airport(start) else { return (nil, .outOfRange(km: 0)) }
+        if let type = aircraft[i].type, !canUse(Capability(type: type, kits: aircraft[i].kits), at: a) {
+            return (nil, .aircraftCannotUse(airport: start))
+        }
+        if let plan = positioningPlan(aircraftIndex: i, from: start, toAny: goals) { return (plan, nil) }
+        guard let first = goals.first, let b = AirportCatalog.airport(first) else { return (nil, .outOfRange(km: 0)) }
         return (nil, .outOfRange(km: Int(a.distanceKm(to: b))))
     }
 
     /// Why this aircraft cannot get (empty) to any of `goals` from where it will next be on the ground, or nil if it can.
     func positioningProblem(aircraftIndex i: Int, toAny goals: [String]) -> WorldError? {
-        if goals.contains(nextGround(of: aircraft[i])) { return nil }
-        return positioning(aircraftIndex: i, toAny: goals).problem
+        positioning(aircraftIndex: i, toAny: goals).problem
     }
 }
