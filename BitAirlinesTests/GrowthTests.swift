@@ -20,7 +20,7 @@ import CoreWorld
             NextStepWords.line(.openSecondRoute, world: w),
         ]
         #expect(lines[1] == "DHC-6 Twin Otter affordable in 9 days")
-        #expect(lines[2] == "Level 3 needs reputation 20. " + ReputationWords.shortHint)
+        #expect(lines[2] == "Level 3 needs reputation 20: fly on time, take jobs")
         #expect(lines[3] == "Open a second route")
         for line in lines {
             #expect(!line.contains("!") && line.count <= 60, "\(line)")
