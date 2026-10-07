@@ -31,7 +31,7 @@ import CoreCatalog
         var old = try SaveCompatibilityTests.decode(data)
         #expect(old.clock == w.clock && old.airline.cash == w.airline.cash && old.aircraft.count == w.aircraft.count && old.routes.count == w.routes.count)
         #expect(old.operationsStore == nil, "the systems added later are missing, and read as in a new game")
-        #expect(old.ops.pilots.isEmpty && old.routes[0].service == Route().service)
+        #expect(old.ops.pilots.isEmpty && old.routes[0].serviceStore == nil && old.aircraft[0].kitsStore == nil)
         let minute = old.clock.minute
         old.advance(byMinutes: 1440)
         #expect(old.clock.minute == minute + 1440, "a day runs on the older save")

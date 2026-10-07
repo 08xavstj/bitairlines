@@ -145,13 +145,13 @@ struct SaveMerge {
                 note("\(name) was also played on another device. Both copies are kept: the other one shows under Continue once you leave the game.")
                 return
             }
-            keepBoth(slot: slot, id: id, local: local, theirs: theirs, name: name)
+            keepBoth(slot: slot, local: local, theirs: theirs, name: name)
         }
     }
 
     /// Two copies that both moved on. The one here becomes its own game (a new id, so it goes up beside the other instead of
     /// fighting over one file); the one from iCloud comes in as the game it was, into a free slot.
-    private mutating func keepBoth(slot: Int, id: String, local: Data, theirs: (data: Data, stamp: SaveStamp), name: String) {
+    private mutating func keepBoth(slot: Int, local: Data, theirs: (data: Data, stamp: SaveStamp), name: String) {
         guard readable(theirs.data, name: name), var envelope = try? SaveStore.decode(local) else { return }
         let newID = UUID().uuidString
         envelope.gameID = newID

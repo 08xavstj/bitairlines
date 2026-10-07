@@ -140,8 +140,9 @@ import CoreWorld
         #expect(cloud.files[CloudSaves.gameFile(id)] == futureData, "the newer copy is not written over")
         #expect(try phone.load(slot: 1).clock.minute > w.clock.minute, "and the copy here is not replaced")
         // A game only in iCloud from a newer version is not brought in either, and is named once.
+        let laterWorld = try SaveSyncTests.world("Later Air", seed: 14)
         let later = SaveEnvelope(formatVersion: SaveStore.formatVersion + 1, savedAt: Date(), gameID: "later", progress: 0, versions: ["pad": 1],
-                                 clockRunning: nil, world: try SaveSyncTests.world("Later Air", seed: 14))
+                                 clockRunning: nil, world: laterWorld)
         cloud.files[CloudSaves.gameFile("later")] = try SaveStore.encode(later)
         let again = cloud.sync(phone)
         #expect(again.needsUpdate == [id, "later"] && phone.summaries().count == 1)
