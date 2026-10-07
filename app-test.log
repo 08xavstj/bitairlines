@@ -1,0 +1,89 @@
+### matches
+IOSurfaceClientSetSurfaceNotify failed e00002c7
+2026-10-07 01:52:30.455686+0000 BitAirlines[5924:23332] fopen failed for data file: errno = 2 (No such file or directory)
+2026-10-07 01:52:31.756085+0000 BitAirlines[5924:23332] fopen failed for data file: errno = 2 (No such file or directory)
+2026-10-07 01:52:35.709705+0000 BitAirlines[5924:23332] [Account] authenticationDidCompleteWithError: Authentication failed for player with error: Error Domain=GKErrorDomain Code=3 "The requested operation could not be completed due to an error communicating with the server." UserInfo={NSLocalizedDescription=The requested operation could not be completed due to an error communicating with the server.}
+2026-10-07 01:52:35.710287+0000 BitAirlines[5924:23332] [Error] reportAuthenticationFailedForPlayer: Authentication failed for player in 0.982035 seconds
+2026-10-07 01:52:36.074055+0000 BitAirlines[5924:23332] [Match] Matchmaker getStoreBagValuesForKeys encountered error: Error Domain=GKErrorDomain Code=3 "The requested operation could not be completed due to an error communicating with the server." UserInfo={NSLocalizedDescription=The requested operation could not be completed due to an error communicating with the server.}
+
+### last 80 lines
+✔ Test aDeletionMadeWhileICloudWasOffStillHappens() passed after 30.243 seconds.
+✔ Test aSaveRoundTrips() passed after 35.991 seconds.
+✔ Test anOpenGameIsNeverReplacedByASync() passed after 30.243 seconds.
+✔ Test aForkWithNoFreeSlotLeavesTheOtherCopyInICloud() passed after 30.244 seconds.
+✔ Test aGameFollowsThePlayerToASecondDevice() passed after 30.406 seconds.
+✔ Test aGameBroughtInGetsNoGuideAndADeletedOneLosesIts() passed after 30.406 seconds.
+✔ Test twoCopiesThatBothMovedOnAreBothKept() passed after 30.406 seconds.
+✔ Test lineageTellsAheadBehindAndForked() passed after 6.117 seconds.
+✔ Test aCopyFromANewerVersionIsLeftAloneAndNamed() passed after 6.117 seconds.
+✔ Test theNewsLinesReadCleanly() passed after 6.118 seconds.
+✔ Test awayTimeBecomesRealTimeAtTheAwayRate() passed after 6.115 seconds.
+✔ Test awayNotesHaveNoExclamationMarks() passed after 6.117 seconds.
+✔ Test forecastFigures() passed after 6.115 seconds.
+✔ Test datesAndTimes() passed after 6.115 seconds.
+✔ Test theRatingPromptComesOncePerVersion() passed after 6.116 seconds.
+✔ Test theRatingPromptFollowsAWinOnly() passed after 6.198 seconds.
+✔ Test numbersAndMoney() passed after 6.199 seconds.
+✔ Test nextStepLinesArePlainAndShort() passed after 6.200 seconds.
+✔ Test everyNewThingHasPlainWords() passed after 1.319 seconds.
+✔ Test theRailHasEveryScreen() passed after 1.319 seconds.
+✔ Test theBestMedalIsKept() passed after 1.319 seconds.
+✔ Test theRatingPromptWaitsAfterABreakdownOrDebt() passed after 6.116 seconds.
+✔ Test aBusyWorldReadsCleanlyInTheNews() passed after 6.219 seconds.
+✔ Test everySpriteFamilyHasADrawing() passed after 36.259 seconds.
+✔ Test theJobNewsLinesReadCleanly() passed after 0.346 seconds.
+✔ Test theDayTurnsAtLocalMidnightInThePhonesTimeZone() passed after 0.346 seconds.
+✔ Test everyEffectHasItsOwnPriority() passed after 0.618 seconds.
+✔ Test everyPhoneCalendarGivesTheSameRealDay() passed after 0.956 seconds.
+✔ Test songsAreWrittenCorrectly() passed after 0.956 seconds.
+✔ Suite SmokeTests passed after 36.906 seconds.
+✔ Suite SaveStoreTests passed after 36.902 seconds.
+✔ Suite MessageTests passed after 36.902 seconds.
+✔ Suite CalendarWordsTests passed after 36.902 seconds.
+✔ Suite SaveSyncTests passed after 36.902 seconds.
+✔ Suite GrowthTests passed after 36.903 seconds.
+✔ Suite FormatTests passed after 36.903 seconds.
+✔ Suite WordsTests passed after 36.903 seconds.
+✔ Test everyEffectIsAudibleAndInRange() passed after 0.958 seconds.
+✔ Suite ArtTests passed after 36.904 seconds.
+✔ Suite RealDayCalendarTests passed after 36.903 seconds.
+✔ Test aDeliveredAircraftIsHeard() passed after 37.453 seconds.
+✔ Test openingARouteIsHeard() passed after 37.453 seconds.
+✔ Test theEngineObeysTheSettings() passed after 37.453 seconds.
+✔ Test settingsAreRememberedAndDefaultToSoundOn() passed after 37.453 seconds.
+✔ Test nothingChangingMeansNoSound() passed after 37.453 seconds.
+✔ Test eachStepPointsAtOneControl() passed after 36.323 seconds.
+✔ Test theStepsFollowWhatThePlayerDid() passed after 36.323 seconds.
+✔ Test buyingAndOpeningFinishTheirStepsWithoutNext() passed after 36.323 seconds.
+✔ Test theGuideIsRememberedPerSlotAndEndsForGood() passed after 36.323 seconds.
+✔ Test aCertificateUpgradeIsACelebration() passed after 37.454 seconds.
+✔ Test goingThroughEveryTipEndsTheGuide() passed after 36.323 seconds.
+✔ Test theSuggestionIsARouteTheStarterCanFly() passed after 36.325 seconds.
+✔ Test everyTipHasAButtonToMoveOn() passed after 49.363 seconds.
+✔ Test theMoneyTipSaysTheFirstDayShowsTomorrow() passed after 44.749 seconds.
+✔ Test jobsComeEarlyWhereRoutesAreThin() passed after 44.750 seconds.
+✔ Test anAircraftAwayOnAJobIsNotParked() passed after 44.750 seconds.
+✔ Test aRouteNoAircraftCanFlySendsThePlayerBackToStepOne() passed after 44.750 seconds.
+✔ Test everyStepHasPlainWordsAndNoDashes() passed after 49.369 seconds.
+✔ Test speedsAreOrdered() passed after 20.462 seconds.
+✔ Test musicLoopsHaveTheRightLengthAndAreAudible() passed after 14.594 seconds.
+✔ Test refusalsBecomeNotices() passed after 20.462 seconds.
+✔ Test theEnginePlaysOnlyTheStrongestSound() passed after 50.510 seconds.
+✔ Suite TutorialTests passed after 50.541 seconds.
+✔ Suite GuideFixesTests passed after 50.544 seconds.
+✔ Suite ChipSynthTests passed after 50.887 seconds.
+✔ Suite SessionTests passed after 50.888 seconds.
+✔ Test musicStartsStopsAndFollowsTheSetting() passed after 51.738 seconds.
+✔ Suite SoundCueTests passed after 51.770 seconds.
+✔ Test run with 67 tests in 15 suites passed after 51.775 seconds.
+2026-10-07 01:53:53.395454+0000 BitAirlines[5924:24197] [Default] Xcode took 20.00 seconds to acknowledge that testing finished.
+2026-10-07 01:53:57.532 xcodebuild[3173:13523] [MT] IDETestOperationsObserverDebug: 211.139 elapsed -- Testing started completed.
+2026-10-07 01:53:57.532 xcodebuild[3173:13523] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-07 01:53:57.532 xcodebuild[3173:13523] [MT] IDETestOperationsObserverDebug: 211.139 sec, +211.139 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/bitairlines/bitairlines/build/DD/Logs/Test/Test-BitAirlines-2026.10.07_01-49-37-+0000.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started
