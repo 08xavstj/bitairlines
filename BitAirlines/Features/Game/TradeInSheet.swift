@@ -78,19 +78,20 @@ struct TradeInSheet: View {
         if session.perform(sound: .coin, { _ = try change(&$0) }) { dismiss() }
     }
 
-    /// Used aircraft at least as big as this one that the airline may fly and that can be delivered home, cheapest first.
+    /// Used aircraft at least as big as this one that the airline may fly and that can be delivered (the check buyUsed makes),
+    /// cheapest first.
     private func usedOffers(_ world: World, seats: Int, typeID: String) -> [UsedListing] {
         let fits = world.market.listings.filter { listing in
             guard let t = AircraftCatalog.type(listing.typeID) else { return false }
-            return t.id != typeID && t.seats >= seats && t.level <= world.airline.level && world.homeProblem(t) == nil
+            return t.id != typeID && t.seats >= seats && t.level <= world.airline.level && world.deliveryProblem(t) == nil
         }
         return Array(fits.sorted { $0.price != $1.price ? $0.price < $1.price : $0.id < $1.id }.prefix(shown))
     }
 
-    /// New types at least as big as this one, in production, that the airline may fly, cheapest first.
+    /// New types at least as big as this one, in production, that the airline may fly and that can be delivered, cheapest first.
     private func newOffers(_ world: World, seats: Int, typeID: String) -> [AircraftType] {
         let fits = AircraftCatalog.available(atLevel: world.airline.level).filter { t in
-            t.inProduction && t.id != typeID && t.seats >= seats && world.homeProblem(t) == nil
+            t.inProduction && t.id != typeID && t.seats >= seats && world.deliveryProblem(t) == nil
         }
         return Array(fits.sorted { $0.priceUSD != $1.priceUSD ? $0.priceUSD < $1.priceUSD : $0.id < $1.id }.prefix(shown))
     }

@@ -14,7 +14,7 @@ struct MarketScreen: View {
         let fits = FitCache.shared.table(world)
         let used = usedListings(world, fits: fits)
         let new = newTypes(fits: fits)
-        Page {
+        Page(lazy: true) {
             ScreenHeader(title: "Hangar") {
                 HStack(spacing: 12) {
                     Text("Cash \(Format.compactMoney(world.airline.cash))").pixelFont(10.667).foregroundStyle(Theme.textMuted)
@@ -23,7 +23,7 @@ struct MarketScreen: View {
             }
             MarketFilterBar(filter: $filter)
             if tab == 0 {
-                Text("Used aircraft reach your home airport within a day. The listings change every week.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
+                Text("Used aircraft arrive within a day, at your home airport when they can use it. The listings change every week.").pixelFont(10.667).foregroundStyle(Theme.textMuted).fixedSize(horizontal: false, vertical: true)
                 RewardButton(session: session, kind: .brokersTip)
                 ForEach(used) { listing in
                     if let type = AircraftCatalog.type(listing.typeID), let fit = fits[type.id] {
@@ -89,7 +89,7 @@ struct UsedCard: View {
         let locked = type.level > world.airline.level
         // A heritage find is shown in the paint it arrives in.
         let paint = listing.rare == .heritage ? RareFinds.heritageLivery(logo: world.airline.branding.logo).branding : world.airline.branding
-        let homeBlock = HangarWords.homeBlock(type, in: world)
+        let delivery = HangarWords.delivery(type, in: world)
         Card {
             HStack(alignment: .top, spacing: 12) {
                 AircraftSpriteView(family: type.family, branding: paint, pixel: 2, maxWidth: 130).frame(width: 130)
@@ -112,12 +112,12 @@ struct UsedCard: View {
                             .pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
                     }
                     FitSummary(fit: fit)
-                    if let homeBlock { HangarBlockLine(text: homeBlock) }
+                    HangarDeliveryLine(delivery: delivery)
                     if listing.rare != nil { RewardButton(session: session, kind: .holdRareFind, target: listing.id) }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 HangarPriceColumn(priceText: Format.dollars(listing.price), price: listing.price, cash: world.airline.cash,
-                                  neededLevel: locked ? type.level : nil, cannotDeliver: homeBlock != nil, action: "Buy") {
+                                  neededLevel: locked ? type.level : nil, cannotDeliver: delivery.blocked != nil, action: "Buy") {
                     session.perform(sound: .coin) { _ = try $0.buyUsed(listingID: listing.id) }
                 }
             }
@@ -133,7 +133,7 @@ struct NewCard: View {
     var body: some View {
         let world = session.world
         let locked = type.level > world.airline.level
-        let homeBlock = HangarWords.homeBlock(type, in: world)
+        let delivery = HangarWords.delivery(type, in: world)
         Card {
             HStack(alignment: .top, spacing: 12) {
                 AircraftSpriteView(family: type.family, branding: world.airline.branding, pixel: 2, maxWidth: 130).frame(width: 130)
@@ -144,11 +144,11 @@ struct NewCard: View {
                     Text("Arrives in about \(Format.wait(minutes: Valuation.newDeliveryMinutes(level: type.level)))").pixelFont(10.667).foregroundStyle(Theme.textPrimary)
                         .fixedSize(horizontal: false, vertical: true)
                     FitSummary(fit: fit)
-                    if let homeBlock { HangarBlockLine(text: homeBlock) }
+                    HangarDeliveryLine(delivery: delivery)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 HangarPriceColumn(priceText: Format.compactMoney(type.priceUSD), price: type.priceUSD, cash: world.airline.cash,
-                                  neededLevel: locked ? type.level : nil, cannotDeliver: homeBlock != nil, action: "Order") {
+                                  neededLevel: locked ? type.level : nil, cannotDeliver: delivery.blocked != nil, action: "Order") {
                     session.perform(sound: .coin) { _ = try $0.orderNew(typeID: type.id) }
                 }
             }
@@ -186,26 +186,29 @@ final class FitCache {
 
 /// Words for the hangar.
 enum HangarWords {
-    /// Why a type cannot be bought at all: every aircraft is delivered to the home airport, and this one cannot land there
-    /// (World.homeProblem, the check buyUsed and orderNew make). Nil when it can.
-    static func homeBlock(_ type: AircraftType, in world: World) -> String? {
-        guard world.homeProblem(type) != nil else { return nil }
-        let home = Place.name(world.airline.home)
-        if let airport = AirportCatalog.airport(world.airline.home) {
-            let needs = world.needs(of: type, at: airport)
-            // Only a base upgrade can be done before buying; a kit needs the aircraft first.
-            if !needs.isEmpty && needs.allSatisfy({ $0 == .paving || $0 == .runwayExtension }) {
-                return "Aircraft are delivered to \(home). It needs \(FitWords.list(needs)) there first."
-            }
-        }
-        return "Aircraft are delivered to \(home), and this one cannot land there."
+    /// Where a bought aircraft of this type would arrive, or why it cannot be bought at all.
+    struct Delivery {
+        /// Why no airport of the network can take it (World.deliveryProblem, the check buyUsed and orderNew make), in words.
+        /// Nil when it can be delivered.
+        var blocked: String?
+        /// Where it arrives when that is not the home airport (a floatplane goes to the nearest water base, for example).
+        var elsewhere: String?
+    }
+
+    static func delivery(_ type: AircraftType, in world: World) -> Delivery {
+        if let blocked = DeliveryWords.problem(world, type: type) { return Delivery(blocked: blocked, elsewhere: nil) }
+        return Delivery(blocked: nil, elsewhere: DeliveryWords.arrival(world, type: type))
     }
 }
 
-/// A reason in red under a card's details.
-struct HangarBlockLine: View {
-    let text: String
+/// Under a card's details: the reason in red when the aircraft cannot be delivered, or where it arrives when that is not home.
+struct HangarDeliveryLine: View {
+    let delivery: HangarWords.Delivery
     var body: some View {
-        Text(text).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
+        if let blocked = delivery.blocked {
+            Text(blocked).pixelFont(10.667).foregroundStyle(Theme.bad).fixedSize(horizontal: false, vertical: true)
+        } else if let elsewhere = delivery.elsewhere {
+            Text(elsewhere).pixelFont(10.667).foregroundStyle(Theme.gold).fixedSize(horizontal: false, vertical: true)
+        }
     }
 }

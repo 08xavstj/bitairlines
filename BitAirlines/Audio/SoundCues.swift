@@ -26,10 +26,17 @@ enum SoundCues {
         if world.news.last != old.newsLast || world.news.count != old.newsCount {
             for item in world.news.reversed() {
                 if item == old.newsLast { break }
-                if let cue = cue(for: item.kind) { cues.append(cue) }
+                if let cue = cue(for: item) { cues.append(cue) }
             }
         }
         return cues
+    }
+
+    /// The sound for one news line. A milestone is a celebration, except an aircraft giving up its job or its empty flight
+    /// ("jobgone:" and "ferrygone:" subjects), which is something to look at.
+    static func cue(for item: NewsItem) -> SoundEffect? {
+        if item.kind == .milestone && (item.subject.hasPrefix("ferrygone:") || item.subject.hasPrefix("jobgone:")) { return .notice }
+        return cue(for: item.kind)
     }
 
     static func cue(for kind: NewsItem.Kind) -> SoundEffect? {

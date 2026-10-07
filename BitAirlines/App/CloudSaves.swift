@@ -13,8 +13,12 @@ final class CloudSaves {
     /// the switch counts from the first moment, before any screen has appeared.
     static let settingKey = "settings.iCloudSaves"
 
+    /// Reads and deletes (the title screen's sync).
     private let queue = DispatchQueue(label: "ca.amaruq.bitairlines.cloud")
+    /// Writes, on their own, so a save made as the app leaves never waits behind a slow read of another device's file.
+    private let uploads = DispatchQueue(label: "ca.amaruq.bitairlines.cloud.upload")
     private var folder: URL?
+    private let folderLock = NSLock()
 
     /// The player can turn syncing off in Settings.
     var enabled: Bool { UserDefaults.standard.object(forKey: CloudSaves.settingKey) as? Bool ?? true }
@@ -24,9 +28,11 @@ final class CloudSaves {
     /// How iCloud shows a file that is in the cloud but not downloaded to this device yet.
     static func placeholder(_ name: String) -> String { ".\(name).icloud" }
 
-    /// The iCloud folder for saves, or nil without iCloud. Only call on `queue`: the lookup can take a moment. A failed lookup is
-    /// tried again next time, so signing in to iCloud later works without restarting the game.
+    /// The iCloud folder for saves, or nil without iCloud. Never call on the main thread: the lookup can take a moment. A failed
+    /// lookup is tried again next time, so signing in to iCloud later works without restarting the game.
     private func cloudFolder() -> URL? {
+        folderLock.lock()
+        defer { folderLock.unlock() }
         if let folder { return folder }
         guard FileManager.default.ubiquityIdentityToken != nil,
               let base = FileManager.default.url(forUbiquityContainerIdentifier: CloudSaves.containerID) else { return nil }
@@ -42,7 +48,7 @@ final class CloudSaves {
     func upload(_ data: Data, gameID: String, stamp: SaveStamp) {
         guard enabled else { return }
         let time = BackgroundTime("iCloud save")
-        queue.async {
+        uploads.async {
             defer { time.end() }
             guard let dir = self.cloudFolder() else { return }
             let name = CloudSaves.gameFile(gameID)

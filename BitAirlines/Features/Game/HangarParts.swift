@@ -40,7 +40,8 @@ struct HangarPriceColumn: View {
     let cash: Int
     /// The level needed, when the airline has not reached it yet.
     let neededLevel: Int?
-    /// True when it cannot land at the home airport, where it would be delivered (the card says why).
+    /// True when no airport of the airline's network can take it, so it cannot be delivered (World.deliveryProblem; the card
+    /// says why). The core would refuse the purchase, so no button is offered.
     var cannotDeliver = false
     let action: String
     let onBuy: () -> Void

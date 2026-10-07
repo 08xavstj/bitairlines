@@ -84,8 +84,8 @@ enum CalendarWords {
             return "\(parts[1]) gave up its job to \(Place.name(parts[2])): " + jobGoneReason(JobGiveUpReason(rawValue: item.amount))
         case "medevac":
             guard parts.count > 2 else { return nil }
-            return "Medevac on the Jobs board: \(Place.name(parts[1])) to \(Place.name(parts[2])), pays \(Format.dollars(item.amount)). "
-                + "The offer ends in \(Tuning.medevacOfferHours) game hours."
+            let route = "Medevac on the Jobs board: \(Place.name(parts[1])) to \(Place.name(parts[2])), pays \(Format.dollars(item.amount))."
+            return route + " The offer ends in \(Tuning.medevacOfferHours) game hours."
         default:
             return nil
         }

@@ -20,6 +20,10 @@ struct RootView: View {
     @State private var wasRunning = false
     /// Why a save could not be opened, shown on the title screen.
     @State private var loadProblem: String?
+    /// The slot Continue is about to open, while iCloud is checked for a newer copy (SaveSync).
+    @State private var pendingContinue: Int?
+    /// Words from the last iCloud sync for the player (a game kept twice, an update needed, an airline left in iCloud).
+    @State private var syncNote: String?
 
     var body: some View {
         ZStack {
@@ -38,16 +42,20 @@ struct RootView: View {
                         .background { ReviewPromptWatcher(session: session) }
                 }
             }
+            if pendingContinue != nil { CloudCheckNote() }
             if settings.scanlines { ScanlineOverlay() }
         }
         .background(Theme.background.ignoresSafeArea())
         .onChange(of: screen, initial: true) { _, now in audio?.setMusic(now == .game ? .flying : .title) }
+        // The store writes with each save whether the clock was running, so Continue knows whether to move the game on.
+        .onChange(of: session?.speed) { _, speed in store.noteClock(running: speed.map { $0 != .paused }) }
         // iOS may close a game in the background without warning, so save the moment the player leaves the app.
         .onChange(of: scenePhase) { _, phase in
             if phase == .background {
                 if let session {
                     // Stop the clock too, so nothing happens between this save and iOS suspending the app.
                     wasRunning = session.speed != .paused
+                    store.noteClock(running: wasRunning)
                     session.stop()
                     backgroundedAt = Date()
                 }
@@ -59,11 +67,16 @@ struct RootView: View {
                     session.start()
                     if wasRunning { session.catchUp(realSeconds: Date().timeIntervalSince(since)) }
                 }
+                // Another device may have moved a game on meanwhile: the sync leaves an open game alone and says so.
+                store.syncWithCloud {}
             }
         }
         .pixelAlert("Cannot open this save", message: loadProblem, isPresented: Binding(get: { loadProblem != nil }, set: { if !$0 { loadProblem = nil } }))
+        .pixelAlert("iCloud saves", message: syncNote, isPresented: Binding(get: { syncNote != nil }, set: { if !$0 { syncNote = nil } }))
         .onAppear {
-            store.cloud?.enabled = { [settings] in settings.iCloudSaves }
+            // A cold start does not go through .active: a note left by the last run must not arrive during this one.
+            Notifier.cancelAll()
+            store.onNote = { note in syncNote = note }
             GameCenter.shared.signIn()
         }
         #if DEBUG
@@ -103,25 +116,46 @@ struct RootView: View {
     #endif
 
     /// Leaving the app: one note for the first thing that will need the player (only if the clock was running, since a paused
-    /// game does not move while away), and the daily reminder if it is on. Nothing is asked of iOS from here.
+    /// game does not move while away), and the daily reminder if it is on. Always called, so a note from an earlier visit is
+    /// cleared even when nothing new is wanted. Nothing is asked of iOS from here.
     private func scheduleNotifications() {
         var note: AwayNote?
         if settings.askedAboutNotifications, settings.notifyAircraft, wasRunning, let session { note = AwayNotes.next(for: session.world) }
-        guard note != nil || settings.notifyDaily else { return }
         Notifier.schedule(note, daily: settings.notifyDaily)
     }
 
+    /// Continue looks at iCloud first, so a copy played on another device since is brought in (or kept beside this one) before
+    /// the game opens. iCloud gets a few seconds at most; a late sync finishes in the background and leaves the open game alone.
     private func continueGame(slot: Int) {
-        guard let world = try? store.load(slot: slot) else {
+        guard pendingContinue == nil else { return }
+        pendingContinue = slot
+        store.syncWithCloud { openContinued(slot) }
+        DispatchQueue.main.asyncAfter(deadline: .now() + SaveStore.continueCheckSeconds) { openContinued(slot) }
+    }
+
+    /// Opens the slot once the iCloud check is back or has waited long enough (whichever comes first; the other call does nothing).
+    private func openContinued(_ slot: Int) {
+        guard pendingContinue == slot else { return }
+        pendingContinue = nil
+        guard screen == .title else { return }
+        if store.lastSync.needsUpdate.contains(store.gameID(slot: slot)) {
+            loadProblem = "A newer copy of this airline is in iCloud and needs a newer version of Pixel Props. Update the game to play it."
+            return
+        }
+        guard let world = try? store.open(slot: slot) else {
             loadProblem = "That save could not be opened. It may come from a newer version of the game."
             return
         }
-        let savedAt = store.summary(slot: slot)?.savedAt
+        let summary = store.summary(slot: slot)
         begin(world: world, slot: slot)
-        if let savedAt { session?.catchUp(realSeconds: Date().timeIntervalSince(savedAt)) }
+        // Only a game left running moves on while the player was away, the same rule as a break with the app kept in memory.
+        // A save from before the flag does not say, and moves on as it always did.
+        if let savedAt = summary?.savedAt, summary?.clockRunning != false { session?.catchUp(realSeconds: Date().timeIntervalSince(savedAt)) }
     }
 
     private func begin(world: World, slot: Int) {
+        // A game opens paused; the first save says so before any speed is chosen.
+        store.noteClock(running: false)
         let newSession = GameSession(world: world, slot: slot, store: store)
         newSession.save()
         newSession.start()
@@ -131,7 +165,23 @@ struct RootView: View {
 
     private func leaveGame() {
         session?.stop()
+        store.closeGame()
         session = nil
         screen = .title
+    }
+}
+
+/// A line at the foot of the title screen while Continue asks iCloud for a newer copy.
+private struct CloudCheckNote: View {
+    var body: some View {
+        VStack {
+            Spacer()
+            Text("Checking iCloud for a newer copy").pixelFont(10.667).foregroundStyle(Theme.textMuted)
+                .padding(.horizontal, 12).padding(.vertical, 8)
+                .background(PixelPanel(fill: Theme.surface, border: Theme.textMuted.opacity(0.5)))
+                .padding(.bottom, 20)
+        }
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
     }
 }

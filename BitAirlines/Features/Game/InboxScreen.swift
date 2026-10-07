@@ -18,6 +18,7 @@ extension Messages {
             if let line = CalendarWords.news(item) { return line }
             if item.subject.hasPrefix("rare:") { return rareFind(item) }
             if item.subject.hasPrefix("goal:") { return goalMet(item) }
+            if item.subject.hasPrefix("ferrygone:") { return ferryGone(item) }
             return item.subject
         case .perk: return "You took the \(Perk(rawValue: item.subject).map { Words.name($0) } ?? "new") perk."
         case .fuelBought: return "You bought \(Format.number(item.amount)) kg of fuel ahead."
@@ -63,6 +64,37 @@ extension Messages {
         let weeks = Tuning.rareFindDays / 7
         return "Rare find in the hangar: \(model ?? "a used aircraft")\(what), \(Format.dollars(item.amount)). On sale for \(weeks) week\(weeks == 1 ? "" : "s")."
     }
+
+    /// An aircraft gave up flying empty to its route or to where it was sent (Positioning.swift). The subject is
+    /// "ferrygone:<registration>:<airport where it stays>", the amount a FerryGiveUpReason.
+    static func ferryGone(_ item: NewsItem) -> String {
+        let parts = item.subject.split(separator: ":").map(String.init)
+        let plane = parts.count > 1 ? parts[1] : "An aircraft"
+        let place = parts.count > 2 ? Place.name(parts[2]) : "where it is"
+        if item.amount == FerryGiveUpReason.cannotLeave.rawValue {
+            return "\(plane) cannot take off from \(place) with the kit it has, so it stays there. Change its kit from Fleet."
+        }
+        return "\(plane) has no way to fly from \(place) to where it was sent, even with stops, so it stays there."
+    }
+}
+
+/// One line of the news feed with an id that stays the same while the line is in the feed, so a new line at the top does not
+/// make every row below it a new row.
+struct NewsRow: Identifiable {
+    let id: String
+    let item: NewsItem
+
+    /// Newest first. The id is the item itself plus how many equal items came before it, so two equal lines stay apart.
+    static func rows(_ news: [NewsItem]) -> [NewsRow] {
+        var seen: [NewsItem: Int] = [:]
+        var rows: [NewsRow] = []
+        for item in news {
+            let n = seen[item, default: 0]
+            seen[item] = n + 1
+            rows.append(NewsRow(id: "\(item.minute):\(item.kind.rawValue):\(item.subject):\(item.amount):\(n)", item: item))
+        }
+        return rows.reversed()
+    }
 }
 
 struct InboxScreen: View {
@@ -70,7 +102,7 @@ struct InboxScreen: View {
 
     var body: some View {
         let world = session.world
-        Page {
+        Page(lazy: true) {
             ScreenHeader("Inbox")
             if world.issues.isEmpty { EmptyNote("Nothing needs you right now. Problems that need a choice from you wait here.") }
             ForEach(world.issues) { issue in
@@ -83,10 +115,10 @@ struct InboxScreen: View {
                 }
             }
             SectionTitle("News")
-            ForEach(Array(world.news.reversed().enumerated()), id: \.offset) { _, item in
+            ForEach(NewsRow.rows(world.news)) { row in
                 HStack(alignment: .top, spacing: 8) {
-                    Text(Format.date(GameClock(minute: item.minute).date)).pixelFont(10.667).foregroundStyle(Theme.textMuted).frame(width: 122, alignment: .leading)
-                    Text(Messages.news(item, in: world)).pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
+                    Text(Format.date(GameClock(minute: row.item.minute).date)).pixelFont(10.667).foregroundStyle(Theme.textMuted).frame(width: 122, alignment: .leading)
+                    Text(Messages.news(row.item, in: world)).pixelFont(10.667).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
                 }
             }
             if world.news.isEmpty { EmptyNote("No news yet.") }

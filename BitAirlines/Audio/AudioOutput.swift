@@ -41,6 +41,13 @@ final class SystemAudioOutput: AudioOutput {
     private var wantedMusic: (theme: MusicTheme, volume: Float)?
     private var observers: [NSObjectProtocol] = []
     private var running = false
+    /// When the last effect was asked for, and the check that pauses the engine a few seconds after it when no music plays.
+    private var lastEffect = Date.distantPast
+    private var idleCheck: Task<Void, Never>?
+
+    /// With no music wanted, the engine is paused this long after the last effect, so it does not mix silence (and keep the audio
+    /// hardware up) for the rest of the session. The next sound starts it again.
+    static let idleSeconds: TimeInterval = 3
 
     init() {
         engine.attach(musicNode)
@@ -99,10 +106,30 @@ final class SystemAudioOutput: AudioOutput {
         node.volume = volume
         node.scheduleBuffer(pcm, at: nil, options: .interrupts)
         if !node.isPlaying { node.play() }
+        lastEffect = Date()
+        pauseWhenIdle()
+    }
+
+    /// Pauses the engine `idleSeconds` after the last effect when no music is wanted. Each effect starts the wait again.
+    private func pauseWhenIdle() {
+        idleCheck?.cancel()
+        guard wantedMusic == nil else { return }
+        idleCheck = Task { [weak self] in
+            try? await Task.sleep(nanoseconds: UInt64(SystemAudioOutput.idleSeconds * 1_000_000_000))
+            if Task.isCancelled { return }
+            self?.pauseIfIdle()
+        }
+    }
+
+    private func pauseIfIdle() {
+        guard wantedMusic == nil, running, Date().timeIntervalSince(lastEffect) >= SystemAudioOutput.idleSeconds - 0.1 else { return }
+        engine.pause()
+        running = false
     }
 
     func playMusic(_ theme: MusicTheme, samples: [Float], volume: Float) {
         wantedMusic = (theme, volume)
+        idleCheck?.cancel()
         guard start() else { return }
         let pcm: AVAudioPCMBuffer
         if let cached = musicBuffers[theme] { pcm = cached } else if let made = buffer(samples) { musicBuffers[theme] = made; pcm = made } else { return }
@@ -128,5 +155,7 @@ final class SystemAudioOutput: AudioOutput {
     func stopMusic() {
         wantedMusic = nil
         musicNode.stop()
+        // Nothing left to play once the last effect has died away.
+        pauseWhenIdle()
     }
 }

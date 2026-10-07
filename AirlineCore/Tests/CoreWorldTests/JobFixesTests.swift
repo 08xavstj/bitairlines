@@ -2,9 +2,11 @@ import Testing
 import CoreCatalog
 @testable import CoreWorld
 
-/// Jobs after the playtest: an aircraft goes back to every route it flew, dropping a job skips no repair, a job that can never be
-/// flown is given back, special jobs stay on the board, slot airports and the Realism fuel rule count, and loads fit an aircraft
-/// that can fly them (JobFlights.swift, JobFit.swift, Jobs.swift).
+/// Jobs and the real calendar after the playtest: an aircraft goes back to every route it flew, dropping a job skips no repair,
+/// a job that can never be flown is given back, special jobs stay on the board, slot airports and the Realism fuel rule count,
+/// loads fit an aircraft that can fly them, job legs wait at the same gate as route legs, the real calendar only moves forward,
+/// stamps count in any order, event jobs count after the end, goals are sized by what lands and can be doubled a week late
+/// (JobFlights.swift, JobFit.swift, Jobs.swift, DailyDispatch.swift, SeasonalEvents.swift, RealDay.swift, WeeklyGoals.swift).
 @Suite struct JobFixesTests {
     func job(_ w: World, id: Int = 900, from: String = "YEV", to: String = "YUB", passengers: Int = 4) -> Job {
         Job(id: id, kind: .crewChange, from: from, to: to, passengers: passengers, cargoKg: 0, pay: 6_000,
@@ -22,6 +24,8 @@ import CoreCatalog
             return .invalidChoice
         }
     }
+
+    // MARK: Routes and status around a job
 
     @Test func aSharedAircraftKeepsItsOtherRoutesWhenItsMainRouteClosesDuringAJob() throws {
         var w = try Fixtures.world()
@@ -71,6 +75,17 @@ import CoreCatalog
         #expect(h.aircraft[0].routeID == route)
     }
 
+    @Test func droppingAnOrdinaryJobCostsTheTunedReputation() throws {
+        var w = try Fixtures.world()
+        let plane = w.aircraft[0].id
+        w.ops.jobs.append(job(w))
+        try w.takeJob(jobID: 900, aircraftID: plane)
+        let reputation = w.airline.reputation
+        try w.dropJob(jobID: 900)
+        #expect(w.airline.reputation == max(0, reputation - Tuning.reputationPerDroppedJob))
+        #expect(w.ops.jobs.isEmpty)
+    }
+
     @Test func aKitCannotComeOffWhileTheAircraftIsOnAJob() throws {
         var w = try Fixtures.world()
         let plane = w.aircraft[0].id
@@ -100,6 +115,22 @@ import CoreCatalog
         #expect(note.amount == JobGiveUpReason.cannotUseAirport.rawValue)
     }
 
+    @Test func aJobLegWaitsForWeatherAtTheSameGateAsARouteLeg() throws {
+        var w = try Fixtures.flyingWorld()
+        let plane = w.aircraft[0].id
+        w.ops.jobs.append(job(w))
+        try w.takeJob(jobID: 900, aircraftID: plane)
+        let until = w.clock.minute + 2 * 1440
+        w.market.closures.append(Closure(airport: "YUB", untilMinute: until))
+        w.aircraft[0].status = .boarding(until: w.clock.minute)
+        w.depart(0)
+        #expect(w.aircraft[0].status == .boarding(until: until), "held at the gate until the weather clears")
+        #expect(w.aircraft[0].flight == nil && w.aircraft[0].jobID == 900)
+        #expect(w.ops.jobs.first { $0.id == 900 }?.loaded == false)
+    }
+
+    // MARK: Special jobs and the board
+
     @Test func aDroppedDispatchGoesBackOnTheBoardAtNoCost() throws {
         var w = try Fixtures.flyingWorld()
         w.setRealDay(RealCalendarTests.day)
@@ -119,6 +150,7 @@ import CoreCatalog
         var w = try Fixtures.world()
         w.setPausePolicy(.never)
         let plane = w.aircraft[0].id
+        w.aircraft[0].location = "YEG"
         let yeg = try Fixtures.airport("YEG")
         #expect(w.needsSlots(yeg) && w.slotsHeld(at: "YEG") == 0)
         w.ops.jobs.append(job(w, from: "YEG", to: "YMM"))
@@ -179,5 +211,142 @@ import CoreCatalog
             #expect(job.passengers <= seats)
             #expect(w.jobCanBeFlown(job), "\(job.from) to \(job.to)")
         }
+    }
+
+    @Test func aMedevacStaysOnOfferTwelveHoursAndMakesTheNews() throws {
+        var w = try Fixtures.world()
+        var medevac: Job?
+        for _ in 0..<20 where medevac == nil { medevac = w.makeJob(kind: .medevac) }
+        let job = try #require(medevac)
+        #expect(job.expiresMinute - w.clock.minute == Tuning.medevacOfferHours * 60)
+        let from = try Fixtures.airport(job.from)
+        let to = try Fixtures.airport(job.to)
+        let hoursToFly = from.distanceKm(to: to) / 300.0 + 1.0
+        #expect(job.deadlineMinute >= w.clock.minute + Int((hoursToFly + Double(Tuning.medevacOfferHours)) * 60))
+        #expect(job.deadlineMinute > job.expiresMinute)
+
+        // Posted by the daily board: the news says one is up.
+        for _ in 0..<30 where !w.ops.jobs.contains(where: { $0.kind == .medevac }) {
+            w.ops.jobs = []
+            w.dailyJobs()
+        }
+        let posted = w.ops.jobs.filter { $0.kind == .medevac }
+        try #require(!posted.isEmpty)
+        for job in posted {
+            #expect(w.news.contains { $0.kind == .milestone && $0.subject == "medevac:\(job.from):\(job.to)" && $0.amount == job.pay })
+        }
+    }
+
+    @Test func everyStartHasAJobAreaAndPuntaArenasGetsItsDispatch() throws {
+        for region in StartRegions.all {
+            for home in region.headquarters {
+                var made: World?
+                for offer in World.starterOffers(home: home, difficulty: .standard) where made == nil {
+                    let config = NewGameConfig(airlineName: "Lontra Air", airlineCode: "LT", homeAirport: home, branding: .starter,
+                                               difficulty: .standard, starterTypeID: offer.typeID, seed: 3, mode: .normal)
+                    made = try? World.newGame(config)
+                }
+                let w = try #require(made, "\(home) has no starter")
+                #expect(w.ops.jobArea.count >= 2, "\(home): jobs need a pair of airports")
+            }
+        }
+        // Every strip near Punta Arenas is in Argentina: one-off jobs reach across the border, so the board and the dispatch work.
+        let puq = try Fixtures.world(home: "PUQ")
+        #expect(puq.ops.jobArea.count >= Tuning.jobAreaMinimumAirports)
+        #expect(puq.ops.jobArea.contains { AirportCatalog.airport($0)?.country == "AR" })
+        #expect(puq.dispatchPlan(realDay: RealCalendarTests.day) != nil)
+    }
+
+    // MARK: The real calendar
+
+    @Test func theRealCalendarOnlyMovesForward() throws {
+        var w = try Fixtures.flyingWorld()
+        let day = RealCalendarTests.day
+        w.setRealDay(day)
+        let dispatch = try #require(w.dispatchToday)
+        let goal = try #require(w.ops.realWeekGoal)
+        w.ops.realWeekGoal?.done = true
+        // The phone's clock set back a day (or a flight west across midnight): nothing is posted or re-armed.
+        w.setRealDay(day - 1)
+        #expect(w.realDay == day)
+        #expect(w.dispatchToday?.id == dispatch.id)
+        #expect(w.ops.jobs.filter { $0.dispatchDay != nil }.count == 1)
+        #expect(w.ops.realWeekGoal?.week == goal.week && w.ops.realWeekGoal?.done == true, "a met goal stays met")
+        // Capped rewards count against the latest day seen, so a day's caps never open again.
+        #expect(w.rewardDay(day - 1) == day)
+        #expect(w.rewardDay(day + 1) == day + 1)
+        // A day whose dispatch was flown never gets a second one, even when the board is worked out again.
+        w.noteSpecialJobDone(dispatch)
+        let flownID = dispatch.id
+        w.ops.jobs.removeAll { $0.id == flownID }
+        w.ops.dispatch.postedDay = 0
+        w.setRealDay(day)
+        #expect(w.dispatchToday == nil && w.dispatchStampedToday)
+    }
+
+    @Test func stampsCountInAnyOrder() throws {
+        var w = try Fixtures.flyingWorld()
+        let day = RealCalendarTests.day
+        w.earnStamp(day: day + 1)
+        w.earnStamp(day: day)
+        w.earnStamp(day: day)
+        #expect(w.ops.dispatch.stamps == 2, "yesterday's dispatch landing after today's still counts, once")
+        #expect(w.ops.dispatch.isStamped(day) && w.ops.dispatch.isStamped(day + 1) && !w.ops.dispatch.isStamped(day + 2))
+        #expect(w.ops.dispatch.lastStampDay == day + 1)
+    }
+
+    @Test func anEventJobTakenBeforeTheEndStillCountsWhenItLandsAfter() throws {
+        var w = try Fixtures.flyingWorld()
+        w.setRealDay(RealCalendar.realDay(year: 2026, month: 12, day: 10))
+        #expect(w.activeSeason?.kind == .holidayParcels)
+        w.countSeasonJob(.holidayParcels)
+        w.countSeasonJob(.holidayParcels)
+        w.setRealDay(RealCalendar.realDay(year: 2026, month: 12, day: 24))
+        #expect(w.activeSeason == nil)
+        #expect(w.ops.season.ended == .holidayParcels && w.ops.season.endedJobsDone == 2)
+        w.countSeasonJob(.holidayParcels)
+        #expect(w.ops.unlockedLiveries.contains(UnlockableLiveries.seasonCode(.holidayParcels)), "the third job landed after the end")
+    }
+
+    // MARK: Goals
+
+    @Test func aGoalMetLateOnSundayCanStillBeDoubledTheNextWeek() throws {
+        var w = try Fixtures.world()
+        let first = try #require(w.ops.weeklyGoal)
+        #expect(w.goalToDouble == nil)
+        w.ops.weeklyGoal?.done = true
+        w.startWeeklyGoal(week: first.week + 1)
+        let second = try #require(w.ops.weeklyGoal)
+        #expect(!second.done && second.previousMetWeek == first.week && second.previousMetReward == first.reward)
+        let paid = try #require(w.goalToDouble)
+        #expect(paid.week == first.week && paid.reward == first.reward)
+        w.ops.weeklyGoal?.done = true
+        #expect(w.goalToDouble?.week == second.week, "this week's goal takes over once it is met")
+    }
+
+    @Test func aPlaceGoalIsSizedByWhatReallyLandsThere() throws {
+        var w = try Fixtures.flyingWorld()
+        w.startWeeklyGoal(week: 4)
+        #expect(w.ops.weeklyGoal?.place == "YUB" && w.ops.weeklyGoal?.kind == .passengers)
+        let toVillage = Flight(from: "YEV", to: "YUB", departedMinute: 0, distanceKm: 140, passengers: 100, cargoKg: 3_000, revenue: 0, cost: 0, isFerry: false)
+        let toTown = Flight(from: "YUB", to: "YEV", departedMinute: 0, distanceKm: 140, passengers: 500, cargoKg: 20_000, revenue: 0, cost: 0, isFerry: false)
+        w.countGoalArrival(toVillage)
+        w.countGoalArrival(toTown)
+        w.countGoalArrival(toTown)
+        #expect(w.ops.weeklyGoal?.arrivals(.freightKg, at: "YUB") == 3_000)
+        #expect(w.ops.weeklyGoal?.arrivals(.passengers, at: "YEV") == 1_000)
+        #expect(w.ops.weeklyGoal?.done == true, "met during the week, not at the next midnight")
+
+        // Next week's freight goal at the village asks for what landed there plus the stretch, not a share of the airline's total.
+        w.startWeeklyGoal(week: 5)
+        let goal = try #require(w.ops.weeklyGoal)
+        #expect(goal.kind == .freightKg && goal.place == "YUB")
+        #expect(goal.target == 3_300)
+        #expect(goal.lastWeekArrivals(.freightKg, at: "YUB") == 3_000)
+
+        // The real-week goal reads the same count: two game weeks of it.
+        w.setRealDay(RealCalendarTests.day)
+        let real = try #require(w.ops.realWeekGoal)
+        #expect(real.kind == .freightKg && real.place == "YUB" && real.target == 6_000)
     }
 }

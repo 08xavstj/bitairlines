@@ -99,6 +99,26 @@ import CoreCatalog
         #expect(time < .seconds(3))
     }
 
+    @Test func anAircraftThatCannotTakeOffWhereItStandsIsToldSoBeforeAnySearch() throws {
+        let (w, indexes) = try Self.ferryWorld()
+        // The Beaver floatplane stands on Inuvik's runway: it can never leave, so the reason is the airport, not "too far".
+        let floats = try #require(indexes.first { w.aircraft[$0].typeID == "dhc2f" })
+        let way = w.positioning(aircraftIndex: floats, toAny: ["YZF"])
+        #expect(way.plan == nil)
+        #expect(way.problem == WorldError.aircraftCannotUse(airport: "YEV"))
+        #expect(w.positioningProblem(aircraftIndex: floats, toAny: ["YEV"]) == nil, "it is there already")
+        // A wheeled aircraft at a stop of the route has nothing to fly and no problem, and the plan shown is the one flown.
+        let caravan = indexes[0]
+        let there = w.positioning(aircraftIndex: caravan, toAny: ["YUB", "YEV"])
+        #expect(there.problem == nil)
+        #expect(there.plan?.hops.isEmpty == true)
+        #expect(there.plan == w.ferryPlan(aircraftID: w.aircraft[caravan].id, toAny: ["YUB", "YEV"]))
+        let away = w.positioning(aircraftIndex: caravan, toAny: ["YZF", "YUB"])
+        #expect(away.problem == nil)
+        #expect(away.plan?.destination == "YUB", "the nearest goal it can use, as startFerry flies it")
+        #expect(away.plan == w.ferryPlan(aircraftID: w.aircraft[caravan].id, toAny: ["YZF", "YUB"]))
+    }
+
     @Test func oneAircraftWeighedForARouteMatchesTheChecksAndTheFerry() throws {
         var w = try Self.hubWorld(spokes: 12)
         for (n, airport) in FerryGrid.airports.enumerated() where n % 150 == 0 {

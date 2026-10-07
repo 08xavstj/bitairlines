@@ -47,7 +47,7 @@ struct SaveEnvelope: Codable {
 
 /// Saves live as JSON files in Application Support: one per slot, written atomically so a crash never leaves a half-written save.
 /// With `cloud`, each game is also copied to iCloud (at most every few minutes, and always when the player leaves the game).
-/// Bringing copies from other devices in is in SaveSync.swift.
+/// Bringing copies from other devices in, and keeping both when a game was played on two devices, is in SaveSync.swift.
 final class SaveStore {
     static let slotCount = 3
     static let formatVersion = 1
@@ -59,7 +59,7 @@ final class SaveStore {
     let deviceID: String
     let tutorial: TutorialStore
 
-    /// Main thread only: what the last iCloud sync found, and where to send words for the player.
+    /// Main thread only: what the last iCloud sync found, and where to send words for the player (RootView shows them).
     var lastSync = SyncReport()
     var onNote: ((String) -> Void)?
 
@@ -72,6 +72,8 @@ final class SaveStore {
     /// Notes already given in this run of the app, so the same one does not come back at every sync.
     var announced: Set<String> = []
     private var pendingDeletes: Set<String>?
+    /// Whether the game clock is running, as last told by the app (`noteClock`), for saves that do not say themselves.
+    private var clockState: Bool?
 
     /// Every file read and write happens on this queue, one at a time, so saving while playing never holds up the screen and a
     /// read always sees the last write.
@@ -151,6 +153,12 @@ final class SaveStore {
         return try decoder.decode(SaveEnvelope.self, from: data)
     }
 
+    /// The app tells the store whenever the clock starts or stops (RootView follows the session's speed), so every save can say
+    /// whether the game was running. A save that says so itself (`clockRunning`) wins over this.
+    func noteClock(running: Bool?) {
+        io.async { self.clockState = running }
+    }
+
     /// Writes the slot. The first save of a session stays on the phone (the copy may be behind another device until the title
     /// screen has synced); after that iCloud gets a copy every few minutes, and at once with `toCloud`.
     func save(_ world: World, slot: Int, toCloud: Bool = false, clockRunning: Bool? = nil) throws {
@@ -172,13 +180,14 @@ final class SaveStore {
         var counts = lockedVersions(slot: slot)
         counts[deviceID, default: 0] += 1
         let savedAt = Date()
+        let running = clockRunning ?? clockState
         let envelope = SaveEnvelope(formatVersion: SaveStore.formatVersion, savedAt: savedAt, gameID: id, progress: world.clock.minute,
-                                    versions: counts, clockRunning: clockRunning, world: world)
+                                    versions: counts, clockRunning: running, world: world)
         let data = try SaveStore.encode(envelope)
         try data.write(to: url(slot: slot), options: .atomic)
         versions[slot] = counts
         writeSummary(SaveSummaryFile(airlineName: world.airline.name, date: world.clock.date, cash: world.airline.cash, aircraft: world.aircraft.count,
-                                     level: world.airline.level, savedAt: savedAt, clockRunning: clockRunning), slot: slot)
+                                     level: world.airline.level, savedAt: savedAt, clockRunning: running), slot: slot)
         guard let cloud else { return }
         if lastUpload[slot] == nil && !toCloud { lastUpload[slot] = Date(); return }
         let due = lastUpload[slot].map { Date().timeIntervalSince($0) > SaveStore.cloudInterval } ?? true

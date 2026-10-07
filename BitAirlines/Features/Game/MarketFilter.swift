@@ -13,8 +13,9 @@ struct MarketFilter: Equatable {
         let q = query.trimmingCharacters(in: .whitespaces).lowercased()
         if !q.isEmpty && !type.displayName.lowercased().contains(q) && !type.id.contains(q) { return false }
         if level != 0 && type.level != level { return false }
-        // Fits my airports: it can land at home (first in the list), where every aircraft is delivered, so it can be bought.
-        if fitsOnly && fit.airports.first?.fits != true { return false }
+        // Fits my airports: some airport of the network takes it as delivered. That is exactly when it can be bought (an aircraft
+        // is delivered to home, or to the nearest airport of the network it can use: World.deliveryAirport).
+        if fitsOnly && !fit.fitsAny { return false }
         return true
     }
 }
