@@ -1,0 +1,196 @@
+### matches
+PLAYTEST slot home RBR: RBR-CQS, flights 4, slots scheduled 2
+PLAYTEST slot home BVB: BVB-BAZ, flights 4, slots scheduled 2
+PLAYTEST slot home PHH: PHH-LUA, flights 4, slots scheduled 2
+PLAYTEST first routes where people would fill more than one aircraft: 9
+CALIBRATION bigger-city YEG-YVR level 4: e175 owned=false 26017/day
+CALIBRATION bigger-city ideas YEV level 4: YLW-YXE e175 owned=false 25652/day; YEG-YLW e175 owned=false 30985/day; YXE-YWG e175 owned=false 27410/day; YVR-YXE e175 owned=false 29271/day; YLW-YVR e175 owned=false 32046/day; YEG-YXE e175 owned=false 30842/day; YLW-YWG e175 owned=false 20442/day; YEG-YWG e175 owned=false 25323/day
+CALIBRATION ranking YEV>YUB: c206 495/day pays back in 2.1 years with 1; dhc3 555/day pays back in 2.3 years with 1; dhc2 233/day pays back in 3.5 years with 1; c208 1017/day pays back in 4.0 years with 1; bn2 696/day pays back in 6.4 years with 1; dc3 134/day pays back in 10.8 years with 1
+CALIBRATION ranking YEV>YZF: dhc6 1064/day pays back in 20.5 years with 2
+CALIBRATION ranking YEV>YUB>YSY: c206 675/day pays back in 1.5 years with 1; dhc3 474/day pays back in 2.7 years with 1; dc3 480/day pays back in 3.0 years with 1; c208 1316/day pays back in 3.1 years with 1; bn2 760/day pays back in 5.9 years with 1; dhc6 1031/day pays back in 10.6 years with 1
+CALIBRATION forecast Twin Otter: thin 263 a day with 1, busy 1064 a day with 2, payback 20.491403050804482 years
+CALIBRATION forecast thin route: Caravan 1017 a day, DC-3 -958 a day
+CALIBRATION forecast Caravan YEV-YUB: predicted 1017 a day (1093 before heavy checks), simulated 1432 a day, load 0.7471106296696357
+CALIBRATION first week YEV-YCO: revenue 45786, cost 33263, flights 17
+CALIBRATION lifeline: VLI-SON 9.259026982938526 a day, HGU-TBG 14.749895859493009 a day
+CALIBRATION forecast DC-3 YEV-YCO: 45-year-old starter 3505 a day, new one 5599 a day
+PLAYTEST first route caribbean SXM: SXM-VIJ c208 2245/day
+PLAYTEST ferry no way there (Caravan YEV to HNL): 20 quick searches 0.000634389 seconds, one plain search 0.210925587 seconds
+PLAYTEST ferry far (Caravan YEV to LHR): 0.002575074 seconds, 5 hops
+PLAYTEST first route caribbean ANU: ANU-SBH c208 1528/day
+PLAYTEST first route caribbean SKB: SKB-VIJ c208 2487/day
+PLAYTEST hub matching: 40 spokes, 866 paths, 866 pairs, refresh 0.014139198 seconds
+PLAYTEST first route melanesia VLI: VLI-SON c208 1661/day
+PLAYTEST first route melanesia HIR: HIR-MUA c208 1608/day
+PLAYTEST first route melanesia SUV: SUV-LBS c208 1693/day
+CALIBRATION caravan YEV-YUB 1/day: profit 515262, flights 704, pax 5491, cargo 208652 kg
+CALIBRATION twin otter YEV-YUB 1/day: profit 306992, flights 678, pax 5393, cargo 209324 kg
+CALIBRATION caravan YEV-YZF 1/day: profit 216794, flights 693, pax 6224, cargo 142833 kg
+CALIBRATION twin otter YEV-YZF 1/day: profit 917811, flights 703, pax 13324, cargo 170018 kg
+CALIBRATION twin otter YEV-YZF 2/day: profit 917739, flights 703, pax 13324, cargo 169999 kg
+CALIBRATION dc-3 YEV-YZF 1/day: profit 239934, flights 704, pax 19661, cargo 170949 kg
+CALIBRATION caravan milk run YEV-YUB-YSY 1/day: profit 895420, flights 1026, pax 7900, cargo 217739 kg
+PLAYTEST first route outback ASP: ASP-CPD dc3 4052/day
+CALIBRATION LHR-JFK 787-9: 5.0 a day with 6, load 0.73568645889501, 229052 a day
+PLAYTEST first route outback ISA: ISA-NTN dc3 1580/day
+PLAYTEST first route outback BME: BME-DRB c208 937/day
+PLAYTEST first route amazon TBT: TBT-BCR c208 1698/day
+PLAYTEST first route amazon RBR: RBR-CQS dc3 5444/day
+PLAYTEST first route amazon BVB: BVB-BAZ dc3 3938/day
+PLAYTEST first route png HGU: HGU-TBG dc3 3462/day
+PLAYTEST first route png GKA: GKA-TBG dc3 3768/day
+CALIBRATION caravan Inuvik-Tuktoyaktuk 1/day, one year: profit 479052, flights 716, pax 5337, cargo 203844 kg, reputation 11.288282366758432, condition 72.27200000000317
+PLAYTEST first route png MAG: MAG-TBG c208 4787/day
+CALIBRATION fare sweep Caravan YEV-YUB 2/day: best fare 1.0, -895 a day, load at 0.5 0.5607720700054889
+PLAYTEST first route patagonia PUQ: PUQ-BBA c208 1454/day
+PLAYTEST ferry quick vs plain (normal): 55 questions, 15 with no way there, all the same
+PLAYTEST first route patagonia USH: USH-GGS dc3 2132/day
+PLAYTEST first route caribbean SXM: SXM-VIJ c208 2245/day
+PLAYTEST first route patagonia FTE: FTE-GGS c208 1513/day
+PLAYTEST first route himalaya LUA: LUA-IMK c208 2400/day
+PLAYTEST first route caribbean ANU: ANU-SBH c208 1528/day
+PLAYTEST first route himalaya JMO: JMO-LUA c208 131/day
+PLAYTEST first route caribbean SKB: SKB-VIJ c208 2487/day
+PLAYTEST first route himalaya PHH: PHH-LUA c208 3216/day
+PLAYTEST plane choices: 120 aircraft and route pairs checked in 3.027480401 seconds
+PLAYTEST first route alaska BET: BET-ADQ dc3 3990/day
+PLAYTEST first route melanesia VLI: VLI-SON c208 1661/day
+PLAYTEST first route alaska OTZ: OTZ-BRW dc3 3349/day
+PLAYTEST first route melanesia HIR: HIR-MUA c208 1608/day
+PLAYTEST first route melanesia SUV: SUV-LBS c208 1693/day
+PLAYTEST first route alaska DLG: DLG-DUT dc3 2730/day
+PLAYTEST first route arctic-canada YEV: YEV-YCO dc3 3505/day
+PLAYTEST first route arctic-canada YCB: YCB-YBK dc3 5988/day
+PLAYTEST first route outback ASP: ASP-CPD dc3 4052/day
+PLAYTEST first route arctic-canada YRT: YRT-YHK dc3 3309/day
+PLAYTEST first route outback ISA: ISA-NTN dc3 1580/day
+PLAYTEST first route greenland JAV: JAV-KUS dc3 3112/day
+PLAYTEST first route outback BME: BME-DRB c208 937/day
+PLAYTEST first route greenland GOH: GOH-KUS dc3 2589/day
+PLAYTEST first routes: weakest 937, strongest 5988 a day
+PLAYTEST ferry quick vs plain (realism): 55 questions, 15 with no way there, all the same
+PLAYTEST first route amazon TBT: TBT-BCR c208 1698/day
+PLAYTEST first route amazon RBR: RBR-CQS dc3 5444/day
+PLAYTEST first route amazon BVB: BVB-BAZ dc3 3938/day
+PLAYTEST first route png HGU: HGU-TBG dc3 3462/day
+PLAYTEST first route png GKA: GKA-TBG dc3 3768/day
+PLAYTEST first route png MAG: MAG-TBG c208 4787/day
+PLAYTEST first route patagonia PUQ: PUQ-BBA c208 1454/day
+PLAYTEST first route patagonia USH: USH-GGS dc3 2132/day
+PLAYTEST first route patagonia FTE: FTE-GGS c208 1513/day
+PLAYTEST first route himalaya LUA: LUA-IMK c208 2400/day
+PLAYTEST first route himalaya JMO: JMO-LUA c208 131/day
+PLAYTEST first route himalaya PHH: PHH-LUA c208 3216/day
+PLAYTEST first route alaska BET: BET-ADQ dc3 3990/day
+PLAYTEST first route alaska OTZ: OTZ-BRW dc3 3349/day
+PLAYTEST first route alaska DLG: DLG-DUT dc3 2730/day
+PLAYTEST first route arctic-canada YEV: YEV-YCO dc3 3505/day
+PLAYTEST first route arctic-canada YCB: YCB-YBK dc3 5988/day
+PLAYTEST first route arctic-canada YRT: YRT-YHK dc3 3309/day
+PLAYTEST first route greenland JAV: JAV-KUS dc3 3112/day
+PLAYTEST first route greenland GOH: GOH-KUS dc3 2589/day
+PLAYTEST VLI after 730 days: level 2, cash 2261063, fleet 2, routes 2, flights 2138, reputation 14, bankrupt false, debt 0
+PLAYTEST VLI after 365 days: level 2, reputation 12, revenue 2273222
+PLAYTEST VLI level 2 at day 252
+PLAYTEST VLI levers: jobs done 0, campaigns running 0, premium routes 0, hangar at home true, slots bought 0
+CALIBRATION route ideas YEV Caravan: YEV-YCO c208 2311/day noRoadTown YCO; YEV-YMA c208 2279/day noRoadTown YMA; YEV-YVQ c208 1786/day noRoadTown YVQ; YEV-YSY c208 1565/day noRoadTown YSY; YEV-YHI c208 1512/day noRoadTown YHI
+CALIBRATION bigger-city slots YEV level 4: YLW-YXE e175 25652/day slots 3 450000; YEG-YLW e175 30985/day slots 4 2400000; YXE-YWG e175 27410/day slots 8 1200000; YVR-YXE e175 29271/day slots 6 2250000; YLW-YVR e175 32046/day slots 6 3600000; YEG-YXE e175 30842/day slots 10 3750000; YLW-YWG e175 20442/day slots 2 300000; YEG-YWG e175 25323/day slots 6 2250000
+PLAYTEST SXM after 730 days: level 3, cash 5100671, fleet 12, routes 11, flights 20631, reputation 52, bankrupt false, debt 0
+PLAYTEST SXM after 365 days: level 3, reputation 28, revenue 16995608
+PLAYTEST SXM level 2 at day 84
+PLAYTEST SXM level 3 at day 280
+PLAYTEST SXM levers: jobs done 0, campaigns running 0, premium routes 8, hangar at home true, slots bought 0
+PLAYTEST ASP after 730 days: level 4, cash 14977273, fleet 14, routes 10, flights 27198, reputation 75, bankrupt false, debt 0
+PLAYTEST ASP after 365 days: level 3, reputation 34, revenue 50627639
+PLAYTEST ASP level 2 at day 49
+PLAYTEST ASP level 3 at day 203
+PLAYTEST ASP level 4 at day 420
+PLAYTEST ASP levers: jobs done 0, campaigns running 0, premium routes 7, hangar at home true, slots bought 16
+PLAYTEST YEV after 730 days: level 4, cash 40438750, fleet 14, routes 20, flights 22693, reputation 62, bankrupt false, debt 0
+PLAYTEST YEV after 365 days: level 3, reputation 29, revenue 47803582
+PLAYTEST YEV level 2 at day 63
+PLAYTEST YEV level 3 at day 266
+PLAYTEST YEV level 4 at day 427
+PLAYTEST YEV levers: jobs done 0, campaigns running 0, premium routes 11, hangar at home true, slots bought 8
+
+### last 80 lines
+✔ Test faresMatchThePrototype() passed after 16.312 seconds.
+✔ Test powersMatchTheirDefinition() passed after 16.312 seconds.
+✔ Test demandMatchesThePrototype() passed after 16.312 seconds.
+✔ Test levelSevenOffersANewBuildAircraft() passed after 16.289 seconds.
+✔ Test aWidebodyIsDeliveredToALongRunwayOnTheNetwork() passed after 16.288 seconds.
+✔ Test aFloatplaneIsDeliveredToAWaterBaseOnTheNetwork() passed after 16.288 seconds.
+✔ Test biggerCityIdeasCarryTheirSlotBill() passed after 16.288 seconds.
+✔ Test bushIdeasNeedNoSlots() passed after 16.287 seconds.
+✔ Test aRouteIntoABusyCityCountsTheSlotsItNeeds() passed after 16.287 seconds.
+✔ Suite CountryCatalogTests passed after 16.335 seconds.
+✔ Suite CatalogInfoTests passed after 16.336 seconds.
+✔ Suite AircraftCatalogTests passed after 16.336 seconds.
+✔ Suite LandMaskTests passed after 16.336 seconds.
+✔ Suite SeededRandomTests passed after 16.335 seconds.
+✔ Suite AirportCatalogTests passed after 16.336 seconds.
+✔ Suite FirstSessionFixesTests passed after 16.336 seconds.
+✔ Suite FlightBookingTests passed after 16.336 seconds.
+✔ Suite ReputationAndGoalsTests passed after 16.336 seconds.
+✔ Suite GeoMathTests passed after 16.336 seconds.
+✔ Suite JobsAndEventsTests passed after 16.336 seconds.
+✔ Suite SharedAircraftTests passed after 16.336 seconds.
+✔ Suite MoneyFixesTests passed after 16.336 seconds.
+✔ Suite PilotsAndScenariosTests passed after 16.336 seconds.
+✔ Suite NextStepTests passed after 16.336 seconds.
+✔ Suite GrowthTests passed after 16.336 seconds.
+✔ Suite PlayFixesTests passed after 16.336 seconds.
+✔ Suite NetworkTests passed after 16.336 seconds.
+✔ Suite JobFixesTests passed after 16.336 seconds.
+✔ Suite ForecastTests passed after 16.336 seconds.
+✔ Suite TakeOffGateTests passed after 16.336 seconds.
+✔ Suite FerryPlanTests passed after 16.336 seconds.
+✔ Suite RealCalendarTests passed after 16.336 seconds.
+✔ Suite NewGameTests passed after 16.336 seconds.
+✔ Suite HeavyCheckTests passed after 16.336 seconds.
+✔ Suite FirstSessionTests passed after 16.336 seconds.
+✔ Suite OperationsTests passed after 16.336 seconds.
+✔ Suite EconomyBalanceTests passed after 16.336 seconds.
+✔ Suite PerfShapeTests passed after 16.336 seconds.
+✔ Suite RouteTests passed after 16.336 seconds.
+✔ Suite CalibrationTests passed after 16.337 seconds.
+✔ Suite RouteProfitTests passed after 16.336 seconds.
+✔ Suite BrandingTests passed after 16.336 seconds.
+✔ Suite MarketingStaffTests passed after 16.337 seconds.
+✔ Suite SimulationTests passed after 16.337 seconds.
+✔ Suite SaveCompatibilityTests passed after 16.337 seconds.
+✔ Suite AircraftFitTests passed after 16.337 seconds.
+✔ Suite FareDemandTests passed after 16.337 seconds.
+✔ Suite LiveryCodeTests passed after 16.337 seconds.
+✔ Suite RareFindTests passed after 16.337 seconds.
+✔ Suite BasesAndKitsTests passed after 16.337 seconds.
+✔ Suite WorldInfoTests passed after 16.337 seconds.
+✔ Suite FleetBalanceTests passed after 16.337 seconds.
+✔ Suite RivalsTests2 passed after 16.337 seconds.
+✔ Suite LookaheadTests passed after 16.337 seconds.
+✔ Suite RestorationTests passed after 16.337 seconds.
+✔ Suite RewardsTests passed after 16.337 seconds.
+✔ Suite RouteIdeasTests passed after 16.337 seconds.
+✔ Suite JobDepartureChecksTests passed after 16.337 seconds.
+✔ Suite EconomyPortTests passed after 16.337 seconds.
+✔ Suite ProgressionFixesTests passed after 16.337 seconds.
+PLAYTEST SXM after 730 days: level 3, cash 5100671, fleet 12, routes 11, flights 20631, reputation 52, bankrupt false, debt 0
+PLAYTEST SXM after 365 days: level 3, reputation 28, revenue 16995608
+PLAYTEST SXM level 2 at day 84
+PLAYTEST SXM level 3 at day 280
+PLAYTEST SXM levers: jobs done 0, campaigns running 0, premium routes 8, hangar at home true, slots bought 0
+PLAYTEST ASP after 730 days: level 4, cash 14977273, fleet 14, routes 10, flights 27198, reputation 75, bankrupt false, debt 0
+PLAYTEST ASP after 365 days: level 3, reputation 34, revenue 50627639
+PLAYTEST ASP level 2 at day 49
+PLAYTEST ASP level 3 at day 203
+PLAYTEST ASP level 4 at day 420
+PLAYTEST ASP levers: jobs done 0, campaigns running 0, premium routes 7, hangar at home true, slots bought 16
+PLAYTEST YEV after 730 days: level 4, cash 40438750, fleet 14, routes 20, flights 22693, reputation 62, bankrupt false, debt 0
+PLAYTEST YEV after 365 days: level 3, reputation 29, revenue 47803582
+PLAYTEST YEV level 2 at day 63
+PLAYTEST YEV level 3 at day 266
+PLAYTEST YEV level 4 at day 427
+PLAYTEST YEV levers: jobs done 0, campaigns running 0, premium routes 11, hangar at home true, slots bought 8
+✔ Test aCarefulPlayerGrowsWithoutBreakingTheWorld(home:) passed after 51.945 seconds.
+✔ Suite PlaythroughTests passed after 51.962 seconds.
+✔ Test run with 345 tests passed after 51.964 seconds.
